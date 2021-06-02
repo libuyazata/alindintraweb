@@ -1,0 +1,351 @@
+/*
+ * Global application theme.
+ * Framework overrides and customization goes here.
+ */
+ body{
+    font-size: .82rem;
+    color:#000;
+    font-family: "Roboto-Light",sans-serif;
+    background-color: #f9f9f9;
+
+    input[type='checkbox'].form-control {
+        height:28px;
+        width:28px;
+        border:0;
+    }
+    input[type='checkbox']:checked {        
+        border:0;
+        background-color: #2196F3 !important;
+    }
+    .ams-container {
+        top:100px;
+        background-color: $white;
+        position: relative;
+        margin-bottom: 62px;
+        padding-top:20px;
+        padding-bottom: 42px;
+        min-height: calc(100vh - 20vh);
+        box-shadow: 0 0 3px rgba(0,0,0,.1);
+    }
+    .panel {
+        box-shadow: 0 0 3px rgba(0,0,0,.1);
+    }
+    .panel-heading {
+        color: #767676;
+        background-color: #f6f6f6;
+        border-color: #e9e9e9;
+    }
+    .panel-body {
+        padding: 15px;
+    }
+    span.toggle-passwordtype-icon {
+        position: relative;
+        right: 8px;
+        float: right;
+        bottom: 32px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    // .fas {
+    //     color: $white;
+    // }
+    .header-top-border{
+        border-top:2px solid #095bbf;
+    }
+    .bottom-box {
+        width: 100%;
+        bottom: 15px;
+        position: absolute;
+    }
+    .bottom-box-link {
+        position: relative;
+        float: right;
+        padding-right: 74px;
+    }
+
+    .dataTables_filter,
+    .dataTables_length {
+        display: none;
+    }
+    table thead tr th {
+        color: #fff;
+        background-color: rgba(9,91,191,.6);//#011b3b;/*#095bbf*/
+        border:0;
+    }
+    .table thead th{
+        border-bottom: 0;
+    }
+    table tbody{
+        border: 1px solid #dee2e6;
+    }
+    table td{
+        img.grid-preview{
+            width:auto;
+            height:30px;
+        }
+    }
+    .table th, .table td{
+        padding: 4px;
+        vertical-align:unset;
+    }
+    .modal {
+        background-color: rgba(0,0,0,.5);
+        .modal-body{
+            max-height: 71vh;
+            overflow-y: scroll;
+        }
+    }
+    table tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+    a.link{        
+        cursor: pointer !important;
+        color:#0073dd !important;
+        i.fas {
+            font-size:20px;
+            color:#0073dd !important;
+        }
+        i.fas.delete-icon {
+            color:#e64e28 !important;
+        }
+        i.far {
+            font-size:20px;
+            color:#0073dd !important;
+        }
+    }
+    .text-area-error-field { top: 58px !important; }
+    .ngx-datepicker-calendar-container {
+        z-index: 100;
+    }
+    .ngx-datepicker-container .ngx-datepicker-input{
+        border-radius: 4px;
+        height:38px;
+    }
+    .page-header-container {  
+        padding-bottom: 10px;      
+        margin-top: 6px;
+        box-shadow:  0 0 3px rgba(0, 0, 0, 0.1);
+
+        .page-header {
+            background-color:#f3f3f3;
+            
+            h4 {
+                color:#000;
+                font-size:18px;
+                padding: 15px;
+                padding-top: 10px;
+                padding-bottom: 0;
+            }
+            h4 {
+                span{
+                    color:#937f7f;
+                    font-weight: 600;
+                }
+            }
+        }
+        .search-container{
+            padding: 10px 30px;
+
+            .search-label-container {
+                font-weight: 600;
+                label{
+                    color: #937f7f;
+                }
+            }
+        }
+    }
+    .pending,
+    .rejected,
+    .approved {
+        color: #FFF;
+        padding:4px 8px;
+        display: block;
+        width: 84px;
+        text-align: center;
+        border-radius: 4px;
+    }
+    .pending{        
+        background: rgba(0,0,0,.4);
+    }
+    .reject,
+    .rejected {
+        background: rgba(255,0,0,1);
+    }
+    .approve,
+    .approved {
+        background: rgba(0,123,255,1);
+    }
+    
+    .approve,
+    .reject {
+        color:#fff;
+    }
+
+    .present-bg,
+    .absent-bg,
+    .sick-bg,
+    .paid-leave-bg,
+    .emergency-bg,
+    .unpaid-leave-bg,
+    .training-bg {
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+    .present-bg{
+        background-color: rgba(47, 167, 69, .7);
+    }
+    .absent-bg {
+        background-color: rgba(230, 184, 183, 1);
+    }
+    .sick-bg {
+        background-color: rgba(255, 255, 0, 1);  
+    }
+    .paid-leave-bg {
+        background-color: rgba(204, 255, 204, 1);
+    }
+    .unpaid-leave-bg {
+        background-color: rgba(217, 217, 217, 1);
+    }
+    .emergency-bg {
+        background-color: rgba(141, 180, 226, 1);
+    }
+    .training-bg {
+        background-color: rgba(131, 80, 169, 1);
+    }
+    .school-bg {
+        background-color: rgba(116, 72, 149, 1);
+    }
+    my-date-picker .mydp {
+        width: 100%;
+        position: relative;
+        left: -2px;
+        top: -6px;
+        border: 0;
+    }
+    my-date-picker .mydp .selector {
+        position: relative;
+    }
+    my-date-picker .attendance-dp .mydp .selector{
+        position: fixed !important;
+    }
+
+    /**/
+    // .nav-tabs .nav-link.active, 
+    // .nav-tabs .nav-link.active:hover,
+    // .nav-tabs .nav-item.show .nav-link {
+    //     color:#FFF;
+    //     background-color: #a13d3e;
+    //     border-color:#a13d3e;
+    //     border:1px solid #a13d3e;
+    //     border-top-left-radius: 0px;
+    //     border-top-right-radius: 0px;
+    // }
+    // .nav-tabs  .nav-link,
+    // .nav-tabs  .nav-link:hover  {
+    //     color:#212529;
+    //     border:1px solid #a13d3e;
+    //     border-top-left-radius: 0px;
+    //     border-top-right-radius: 0px;
+    // }
+    // .nav-tabs {
+    //     border-bottom: 0px solid #dee2e6;
+    // }
+    /**/
+
+    /**Bootstrap class over ride **/
+    .navbar-nav .show > .nav-link, 
+    .navbar-nav .active > .nav-link,
+    .navbar-nav .nav-link.show, 
+    .navbar-nav .nav-link,
+    .navbar-nav .nav-link.active {
+        margin: 0px 8px;
+        border-radius: 4px;
+        color: rgba(0,0,0,.7);
+    }
+    .navbar-nav .nav-link.active {
+        color: #fff;
+        background-color: #a13d3e;
+    }
+    .btn-info{
+        border-color: #58cd89;
+        background-color: #2fc86f;
+    }
+    .btn-info:hover,
+    .btn-info:focus{
+        border-color: #58cd89;
+        background-color: #15cb61;
+    }
+    .btn-danger{
+        border-color: #b74f59;
+        background-color: #c03542;
+    }
+    .btn-danger{
+        border-color: #b74f59;
+        background-color: #c82333;
+    }
+    .btn-warning,
+    .btn-warning:hover,
+    .btn-warning:focus {
+        color: #fff;
+    }
+    .invalid-feedback {
+        position: absolute;
+        top:60px;
+        width:auto !important;
+    }
+    .badge {
+        color: #FFF;
+        font-size: 86%;
+    }
+    @media only screen and (max-width: 600px) {    
+
+        ngb-tabset {
+            .nav-tabs {
+              .nav-link {
+                display: block;
+                width: 104px !important;
+                padding: 5px 0px;
+                border: 0;
+                color: #FFF;
+                text-align: center;
+                background-color: #0073dd;
+                border-radius: 0px;
+                &.active {
+                  display: block;
+                  width: 104px !important;
+                  padding: 5px 0px;
+                  border: 0;
+                  color: #FFF;
+                  text-align: center;
+                  background-color: #0073dd;
+                  border-radius: 0px;
+                }
+              }
+              .nav-item.show .nav-link {
+                display: block;
+                width: 104px !important;
+                padding: 5px 0px;
+                border: 0;
+                color: #FFF;
+                text-align: center;
+                background-color: #0073dd;
+                border-radius: 0px;
+              }
+              .nav-link {
+                color: #FFF;
+                background-color: rgba(0, 0, 0, 0.3);
+              }
+              margin-top: 25px;
+            }
+            ul li {
+              float: left;
+            }
+            .nav-tabs .nav-item {
+              margin-bottom: 0px;
+            }
+          }
+    }
+    /**/
+ }
+ 
+

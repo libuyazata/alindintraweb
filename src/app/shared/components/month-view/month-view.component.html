@@ -1,0 +1,58 @@
+<div class="">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row form-group">
+                <div class="col-lg-12">               
+                    <div class="month-view-selectors">                
+                        <form novalidate [formGroup]="monthYearSelector">
+                            <div class="row">
+                                <div class="col-lg-7">
+                                    <select class="form-control" name="monthSelector" formControlName="monthSelector"
+                                    (change)="onMonthYearChanged($event)">
+                                        <option *ngFor="let month of months;let i = index;" [value]="i">{{month}}</option>
+                                    </select> 
+                                </div>
+                                <div class="col-lg-5">
+                                    <select class="form-control" name="yearSelector" formControlName="yearSelector"
+                                    (change)="onMonthYearChanged($event)">
+                                        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="month-view-wrapper">
+                        <div class="month-view-scroller">
+                            <table class="month-view-table">
+                                <thead>
+                                    <tr>
+                                        <th class="month-view-sticky-col">Resource</th>
+                                        <th  *ngFor="let date of datesList; index as dayIndex">
+                                            {{ getDayOfTheWeek(date) }} {{ date | date:'dd' }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let event of eventList; index as rowIndex">
+                                        <td class="month-view-sticky-col">
+                                            <a class="link" (click)="onResourceClicked($event, event);">{{ event.resource }} </a>
+                                        </td>
+                                        <td *ngFor="let date of datesList; index as dayIndex" 
+                                            (click)="onResourceAttendanceCellClicked($event, event, date);"
+                                            [ngClass]="[isAnOffDay(date) ? 'off-day' : '']">                                      
+                                                {{  getCellValue(event, date) }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>  
+</div>

@@ -1,0 +1,21 @@
+@import "src/theme/theme-variables";
+
+footer {
+  padding: 20px;
+  margin-top: 20px;
+  color: $linkColor;
+  background-color: $footerBg;
+  i {
+    &.fas, &.far {
+      padding-right: 5px;
+    }
+  }
+  .copyright {
+    color: $copyRtColor;
+  }
+  h4 span {
+    color: $footerHeaderColor;
+  }
+}
+
+

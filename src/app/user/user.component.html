@@ -1,0 +1,169 @@
+<div class="page-header pb-2">
+  <h2>
+      My View     
+      <button class="btn btn-info leave-req-btn" (click)="openLeaveRequestView();"><i class="fa fa-plus"></i> Request Leave</button> 
+  </h2>    
+</div>
+<br/>
+<ngb-tabset class="tabset1">
+  <ngb-tab class="nav nav-tabs flex-column flex-md-row">
+    <ng-template ngbTabTitle><span class="title1">Leave Request</span></ng-template>
+    <ng-template ngbTabContent>          
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="table-responsive">
+                <table class="table" [mfData]="userLeaveInfo" #mf="mfDataTable" [mfRowsOnPage]="50">
+                    <thead>
+                    <tr>
+                        <th>
+                            <mfDefaultSorter by="attendanceName">Leave Type</mfDefaultSorter>
+                        </th>    
+                        <th>
+                          <mfDefaultSorter by="leaveReason">Leave Reason</mfDefaultSorter>
+                        </th>          
+                        <th>
+                            <mfDefaultSorter by="dateFrom">From Date</mfDefaultSorter>
+                        </th>
+                        <th>
+                            <mfDefaultSorter by="dateTo">To Date</mfDefaultSorter>
+                        </th>
+                        <th>
+                            <mfDefaultSorter by="createdDate">Applied On</mfDefaultSorter>
+                        </th>
+                        <th>
+                            <mfDefaultSorter by="">Status</mfDefaultSorter>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of mf.data">                          
+                        <td>{{item.attendanceName }}</td>
+                        <td>{{item.leaveReason }}</td>             
+                        <td>{{item.dateFrom | date :  "dd MMM yyyy" }}</td>
+                        <td>{{item.dateTo | date :  "dd MMM yyyy" }}</td>
+                        <td>{{item.createdDate | date :  "dd MMM yyyy" }}</td>
+                        <td>
+                          <span [ngClass]="getClassName(item.approvalId)">{{item.approvalId | leaveStatus }}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                          <td colspan="9">
+                              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                          </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                  <div *ngIf="userLeaveInfo <= 0" class="text-center">
+                      <div>No leave request(s) to display.</div>
+                  </div>
+            
+              </div>
+            </div>
+          </div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab>
+    <ng-template ngbTabTitle><span class="title1">Leave Credits</span></ng-template>
+    <ng-template ngbTabContent>
+        <div class="table-responsive">
+          <table class="table" [mfData]="userLeaveCredits" #mf="mfDataTable" [mfRowsOnPage]="50">
+            <thead>
+            <tr>
+                <th>
+                    <mfDefaultSorter by="attendanceName">Leave Type</mfDefaultSorter>
+                </th>    
+                <th>
+                  <mfDefaultSorter by="maxLeaveCount">Leaves Available</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="maxLeaveCount">Leaves Remaining</mfDefaultSorter>
+                </th>           
+                <th>
+                    <mfDefaultSorter by="leaveTaken">Leaves Taken</mfDefaultSorter>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of mf.data">                          
+                <td>{{ item.attendanceName }}</td>
+                <td>{{ item.maxLeaveCount }}</td>   
+                <td>{{ item.maxLeaveCount - item.leaveTaken }}</td>          
+                <td>{{ item.leaveTaken }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
+  <!-- Leave Request Modal Form -->
+<div class="modal leave-request-model" id="leaveRequestModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Leave Request</h5>
+        <button class="close" type="button" data-dismiss="modal" appModal  (click)="closeLeaveRequestView();">&times;</button>
+      </div>
+      <form novalidate [formGroup]="saveLeaveRequestForm" (ngSubmit)="onLeaveRequestSubmitted();">
+        <div class="modal-body">
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Leave Type</label>            
+            </div>
+            <div class="col-lg-12">
+              <select class="form-control" formControlName="attendanceTypeId" 
+              [ngClass]="{ 'is-invalid': isLeaveReqFormAttemptSubmit && leaveRequestForm.attendanceTypeId.errors }">   
+                <option value="">Select</option>
+                <option *ngFor="let attendance of attendanceTypeList" [ngValue]="attendance.id">{{ attendance.attendanceType }}</option>
+              </select>
+              <div *ngIf="isLeaveReqFormAttemptSubmit && leaveRequestForm.attendanceTypeId.errors" class="invalid-feedback">
+                  <div *ngIf="leaveRequestForm.attendanceTypeId.errors.required">Please select a leave type.</div>
+              </div>
+            </div>
+          </div>  
+          <div class="row form-group">
+              <div class="col-lg-12">
+                <label>Leave Reason</label>            
+              </div>
+              <div class="col-lg-12">
+                <textarea class="form-control" formControlName="leaveReason" 
+                [ngClass]="{ 'is-invalid': isLeaveReqFormAttemptSubmit && leaveRequestForm.leaveReason.errors }">
+                </textarea>
+                <div *ngIf="isLeaveReqFormAttemptSubmit && leaveRequestForm.leaveReason.errors" class="invalid-feedback text-area-error-field">
+                    <div *ngIf="leaveRequestForm.leaveReason.errors.required">Please enter the leave reason.</div>
+                </div>
+              </div>
+            </div>  
+          <div class="row form-group">
+            <div class="col-lg-6">
+                <label>From Date</label><br/>
+                <my-date-picker name="dateFrom" [options]="attendancePickerOptions" class="form-control"
+                  formControlName="dateFrom" [ngClass]="{ 'is-invalid': isLeaveReqFormAttemptSubmit && leaveRequestForm.dateFrom.errors }">
+                </my-date-picker>       
+                <div *ngIf="isLeaveReqFormAttemptSubmit && leaveRequestForm.dateFrom.errors" class="invalid-feedback">
+                    <div *ngIf="leaveRequestForm.dateFrom.errors.required">Please select the date.</div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label>To Date</label><br/>
+                <my-date-picker name="dateTo" [options]="attendancePickerOptions" class="form-control"
+                  formControlName="dateTo" [ngClass]="{ 'is-invalid': isLeaveReqFormAttemptSubmit && leaveRequestForm.dateTo.errors }">
+                </my-date-picker>       
+                <div *ngIf="isLeaveReqFormAttemptSubmit && leaveRequestForm.dateTo.errors" class="invalid-feedback">
+                    <div *ngIf="leaveRequestForm.dateTo.errors.required">Please select the date.</div>
+                </div>
+            </div>
+          </div>         
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-info" type="submit">Submit</button>
+          <button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closeLeaveRequestView();">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- End Of Leave Request Modal Form -->

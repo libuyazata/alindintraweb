@@ -1,0 +1,233 @@
+<div class="page-header">
+  <h2>
+      Attendance
+      <button class="btn btn-info float-right" (click)="openAddAttendanceView();"><i class="fa fa-plus"></i> Attendance</button>
+  </h2>    
+</div>
+<br/>
+<month-view (resourceRowClicked)="onMonthViewRowDataEventReceived($event);"
+  (monthAndYearChanged)="onMonthAndYearChanged($event);"
+   [resourceData]="attendanceData">
+</month-view>
+<!-- Employee View Modal Form -->
+<div class="modal employee-model" id="employeeViewModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Attendance Details</h5>
+          <button class="close" type="button" data-dismiss="modal" appModal  (click)="closeEmployeeView();">&times;</button>
+        </div>
+        <div class="modal-body">        
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Employee Code</label>
+              {{ userAttendanceDetails && userAttendanceDetails?.user.employeeCode ? userAttendanceDetails?.user.employeeCode : "" }}
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Name</label>
+              {{ userAttendanceDetails?.user.firstName }} {{ userAttendanceDetails?.user.lastName }}
+            </div>
+          </div>   
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Department</label>
+              {{ userAttendanceDetails?.user.departmentName }} 
+            </div>
+          </div> 
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Designation</label>
+              {{ userAttendanceDetails?.user.designationName }} 
+            </div>
+          </div> 
+          <div class="row form-group">
+            <div class="col-lg-6">
+              <label>Date Of Join</label>            
+              <span *ngIf="userAttendanceDetails?.user.doj"> {{ userAttendanceDetails?.user.doj | date :  "dd MMM yyyy" }}  </span>
+              <span *ngIf="userAttendanceDetails?.user.isActive != 1"> -NA- </span>
+            </div>
+            <div class="col-lg-6">
+                <label>Is Active</label>
+                <span *ngIf="userAttendanceDetails?.user.isActive == 1"> <span class="badge badge-success">Yes</span> </span>
+                <span *ngIf="userAttendanceDetails?.user.isActive != 1"> <span class="badge badge-light">No</span> </span>
+              </div>
+          </div> 
+          <div class="row">
+              <div class="col-lg-12">
+                  <table class="table table-bordered user-aggregate-attendance-report-grid">
+                      <tr>
+                        <td class="text-center p-0" [ngClass]="getClassName(attendance)" *ngFor="let attendance of ['P',	'A',	'SL',	'PL',	'E',	'UL',	'T',	'S']">
+                            <b>{{ attendance }}</b> <br/> {{  aggregateLeaveInfo[attendance] }}
+                        </td>
+                      </tr>
+                    </table>
+              </div>
+          </div>
+          <div class="row form-group">
+              <div class="col-lg-12">
+                  <table class="table table-bordered user-attendance-report-grid" 
+                   *ngIf="userAttendanceDetails?.user.leaveDetails[0]">
+                    <tr>
+                      <th>Month</th><!-- 0 index is to iterate and create the header from it -->
+                      <th class="text-center" *ngFor="let header of userAttendanceDetails?.user.leaveDetails[0]?.attendanceTypes">
+                        {{header.shortName}}
+                      </th>
+                    </tr>
+                    <tr *ngFor="let attendanceDetail of userAttendanceDetails?.user.leaveDetails">
+                      <td>{{ attendanceDetail.monthName }}</td>
+                      <td class="text-center" *ngFor="let attendance of attendanceDetail?.attendanceTypes">
+                         {{attendance.noOfLeaves}}
+                      </td>
+                    </tr>
+                  </table>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closeEmployeeView();">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- End Of Employee Modal Form -->
+  <!-- Employee Attendance Modal Form -->
+<div class="modal employee-attendance-model" id="employeeAttendanceModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Attendance</h5>
+        <button class="close" type="button" data-dismiss="modal" appModal  (click)="closeAddAttendanceView();">&times;</button>
+      </div>
+      <form novalidate [formGroup]="saveAttendanceForm" (ngSubmit)="onAttendanceDetailsSubmitted();">
+        <div class="modal-body">
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Employee</label>            
+            </div>
+            <div class="col-lg-12">
+                <select class="form-control" formControlName="userId" (change)="onEmployeeChanged($event)"
+                  [ngClass]="{ 'is-invalid': isAttendanceFormAttemptSubmit && attendanceForm.userId.errors }">
+                    <option value="">Select</option>              
+                    <option *ngFor="let user of userList" [ngValue]="user.userId">{{user.firstName}} {{user.lastName}}</option>
+                </select>
+                <div *ngIf="isAttendanceFormAttemptSubmit && attendanceForm.userId.errors" class="invalid-feedback">
+                    <div *ngIf="attendanceForm.userId.errors.required">Please select an employee.</div>
+                </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Attendance Type</label>            
+            </div>
+            <div class="col-lg-12">
+              <select class="form-control" formControlName="attendanceTypeId" 
+              [ngClass]="{ 'is-invalid': isAttendanceFormAttemptSubmit && attendanceForm.attendanceTypeId.errors }">   
+                <option value="">Select</option>
+                <option *ngFor="let attendance of attendanceTypeList" [ngValue]="attendance.id">{{ attendance.attendanceType }}</option>
+              </select>
+              <div *ngIf="isAttendanceFormAttemptSubmit && attendanceForm.attendanceTypeId.errors" class="invalid-feedback">
+                  <div *ngIf="attendanceForm.attendanceTypeId.errors.required">Please select an attendance type.</div>
+              </div>
+            </div>
+          </div>   
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Atendance Date</label>           
+            </div>
+            <div class="col-lg-12">
+                <!-- <input class="form-control" formControlName="attendanceDate" />    -->
+                <my-date-picker name="attendanceDate" [options]="attendancePickerOptions" class="form-control attendance-dp"
+                  formControlName="attendanceDate" [ngClass]="{ 'is-invalid': isAttendanceFormAttemptSubmit && attendanceForm.attendanceDate.errors }">
+                </my-date-picker>       
+                <div *ngIf="isAttendanceFormAttemptSubmit && attendanceForm.attendanceDate.errors" class="invalid-feedback">
+                    <div *ngIf="attendanceForm.attendanceDate.errors.required">Please select an attendance date.</div>
+                </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Project</label>            
+            </div>
+            <div class="col-lg-12">
+              <select class="form-control" formControlName="projectId" 
+              [ngClass]="{ 'is-invalid': isAttendanceFormAttemptSubmit && attendanceForm.projectId.errors }">   
+                <option value="">Select</option>
+                <option *ngFor="let project of projectList" [ngValue]="project.projectId">{{ project.projectName }}</option>
+              </select>
+              <div *ngIf="isAttendanceFormAttemptSubmit && attendanceForm.projectId.errors" class="invalid-feedback">
+                  <div *ngIf="attendanceForm.projectId.errors.required">Please select the project.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label>Duration Of Employee Availability</label>            
+            </div>
+            <div class="col-lg-12">
+              <select class="form-control" formControlName="availabilityInOffice" 
+              [ngClass]="{ 'is-invalid': isAttendanceFormAttemptSubmit && attendanceForm.availabilityInOffice.errors }">   
+                <option value="">Select</option>
+                <option *ngFor="let avail of availabityList" [ngValue]="avail.availabilityId">{{ avail.availabilityName }}</option>
+              </select>
+              <div *ngIf="isAttendanceFormAttemptSubmit && attendanceForm.availabilityInOffice.errors" class="invalid-feedback">
+                  <div *ngIf="attendanceForm.availabilityInOffice.errors.required">Please select the availability.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-lg-12">
+                  <label>Work Hour</label>            
+                </div>
+                <div class="col-lg-8">
+                  <input formControlName="workHours" class="form-control" maxlength="2"
+                    [ngClass]="{ 'is-invalid': isAttendanceFormAttemptSubmit && attendanceForm.workHours.errors }" />                
+                  <div *ngIf="isAttendanceFormAttemptSubmit && attendanceForm.workHours.errors" class="invalid-feedback">
+                      <div *ngIf="attendanceForm.workHours.errors.required">Please enter the work hour(s).</div>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <!-- <span class="label-info">Hour(s)</span> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-lg-12">
+                  <label>Extra Hour</label>            
+                </div>
+                <div class="col-lg-6">
+                  <input formControlName="extraHours" class="form-control" maxlength="2"
+                    [ngClass]="{ 'is-invalid': isAttendanceFormAttemptSubmit && attendanceForm.extraHours.errors }" />
+                  <div *ngIf="isAttendanceFormAttemptSubmit && attendanceForm.extraHours.errors" class="invalid-feedback">
+                      <div *ngIf="attendanceForm.extraHours.errors.required">Please enter the extra work hour(s).</div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <!-- <span class="label-info">Hour(s)</span> -->
+                  <select class="form-control" formControlName="extraHourRate">   
+                    <option value="1.5">1.5</option>
+                    <option value="1.75">1.75</option>
+                    <option value="2">2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+                  
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-info" type="submit">Save</button>
+          <button class="btn btn-warning" type="button" title="Click to delete." (click)="deleteAttendance();">Delete</button>
+          <button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closeAddAttendanceView();">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- End Of Employee Modal Form -->

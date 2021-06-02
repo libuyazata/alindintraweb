@@ -1,0 +1,26 @@
+.employee-model {
+    label{
+        display: inline-block;
+        font-weight: 600;
+        width: 120px;
+    }
+    .label-info{
+        bottom: 0px;
+        position: absolute;
+    }
+    table.user-aggregate-attendance-report-grid {
+        th, td{
+            padding-top:0;
+            padding-bottom: 0px;
+            border:0px;
+            border-radius: 0px;
+            width: 12.5%;
+        }
+    }
+    table.user-attendance-report-grid {
+        th, td{
+            padding-top:0;
+            padding-bottom: 0px;
+        }
+    }
+}

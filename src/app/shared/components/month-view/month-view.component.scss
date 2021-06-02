@@ -1,0 +1,76 @@
+$borderColor: #ddd;
+// .month-view-table {
+//     border: none;
+//     border-right: solid 1px #DDEFEF;
+//     border-collapse: separate;
+//     border-spacing: 0;
+//     font: normal 13px Arial, sans-serif;
+// }
+// .month-view-table thead th {
+//     background-color: #DDEFEF;
+//     border: none;
+//     color: #336B6B;
+//     padding: 10px;
+//     text-align: left;
+//     text-shadow: 1px 1px 1px #fff;
+//     white-space: nowrap;
+// }
+// .month-view-table tbody td {
+//     border-bottom: solid 1px #DDEFEF;
+//     color: #333;
+//     padding: 10px;
+//     text-shadow: 1px 1px 1px #fff;
+//     white-space: nowrap;
+// }
+// .month-view-wrapper {
+//     position: relative;
+// }
+// .month-view-scroller {
+//     margin-left: 141px;
+//     overflow-x: scroll;
+//     overflow-y: visible;
+//     padding-bottom: 5px;
+//     width: 500px;
+// }
+// .month-view-table .month-view-sticky-col {
+//     border-left: solid 1px #DDEFEF;
+//     border-right: solid 1px #DDEFEF;
+//     left: 0;
+//     position: absolute;
+//     top: auto;
+//     width: 140px;
+// }
+// .month-view-table thead tr th:not(:first-child) {
+//     border-bottom: 1px solid #DDEFEF;
+// }
+// .month-view-table tbody tr td:not(:first-child) {
+//     padding-top: 10.6px;
+// }
+/* END OF TABLE FREEZE */
+.month-view-table td, 
+.month-view-table th {
+    border:1px solid $borderColor;
+    text-align: center;
+    padding: 4px;
+}
+.month-view-table td:first-child{
+    text-align: left;
+    min-width: 120px;
+}
+.month-view-selectors {
+    width: 265px;    
+}
+.month-view-table th.off-day,
+.month-view-table td.off-day {
+    background-color: #f9f7fa;
+}
+// .month-view-selectors select{
+//     width: 40%;
+// }
+// .month-view-selectors select:first-child{
+//     width: 60%;
+// }
+.month-view-selectors form select{
+    float: left;
+}
+
