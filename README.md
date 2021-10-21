@@ -1,2 +1,0 @@
-# alindintraweb
-Web Version
