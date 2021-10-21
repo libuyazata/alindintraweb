@@ -1,0 +1,14 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.css";
+
+table.student-list-grid {
+    td{
+        min-width: 180px;
+        padding: 0.25rem;
+        padding-left: 12px;
+    }
+    td.status-col{
+        min-width: 240px;
+    }
+}
+

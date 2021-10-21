@@ -1,0 +1,48 @@
+.main-container {
+    // margin-left: 160px;
+    -ms-overflow-x: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+    top:60px;
+    background-color: #011b3b;
+}
+
+.router-outlet-container {
+    flex: 1;
+    min-width: 0;
+    margin-left: 60px;
+    margin-top:60px;
+    margin-bottom: 50px;
+    
+
+}
+.router-outlet-container.menu-active {
+    margin-left: 210px;
+}
+
+
+.app-body {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    overflow-x: hidden;
+    margin-bottom: 60px;
+}
+
+
+
+@media only screen and (max-width: 575px) {
+    .router-outlet-container  {
+        margin-left: 0px;
+    }
+    .router-outlet-container.menu-active {
+        margin-left: 0px;
+    }
+}
+
+

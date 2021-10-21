@@ -1,0 +1,110 @@
+<div class="main-content">
+                <div class="section__content section__content--p15">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">Dashboard</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-t-25">
+                            <div class="col-sm-6 col-lg-3">
+                                <a class="link" [routerLink]="['/department/']">
+								<div class="overview-item overview-item--c1" style="background-image: -webkit-linear-gradient(90deg, #3f5efb 0%, #fc466b 100%);">
+                                    <div class="overview__inner">
+                                         <div class="overview-box clearfix">
+										   <div class="text">
+                                            <span class="btn-icon btn-icon-round btn-icon-lg-alt">
+												<h1><span class="fas fa-building"></span></h1>
+											</span>
+                                            <div class="box-info float-right">
+												<h2 class="float-right">{{dashboardData?.noOfDepartments}}</h2>
+												<p><span class="float-right">Departments</span></p>
+											</div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart1"></canvas>
+                                        </div>
+										</div>
+                                    </div>
+                                </div>
+								</a>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <a class="link" [routerLink]="['/employees/']">
+								<div class="overview-item overview-item--c2" style="background-image: -webkit-linear-gradient(90deg, #11998e 0%, #38ef7d 100%);">
+                                    <div class="overview__inner">
+                                         <div class="overview-box clearfix">
+										   <div class="text">
+                                            <span class="btn-icon btn-icon-round btn-icon-lg-alt">
+												<h1><span class="fas fa-users"></span></h1>
+											</span>
+                                            <div class="box-info float-right">
+												<h2 class="float-right">{{dashboardData?.noOfEmpoyees}}</h2>
+												<p><span class="float-right">Employees</span></p>
+											</div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart1"></canvas>
+                                        </div>
+										</div>
+                                    </div>
+                                </div>
+								</a>
+                            </div>
+							<div class="col-sm-6 col-lg-3">
+                                <a class="link" [routerLink]="['/project/']">
+								<div class="overview-item overview-item--c2" style="background-image: -webkit-linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);">
+                                    <div class="overview__inner">
+                                         <div class="overview-box clearfix">
+										   <div class="text">
+                                            <span class="btn-icon btn-icon-round btn-icon-lg-alt">
+												<h1><span class="fas fa-project-diagram"></span></h1>
+											</span>
+                                            <div class="box-info float-right">
+												<h2 class="float-right">{{dashboardData?.workDetails.noOfWork}}</h2>
+												<p><span class="float-right">Work</span></p>
+											</div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart1"></canvas>
+                                        </div>
+										</div>
+                                    </div>
+                                </div>
+								</a>
+                            </div>
+							<div class="col-sm-6 col-lg-3">
+                                <a class="link" [routerLink]="['/project/']">
+								<div class="overview-item overview-item--c2" style="background-image: -webkit-linear-gradient(90deg, #45b649 0%, #dce35b 100%);">
+                                    <div class="overview__inner">
+                                         <div class="overview-box clearfix">
+										   <div class="text">
+                                            <span class="btn-icon btn-icon-round btn-icon-lg-alt">
+												<h1><span class="fas fa-project-diagram"></span></h1>
+											</span>
+                                            <div class="box-info float-right">
+												<h2 class="float-right">{{dashboardData?.workDetails.pendingVerification}}</h2>
+												<p><span class="float-right">Work Pending</span></p>
+											</div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart1"></canvas>
+                                        </div>
+										</div>
+                                    </div>
+                                </div>
+								</a>
+                            </div>
+                            
+                            
+                            
+                        </div>
+                        
+                        
+                        
+                       
+                    </div>
+                </div>
+            </div>

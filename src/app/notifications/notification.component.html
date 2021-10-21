@@ -1,0 +1,182 @@
+<div class="page-header">
+  <h2>
+      Notifications      
+  </h2>    
+</div>
+<br/>
+<ngb-tabset class="tabset1" #tabs>
+    <ngb-tab tabindex="0">
+        <ng-template ngbTabTitle><span class="title1">Documents Expiry Alerts</span></ng-template>
+        <ng-template ngbTabContent>
+            <table class="table" [mfData]="documentExpiryAlerts" #mf="mfDataTable" [mfRowsOnPage]="50">
+                <thead>
+                <tr> 
+                    <th>
+                        <mfDefaultSorter by="employeeCode">Employee Code</mfDefaultSorter>
+                    </th>
+                    <th>
+                        <mfDefaultSorter by="firstName">First Name</mfDefaultSorter>
+                    </th>
+                    <th>
+                        <mfDefaultSorter by="lastName">Last Name</mfDefaultSorter>
+                    </th>                  
+                    <th>
+                        <mfDefaultSorter by="designationName">Designation Name</mfDefaultSorter>
+                    </th>
+                    <th>
+                        <mfDefaultSorter by="departmentName">Department</mfDefaultSorter>
+                    </th>  
+                    <th>
+                    <mfDefaultSorter by="documentType">Document Type</mfDefaultSorter>
+                    </th>            
+                    <th>
+                        <mfDefaultSorter by="expiryDate">Expiry Date</mfDefaultSorter>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of mf.data">
+                    <!-- <td><a class="link" [routerLink]="['/user-info/']" [queryParams]="{ 'uid': item.userId}">{{item.firstName}}</a></td>
+                    <td><a class="link" [routerLink]="['/user-info/']" [queryParams]="{ 'uid': item.userId}">{{item.lastName}}</a></td> -->
+                    <td><a class="link">{{item.employeeCode }}</a></td>
+                    <td><a class="link">{{item.firstName}}</a></td>
+                    <td><a class="link">{{item.lastName}}</a></td>                  
+                    <td>{{item.designationName | uppercase}}</td>
+                    <td>{{item.departmentName | uppercase}}</td> 
+                    <td>{{item.documentType | uppercase}}</td>             
+                    <td>
+                        <span [className]="item.leaveCount >= 10 ? 'badge badge-danger' : 'badge badge-warning'">
+                            {{item.expiryDate | date :  "dd MMM yyyy"}}
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="7">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </ng-template>
+    </ngb-tab>
+<!--
+    <ngb-tab tabindex="1">
+      <ng-template ngbTabTitle><span class="title1">Leave Request</span></ng-template>
+      <ng-template ngbTabContent>
+          <br/>
+          <div class="row">
+              <div class="col-lg-12">
+                  <table class="table" [mfData]="leaveInfoList" #mf="mfDataTable" [mfRowsOnPage]="50">
+                      <thead>
+                      <tr>
+                          <th>
+                              <mfDefaultSorter by="firstName">First Name</mfDefaultSorter>
+                          </th>
+                          <th>
+                              <mfDefaultSorter by="lastName">Last Name</mfDefaultSorter>
+                          </th>
+                          <th>
+                              <mfDefaultSorter by="attendanceName">Leave Type</mfDefaultSorter>
+                          </th>
+                          <th>
+                              <mfDefaultSorter by="designationName">Designation Name</mfDefaultSorter>
+                          </th>
+                          <th>
+                              <mfDefaultSorter by="departmentName">Department</mfDefaultSorter>
+                          </th>              
+                          <th>
+                              <mfDefaultSorter by="dateFrom">From Date</mfDefaultSorter>
+                          </th>
+                          <th>
+                              <mfDefaultSorter by="dateTo">To Date</mfDefaultSorter>
+                          </th>
+                          <th>
+                              <mfDefaultSorter by="createdDate">Applied On</mfDefaultSorter>
+                          </th>
+                        <th>
+                          Action
+                        </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let item of mf.data">
+                          <td><a class="link" [routerLink]="['/user-info/']" [queryParams]="{ 'uid': item.userId}">{{item.firstName}}</a></td>
+                          <td><a class="link" [routerLink]="['/user-info/']" [queryParams]="{ 'uid': item.userId}">{{item.lastName}}</a></td>              
+                          <td>{{item.attendanceName }}</td>
+                          <td>{{item.designationName | uppercase}}</td>
+                          <td>{{item.departmentName | uppercase}}</td>              
+                          <td>{{item.dateFrom | date :  "dd MMM yyyy" }}</td>
+                          <td>{{item.dateTo | date :  "dd MMM yyyy" }}</td>
+                          <td>{{item.createdDate | date :  "dd MMM yyyy" }}</td>
+                          <td>
+                              <button class="btn btn-sm approve" (click)="approveOrRejectLeave(item.leaveId, 2);"><i class="fas fa-check"></i> Approve</button>
+                              <button class="btn btn-sm reject" (click)="approveOrRejectLeave(item.leaveId, 1);"><i class="fas fa-ban"></i> Reject</button>
+                          </td>
+                      </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                            <td colspan="9">
+                                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+              </div>
+            </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab tabindex="2">
+      <ng-template ngbTabTitle><span class="title1">Alerts</span></ng-template>
+      <ng-template ngbTabContent>
+        <table class="table" [mfData]="leaveAlerts" #mf="mfDataTable" [mfRowsOnPage]="50">
+            <thead>
+            <tr>
+                <th>
+                    <mfDefaultSorter by="firstName">First Name</mfDefaultSorter>
+                </th>
+                <th>
+                    <mfDefaultSorter by="lastName">Last Name</mfDefaultSorter>
+                </th>
+                <th>
+                    <mfDefaultSorter by="attendanceName">Leave Type</mfDefaultSorter>
+                </th>
+                <th>
+                    <mfDefaultSorter by="designationName">Designation Name</mfDefaultSorter>
+                </th>
+                <th>
+                    <mfDefaultSorter by="departmentName">Department</mfDefaultSorter>
+                </th>              
+                <th>
+                    <mfDefaultSorter by="leaveCount">Leaves Taken</mfDefaultSorter>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of mf.data">                
+                <td><a class="link">{{item.firstName}}</a></td>
+                <td><a class="link">{{item.lastName}}</a></td>
+                <td>{{item.attendanceName }}</td>
+                <td>{{item.designationName | uppercase}}</td>
+                <td>{{item.departmentName | uppercase}}</td>              
+                <td>
+                    <span [className]="item.leaveCount >= 10 ? 'badge badge-danger' : 'badge badge-warning'">
+                        {{item.leaveCount }}
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                  <td colspan="7">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                  </td>
+              </tr>
+            </tfoot>
+          </table>
+      </ng-template>
+    </ngb-tab>
+-->
+  </ngb-tabset>

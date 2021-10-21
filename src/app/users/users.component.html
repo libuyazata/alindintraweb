@@ -1,0 +1,91 @@
+<div class="page-header-container">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>
+                    <span>Employee List</span>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="row" *allowUser="'admin'">
+        <div class="col-lg-12 search-container">
+            <!-- <form novalidate [formGroup]="empSearchForm"> -->
+                <div class="row">
+                    <div class="col-lg-12 pt-4">
+                        <span class="float-right">
+                            <button class="btn btn-info float-right" [routerLink]="['/save-user/']" [queryParams]="{ 'uid': '0'}"><i class="fa fa-plus"></i> Manage Employee</button>
+                        </span>
+                    </div>
+                </div>
+            <!-- </form> -->
+        </div>
+    </div>
+</div><br/>
+
+<div class="page-content">
+  <div>
+     <div class="table100">
+        <table [mfData]="employeeList" #mf="mfDataTable" [mfRowsOnPage]="10"
+                [mfSortBy]="sortBy" [mfSortOrder]="sortOrder">
+            <thead>
+            <tr class="table100-head">
+                <th class="column1">
+                    <mfDefaultSorter by="empCode">Employee Code</mfDefaultSorter>
+                </th>
+                <th class="column2">
+                    <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                </th>
+                <!-- <th>
+                    <mfDefaultSorter by="firstName">First Name</mfDefaultSorter>
+                </th>
+                <th>
+                    <mfDefaultSorter by="lastName">Last Name</mfDefaultSorter>
+                </th> -->
+                <th class="column3">
+                    <mfDefaultSorter by="emailId">Email</mfDefaultSorter>
+                </th>
+                 <th class="column4">
+                    <mfDefaultSorter by="department.departmentName">Department</mfDefaultSorter>
+                </th>
+                <th class="column5">
+                  <mfDefaultSorter by="primaryMobileNo">Mobile #</mfDefaultSorter>
+                </th>
+              	<th class="column6"></th>
+			  <!-- <th *allowUser="'admin'">
+                Action
+              </th> -->
+            </tr>
+            </thead>
+            <tbody *ngFor="let item of mf.data">
+            <tr class="hover-action-row">
+                <!-- <td><a class="link" [routerLink]="['/user-info/']" [queryParams]="{ 'uid': item.userId}">{{item.firstName}}</a></td>
+                <td><a class="link" [routerLink]="['/user-info/']" [queryParams]="{ 'uid': item.userId}">{{item.lastName}}</a></td> -->
+                <td class="column1"><a class="link">{{item.empCode | uppercase}}</a></td>
+                <td class="column2"><a class="link">{{item.firstName | uppercase}} {{item.lastName | uppercase}}</a></td>
+                <!-- <td><a class="link">{{item.lastName | uppercase}}</a></td> -->
+                <td class="column3">{{item.emailId | uppercase}}</td>
+                <td class="column4">{{item.department.departmentName | uppercase}}</td>
+                <td class="column5">{{item.primaryMobileNo | uppercase }}</td>
+				<td class="column6 col-md-1"></td>
+<!-- 				<td class="actions" *allowUser="'admin'" [routerLink]="['/save-user/']" [queryParams]="{ 'uid': item.employeeId}">
+ -->				<td class="actions">
+                <div class="link-holder">
+                    <a class="link" title="Delete" (click)="deleteEmployee(item);" ><i class="fas fa-trash"></i></a>
+					<a class="link" ><i class="fas fa-edit"></i></a>
+                  <!-- <a class="link" (click)="onUserEditClicked($event, item);"><i class="far fa-edit"></i></a> -->
+                </div>
+				</td>
+            </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                  <td colspan="7">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                  </td>
+              </tr>
+            </tfoot>
+          </table>
+    </div>
+  </div>
+</div>

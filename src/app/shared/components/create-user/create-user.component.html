@@ -1,0 +1,338 @@
+<form novalidate [formGroup]="addEmployeeForm" (ngSubmit)="onEmployeeDataSubmitClicked();">
+  <div class="emp-form-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <input formControlName="employeeId" class="form-control" type="hidden" />
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-lg-12">
+            <h4>Personal Information</h4>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-lg-3">
+            <div><label>First Name</label></div>
+            <input formControlName="firstName" class="form-control" [attr.disabled]="isEmployeeEdit?'':null"
+            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.firstName.errors }"/>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.firstName.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.firstName.errors.required">Please provide the first name.</div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div><label>Second Name</label></div>
+            <input formControlName="lastName" class="form-control" [attr.disabled]="isEmployeeEdit?'':null"
+            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.lastName.errors }"/>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.lastName.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.lastName.errors.required">Please provide the second name.</div>
+            </div>
+        </div>
+        <!-- <div class="col-lg-3">
+            <div><label>Third Name</label></div>
+            <input formControlName="thirdName" class="form-control" />
+        </div>
+        <div class="col-lg-3">
+            <div><label>Fourth Name</label></div>
+            <input formControlName="fourthName" class="form-control" />
+        </div>  -->
+    </div>
+    <div class="row form-group">
+        <div class="col-lg-3">
+            <div><label>Email</label></div>
+            <input formControlName="emailId" class="form-control"
+            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.emailId.errors }"/>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.emailId.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.emailId.errors.required">Please provide an email.</div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div><label>Contact No 1</label></div>
+            <input formControlName="primaryMobileNo" class="form-control" maxlength="13"/>
+        </div>
+        <div class="col-lg-2">
+            <div><label>Contact No 2</label></div>
+            <input formControlName="secondaryMobileNo" class="form-control" maxlength="13"/>
+        </div>
+        <!-- <div class="col-lg-2">
+            <div><label>Date Of Birth</label></div>
+            <my-date-picker name="dob" [options]="myDatePickerOptions" class="form-control"
+            formControlName="dob" [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.dob.errors }">
+            </my-date-picker>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.dob.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.dob.errors.required">Please select the date of birth.</div>
+            </div>
+        </div> -->
+        <div class="col-lg-3">
+            <div><label>Nationality</label></div>
+            <input formControlName="nationality" class="form-control"
+            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.nationality.errors }"/>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.nationality.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.nationality.errors.required">Please provide the nationality.</div>
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+    <div class="col-lg-6">
+        <div><label>Native Address / Home Address</label></div>
+        <textarea formControlName="nativeAddress" class="form-control"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.nativeAddress.errors }">
+        </textarea>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.nativeAddress.errors" class="invalid-feedback text-area-section">
+            <div *ngIf="employeeForm.nativeAddress.errors.required">Please provide the native address.</div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div><label>Accommodation Address</label></div>
+        <textarea formControlName="accommodationLocation" class="form-control">
+        </textarea>
+    </div>
+    </div>
+
+    <div class="row form-group">
+    <div class="col-lg-12">
+        <h4>Office Information</h4>
+    </div>
+    </div>
+    <div class="row form-group">
+    <div class="col-lg-6">
+        <div><label>Employee Code</label></div>
+        <input formControlName="empCode" class="form-control" [attr.disabled]="isEmployeeEdit?'':null"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.empCode.errors }"/>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.empCode.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.empCode.errors.required">Please provide the Employee Code.</div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div><label>Employee Type</label></div>
+        <select class="form-control" formControlName="empolyeeTypeId"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.empolyeeTypeId.errors }" >
+        <option value="">Select</option>
+        <option *ngFor="let employeeType of employeeTypeList" [ngValue]="employeeType.employeeTypeId">{{employeeType.employeeTypeName}}</option>
+        </select>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.empolyeeTypeId.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.empolyeeTypeId.errors.required">Please select a employee type.</div>
+        </div>
+    </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-lg-6">
+            <div><label>Employee Role</label></div>
+            <select class="form-control" formControlName="userRoleId"
+            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.userRoleId.errors }" >
+                <option value="">Select</option>
+                <option *ngFor="let userRole of userRoleList" [ngValue]="userRole.userRoleId">{{userRole.userRoleName}}</option>
+            </select>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.userRoleId.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.userRoleId.errors.required">Please select an employee role.</div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div>
+                <label>Department</label>
+            </div>
+            <select class="form-control" formControlName="departmentId"
+            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.departmentId.errors }" >
+            <option value="">Select</option>
+            <option *ngFor="let department of departmentList" [ngValue]="department.departmentId">{{department.departmentName}}</option>
+            </select>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.departmentId.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.departmentId.errors.required">Please select a department.</div>
+            </div>
+        </div>
+        <!-- <div class="col-lg-6">
+            <div><label>Employee Status</label></div>
+            <select class="form-control" formControlName="userStatus"
+            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.userStatus.errors }" >
+                <option value="">Select</option>
+                <option *ngFor="let status of userStatusList" [ngValue]="status.userStatusId">{{status.userStatusName}}</option>
+            </select>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.userStatus.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.userStatus.errors.required">Please select a employee status.</div>
+            </div>
+        </div>             -->
+    </div>
+    <!-- <div class="row form-group">
+
+        <div class="col-lg-6">
+            <div>
+            <label>Designation</label>
+            </div>
+            <select class="form-control" formControlName="designationId"
+            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.designationId.errors }" >
+            <option value="">Select</option>
+            <option *ngFor="let designation of designationList" [ngValue]="designation.designationId">{{designation.designationName}}</option>
+            </select>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.designationId.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.designationId.errors.required">Please select a department.</div>
+            </div>
+        </div>
+    </div>  -->
+    <!-- <div class="row form-group">
+    <div class="col-lg-6">
+        <div><label>Date Of Join</label></div>
+        <my-date-picker name="doj" [options]="myDatePickerOptions" class="form-control"
+        formControlName="doj" [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.doj.errors }">
+        </my-date-picker>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.doj.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.doj.errors.required">Please select the date of join.</div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div>
+            <label>Employment Remark</label>
+        </div>
+        <select class="form-control" formControlName="employmentRemark"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.employmentRemark.errors }" >
+            <option value="">Select</option>
+            <option *ngFor="let employmentRemark of employmentRemarkList" [ngValue]="employmentRemark.employmentRemarkId">{{employmentRemark.employmentRemarkName}}</option>
+        </select>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.employmentRemark.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.employmentRemark.errors.required">Please select a department.</div>
+        </div>
+    </div>
+    </div>  -->
+    <!-- <div class="row form-group">
+    <div class="col-lg-6">
+        <div><label>Visa Profession</label></div>
+        <input formControlName="visaProfession" class="form-control"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.visaProfession.errors }"/>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.visaProfession.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.visaProfession.errors.required">Please provide the visa profession.</div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div><label>Visa Validity</label></div>
+        <my-date-picker name="visaValidity" [options]="myDatePickerOptions" class="form-control"
+            formControlName="visaValidity" [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.visaValidity.errors }">
+        </my-date-picker>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.visaValidity.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.visaValidity.errors.required">Please select the visa validity.</div>
+        </div>
+    </div>
+    </div>    -->
+    <!-- <div class="row form-group">
+        <div class="col-lg-6">
+            <div><label>Qatar ID</label></div>
+            <input formControlName="qatarId" class="form-control"
+            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.qatarId.errors }"/>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.qatarId.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.qatarId.errors.required">Please provide the Qatar ID  .</div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div><label>Qatar ID Validity</label></div>
+            <my-date-picker name="qatarIdValidity" [options]="myDatePickerOptions" class="form-control"
+                formControlName="qatarIdValidity" [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.qatarIdValidity.errors }">
+            </my-date-picker>
+            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.qatarIdValidity.errors" class="invalid-feedback">
+                <div *ngIf="employeeForm.qatarIdValidity.errors.required">Please select the Qatar ID validity.</div>
+            </div>
+        </div>
+    </div>   -->
+    <!-- <div class="row form-group">
+    <div class="col-lg-6">
+        <div><label>Visa</label></div>
+        <input formControlName="visa" class="form-control"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.visa.errors }"/>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.visa.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.visa.errors.required">Please provide the visa details.</div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div><label>Working Country Id Number</label></div>
+        <input formControlName="workingCountryIdNo" class="form-control"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.workingCountryIdNo.errors }"/>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.workingCountryIdNo.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.workingCountryIdNo.errors.required">Please provide the working id number.</div>
+        </div>
+    </div>
+    </div> -->
+    <div class="row form-group">
+    <div class="col-lg-6">
+        <div><label>Passport Number</label></div>
+        <input formControlName="passportNo" class="form-control"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.passportNo.errors }"/>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.passportNo.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.passportNo.errors.required">Please provide the passport number.</div>
+        </div>
+    </div>
+    <!-- <div class="col-lg-6">
+        <div><label>Passport Validity</label></div>
+        <my-date-picker name="passportValidity" [options]="myDatePickerOptions" class="form-control"
+            formControlName="passportValidity" [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.passportValidity.errors }">
+        </my-date-picker>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.passportValidity.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.passportValidity.errors.required">Please provide the passport validity.</div>
+        </div>
+    </div> -->
+    </div>
+    <div class="row form-group">
+    <div class="col-lg-6">
+        <div><label>Health Card Number</label></div>
+        <input formControlName="healthCardNo" class="form-control"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.healthCardNo.errors }"/>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.healthCardNo.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.healthCardNo.errors.required">Please provide the health number.</div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div><label>Health Card Validity</label></div>
+        <my-date-picker name="healthCardValidity" [options]="myDatePickerOptions" class="form-control"
+            formControlName="healthCardValidity" [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.healthCardValidity.errors }">
+        </my-date-picker>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.healthCardValidity.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.healthCardValidity.errors.required">Please provide the health card validity.</div>
+        </div>
+    </div>
+    </div>
+    <div class="row form-group">
+    <div class="col-lg-6">
+        <div><label>Insurance Policy Number</label></div>
+        <input formControlName="insurancePolicyNo" class="form-control"/>
+    </div>
+    <div class="col-lg-6">
+        <div><label>Insurance Validity</label></div>
+        <my-date-picker name="insuranceValidity" [options]="myDatePickerOptions" class="form-control"
+                formControlName="insuranceValidity"
+                [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.insuranceValidity.errors }"></my-date-picker>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.insuranceValidity.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.insuranceValidity.errors.required">Please provide the insurance validity date.</div>
+        </div>
+    </div>
+    </div>
+    <div class="row form-group">
+    <div class="col-lg-12">
+        <h4>Emergency Contact Information</h4>
+    </div>
+    </div>
+    <div class="row form-group">
+    <div class="col-lg-3">
+        <div><label>Emergency Contact Name </label></div>
+        <input formControlName="emergencyContactName" class="form-control"/>
+    </div>
+    <div class="col-lg-3">
+        <div><label>Emergency Contact Number </label></div>
+        <input formControlName="emergencyContactPhone" class="form-control"
+        [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.emergencyContactPhone.errors }"/>
+        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.emergencyContactPhone.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.emergencyContactPhone.errors.required">Please provide the emergency contact number.</div>
+        </div>
+    </div>
+    <!-- <div class="col-lg-3">
+        <div><label>Home Country Phone </label></div>
+        <input formControlName="homeCountryPhone" class="form-control" />
+    </div> -->
+    <div class="col-lg-3">
+        <div><label>Relationship </label></div>
+        <input formControlName="relationship" class="form-control" />
+    </div>
+    </div>
+  </div>
+<br/>
+  <div class="row form-group">
+    <div class="col-lg-12">
+    <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-danger" type="reset">Clear</button>
+    </div>
+  </div>
+</form>

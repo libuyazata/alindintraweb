@@ -1,0 +1,72 @@
+@import "src/theme/theme-variables";
+
+.page-header {
+  z-index: 100;
+  width: 100%;
+  height:60px;
+  position: fixed;
+  background-color: $pageHeader;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+
+  .logo{
+    margin-left: 10px;
+    height:auto;
+    width:300px;
+  }
+}
+.navbar {
+  // margin-bottom: $spacer;
+  padding-top: 0px;
+  padding-bottom: 0px;
+
+  padding-left: 0px !important;
+
+  .nav-menu {
+    @-moz-document url-prefix() { 
+      button  {
+        border: 0;
+        padding: 10px;
+      }
+    }
+    
+  }
+  
+}
+.navbar-nav span {
+  display: inherit;
+}
+.nav-item:hover{
+  cursor: pointer;
+}
+.menu-active {
+  .navbar-menu-text {
+    display: none;
+  }
+}
+.navbar-menu-text {
+  padding: 2px 58px;
+}
+
+.navbar-toggler-icon {
+  height: 23px;
+  background-image: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB2aWV3Qm94PScwIDAgMzAgMzAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggc3Ryb2tlPScjNzM4MThmJyBzdHJva2Utd2lkdGg9JzIuMjUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLW1pdGVybGltaXQ9JzEwJyBkPSdNNCA3aDIyTTQgMTVoMjJNNCAyM2gyMicvPjwvc3ZnPg==);
+}
+
+.nav-menu {
+  // background-color: #012f5a;
+  padding-left: 5px;
+  width: $sidebarWidth;
+  height: 60px; 
+  padding-top: 10px;
+  
+}
+.nav-menu.menu-active {
+  width: 50px !important;
+  @-moz-document url-prefix() { 
+    button  {
+      border: 0;
+      padding: 10px;
+      width: 45px;
+    }
+  }
+}

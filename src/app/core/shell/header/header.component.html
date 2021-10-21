@@ -1,0 +1,149 @@
+<header>
+  <nav class="navbar navbar-expand-lg page-header header-top-border pl-2">
+    <!-- <a class="navbar-brand p-0" translate target="_blank" href="https://alindrelays.com/" title="">
+      <img src="assets/logo.png" class="logo" />
+    </a> -->
+    <div class="nav-menu" [ngClass]="{'menu-active': ! nav.visible}">
+      <button class="btn btn-primary" type="button" aria-controls="navbar-menu"
+              aria-label="Toggle navigation" (click)="toggleMenu()"  >
+            
+        <i class="fa fa-bars" aria-hidden="true"></i>
+        <span class="navbar-menu-text"> Menu </span>
+      </button>
+    </div>
+
+    <!-- <a class="navbar-brand p-0" translate target="_blank" href="https://alindrelays.com/" title="">
+      
+    </a> -->
+
+
+    <a class="navbar-brand p-0" translate target="_blank" href="https://alindrelays.com/" title="">
+      <img src="assets/logo.png" class="logo" />
+    </a>
+
+    <div id="navbar-menu" class="collapse navbar-collapse float-xs-none" [ngbCollapse]="menuHidden">
+      <!-- <div class="navbar-nav">
+        <a class="nav-item nav-link text-uppercase" routerLink="/home" routerLinkActive="active">
+          <i class="fas fa-home"></i>
+          <span translate>Home</span>
+        </a>
+        <a class="nav-item nav-link text-uppercase" routerLink="/about" routerLinkActive="active">
+          <i class="fas fa-question-circle"></i>
+          <span translate>About</span>
+        </a>
+      </div> -->
+      <div class="navbar-nav ml-auto">
+        <div class="navbar-nav">
+          <span *ngIf="isAdminUser">
+            <!-- <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active">
+              <span class="nav-label"><i class="fas fa-tachometer-alt"></i> Dashboard</span>
+            </a>
+            <a class="nav-item nav-link" routerLink="/employees" routerLinkActive="active">
+              <span class="nav-label"><i class="fas fa-users"></i> Employee</span>
+            </a>
+            <a class="nav-item nav-link" routerLink="/attendance" routerLinkActive="active">
+              <span class="nav-label"><i class="fas fa-edit"></i> Attendance</span>
+            </a>
+            <a class="nav-item nav-link" routerLink="/project" routerLinkActive="active">
+              <span class="nav-label"><i class="far fa-file"></i> Project</span>
+            </a> -->
+            <a class="nav-item nav-link" routerLink="/notification" routerLinkActive="active">
+              <span class="nav-label"><i class="far fa-envelop"></i> </span>
+            </a>
+            <!-- <a class="nav-item nav-link" routerLink="/notification" routerLinkActive="active">
+              <span class="nav-label"><i class="far fa-bell"></i> </span>
+            </a> -->
+          </span>
+          <span *ngIf="!isAdminUser">
+            <!-- <a class="nav-item nav-link" routerLink="/notification" routerLinkActive="active">
+              <span class="nav-label"><i class="far fa-bell"></i> Notification</span>
+            </a> -->
+          </span>
+        </div>
+        <!-- 
+          ****************************************************************************************************************
+           <span *ngIf="isAdminUser">
+            <a class="menu-link" routerLink="/home" routerLinkActive="active"><span class="fas fa-tachometer-alt"></span><span class="nav-label"> Dashboard</span></a>
+            <a class="menu-link" routerLink="/users" routerLinkActive="active"><span class="fas fa-users"></span><span class="nav-label"> Users</span></a>
+            <a class="menu-link" routerLink="/attendance" routerLinkActive="active"><span class="fas fa-edit"></span><span class="nav-label"> Attendance</span></a>
+            <a class="menu-link" routerLink="/notification" routerLinkActive="active"><span class="far fa-bell"></span><span class="nav-label"> Notification</span></a>
+        </span>
+        <span *ngIf="!isAdminUser">
+            <a class="menu-link" routerLink="/employee" routerLinkActive="active"><span class="fas fa-user"></span><span class="nav-label"> My View</span></a>
+        </span>
+        <a class="menu-link"><span class="fas fa-cogs"></span><span class="nav-label"> Settings</span></a>
+
+        -->
+        <!-- <div class="nav-item" ngbDropdown placement="bottom-right">
+          <a id="language-dropdown" class="nav-link" ngbDropdownToggle>{{currentLanguage}}</a>
+          <div ngbDropdownMenu aria-labelledby="language-dropdown">
+            <button class="dropdown-item" *ngFor="let language of languages" (click)="setLanguage(language)">
+              {{language}}
+            </button>
+          </div>
+        </div> -->
+        <div class="nav-item" ngbDropdown placement="bottom-right">
+          
+          <a id="user-dropdown" class="nav-link" ngbDropdownToggle>{{username}}
+            <i class="fas fa-user-circle fa-2x pr-1 pl-2"></i>            
+          </a>
+          <div ngbDropdownMenu aria-labelledby="user-dropdown">
+            <h6 class="dropdown-header">
+              <span translate>Logged in as </span> <b>{{username}}</b></h6>
+            <div class="dropdown-divider"></div>
+<!--             <button class="dropdown-item" (click)="openResetPassword()" translate>Reset Password</button>
+ -->            <button class="dropdown-item" (click)="logout()" translate>Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>  
+</header>
+
+<!-- Create/Update Form [BEGIN]-->
+<!-- <div class="modal" [ngClass]="{ 'd-block' : isResetPasswordFormVisible}" id="resetPasswordModal" *ngIf="isResetPasswordFormVisible">
+  <div class="modal-dialog modal-md">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Reset Password</h5>
+              <button class="close" type="button" data-dismiss="modal" appModal  (click)="closeResetPasswordModal();">&times;</button>
+          </div>
+          <div class="modal-body">
+              <form novalidate [formGroup]="resetPasswordForm" (ngSubmit)="onSubmitResetPassword();">
+                  <div class="col-lg-12">
+                      <div><label>Current Password :</label></div>
+                      <input class="form-control mandatory-field" formControlName="currentPassword" type="password"
+                      [ngClass]="{ 'is-invalid': isFormSubmitInitiated && resetForm.currentPassword.errors }"/>
+
+                      <div *ngIf="isFormSubmitInitiated && resetForm.currentPassword.errors" style="color:red;">Please enter the current password.</div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div><label>Password :</label></div>
+                    <input class="form-control mandatory-field" formControlName="newPassword" type="password"
+                    [ngClass]="{ 'is-invalid': isFormSubmitInitiated && resetForm.newPassword.errors }"/>
+
+                    <div *ngIf="isFormSubmitInitiated && resetForm.newPassword.errors" style="color:red;">Please enter the new password.</div>
+                  </div>
+
+                <div class="col-lg-12">
+                  <div><label>Retype Password :</label></div>
+                  <input class="form-control mandatory-field" formControlName="retypePassword" type="password"
+                  [ngClass]="{ 'is-invalid': isFormSubmitInitiated && resetForm.retypePassword.errors }"/>
+
+                  <div *ngIf="isFormSubmitInitiated && resetForm.retypePassword.errors" style="color:red;">Please retype the password.</div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="alert alert-danger" [hidden]="validPasswords()" translate>
+                    Passwords does not match
+                  </div>
+                </div>
+                  <div class="col-lg-12 form-group" style="margin-top: 20px;">
+                      <button class="btn btn-primary" type="submit">Reset Password</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div> -->
+<!-- Create/Update Form [END]-->
