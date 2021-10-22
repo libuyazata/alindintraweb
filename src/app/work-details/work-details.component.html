@@ -1,3 +1,11 @@
+<style>
+#scrollMe {
+    height:150px;
+    overflow: inherit !important;
+    overflow-x:hidden;
+    padding:20px;
+}
+</style>
 <div class="page-header-container">
     <div class="page-header">
         <div class="row">
@@ -493,7 +501,7 @@
                          </select> 
 						<div *ngIf="isAllocateFormInitiated && allocateForm.subTaskId.errors" style="color:red;">Please Choose {{subitemName}}</div>
 					   </div>
-					   <div class="col-lg-12">
+					   <div class="col-lg-12" id="scrollMe">
                         <div><label>Choose Employee :</label></div>
 						
 						 <ng-multiselect-dropdown #multiSelect

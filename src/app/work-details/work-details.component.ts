@@ -74,15 +74,17 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {     
-    
-    this.dropdownSettings = {
+	this.dropdownSettings = {
       singleSelection: false,
       idField: 'employeeId',
-      textField: 'firstName',
+      textField: 'firstName', 
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 10,
-      allowSearchFilter: true
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+	  maxHeight: 197,
+	  clearSearchFilter: true,
+	  defaultOpen: false
     };
 	this.serviceReportSearchForm = new FormGroup({
       //callManagementStatus : new FormControl(''),
@@ -407,7 +409,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	   let params = this.getPreparedParamsAlloc(submitData);
 	  //let allotInfo = this.addempAllocateForm.value;   
       //alert(allotInfo);
-	  this.workDetailsService.saveEmployeeTaskAllocation(submitData).subscribe((resp:any)=>{      
+	  this.workDetailsService.saveEmployeeTaskAllocation(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.allocateName.toLowerCase(), true);
           this.resetsubForm();
