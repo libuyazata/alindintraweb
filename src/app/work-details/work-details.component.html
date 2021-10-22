@@ -498,16 +498,21 @@
 						
 						 <ng-multiselect-dropdown #multiSelect
 						  [placeholder]="'Choose Employee'" 
-						  [data]="allocatedEmployeeList" 
-						  [formControl]="employeeList" 
-						  [settings]="dropdownSettings"
 						  [disabled]="false"
-                          (onDeSelect)="onItemDeSelect($event)"
-						  (onSelect)="onItemSelect($event)"
+						  [data]="allocatedEmployeeList" 
+						  name="employeeList"
+						  formControlName="employeeList" 
+						  [settings]="dropdownSettings"
+                          (onSelect)="onItemSelect($event)" 
+						  (onDeSelect)="onItemDeSelect($event)"
+      
 						  >
 						</ng-multiselect-dropdown>
 <!-- 						<div *ngIf="isAllocateFormInitiated && allocateForm.employeeList.errors" style="color:red;">Please Choose Employee</div>
- -->					   </div> 
+ -->					   
+                                 <div *ngIf="isAllocateFormInitiated && allocateForm.employeeList.errors" style="color:red;">Please select atleast one employee.</div>
+
+ </div> 
                     <div class="col-lg-12 form-group" style="margin-top: 20px;">
                         <button class="btn btn-primary" type="submit">Save</button>
                         <button class="btn btn-danger" *ngIf=" ! isAllocateEdit" (click)="resetAllocateForm()"  type="reset">Clear</button>     

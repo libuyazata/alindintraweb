@@ -351,8 +351,11 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
       departmentId : new FormControl((null != data ? data.departmentId : '')),
       subTaskId : new FormControl((null != data ? data.subTaskId : ''), Validators.required),
       workDetailsId : new FormControl((null != data ? data.workDetailsId : ''), Validators.required),
-/*       employeeList : new FormControl((null != data ? data.employeeList : ''), Validators.required),
- */    });
+      employeeList : new FormControl((null != data ? data.employeeList : ''), Validators.required),
+		//employeeList: new FormControl(this.addempAllocateForm, Validators.required)
+	 // employeeList : new FormControl('', Validators.required),
+
+	});
 	this.getWorkDetailsList();
   }
   onAddItem() { 
@@ -400,9 +403,11 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   onAddemployeeAllocate() { 
     this.isAllocateFormInitiated = true;
     if( this.addempAllocateForm.valid ) { 
-	  let allotInfo = this.addempAllocateForm.value;   
+	    let submitData = this.addempAllocateForm.value;
+	   let params = this.getPreparedParamsAlloc(submitData);
+	  //let allotInfo = this.addempAllocateForm.value;   
       //alert(allotInfo);
-	  this.workDetailsService.saveEmployeeTaskAllocation(allotInfo).subscribe((resp:any)=>{      
+	  this.workDetailsService.saveEmployeeTaskAllocation(submitData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.allocateName.toLowerCase(), true);
           this.resetsubForm();
@@ -669,14 +674,16 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
       });
 	}
 	};   
-  public onItemDeSelect(event:any){    
+	public onItemDeSelect(event:any){ 
     this.isNotEmployeesSelected = (!this.addempAllocateForm.value.employeeList || 
                                     this.addempAllocateForm.value.employeeList.length == 0);
-  }
-  public onItemSelect(event:any){    
+	}
+    public onItemSelect(event:any){ 
     this.isNotEmployeesSelected = !(this.addempAllocateForm.value.employeeList && 
                                     this.addempAllocateForm.value.employeeList.length > 0);    
-  }
+    }
+  
+
   get itemForm() { return this.addItemForm.controls; }
   get subitemForm() { return this.addItemsubForm.controls; }
   get uploadForm() { return this.addItemuploadForm.controls; }
