@@ -31,6 +31,9 @@ export class WorkDetailsService extends BaseService {
   public getSubtaskDocumentDetails(data:any): Observable<any>{
     return this.httpClient.get("project/getWorkDocumentBySubTaskId/"+data);
   }
+  public documentDownload(data:any): Observable<any>{
+    return this.httpClient.get("project/getWorkDocument/"+data);
+  }
   public getWorkTypeList(data:any): Observable<any>{
     return this.httpClient.get("masterTable/getAllWorkType",{ params: data });
   }

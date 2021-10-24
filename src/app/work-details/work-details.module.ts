@@ -9,6 +9,7 @@ import { DataTableModule } from 'angular-6-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { DownloadReportModule } from '@app/shared/components/download-ctrl/download.module';
 
 @NgModule({
   imports: [
@@ -20,13 +21,15 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     ReactiveFormsModule,
     WorkDetailsRoutingModule,
 	NgMultiSelectDropDownModule,
+	DownloadReportModule,
   ],
   declarations: [
     WorkDetailsComponent
   ],
   providers:[
     WorkDetailsService,
-	AlertNotificationService
+	AlertNotificationService,
+	DownloadReportModule
   ]
 })
 export class WorkDetailsModule { }

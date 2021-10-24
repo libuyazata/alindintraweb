@@ -186,6 +186,9 @@
 																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 1">
 																			<button class="btn btn-info" type="button" >Approved</button>  
 																			</span>
+																			<download-ctrl id="report-download-control" style="visibility:hidden;" (click)="onDownloadPdfClicked(subDocument);"></download-ctrl>
+																			<button type="button" class="btn btn-primary" 
+																			(click)="print($event)"> Download</button>
 																			</div>
 																			</td>
 																			</tr>

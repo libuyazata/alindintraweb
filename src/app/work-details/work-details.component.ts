@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, OnChanges,ViewChild } from '@angular/core';
 import { environment } from '@env/environment';
 import { FormGroup, FormControl, Validators,ValidatorFn } from '@angular/forms';
 import { BaseComponent } from '@app/core/component/base.component';
@@ -7,6 +7,7 @@ import { AlertNotificationService } from '@app/shared/services/alertnotification
 import { WorkDetailsService } from '@app/work-details/work-details.service';
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { DownloadComponent } from '@app/shared/components/download-ctrl/download.component';
 import { ReplaySubject } from 'rxjs';
 @Component({
   selector: 'app-work-details',
@@ -65,8 +66,9 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   private previousItemDoc : any;
   public uploadPerCent : string;
   protected fileToUpload : any; // MoM files
-
-  constructor(private workDetailsService : WorkDetailsService,
+  @ViewChild(DownloadComponent) downloadCtrl:DownloadComponent;
+ 
+ constructor(private workDetailsService : WorkDetailsService,
 			  private alertService : AlertNotificationService, 
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute) { 
@@ -77,7 +79,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	this.dropdownSettings = {
       singleSelection: false,
       idField: 'employeeId',
-      textField: 'firstName', 
+      textField: 'empFullNameWithEmpCode', 
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 3,
@@ -269,7 +271,8 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     this.addItemuploadForm.reset();
   }
   resetAllocateForm() {
-    this.addempAllocateForm.reset();
+    this.allocatedEmployeeList = [];
+	this.addempAllocateForm.reset();
   }
   private initializeForm(data: any) {
 	this.addItemForm = new FormGroup({
@@ -541,6 +544,22 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     }; */
 	const workDocumentId= item.workDocumentId;
     this.alertService.showConfirmation(this, "Are you sure you want to Confirm this Document?", "Document Confirmation", "OK", this.onConfirmDocument, workDocumentId);
+  }
+  documentDownload(item: any) {
+	const workDocumentId= item.workDocumentId;
+	this.workDetailsService.documentDownload(workDocumentId).subscribe((resp:any)=>{      
+      //this.workDetailsList = resp["models"];
+    });
+  }
+  public onDownloadPdfClicked(item: any){
+    const workDocumentId= item.workDocumentId;
+	this.downloadCtrl.downloadPdf(item.documentnumber, workDocumentId);
+ }
+  public print(event: any) {
+    event.preventDefault();
+
+    let element: HTMLElement = document.getElementById("report-download-control") as HTMLElement;
+    element.click();
   }
   documentApproval(item: any) {
     /* let params = {
