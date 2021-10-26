@@ -23,7 +23,20 @@ export class GeneralInfoMenuService extends BaseService {
   toggle() {
     this.visible = !this.visible;
   }
-
-
   
+  public getDocumentTypes(data:any): Observable<any> {
+    return this.httpClient.get("masterTable/getAllDocumentTypes/"+data);
+  }
+  public saveWorkDocument(data: any): Observable<any>{
+    return this.httpClient.post('masterTable/saveDocumentTypes', data);
+  }
+  public getWorkDetailsList(data:any): Observable<any>{
+    return this.httpClient.get("project/getWorkDetailsByDeptId",{ params: data });
+  }
+  public getWorkDetailsById(data:any): Observable<any>{
+    return this.httpClient.get("project/getWorkDetailsById",{ params: data });
+  }
+  public getSubTaskByWorkId(data:any): Observable<any>{
+    return this.httpClient.get("project/getSubTaskByWorkId",{ params: data });
+  }
 }

@@ -572,14 +572,14 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     _self.workDetailsService.confirmDocument(params).subscribe((resp: any) => {
       let deleteStatus = resp.status == "success";
       _self.alertService.showSuccess("Document Verified Successfully", deleteStatus);
-      //_self.getWorkDetailsList();
+      _self.getWorkDetailsList();
     });
   }
   public onApproveDocument(_self: any, params: any) {
     _self.workDetailsService.approveDocument(params).subscribe((resp: any) => {
       let deleteStatus = resp.status == "success";
       _self.alertService.showSuccess("Document Approved Successfully", deleteStatus);
-     // _self.getWorkDetailsList();
+      _self.getWorkDetailsList();
     });
   }
   public onConfirmDelete(_self: any, params: any) {

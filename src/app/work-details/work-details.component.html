@@ -178,13 +178,13 @@
 																			<td>
 																			<div class="link-holder">
 																			<span *ngIf="subDocument.verificationStatus == 0">
-																			<button class="btn btn-info" type="button" (click)="documentConfirm(subDocument);" >Confirm</button>  
+																			<button class="btn btn-info" type="button" (click)="documentConfirm(subDocument);" >Verify</button>  
 																			</span>
 																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 0">
-																			<button class="btn btn-info" type="button" (click)="documentApproval(subDocument);">Approval</button>  
+																			<button class="btn btn-warning" type="button" (click)="documentApproval(subDocument);">Approval</button>  
 																			</span>
 																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 1">
-																			<button class="btn btn-info" type="button" >Approved</button>  
+																			<button class="btn btn-success" type="button" >Approved</button>  
 																			</span>
 																			<download-ctrl id="report-download-control" style="visibility:hidden;" (click)="onDownloadPdfClicked(subDocument);"></download-ctrl>
 																			<button type="button" class="btn btn-primary" 
