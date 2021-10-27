@@ -27,13 +27,13 @@ export class DeputationService extends BaseService {
   }
    public saveDeputation(data: any) : Observable<any> {
 	if(data.deputationId!=""){
-	return this.httpClient.post("masterTable/updateDeputation", data);
+	return this.httpClient.post("user/updateDeputation", data);
 	}else{
-	return this.httpClient.post("masterTable/saveDeputation", data);
+	return this.httpClient.post("user/saveDeputation", data);
 	}
 
   }
   public deleteDeputation(data:any): Observable<any>{
-    return this.httpClient.get("masterTable/deleteDeputation/"+data);
+    return this.httpClient.get("user/deleteDeputation/"+data);
   }
 }

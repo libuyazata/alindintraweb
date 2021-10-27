@@ -46,6 +46,8 @@ export class DeputationComponent extends BaseComponent implements OnInit {
       type : new FormControl(''),
       drawingSeries : new FormControl(''),
     })
+	this.getDepartmentList();
+	this.getAllEmployeeList();
   }
 	
   protected getdeputationList() {
@@ -73,8 +75,6 @@ export class DeputationComponent extends BaseComponent implements OnInit {
   openCreateForm() {
     this.isFormVisible = true;
     this.isEdit = false;
-	this.getAllEmployeeList();
-	this.getDepartmentList();
     this.initializeForm(null)
   }
   closePopup() {
@@ -127,6 +127,7 @@ export class DeputationComponent extends BaseComponent implements OnInit {
     let params : {[k : string]: any}= {
       employeeId : submitData.employeeId,
       deputedDepartmentId : submitData.deputedDepartmentId,
+      description : submitData.description,
       startDate : submitData.startDate,
       endDate : submitData.endDate,
 	 /*  createdOn : submitData.createdOn,
@@ -161,7 +162,7 @@ export class DeputationComponent extends BaseComponent implements OnInit {
     /* let params = {
       documentTypeId : item.documentTypeId
     }; */
-	const params=item.documentTypeId;
+	const params=item.deputationId;
     this.alertService.showPermenantDeleteConfirmation(this, this.itemName.toLowerCase(), this.onConfirmDelete, params);
   }
   public onConfirmDelete(_self: any, params: any) {

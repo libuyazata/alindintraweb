@@ -102,15 +102,15 @@ export class WorkDocumentComponent extends BaseComponent implements OnInit {
   private getPreparedParams(submitData: any) {
 
     let params : {[k : string]: any}= {
-      type : submitData.type,
+      documentTypeId : submitData.documentTypeId,
+	  type : submitData.type,
       drawingSeries : submitData.drawingSeries,
-	  status : 1
     }
 
-    if(this.isEdit) { 
+   /*  if(this.isEdit) { 
       params.documentTypeId = submitData.documentTypeId,
       params.status = 1
-    }
+    } */
 
     return params;
   }
