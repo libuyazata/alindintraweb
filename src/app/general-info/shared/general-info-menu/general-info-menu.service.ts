@@ -24,7 +24,7 @@ export class GeneralInfoMenuService extends BaseService {
     this.visible = !this.visible;
   }
   
-  public getDocumentTypes(data:any): Observable<any> {
+ /*  public getDocumentTypes(data:any): Observable<any> {
     return this.httpClient.get("masterTable/getAllDocumentTypes/"+data);
   }
   public saveWorkDocument(data: any): Observable<any>{
@@ -38,5 +38,5 @@ export class GeneralInfoMenuService extends BaseService {
   }
   public getSubTaskByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/getSubTaskByWorkId",{ params: data });
-  }
+  } */
 }

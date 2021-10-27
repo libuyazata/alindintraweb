@@ -659,8 +659,9 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     });
   }
   protected getDocumentTypes(){
-    this.workDetailsService.getDocumentTypes().subscribe((resp:any) => {
-      this.documentTypeList = resp["documentTypes"];
+    const status = 1;
+	this.workDetailsService.getDocumentTypes(status).subscribe((resp:any) => {
+      this.documentTypeList = resp["models"];
     });
   } 
   public onFileSelect(files: FileList) {

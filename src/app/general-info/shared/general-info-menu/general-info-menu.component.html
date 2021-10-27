@@ -23,90 +23,9 @@
                 </li>
                 <li><a href="/#/general-info/work-type">Work Type &raquo;</a>
                 </li>
-				<li><a (click)="openUploadForm()">Work Document &raquo;</a>
+				<li><a href="/#/general-info/work-document">Work Document &raquo;</a>
                 </li>
-                
             </ul>
         </nav>
-    </div>
-</div>
-<div class="modal" [ngClass]="{ 'd-block' : isuploadFormVisible}" id="uploadFormModal" *ngIf="isuploadFormVisible">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">{{isuploadEdit ? ('Update ' +uploadName)  : ('Create ' +uploadName)}}</h5>
-				<button class="close" type="button" data-dismiss="modal" appModal  (click)="closeuploadPopup();">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form novalidate [formGroup]="addItemuploadForm" (ngSubmit)="onAddDocument()">
-                    <div class="col-lg-12">
-                        <input class="form-control mandatory-field" formControlName="departmentId" type="hidden" 
-                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.documentName.errors }"/>
-                        
-						
-						<div><label>{{itemName}} :</label></div>
-                        <select class="form-control" formControlName="workDetailsId" (change)="getSubTaskByWorkId($event.target.value);">
-                        <option value="">Choose Work</option>
-						<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
-                         </select> 
-                        <div *ngIf="isuploadFormInitiated && uploadForm.workDetailsId.errors" style="color:red;">Please select {{itemName}}</div>
-                      </div>
-					 <div class="col-lg-12">
-                        <div><label>{{subitemName}} :</label></div>
-                        <select class="form-control" formControlName="subTaskId" >
-                        <option value="">Choose {{subitemName}}</option>
-						<option *ngFor="let subwork of subtaskDetailsListbyId" [ngValue]="subwork.subTaskId">{{subwork.subTaskName}}</option>
-                         </select> 
-                        <div *ngIf="isuploadFormInitiated && uploadForm.subTaskId.errors" style="color:red;">Please select {{itemName}}</div>
-                       </div> 
-                    <div class="col-lg-12">
-                        <div><label>Description : </label></div>
-                        <textarea class="form-control mandatory-field" formControlName="description"  type="text" maxlength="400"
-                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.description.errors }"></textarea>
-                        <div *ngIf="isuploadFormInitiated && uploadForm.description.errors" style="color:red;">Please enter description.</div>
-                    </div>
-					<div class="col-lg-12">
-                        <div><label>Document Name :</label></div>
-                        <input class="form-control mandatory-field" formControlName="documentName" type="text" 
-                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.documentName.errors }"/>
-                        <div *ngIf="isuploadFormInitiated && uploadForm.documentName.errors" style="color:red;">Please enter a Document Name.</div>
-                    </div>
-					<div class="col-lg-12">  
-                        <div><label>Document Type :</label></div>
-					<select class="form-control" formControlName="documentTypeId">
-                        <option value="">Select</option>              
-                        <option *ngFor="let documentType of documentTypeList"
-                            [value]="documentType.documentTypeId">
-                            {{ documentType.type }}
-                        </option>
-                    </select>
-                    <div *ngIf="isuploadFormInitiated && uploadForm.documentTypeId.errors" style="color:red;">Please enter a Document Type.</div>
-					</div> 		
-							<div class="col-lg-12">  
-								<label>Please select a Document to upload:</label>
-							</div> 
-							<div class="col-lg-12">  
-							<input type="file" formControlName="docfile" (change)="onFileSelect($event.target.files)"/>
-								<!-- <div class="row form-group">
-									<div class="col-lg-3"> 
-										<br/>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="70" 
-												aria-valuemin="0" aria-valuemax="100" [style.width]="uploadPerCent + '%'">
-													{{ uploadPerCent == '0' ? '' : uploadPerCent }}
-											</div>
-										</div>
-									</div>
-								</div> -->
-								<br/> 
-                    <div *ngIf="isuploadFormInitiated && uploadForm.docfile.errors" style="color:red;">Please select a Document to upload</div>
-							</div> 
-                    <div class="col-lg-12 form-group" style="margin-top: 20px;">
-                        <button class="btn btn-primary" type="submit">Save</button>
-                        <button class="btn btn-danger" *ngIf=" ! isuploadEdit" (click)="resetuploadForm()"  type="reset">Clear</button>     
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
 </div>

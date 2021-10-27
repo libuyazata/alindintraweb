@@ -34,6 +34,8 @@ import { WorkTypeModule } from '@app/general-info/work-type/work-type.module';
 import { WorkDetailsModule } from './work-details/work-details.module';
 import { SettingModule } from './setting/setting.module';
 import { GeneralInfoModule } from './general-info/general-info.module';
+import { WorkDocumentModule } from '@app/general-info/work-document/work-document.module';
+import { DeputationModule } from '@app/deputation/deputation.module';
 
 
 
@@ -67,6 +69,8 @@ import { GeneralInfoModule } from './general-info/general-info.module';
 	WorkStatusModule,
 	WorkTypeModule,
 	GeneralInfoModule,
+	WorkDocumentModule,
+	DeputationModule,
   ],
   declarations: [AppComponent, BaseComponent],
   providers: [

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators,ValidatorFn } from '@angular/forms';
 import { GeneralInfoMenuService } from './general-info-menu.service';
-import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
 
 
 
@@ -12,25 +10,10 @@ import { AlertNotificationService } from '@app/shared/services/alertnotification
   styleUrls: ['./general-info-menu.component.scss']
 })
 export class GeneralInfoMenuComponent implements OnInit {
-  public addItemuploadForm: FormGroup;
-
-  public isuploadFormVisible : boolean = false;
-  public isuploadEdit : boolean = false;
-  public isuploadFormInitiated : boolean = false;
-  public workDetailsById : Array<any>;
-  public subtaskDetailsListbyId : Array<any>;
-
-  public workDetailsList : Array<any>;
-  public documentTypeList : Array<any>;
-  protected fileToUpload : any; // MoM files
-  public itemName: string = "Work";
-  public subitemName: string = "Sub Task";
-  public uploadName: string = "Upload Document";
+ 
 
   constructor(
-  private GeneralInfoMenuService : GeneralInfoMenuService,
-  private alertService : AlertNotificationService, 
-  private router: Router) { }
+   private router: Router) { }
 
   ngOnInit() {
 	  
@@ -39,7 +22,8 @@ export class GeneralInfoMenuComponent implements OnInit {
   toggleMenu() {
   }
   
-  openUploadForm() { 
+  
+  /* openUploadForm() { 
     this.isuploadFormVisible = true;
     this.isuploadEdit = false;
     this.initializeuploadForm(null)
@@ -111,9 +95,9 @@ export class GeneralInfoMenuComponent implements OnInit {
     }
 	this.GeneralInfoMenuService.getSubTaskByWorkId(params1).subscribe((resp:any)=>{      
 	  this.subtaskDetailsListbyId = resp["models"];
-	/*   this.addItemuploadForm.patchValue({
+	  this.addItemuploadForm.patchValue({
 		departmentId: 12,
-		}); */
+		});
     });
   }
 	public onFileSelect(files: FileList) {
@@ -141,6 +125,6 @@ export class GeneralInfoMenuComponent implements OnInit {
     });
   }
   get uploadForm() { return this.addItemuploadForm.controls; }
-
+ */
 }
 

@@ -1,0 +1,100 @@
+<general-info-menu></general-info-menu>
+<div class="page-header-container">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>
+                    <span>{{itemName}}</span>                
+                </h4>    
+            </div>
+        </div>
+    </div>
+	
+	<div class="row">
+	 	<div class="col-lg-12">
+		<button (click)="openCreateForm()" class="btn btn-info mt-4">Create {{itemName}}</button>  
+		</div>
+	</div>
+	</div>
+	<div class="page-body-container">
+    <div class="row">
+        <div class="col-lg-12">
+                <div class="table100">
+                    <table [mfData]="workDocumentList" #mf="mfDataTable" [mfRowsOnPage]="15">
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1"><mfDefaultSorter by="type">Type</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="drawingseries">Drawing Series</mfDefaultSorter></th>
+                                <th class="column3"><mfDefaultSorter by="created">Created On</mfDefaultSorter></th>
+                                <th class="column4"><mfDefaultSorter by="updated">Updated On</mfDefaultSorter></th>
+					        </tr>
+                        </thead>
+                        <tbody *ngFor="let item of mf.data;index as i">
+                            <tr class="hover-action-row">
+                                <td class="column1">{{item.type}}</td>
+                                <td class="column2">{{item.drawingSeries}}</td> 
+                                <td class="column3">{{item.createdOn  | date :  "dd-MM-yyyy" }}</td> 
+                                <td class="column4">{{item.updatedOn  | date :  "dd-MM-yyyy" }}</td> 
+								<td class="actions">
+                                    <div class="link-holder">
+                                        <a class="link" title="Delete" (click)="deleteItem(item);" ><i class="fas fa-trash"></i></a>
+                                        <a class="link" title="Edit" (click)="editItem(item);"><i class="fas fa-edit"></i></a>
+                                    </div>
+                                </td>
+							</tr>
+								
+						</tbody>
+						<tbody *ngIf="workDocumentList && workDocumentList.length == 0">
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-center">No Data Found</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[15,20,30,40,50]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Create/Update Form [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : isFormVisible}" id="createUpdateModal" *ngIf="isFormVisible">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{isEdit ? ('Update ' +itemName)  : ('Create ' +itemName)}}</h5>
+                <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePopup();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form novalidate [formGroup]="addItemForm" (ngSubmit)="onAddItem();">
+                    <div class="col-lg-12">
+                        <div><label>{{itemName}} Type :</label></div>
+                        <input formControlName="documentTypeId" class="form-control"  type="hidden"/>  
+						<textarea class="form-control mandatory-field" formControlName="type" 
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && itemForm.type.errors }"></textarea>
+					   <div *ngIf="isFormSubmitInitiated && itemForm.type.errors" style="color:red;">Please enter a Type.</div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div><label>{{itemName}} Drawing Series : </label></div>
+						<input class="form-control mandatory-field" formControlName="drawingSeries" type="text" 
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && itemForm.drawingSeries.errors }" maxlength="3" />
+						<div *ngIf="isFormSubmitInitiated && itemForm.drawingSeries.errors" style="color:red;">Please enter atleast 3 digits</div>
+					</div>
+                    <div class="col-lg-12 form-group" style="margin-top: 20px;">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-danger" *ngIf=" ! isEdit" (click)="resetForm()"  type="reset">Clear</button>     
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Create/Update Form [END]-->

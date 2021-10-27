@@ -24,8 +24,9 @@
 			<a class="menu-link" (click)=menuButtonClicked() routerLink="/general-info/work-status" routerLinkActive="active">
                 <span class="fas fa-info-circle"></span><span class="nav-label">General Info</span>
             </a>
-             <!-- <a class="menu-link" routerLink="/attendance" routerLinkActive="active"><span class="fas fa-edit"></span><span class="nav-label pl-2"> Attendance</span></a>
-            <a class="menu-link" routerLink="/notification" routerLinkActive="active"><span class="far fa-bell"></span><span class="nav-label pl-2"> Notification</span></a> -->
+              <a><span class="fas fa-users"></span><span class="nav-label pl-2"> HR</span></a>
+              <a class="menu-link" routerLink="/deputation" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Deputation</span></a>
+            <!--<a class="menu-link" routerLink="/notification" routerLinkActive="active"><span class="far fa-bell"></span><span class="nav-label pl-2"> Notification</span></a> -->
         </span>
         <span *ngIf="!isAdminUser">
             <!-- <a class="menu-link" routerLink="/employee" routerLinkActive="active">

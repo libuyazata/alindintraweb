@@ -89,8 +89,8 @@ export class WorkDetailsService extends BaseService {
   public getWorkDetailsBySearch(data:any): Observable<any>{
     return this.httpClient.get("project/getWorkDetailsBySearch", { params : data});
   }
-  public getDocumentTypes(): Observable<any> {
-    return this.httpClient.get("masterTable/getAllDocumentTypes");
+  public getDocumentTypes(data:any): Observable<any> {
+    return this.httpClient.get("masterTable/getAllDocumentTypes/"+data);
   }
 
 }
