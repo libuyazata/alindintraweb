@@ -139,8 +139,7 @@
 													<ngb-tabset class="tabset1" #tabs1>
 														<ng-container *ngIf="subtaskDocumentDetails.length > 0; else noItems">														
 														<ngb-tab *ngFor="let subDocument of subtaskDocumentDetails; index as i" tabindex="{{i}}">
-															
-															<ng-template ngbTabTitle><span class="title1">Document {{i+1}}</span></ng-template>
+															<ng-template ngbTabTitle><span class="title1" title="{{subDocument.documentnumber}}">{{subDocument.documentnumber | slice:0:5}}</span></ng-template>
 																<ng-template ngbTabContent>
 																<table [mfData]="subtaskDocumentDetails" #mf="mfDataTable" [mfRowsOnPage]="15">
 																			<thead>
@@ -450,7 +449,7 @@
 								<label>Please select a Document to upload:</label>
 							</div> 
 							<div class="col-lg-12">  
-							<input type="file" formControlName="docfile" (change)="onFileSelect($event.target.files)"/>
+							<input type="file" formControlName="docfile" (change)="onFileSelect($event.target.files)" accept=".pdf"/>
 								<!-- <div class="row form-group">
 									<div class="col-lg-3"> 
 										<br/>
