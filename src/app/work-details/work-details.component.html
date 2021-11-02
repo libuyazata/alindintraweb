@@ -420,9 +420,31 @@
                         <option value="">Choose {{subitemName}}</option>
 						<option *ngFor="let subwork of subtaskDetailsListbyId" [ngValue]="subwork.subTaskId">{{subwork.subTaskName}}</option>
                          </select> 
-                        <div *ngIf="isuploadFormInitiated && uploadForm.subTaskId.errors" style="color:red;">Please select {{itemName}}</div>
+                        <div *ngIf="isuploadFormInitiated && uploadForm.subTaskId.errors" style="color:red;">Please select {{subitemName}}</div>
                        </div> 
-                    <div class="col-lg-12">
+                    <div class="col-lg-12">  
+                        <div><label>Document Category :</label></div>
+						<select class="form-control" formControlName="documentCategoryId">
+							<option value="">Select</option>              
+							<option *ngFor="let documentCat of documentCatList"
+								[value]="documentCat.documentTypeId">
+								{{ documentCat.type }}
+							</option>
+						</select>
+						<div *ngIf="isuploadFormInitiated && uploadForm.documentTypeId.errors" style="color:red;">Please select a Document Category.</div>
+					</div> 
+					<div class="col-lg-12">  
+                        <div><label>Document Type :</label></div>
+						<select class="form-control" formControlName="documentTypeId">
+							<option value="">Select</option>              
+							<option *ngFor="let documentType of documentTypeList"
+								[value]="documentType.documentTypeId">
+								{{ documentType.type }}
+							</option>
+						</select>
+						<div *ngIf="isuploadFormInitiated && uploadForm.documentTypeId.errors" style="color:red;">Please select a Document Type.</div>
+					</div> 
+					<div class="col-lg-12">
                         <div><label>Description : </label></div>
                         <textarea class="form-control mandatory-field" formControlName="description"  type="text" maxlength="400"
                         [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.description.errors }"></textarea>
@@ -435,34 +457,12 @@
                         <div *ngIf="isuploadFormInitiated && uploadForm.documentName.errors" style="color:red;">Please enter a Document Name.</div>
                     </div>
 					<div class="col-lg-12">  
-                        <div><label>Document Category :</label></div>
-					<select class="form-control" formControlName="documentTypeId">
-                        <option value="">Select</option>              
-                        <option *ngFor="let documentType of documentTypeList"
-                            [value]="documentType.documentTypeId">
-                            {{ documentType.type }}
-                        </option>
-                    </select>
-                    <div *ngIf="isuploadFormInitiated && uploadForm.documentTypeId.errors" style="color:red;">Please enter a Document Type.</div>
-					</div> 		
-							<div class="col-lg-12">  
 								<label>Please select a Document to upload:</label>
 							</div> 
 							<div class="col-lg-12">  
 							<input type="file" formControlName="docfile" (change)="onFileSelect($event.target.files)" accept=".pdf"/>
-								<!-- <div class="row form-group">
-									<div class="col-lg-3"> 
-										<br/>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="70" 
-												aria-valuemin="0" aria-valuemax="100" [style.width]="uploadPerCent + '%'">
-													{{ uploadPerCent == '0' ? '' : uploadPerCent }}
-											</div>
-										</div>
-									</div>
-								</div> -->
-								<br/> 
-                    <div *ngIf="isuploadFormInitiated && uploadForm.docfile.errors" style="color:red;">Please enter a Document Type.</div>
+							<br/> 
+                    <div *ngIf="isuploadFormInitiated && uploadForm.docfile.errors" style="color:red;">Please choose a PDF Document.</div>
 							</div> 
                     <div class="col-lg-12 form-group" style="margin-top: 20px;">
                         <button class="btn btn-primary" type="submit">Save</button>

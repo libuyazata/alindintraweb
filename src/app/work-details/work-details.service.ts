@@ -95,5 +95,8 @@ export class WorkDetailsService extends BaseService {
   public getDocumentTypes(data:any): Observable<any> {
     return this.httpClient.get("masterTable/getAllDocumentTypes/"+data);
   }
+  public getAllDocumentCategory(data:any): Observable<any> {
+    return this.httpClient.get("masterTable/getAllDocumentCategory/"+data);
+  }
 
 }

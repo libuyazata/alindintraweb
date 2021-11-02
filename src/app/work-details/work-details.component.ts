@@ -26,6 +26,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   public employeeList : Array<any>;
   public workStatusList : Array<any>;
   public documentTypeList : Array<any>;
+  public documentCatList : Array<any>;
   public subtaskDocumentDetails : Array<any>;
   public workDetailsById : Array<any>;
   public allocatedEmployeeList : Array<any>;
@@ -358,10 +359,12 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
       description : new FormControl((null != data ? data.description : ''), Validators.required),
       documentName : new FormControl((null != data ? data.documentName : ''), Validators.required),
       documentTypeId : new FormControl((null != data ? data.documentTypeId : ''), Validators.required),
+      documentCategoryId : new FormControl((null != data ? data.documentCategoryId : ''), Validators.required),
       docfile : new FormControl((null != data ? data.docfile : ''), Validators.required),
       });
 	this.getWorkDetailsList();
 	this.getDocumentTypes();
+	this.getdocumentCatList();
   }
   private initializeAllocateForm(data: any) {
     this.addempAllocateForm = new FormGroup({
@@ -511,7 +514,8 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
       subTaskId : submitData.subTaskId,
       description : submitData.description,
       documentName : submitData.documentName,
-      documentTypeId : submitData.documentTypeId
+      documentTypeId : submitData.documentTypeId,
+      documentCategoryId : submitData.documentCategoryId
     }
 	/* if(this.isuploadEdit) { 
       params.subTaskId = submitData.subTaskId,
@@ -695,6 +699,12 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
       this.documentTypeList = resp["models"];
     });
   } 
+  protected getdocumentCatList(){
+    const status = 1;
+	this.workDetailsService.getAllDocumentCategory(status).subscribe((resp:any) => {
+      this.documentCatList = resp["models"];
+    });
+  } 
   public onFileSelect(files: FileList) {
     this.fileToUpload = files.item(0);
   }
@@ -712,6 +722,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	  formData.append("description", this.addItemuploadForm.get("description").value);
 	  formData.append("documentName", this.addItemuploadForm.get("documentName").value);
 	  formData.append("documentTypeId", this.addItemuploadForm.get("documentTypeId").value);
+	  formData.append("documentCategoryId", this.addItemuploadForm.get("documentCategoryId").value);
 	
 	  this.workDetailsService.saveWorkDocument(formData).subscribe((resp:any) => {	  
 		if(resp.status == "success") {
