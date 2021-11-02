@@ -100,13 +100,12 @@
 								   <td colspan="9" style="padding: 20px;">
 									<div class="row form-group">
 										<div class="col-lg-12">
-													<ngb-tabset class="tabset1" #tabs>
+													<!-- <ngb-tabset class="tabset1" #tabs>
 														<ng-container *ngIf="subtaskDetailsList.length > 0; else noItems">														
 														<ngb-tab *ngFor="let subData of subtaskDetailsList; index as i" tabindex="{{i}}">
 															
 															<ng-template ngbTabTitle><span class="title1">{{subitemName}} {{i+1}}</span></ng-template>
-<!-- 															<ng-template ngbTabTitle *ngIf="!subData.length"><span class="title1">No Data</span></ng-template>
- -->																<ng-template ngbTabContent>
+																<ng-template ngbTabContent> -->
 																<table [mfData]="subtaskDetailsList" #mf="mfDataTable" [mfRowsOnPage]="15">
 																			<thead>
 																				<tr> 
@@ -116,7 +115,7 @@
 																					<th class="column4"><mfDefaultSorter by="endDate">End Date</mfDefaultSorter></th>
 																					<th class="column5"><mfDefaultSorter by="Documentnumber">Uploaded By</mfDefaultSorter></th>
 																			</thead>
-																			<tbody>
+																			<tbody *ngFor="let subData of subtaskDetailsList;index as i">
 																			<tr class="hover-action-row">
 																			<td class="column1">
 																			<a title="Open Document Request" class="link" (click)="openDocumentRequest(subData);">
@@ -163,8 +162,8 @@
 																			<td class="column2">
 																				{{subDocument.originalFileName}}
 																			</td>
-																			<td class="column3">
-																				{{subDocument.documentName}}
+																			<td class="column3" title="{{subDocument.documentName}}">
+																					{{subDocument.documentName | slice:0:20}}
 																			</td>
 																			<td class="column4">
 																				{{subDocument.documentnumber}}
@@ -178,13 +177,13 @@
 																			<td>
 																			<div class="link-holder">
 																			<span *ngIf="subDocument.verificationStatus == 0">
-																			<button class="btn btn-info" type="button" (click)="documentConfirm(subDocument);" >Verify</button>  
+																			<button class="btn {{btnClass1}}" type="button" (click)="documentConfirm(subDocument);" >{{btnVal1}}</button>  
 																			</span>
 																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 0">
-																			<button class="btn btn-warning" type="button" (click)="documentApproval(subDocument);">Approval</button>  
+																			<button class="btn {{btnClass2}}" type="button" (click)="documentApproval(subDocument);">{{btnVal2}}</button>  
 																			</span>
 																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 1">
-																			<button class="btn btn-success" type="button" >Approved</button>  
+																			<button class="btn {{btnClass3}}" type="button" >{{btnVal3}}</button>  
 																			</span>
 																			<download-ctrl id="report-download-control" style="visibility:hidden;" (click)="onDownloadPdfClicked(subDocument);"></download-ctrl>
 																			<button type="button" class="btn btn-primary" 
@@ -210,7 +209,7 @@
 								</tr>
 																			</tbody>
 																</table>
-															</ng-template>
+															<!-- </ng-template>
 														</ngb-tab>
 														</ng-container>
 														<ng-template #noItems>
@@ -219,7 +218,7 @@
 															<ng-template ngbTabContent>No Data Found</ng-template>
 														  </ngb-tab>
 														</ng-template>
-														</ngb-tabset>
+														</ngb-tabset> -->
 										</div>
 									  </div>
 								   </td> 
@@ -437,7 +436,7 @@
                         <div *ngIf="isuploadFormInitiated && uploadForm.documentName.errors" style="color:red;">Please enter a Document Name.</div>
                     </div>
 					<div class="col-lg-12">  
-                        <div><label>Document Type :</label></div>
+                        <div><label>Document Category :</label></div>
 					<select class="form-control" formControlName="documentTypeId">
                         <option value="">Select</option>              
                         <option *ngFor="let documentType of documentTypeList"

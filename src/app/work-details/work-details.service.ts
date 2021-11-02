@@ -34,6 +34,9 @@ export class WorkDetailsService extends BaseService {
   public documentDownload(data:any): Observable<any>{
     return this.httpClient.get("project/getWorkDocument/"+data);
   }
+  public getWorkVerificationStatus(data:any): Observable<any>{
+    return this.httpClient.get("project/getWorkVerificationStatus/"+data);
+  }
   public getWorkTypeList(data:any): Observable<any>{
     return this.httpClient.get("masterTable/getAllWorkType",{ params: data });
   }

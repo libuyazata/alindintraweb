@@ -17,17 +17,17 @@ export class WorkDocumentService extends BaseService {
   }  
 
   public getWorkDocumentList(data:any): Observable<any>{
-    return this.httpClient.get("masterTable/getAllDocumentTypes/"+data);
+    return this.httpClient.get("masterTable/getAllDocumentCategory/"+data);
   }
    public saveDocumentTypes(data: any) : Observable<any> {
 	if(data.documentTypeId!=""){
-	return this.httpClient.post("masterTable/updateDocumentTypes", data);
+	return this.httpClient.post("masterTable/updateDocumentCategory", data);
 	}else{
-	return this.httpClient.post("masterTable/saveDocumentTypes", data);
+	return this.httpClient.post("masterTable/saveDocumentCategory", data);
 	}
 
   }
   public deleteDocumentTypes(data:any): Observable<any>{
-    return this.httpClient.get("masterTable/deleteDocumentTypes/"+data);
+    return this.httpClient.get("masterTable/deleteDocumentCategoryById/"+data);
   }
 }

@@ -23,7 +23,7 @@ export class WorkDocumentComponent extends BaseComponent implements OnInit {
   public isEdit : boolean = false;
   public isFormSubmitInitiated : boolean = false;
 
-  public itemName: string = "Work Document";
+  public itemName: string = "Document Category";
   public materialRequestSearchForm : FormGroup;
   private previousItem : any;
 

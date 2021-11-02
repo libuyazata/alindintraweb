@@ -9,6 +9,7 @@ import { AuthenticationService } from '@app/core/authentication/authentication.s
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { DownloadComponent } from '@app/shared/components/download-ctrl/download.component';
 import { ReplaySubject } from 'rxjs';
+import {  } from '@angular/core';
 @Component({
   selector: 'app-work-details',
   templateUrl: './work-details.component.html',
@@ -28,6 +29,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   public subtaskDocumentDetails : Array<any>;
   public workDetailsById : Array<any>;
   public allocatedEmployeeList : Array<any>;
+  public getWorkVerificationStatus : Array<any>;
   public dropdownSettings: any = {};
 
   public data  : any = {};
@@ -67,6 +69,16 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   public uploadPerCent : string;
   protected fileToUpload : any; // MoM files
   @ViewChild(DownloadComponent) downloadCtrl:DownloadComponent;
+  public btnVal1: string= "Verify";
+  public btnVal2: string= "Approval";
+  public btnVal3: string= "Approved";
+  public btnClass1: string= "btn-info";
+  public btnClass2: string= "btn-warning";
+  public btnClass3: string= "btn-success";
+  
+  public documentConfirmlabel: string= "documentConfirm";
+  public documentApprovallabel: string= "documentApproval";
+
  
  constructor(private workDetailsService : WorkDetailsService,
 			  private alertService : AlertNotificationService, 
@@ -539,12 +551,22 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     this.alertService.showPermenantDeleteConfirmation(this, this.subitemName.toLowerCase(), this.onConfirmDeletesub, params);
   }
   documentConfirm(item: any) {
-    /* let params = {
+   
+   /* let params = {
       workDocumentId : item.workDocumentId
     }; */
 	const workDocumentId= item.workDocumentId;
-    this.alertService.showConfirmation(this, "Are you sure you want to Confirm this Document?", "Document Confirmation", "OK", this.onConfirmDocument, workDocumentId);
-  }
+	this.workDetailsService.getWorkVerificationStatus(workDocumentId).subscribe((resp:any)=>{
+		if(resp.verficationStatus == 0){
+		this.alertService.showConfirmation(this, "Are you sure you want to Confirm this Document?", "Document Confirmation", "OK", this.onConfirmDocument, workDocumentId);
+		}
+		if(resp.verficationStatus == 1){
+		this.alertService.showConfirmation(this, "Are you sure you want to Approve this Document?", "Document Approval", "OK", this.onApproveDocument, workDocumentId);
+		}
+    });
+	//alert(getWorkVerificationStatus['verificationStatus']);
+	
+  } 
   documentDownload(item: any) {
 	const workDocumentId= item.workDocumentId;
 	this.workDetailsService.documentDownload(workDocumentId).subscribe((resp:any)=>{      
@@ -572,14 +594,22 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     _self.workDetailsService.confirmDocument(params).subscribe((resp: any) => {
       let deleteStatus = resp.status == "success";
       _self.alertService.showSuccess("Document Verified Successfully", deleteStatus);
-      _self.getWorkDetailsList();
+     _self.btnVal1 = "Approval";
+     _self.btnClass1 = "btn-warning";
+     _self.documentConfirmlabel = "documentConfirm";
+	 
+	 //_self.getWorkDetailsList();
     });
   }
   public onApproveDocument(_self: any, params: any) {
     _self.workDetailsService.approveDocument(params).subscribe((resp: any) => {
       let deleteStatus = resp.status == "success";
       _self.alertService.showSuccess("Document Approved Successfully", deleteStatus);
-      _self.getWorkDetailsList();
+      //_self.getWorkDetailsList();
+	 _self.btnVal1 = "Approved";
+     _self.btnClass1 = "btn-success";
+	 _self.btnVal2 = "Approved";
+     _self.btnClass2 = "btn-success";
     });
   }
   public onConfirmDelete(_self: any, params: any) {
@@ -615,6 +645,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 
     this.previousItemDoc = subData;
 	this.getSubtaskDocumentDetails(subData.subTaskId);
+	
   }
   
   protected getSubtaskDocumentDetails(item : any){
@@ -648,7 +679,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     });
   }
   
-  protected getSubtaskDetails(item : any){
+  protected getSubtaskDetails(item : any){ 
     const workDetailsId = item;
     let params = { 
        workDetailsId : workDetailsId,
