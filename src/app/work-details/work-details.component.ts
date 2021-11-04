@@ -31,6 +31,8 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   public workDetailsById : Array<any>;
   public allocatedEmployeeList : Array<any>;
   public getWorkVerificationStatus : Array<any>;
+  public employeeAllocatelist : Array<any>;
+  public employeeAllocatesublist : Array<any>;
   public dropdownSettings: any = {};
 
   public data  : any = {};
@@ -42,12 +44,15 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   public addItemsubForm: FormGroup;
   public addItemuploadForm: FormGroup;
   public addempAllocateForm: FormGroup;
+  public addempAllocateList: FormGroup;
 
   //Status variables
   public isFormVisible : boolean = false;
   public issubFormVisible : boolean = false;
   public isuploadFormVisible : boolean = false;
   public isempAllocateFormVisible : boolean = false;
+  public empAllocatelistFormVisible : boolean = false;
+  public empAllocatesublistFormVisible : boolean = false;
   public isEdit : boolean = false;
   public issubEdit : boolean = false;
   public isuploadEdit : boolean = false;
@@ -148,6 +153,18 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	  this.workDetailsList = resp["models"];
     });
   }
+  protected getAllocatelist(item:any) {
+    const workDetailsId = item;
+	this.workDetailsService.getAllEmployeeTaskAllocationByWorkDetailsId(workDetailsId).subscribe((resp:any)=>{      
+	  this.employeeAllocatelist = resp["models"];
+    });
+  }
+  protected getAllocatesublist(item:any) {
+    const subTaskId = item;
+	this.workDetailsService.getAllEmployeeTaskAllocationBySubTaskId(subTaskId).subscribe((resp:any)=>{      
+	  this.employeeAllocatesublist = resp["models"];
+    });
+  }
   protected getAllocatedEmployeeList() {
 	/* const departmentId = this.departmentId;*/
 	const departmentId = this.addempAllocateForm.get('departmentId').value
@@ -238,9 +255,25 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     this.isAllocateEdit = false;
     this.initializeAllocateForm(null)
   }
+  openAllocatelistForm() { 
+    this.empAllocatelistFormVisible = true;
+    this.initializeAllocatelist(null)
+  }
+  openAllocatesublistForm(item:any) { 
+    this.empAllocatesublistFormVisible = true;
+    this.initializeAllocatesublist(item)
+  }
   closePopup() {
     this.clearForm();
     this.resetForm();
+  }
+  closePopupempAlloclist() {
+    this.clearempAlloclist();
+    //this.resetForm();
+  }
+  closePopupempAllocsublist() {
+    this.clearempAllocsublist();
+    //this.resetForm();
   }
   closesubPopup() {
     this.clearsubForm();
@@ -258,6 +291,12 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     this.isEdit = false;
     this.isFormVisible = false;
     this.isFormSubmitInitiated = false;
+  }
+  private clearempAlloclist() {
+    this.empAllocatelistFormVisible = false;
+  }
+  private clearempAllocsublist() {
+    this.empAllocatesublistFormVisible = false;
   }
   private clearsubForm() {
     this.issubEdit = false;
@@ -378,6 +417,16 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	});
 	this.getWorkDetailsList();
   }
+  private initializeAllocatelist(data: any) {
+	this.addempAllocateList = new FormGroup({
+       workDetailsId : new FormControl((null != data ? data.workDetailsId : ''), Validators.required),
+     });
+	this.getWorkDetailsList();
+	//this.getAllocatelist();
+  }
+  private initializeAllocatesublist(data: any) {
+	this.getAllocatesublist(data);
+  }
   onAddItem() { 
     this.isFormSubmitInitiated = true;
     if( this.addItemForm.valid ) { 
@@ -430,8 +479,8 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	  this.workDetailsService.saveEmployeeTaskAllocation(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.allocateName.toLowerCase(), true);
-          this.resetsubForm();
-          this.clearsubForm();
+          this.resetAllocateForm();
+          this.clearAllocateForm();
           this.getWorkDetailsList();
         } else {
           this.alertService.showSaveStatus(this.allocateName.toLowerCase(), false);
@@ -752,5 +801,6 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   get subitemForm() { return this.addItemsubForm.controls; }
   get uploadForm() { return this.addItemuploadForm.controls; }
   get allocateForm() { return this.addempAllocateForm.controls; }
+  get allocateList() { return this.addempAllocateList.controls; }
 
 }

@@ -52,6 +52,7 @@
 			<button (click)="openCreateSubForm()" class="btn btn-info mt-4">Create Sub Task</button>  
 			<button (click)="openUploadForm()" class="btn btn-info mt-4">Upload Document</button>  
 			<button (click)="openAllocateForm()" class="btn btn-info mt-4">Employee Allocation</button>  
+			<button (click)="openAllocatelistForm()" class="btn btn-success mt-4" style="background:#900C3F;">Allocated work for Employees</button>  
 		</div>
     </div>
 	<div class="row">
@@ -129,6 +130,7 @@
 																			<div class="link-holder">
 																				<a class="link" title="Delete" (click)="deletesubItem(subData);" ><i class="fas fa-trash"></i></a>
 																				<a class="link" title="Edit" (click)="editsubItem(subData);"><i class="fas fa-edit"></i></a>
+																				<button (click)="openAllocatesublistForm(subData.subTaskId)" class="btn btn-success" style="background:#900C3F;margin-left:70px;padding:0px;">Allocated work for Employees</button>  
 																			</div>
 																			</td>
 																			</tr>
@@ -532,3 +534,118 @@
     </div>
 </div>
 <!-- Create/Update Form [END]-->
+<!-- Employee allocate list  [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : empAllocatelistFormVisible}" id="createUpdateModal" *ngIf="empAllocatelistFormVisible">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Allocated work for Employees</h5>
+                <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePopupempAlloclist();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <div class="col-lg-4">
+				<form novalidate [formGroup]="addempAllocateList" >
+                <div><label>Choose Work :</label></div>
+				<select class="form-control" formControlName="workDetailsId" (change)="getAllocatelist($event.target.value);">
+                        <option value="" selected>Choose Work</option>
+						<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
+                </select>
+				</form>
+				</div>
+				<div class="col-lg-12 mt-5">
+                <div class="table100">
+                    <table [mfData]="employeeAllocatelist" #mf="mfDataTable" [mfRowsOnPage]="15">
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1"><mfDefaultSorter by="employeename">Employee Name</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="employeeid">Employee Code</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="workname">Work Name</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="subtaskname">Sub Task Name</mfDefaultSorter></th>
+					        </tr>
+                        </thead>
+                        <tbody *ngFor="let item of mf.data;index as i">
+                            <tr class="hover-action-row">
+                                <td class="column1">{{item.empName}}</td>
+                                <td class="column2">{{item.empCode}}</td> 
+                                <td class="column3">{{item.workName}}</td> 
+                                <td class="column4">{{item.subTaskName}}</td> 
+							</tr>
+								
+						</tbody>
+						<tbody *ngIf="employeeAllocatelist && employeeAllocatelist.length == 0">
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-center">No Data Found</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[15,20,30,40,50]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+		</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Employee allocate list  [END]-->
+<!-- Employee allocate list  [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : empAllocatesublistFormVisible}" id="createUpdateModal" *ngIf="empAllocatesublistFormVisible">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Allocated work for Employees</h5>
+                <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePopupempAllocsublist();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+				<div class="col-lg-12">
+                <div class="table100">
+                    <table [mfData]="employeeAllocatesublist" #mf="mfDataTable" [mfRowsOnPage]="15">
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1"><mfDefaultSorter by="employeename">Employee Name</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="employeeid">Employee Code</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="workname">Work Name</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="subtaskname">Sub Task Name</mfDefaultSorter></th>
+					        </tr>
+                        </thead>
+                        <tbody *ngFor="let item of mf.data;index as i">
+                            <tr class="hover-action-row">
+                                <td class="column1">{{item.empName}}</td>
+                                <td class="column2">{{item.empCode}}</td> 
+                                <td class="column3">{{item.workName}}</td> 
+                                <td class="column4">{{item.subTaskName}}</td> 
+							</tr>
+								
+						</tbody>
+						<tbody *ngIf="employeeAllocatelist && employeeAllocatelist.length == 0">
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-center">No Data Found</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[15,20,30,40,50]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+		</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Employee allocate list  [END]-->

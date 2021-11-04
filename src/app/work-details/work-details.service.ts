@@ -98,5 +98,11 @@ export class WorkDetailsService extends BaseService {
   public getAllDocumentCategory(data:any): Observable<any> {
     return this.httpClient.get("masterTable/getAllDocumentCategory/"+data);
   }
+  public getAllEmployeeTaskAllocationByWorkDetailsId(data:any): Observable<any> {
+    return this.httpClient.get("project/getAllEmployeeTaskAllocationByWorkDetailsId/"+data);
+  }
+  public getAllEmployeeTaskAllocationBySubTaskId(data:any): Observable<any> {
+    return this.httpClient.get("project/getAllEmployeeTaskAllocationBySubTaskId/"+data);
+  }
 
 }
