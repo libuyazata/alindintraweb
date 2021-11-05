@@ -117,9 +117,8 @@
 																					<th class="column5"><mfDefaultSorter by="Documentnumber">Uploaded By</mfDefaultSorter></th>
 																					<th class="column6"><mfDefaultSorter by="View">View Allocated Work</mfDefaultSorter></th>
 																					<th class="column7"><mfDefaultSorter by="View"></mfDefaultSorter></th>
-																					<th class="column8"></th>
-																					<th class="column9"></th>
-																					<th class="column10"></th>
+																					<th class="column8"><mfDefaultSorter by="View"></mfDefaultSorter></th>
+																					<th class="column9"><mfDefaultSorter by="View"></mfDefaultSorter></th>
 																			</thead>
 																			<tbody *ngFor="let subData of subtaskDetailsList;index as i">
 																			<tr class="hover-action-row">
@@ -135,10 +134,9 @@
 																			<td class="column7 col-md-1"></td>
 																			<td class="column8 col-md-1"></td>
 																			<td class="column9 col-md-1"></td>
-																			<td class="column10 col-md-1"></td>
 																			<td class="actions">
 																			<div class="link-holder">
-																				<a class="link" title="Delete" (click)="deletesubItem(subData);" ><i class="fas fa-trash"></i></a>
+																				<a class="link" title="Delete" (click)="deletesubItem(subData);"><i class="fas fa-trash"></i></a>
 																				<a class="link" title="Edit" (click)="editsubItem(subData);"><i class="fas fa-edit"></i></a>
 																			</div>
 																			</td>
@@ -162,7 +160,7 @@
 																					<th class="column5"><mfDefaultSorter by="Documentnumber">Description</mfDefaultSorter></th>
 																					<th class="column6"><mfDefaultSorter by="Documentnumber">Uploaded By</mfDefaultSorter></th>
 																					<th class="column7"><mfDefaultSorter by="Actions">Actions</mfDefaultSorter></th>
-																				</tr>
+																					</tr>
 																			</thead>
 																			<tbody>
 																			<tr class="hover-action-row">
@@ -184,22 +182,39 @@
 																			<td class="column6">
 																				{{subDocument.createdEmpName}}
 																			</td>
-																			<td>
-																			<div class="link-holder">
+																			<td class="column7">
 																			<span *ngIf="subDocument.verificationStatus == 0">
-																			<button class="btn {{btnClass1}}" type="button" (click)="documentConfirm(subDocument);" >{{btnVal1}}</button>  
+																			<button class="btn {{btnClass1}}" type="button" (click)="documentConfirm(subDocument);"  style1="float:right;margin-right:5px;">{{btnVal1}}</button>  
 																			</span>
 																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 0">
-																			<button class="btn {{btnClass2}}" type="button" (click)="documentApproval(subDocument);">{{btnVal2}}</button>  
+																			<button class="btn {{btnClass2}}" type="button" (click)="documentApproval(subDocument);" style1="float:right;margin-right:5px;">{{btnVal2}}</button>  
 																			</span>
 																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 1">
 																			<button class="btn {{btnClass3}}" type="button" >{{btnVal3}}</button>  
 																			</span>
 																			<download-ctrl id="report-download-control" style="visibility:hidden;" (click)="onDownloadPdfClicked(subDocument);"></download-ctrl>
 																			<button type="button" class="btn btn-primary" 
-																			(click)="print($event)"> Download</button>
-																			</div>
+																			(click)="print($event)" style1="float:right;margin-right:5px;"> Download</button>
+
 																			</td>
+																			<!-- <td class="column7"></td>
+																			<td class="column8"></td>
+																			<td class="actions">
+																			<div class="link-holder">
+																			<span *ngIf="subDocument.verificationStatus == 0">
+																			<button class="btn {{btnClass1}}" type="button" (click)="documentConfirm(subDocument);"  style1="float:right;margin-right:5px;">{{btnVal1}}</button>  
+																			</span>
+																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 0">
+																			<button class="btn {{btnClass2}}" type="button" (click)="documentApproval(subDocument);" style1="float:right;margin-right:5px;">{{btnVal2}}</button>  
+																			</span>
+																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 1">
+																			<button class="btn {{btnClass3}}" type="button" >{{btnVal3}}</button>  
+																			</span>
+																			<download-ctrl id="report-download-control" style="visibility:hidden;" (click)="onDownloadPdfClicked(subDocument);"></download-ctrl>
+																			<button type="button" class="btn btn-primary" 
+																			(click)="print($event)" style1="float:right;margin-right:5px;"> Download</button>
+																			</div>
+																			</td> -->
 																			</tr>
 																			</tbody>
 																</table>
@@ -208,8 +223,8 @@
 														</ng-container>
 														<ng-template #noItems>
 														  <ngb-tab tabindex="0"> 
-															<ng-template ngbTabTitle><span class="title1">No Data</span></ng-template>
-															<ng-template ngbTabContent>No Data Found</ng-template>
+															<ng-template ngbTabTitle><span class="title1">No Document</span></ng-template>
+															<ng-template ngbTabContent style="padding:5px;">No Document Found</ng-template>
 														  </ngb-tab>
 														</ng-template>
 														</ngb-tabset>
@@ -239,7 +254,7 @@
 						<tbody *ngIf="workDetailsList && workDetailsList.length == 0">
                             <tr>
                                 <td colspan="8">
-                                    <div class="text-center">No Data Found</div>
+                                    <div class="text-center" style="padding:5px;">No Data Found</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -577,7 +592,7 @@
 						<tbody *ngIf="employeeAllocatelist && employeeAllocatelist.length == 0">
                             <tr>
                                 <td colspan="5">
-                                    <div class="text-center">No Data Found</div>
+                                    <div class="text-center" style="padding:5px;">No Data Found</div>
                                 </td>
                             </tr>
                         </tbody>
@@ -630,7 +645,7 @@
 						<tbody *ngIf="employeeAllocatelist && employeeAllocatelist.length == 0">
                             <tr>
                                 <td colspan="5">
-                                    <div class="text-center">No Data Found</div>
+                                    <div class="text-center" style="padding:5px;">No Data Found</div>
                                 </td>
                             </tr>
                         </tbody>
