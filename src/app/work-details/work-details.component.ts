@@ -168,6 +168,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   protected getAllocatedEmployeeList() {
 	/* const departmentId = this.departmentId;*/
 	const departmentId = this.addempAllocateForm.get('departmentId').value
+	//const departmentId =1;
 	this.workDetailsService.getAllocatedEmployeeList(departmentId).subscribe((resp:any)=>{      
 	  this.allocatedEmployeeList = resp["models"];
     });
@@ -176,6 +177,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	let params = {
       workDetailsId:item
     }
+
 	this.workDetailsService.getWorkDetailsById(params).subscribe((resp:any)=>{      
 	  this.workDetailsById = resp["model"];
 	  this.addItemuploadForm.patchValue({
@@ -240,20 +242,68 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 
     this.initializeForm(null)
   }
-  openCreateSubForm() {
+/*   openCreateSubForm() {
     this.issubFormVisible = true;
     this.issubEdit = false;
     this.initializesubForm(null)
+  } */
+  openCreateSubForm(item:any) {
+    this.issubFormVisible = true;
+    this.issubEdit = false;
+	this.initializesubForm(null)
+	this.addItemsubForm.patchValue({"workDetailsId" : item.workDetailsId});
   }
-  openUploadForm() { 
+  /* openUploadForm() { 
     this.isuploadFormVisible = true;
     this.isuploadEdit = false;
     this.initializeuploadForm(null)
+  } */
+  openUploadForm(item:any) { 
+    this.isuploadFormVisible = true;
+    this.isuploadEdit = false;
+    this.initializeuploadForm(null)
+	this.addItemuploadForm.patchValue({"workDetailsId" : item.workDetailsId});
+	this.addItemuploadForm.patchValue({"subTaskId" : item.subTaskId});
+	//this.addItemuploadForm.patchValue({"departmentId" : 1});
+	let params = {
+      workDetailsId:item.workDetailsId
+    }
+
+	this.workDetailsService.getWorkDetailsById(params).subscribe((resp:any)=>{      
+	  this.workDetailsById = resp["model"];
+	  this.addItemuploadForm.patchValue({
+		departmentId: this.workDetailsById['departmentId'],
+		});
+    });
   }
-  openAllocateForm() { 
+  /* openAllocateForm() { 
     this.isempAllocateFormVisible = true;
     this.isAllocateEdit = false;
     this.initializeAllocateForm(null)
+  } */
+  openAllocateForm(item:any) { 
+    this.isempAllocateFormVisible = true;
+    this.isAllocateEdit = false;
+    this.initializeAllocateForm(null)
+	let params = {
+      workDetailsId:item.workDetailsId
+    }
+
+	this.workDetailsService.getWorkDetailsById(params).subscribe((resp:any)=>{      
+	  this.workDetailsById = resp["model"];
+	  this.addempAllocateForm.patchValue({
+		departmentId: this.workDetailsById['departmentId'],
+		});
+    });
+	//const departmentId = this.addempAllocateForm.get('departmentId').value
+	const departmentId =1;
+	this.workDetailsService.getAllocatedEmployeeList(departmentId).subscribe((resp:any)=>{      
+	  this.allocatedEmployeeList = resp["models"];
+    });
+	
+	this.addempAllocateForm.patchValue({"workDetailsId" : item.workDetailsId});
+	this.addempAllocateForm.patchValue({"subTaskId" : item.subTaskId});
+	
   }
   openAllocatelistForm() { 
     this.empAllocatelistFormVisible = true;
@@ -386,8 +436,8 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
       createdOn : new FormControl((null != data ? data.createdOn : '')),
 	  updatedOn : new FormControl((null != data ? data.updatedOn : ''))
 	});
-	this.getWorkDetailsList();
-	this.getworkStatusList();
+	//this.getWorkDetailsList();
+	//this.getworkStatusList();
 
   }
   private initializeuploadForm(data: any) {
@@ -401,7 +451,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
       documentCategoryId : new FormControl((null != data ? data.documentCategoryId : ''), Validators.required),
       docfile : new FormControl((null != data ? data.docfile : ''), Validators.required),
       });
-	this.getWorkDetailsList();
+	//this.getWorkDetailsList();
 	this.getDocumentTypes();
 	this.getdocumentCatList();
   }
@@ -415,7 +465,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	 // employeeList : new FormControl('', Validators.required),
 
 	});
-	this.getWorkDetailsList();
+	//this.getWorkDetailsList();
   }
   private initializeAllocatelist(data: any) {
 	this.addempAllocateList = new FormGroup({
@@ -452,7 +502,6 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
     this.issubFormSubmitInitiated = true;
     if( this.addItemsubForm.valid ) { 
       let submitData = this.addItemsubForm.value;
-
       let params = this.getPreparedParamssub(submitData);
 
       this.workDetailsService.saveOrUpdatesubWorkStatusList(params).subscribe((resp:any)=>{      
@@ -460,8 +509,10 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
           this.alertService.showSaveStatus(this.subitemName.toLowerCase(), true);
           this.resetsubForm();
           this.clearsubForm();
-          this.getWorkDetailsList();
-        } else {
+          //this.getWorkDetailsList();
+         // this.getSubtaskDetails(item.workDetailsId);
+          this.getSubtaskDetails(submitData.workDetailsId);
+		} else {
           this.alertService.showSaveStatus(this.subitemName.toLowerCase(), false);
         }
       });
@@ -481,7 +532,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
           this.alertService.showSaveStatus(this.allocateName.toLowerCase(), true);
           this.resetAllocateForm();
           this.clearAllocateForm();
-          this.getWorkDetailsList();
+          //this.getWorkDetailsList();
         } else {
           this.alertService.showSaveStatus(this.allocateName.toLowerCase(), false);
         }
@@ -764,7 +815,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	  if(this.fileToUpload){
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
       }
-	
+	  const subId=this.addItemuploadForm.get("subTaskId").value;
 	  formData.append("departmentId", this.addItemuploadForm.get("departmentId").value);
 	  formData.append("workDetailsId", this.addItemuploadForm.get("workDetailsId").value);
 	  formData.append("subTaskId", this.addItemuploadForm.get("subTaskId").value);
@@ -778,7 +829,8 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
           this.alertService.showSaveStatus(this.uploadName.toLowerCase(), true);
           this.resetuploadForm();
           this.clearuploadForm();
-          this.getWorkDetailsList();
+		  this.getSubtaskDocumentDetails(subId);
+		  //this.getWorkDetailsList();
         } else {
           this.alertService.showSaveStatus(this.uploadName.toLowerCase(), false);
         }
