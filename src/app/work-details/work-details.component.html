@@ -53,8 +53,8 @@
 		<!-- 	<button (click)="openCreateSubForm()" class="btn btn-info mt-4">Create Sub Task</button>  
 			<button (click)="openUploadForm()" class="btn btn-info mt-4">Upload Document</button>  
 			<button (click)="openAllocateForm()" class="btn btn-info mt-4">Employee Allocation</button>  
-			<button (click)="openAllocatelistForm()" class="btn btn-success mt-4" style="background:#900C3F;">Allocated work for Employees</button>  
-		 --></div>
+		 -->	<button (click)="openAllocatelistForm()" class="btn btn-success mt-4" style="background:#900C3F;">Allocated work for Employees</button>  
+		</div>
     </div>
 	<div class="row">
 	 
@@ -90,12 +90,13 @@
                                 <td class="column6">{{item.workType}}</td> 
                                 <td class="column7">{{item.startDate  | date :  "dd-MM-yyyy" }}</td>                        
                                 <td class="column8">{{item.endDate  | date :  "dd-MM-yyyy" }}</td> 
-								<td class="column9 col-md-1"></td>
+								<td class="column9 col-md-2"></td>
 								<td class="actions">
                                     <div class="link-holder">
                                         <a class="link" title="Delete" (click)="deleteItem(item);" ><i class="fas fa-trash"></i></a>
                                         <a class="link" title="Edit" (click)="editItem(item);"><i class="fas fa-edit"></i></a>
                                         <a class="link" title="Add Sub Task" (click)="openCreateSubForm(item);"><i class="fas fa-plus"></i></a>
+                                        <a class="link" title="View Allocated Work" (click)="openAllocatelistForm(item);"><i class="fas fa-eye"></i></a>
                                     </div>
                                 </td>
 							</tr>
@@ -117,12 +118,8 @@
 																					<th class="column3"><mfDefaultSorter by="startDate">Start Date</mfDefaultSorter></th>
 																					<th class="column4"><mfDefaultSorter by="endDate">End Date</mfDefaultSorter></th>
 																					<th class="column5"><mfDefaultSorter by="Documentnumber">Uploaded By</mfDefaultSorter></th>
-																					<th class="column6"><mfDefaultSorter by="View">View Allocated Work</mfDefaultSorter></th>
-																					<th class="column7"><mfDefaultSorter by="View"></mfDefaultSorter></th>
-																					<th class="column8"><mfDefaultSorter by="View"></mfDefaultSorter></th>
-																					<th class="column9"><mfDefaultSorter by="View"></mfDefaultSorter></th>
-																					<th class="column10"><mfDefaultSorter by="View"></mfDefaultSorter></th>
-																			</thead>
+																					<th class="column6"><mfDefaultSorter by="View"></mfDefaultSorter></th>
+																					</thead>
 																			<tbody *ngFor="let subData of subtaskDetailsList;index as i">
 																			<tr class="hover-action-row">
 																			<td class="column1">
@@ -133,17 +130,14 @@
 																			<td class="column3">{{subData.startDate  | date :  "dd-MM-yyyy" }}</td>
 																			<td class="column4">{{subData.endDate  | date :  "dd-MM-yyyy" }}</td>
 																			<td class="column5">{{subData.createdEmpName}}</td>
-																			<td class="column6"><button (click)="openAllocatesublistForm(subData.subTaskId)" class="btn btn-success" style="background:#900C3F;">Allocated work for Employees</button></td>
-																			<td class="column7 col-md-1"></td>
-																			<td class="column8 col-md-1"></td>
-																			<td class="column9 col-md-1"></td>
-																			<td class="column10 col-md-1"></td>
+																			<td class="column7 col-md-2"></td>
 																			<td class="actions">
 																			<div class="link-holder">
 																				<a class="link" title="Delete" (click)="deletesubItem(subData);"><i class="fas fa-trash"></i></a>
 																				<a class="link" title="Edit" (click)="editsubItem(subData);"><i class="fas fa-edit"></i></a>
 																				<a class="link" title="Upload Document" (click)="openUploadForm(subData);"><i class="fas fa-upload"></i></a>
 																				<a class="link" title="Employee Allocation" (click)="openAllocateForm(subData);"><i class="fas fa-user-plus"></i></a>
+																				<a class="link" title="View Allocated Work" (click)="openAllocatesublistForm(subData.subTaskId)"><i class="fas fa-eye"></i></a>
 																			</div>
 																			</td>
 																			</tr>
@@ -577,16 +571,17 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                <div class="col-lg-4">
+                <!-- <div class="col-lg-4">
 				<form novalidate [formGroup]="addempAllocateList" >
                 <div><label>Choose Work :</label></div>
 				<select class="form-control" formControlName="workDetailsId" (change)="getAllocatelist($event.target.value);">
                         <option value="" selected>Choose Work</option>
 						<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
                 </select>
+				
 				</form>
-				</div>
-				<div class="col-lg-12 mt-5">
+				</div> -->
+				<div class="col-lg-12">
                 <div class="table100">
                     <table [mfData]="employeeAllocatelist" #mf="mfDataTable" [mfRowsOnPage]="15">
                         <thead>

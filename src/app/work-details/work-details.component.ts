@@ -305,9 +305,15 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	this.addempAllocateForm.patchValue({"subTaskId" : item.subTaskId});
 	
   }
-  openAllocatelistForm() { 
+  /* openAllocatelistForm() { 
     this.empAllocatelistFormVisible = true;
     this.initializeAllocatelist(null)
+  } */
+  openAllocatelistForm(item:any) { 
+    this.empAllocatelistFormVisible = true;
+    this.initializeAllocatelist(null)
+	this.getAllocatelist(item.workDetailsId);
+	//this.addempAllocateList.patchValue({"workDetailsId" : item.workDetailsId});
   }
   openAllocatesublistForm(item:any) { 
     this.empAllocatesublistFormVisible = true;
@@ -471,7 +477,7 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
 	this.addempAllocateList = new FormGroup({
        workDetailsId : new FormControl((null != data ? data.workDetailsId : ''), Validators.required),
      });
-	this.getWorkDetailsList();
+	//this.getWorkDetailsList();
 	//this.getAllocatelist();
   }
   private initializeAllocatesublist(data: any) {
