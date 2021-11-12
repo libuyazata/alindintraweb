@@ -10,7 +10,7 @@ const routes: Routes = [
       path: 'work-details', 
       component: WorkDetailsComponent, 
       loadChildren: './work-details.module#WorkDetailsModule',
-      data: { title: extract('work-details') } 
+      data: { title: extract('Work Details') } 
     }
   ])  
 ];

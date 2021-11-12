@@ -10,7 +10,7 @@ const routes: Routes = [
       path: 'general-info/work-document', 
       component: WorkDocumentComponent, 
       loadChildren: './work-document.module#WorkDocumentModule',
-      data: { title: extract('work-document') } 
+      data: { title: extract('Work Document') } 
     }
   ])  
 ];

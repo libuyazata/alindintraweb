@@ -5,13 +5,13 @@
   margin-left: -26px;
 }
 
-ul#navigation {
+ul.navigation {
   position:relative;
   border-left:1px solid #c4dbe7;
   border-right:1px solid #c4dbe7;
 }
 
-ul#navigation li {
+ul.navigation li {
   display:inline;
   font-size:12px;
   font-weight:bold;
@@ -23,7 +23,7 @@ ul#navigation li {
   border-bottom:2px solid #c4dbe7;
 }
 
-ul#navigation li a {
+ul.navigation li a {
   padding:10px 25px;
   color:#616161;
   // text-shadow:1px 1px 0px #fff;
@@ -40,23 +40,27 @@ ul#navigation li a {
   transition:color 0.2s linear, background 0.2s linear;
 }
 
-ul#navigation li a:hover {
+ul.navigation li a:hover {
   background:#f8f8f8;
   color:#282828;
 }
 
 
-ul#navigation li a.last {
+ul.navigation li a.last {
   border-right: 1px solid #C2C2C2;
 }
 
-ul#navigation li:hover > a {
+ul.navigation li:hover > a {
   background:#012f5a;
   color: #ffffff;
 }
 
+ul.navigation li a.active {
+  background:#012f5a;
+  color: #ffffff;
+}
 /* Drop-Down Navigation */
-ul#navigation li:hover > ul
+ul.navigation li:hover > ul
 {
 /*these 2 styles are very important,
 being the ones which make the drop-down to appear on hover */
@@ -64,7 +68,7 @@ being the ones which make the drop-down to appear on hover */
   opacity:1;
 }
 
-ul#navigation ul, ul#navigation ul li ul {
+ul.navigation ul, ul.navigation ul li ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -84,24 +88,24 @@ being the ones which make the drop-down to stay hidden */
   transition:opacity 0.2s linear, visibility 0.2s linear;
 }
 
-ul#navigation ul {
+ul.navigation ul {
   top: 43px;
   left: 1px;
 }
 
-ul#navigation ul li ul {
+ul.navigation ul li ul {
   top: 0;
   left: 181px; /* strong related to width:180px; from above */
 }
 
-ul#navigation ul li {
+ul.navigation ul li {
   clear:both;
   width:100%;
   border:0 none;
   border-bottom:1px solid #c9c9c9;
 }
 
-ul#navigation ul li a {
+ul.navigation ul li a {
   background:none;
   padding:7px 15px;
   color:#616161;
@@ -115,7 +119,7 @@ ul#navigation ul li a {
   cursor: pointer;
 }
 
-ul#navigation ul li a:hover {
+ul.navigation ul li a:hover {
   background-color: #012f5a;
   color: #ffffff;
 }

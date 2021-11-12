@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { WorkTypeComponent } from './work-type.component';
+import { PrivilegesComponent } from '@app/privileges/privileges.component';
 
 const routes: Routes = [
   Route.withShell([
     { 
-      path: 'general-info/work-type', 
-      component: WorkTypeComponent, 
-      loadChildren: './work-type.module#WorkTypeModule',
-      data: { title: extract('Work Type') } 
+      path: 'privileges', 
+      component: PrivilegesComponent, 
+      loadChildren: './privileges.module#PrivilegesModule',
+      data: { title: extract('Manage privileges') } 
     }
   ])  
 ];
@@ -20,4 +20,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class WorkTypeRoutingModule { }
+export class PrivilegesRoutingModule { }

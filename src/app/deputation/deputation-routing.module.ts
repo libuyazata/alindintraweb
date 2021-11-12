@@ -10,7 +10,7 @@ const routes: Routes = [
       path: 'deputation', 
       component: DeputationComponent, 
       loadChildren: './deputation.module#DeputationModule',
-      data: { title: extract('deputation') } 
+      data: { title: extract('Deputation') } 
     }
   ])  
 ];
