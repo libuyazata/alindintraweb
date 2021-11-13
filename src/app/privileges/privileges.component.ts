@@ -14,7 +14,7 @@ import { PrivilegesService } from '@app/privileges/privileges.service';
 export class PrivilegesComponent extends BaseComponent implements OnInit {
   
   public privilegesList : Array<any>;
-  public authorizationId : Array<any>;
+ /*  public authorizationId : Array<any>;
   public userRoleId : Array<any>;
   public employeeView : Array<any>;
   public employeeEdit : Array<any>;
@@ -33,7 +33,7 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
   public documentDelete : Array<any>;
   public deputationView : Array<any>;
   public deputationEdit : Array<any>;
-  public deputationDelete : Array<any>;
+  public deputationDelete : Array<any>; */
   public authorizationEntity : Array<any>;
   
   public serviceReportSearchForm : FormGroup;
@@ -56,8 +56,9 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {    
+	this.getprivilegesList();
 	this.initializeForm(null)
-  }
+ }
   
   protected getprivilegesList() {
 		this.PrivilegesService.getAdminDashBoard().subscribe((resp:any)=>{      
@@ -65,6 +66,26 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
 		  const userRoleId=1;
 		  this.PrivilegesService.getprivilegesList(this.authorizationEntity).subscribe((resp:any)=>{      
 		  this.privilegesList = resp["authorization"];
+		  this.addPrivilegeForm.patchValue({"authorizationId" : this.privilegesList['authorizationId']});
+	      this.addPrivilegeForm.patchValue({"userRoleId" : this.privilegesList['userRoleId']});
+	      this.addPrivilegeForm.patchValue({"employeeView" : this.privilegesList['employeeView']});
+	      this.addPrivilegeForm.patchValue({"employeeEdit" : this.privilegesList['employeeEdit']});
+	      this.addPrivilegeForm.patchValue({"employeeDelete" : this.privilegesList['employeeDelete']});
+	      this.addPrivilegeForm.patchValue({"departmentView" : this.privilegesList['departmentView']});
+	      this.addPrivilegeForm.patchValue({"departmentEdit" : this.privilegesList['departmentEdit']});
+	      this.addPrivilegeForm.patchValue({"departmentDelete" : this.privilegesList['departmentDelete']});
+	      this.addPrivilegeForm.patchValue({"workView" : this.privilegesList['workView']});
+	      this.addPrivilegeForm.patchValue({"workEdit" : this.privilegesList['workEdit']});
+	      this.addPrivilegeForm.patchValue({"workDelete" : this.privilegesList['workDelete']});
+	      this.addPrivilegeForm.patchValue({"subTaskView" : this.privilegesList['subTaskView']});
+	      this.addPrivilegeForm.patchValue({"subTaskEdit" : this.privilegesList['subTaskEdit']});
+	      this.addPrivilegeForm.patchValue({"subTaskDelete" : this.privilegesList['subTaskDelete']});
+	      this.addPrivilegeForm.patchValue({"doucmentView" : this.privilegesList['doucmentView']});
+	      this.addPrivilegeForm.patchValue({"documentEdit" : this.privilegesList['documentEdit']});
+	      this.addPrivilegeForm.patchValue({"documentDelete" : this.privilegesList['documentDelete']});
+	      this.addPrivilegeForm.patchValue({"deputationView" : this.privilegesList['deputationView']});
+	      this.addPrivilegeForm.patchValue({"deputationEdit" : this.privilegesList['deputationEdit']});
+	      this.addPrivilegeForm.patchValue({"deputationDelete" : this.privilegesList['deputationDelete']});
 		});
 	});
 	
@@ -93,7 +114,6 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
       deputationEdit : new FormControl((null != data ? data.deputationEdit : '')),
       deputationDelete : new FormControl((null != data ? data.deputationDelete : '')),
 	 });
-	this.getprivilegesList();
   }
   
   addPrivilege() { 

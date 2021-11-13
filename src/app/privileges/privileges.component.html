@@ -13,27 +13,27 @@
     <div class="row">
         <div class="col-lg-12">
                 <form novalidate [formGroup]="addPrivilegeForm" (ngSubmit)="addPrivilege();">
-                    <input formControlName="authorizationId" class="form-control"  [(ngModel)]="privilegesList.authorizationId" type="hidden"/>  
-                    <input formControlName="userRoleId" class="form-control"  [(ngModel)]="privilegesList.userRoleId" type="hidden"/>  
+                    <input formControlName="authorizationId"  type="hidden"/>  
+                    <input formControlName="userRoleId"   type="hidden"/>  
 					<ul class="priv_list">
-		                <li><input type="checkbox" formControlName="employeeView" [(ngModel)]="privilegesList.employeeView" [checked]="privilegesList.employeeView == true" ><b>Employee View</b></li>
-						<li><input type="checkbox" formControlName="employeeEdit" [(ngModel)]="privilegesList.employeeEdit" [checked]="privilegesList.employeeEdit == true" ><b>Employee Edit</b></li>
-						<li><input type="checkbox" formControlName="employeeDelete" [(ngModel)]="privilegesList.employeeDelete" [checked]="privilegesList.employeeDelete == true" ><b>Employee Delete</b></li>
-						<li><input type="checkbox" formControlName="departmentView" [(ngModel)]="privilegesList.departmentView" [checked]="privilegesList.departmentView == true" ><b>Department View</b></li>
-						<li><input type="checkbox" formControlName="departmentEdit" [(ngModel)]="privilegesList.departmentEdit" [checked]="privilegesList.departmentEdit == true" ><b>Department Edit</b></li>
-						<li><input type="checkbox" formControlName="departmentDelete" [(ngModel)]="privilegesList.departmentDelete" [checked]="privilegesList.departmentDelete == true" ><b>Department Delete</b></li>
-						<li><input type="checkbox" formControlName="workView" [(ngModel)]="privilegesList.workView" [checked]="privilegesList.workView == true" ><b>Work View</b></li>
-						<li><input type="checkbox" formControlName="workEdit" [(ngModel)]="privilegesList.workEdit" [checked]="privilegesList.workEdit == true" ><b>Work Edit</b></li>
-						<li><input type="checkbox" formControlName="workDelete" [(ngModel)]="privilegesList.workDelete" [checked]="privilegesList.workDelete == true" ><b>Work Delete</b></li>
-						<li><input type="checkbox" formControlName="subTaskView" [(ngModel)]="privilegesList.subTaskView" [checked]="privilegesList.subTaskView == true" ><b>Sub Task View</b></li>
-						<li><input type="checkbox" formControlName="subTaskEdit" [(ngModel)]="privilegesList.subTaskEdit" [checked]="privilegesList.subTaskEdit == true" ><b>Sub Task Edit</b></li>
-						<li><input type="checkbox" formControlName="subTaskDelete" [(ngModel)]="privilegesList.subTaskDelete" [checked]="privilegesList.subTaskDelete == true" ><b>Sub Task Delete</b></li>
-						<li><input type="checkbox" formControlName="doucmentView" [(ngModel)]="privilegesList.doucmentView" [checked]="privilegesList.doucmentView == true" ><b>Document View</b></li>
-						<li><input type="checkbox" formControlName="documentEdit" [(ngModel)]="privilegesList.documentEdit" [checked]="privilegesList.documentEdit == true" ><b>Document Edit</b></li>
-						<li><input type="checkbox" formControlName="documentDelete" [(ngModel)]="privilegesList.documentDelete" [checked]="privilegesList.documentDelete == true" ><b>Document Delete</b></li>
-						<li><input type="checkbox" formControlName="deputationView" [(ngModel)]="privilegesList.deputationView" [checked]="privilegesList.deputationView == true" ><b>Deputation View</b></li>
-						<li><input type="checkbox" formControlName="deputationEdit" [(ngModel)]="privilegesList.deputationEdit" [checked]="privilegesList.deputationEdit == true" ><b>Deputation Edit</b></li>
-						<li><input type="checkbox" formControlName="deputationDelete" [(ngModel)]="privilegesList.deputationDelete" [checked]="privilegesList.deputationDelete == true" ><b>Deputation Delete</b></li>
+		                <li><input type="checkbox" formControlName="employeeView" ><b>Employee View</b></li>
+						<li><input type="checkbox" formControlName="employeeEdit" ><b>Employee Edit</b></li>
+						<li><input type="checkbox" formControlName="employeeDelete" ><b>Employee Delete</b></li>
+						<li><input type="checkbox" formControlName="departmentView" ><b>Department View</b></li>
+						<li><input type="checkbox" formControlName="departmentEdit" ><b>Department Edit</b></li>
+						<li><input type="checkbox" formControlName="departmentDelete"  ><b>Department Delete</b></li>
+						<li><input type="checkbox" formControlName="workView" ><b>Work View</b></li>
+						<li><input type="checkbox" formControlName="workEdit" ><b>Work Edit</b></li>
+						<li><input type="checkbox" formControlName="workDelete" ><b>Work Delete</b></li>
+						<li><input type="checkbox" formControlName="subTaskView" ><b>Sub Task View</b></li>
+						<li><input type="checkbox" formControlName="subTaskEdit" ><b>Sub Task Edit</b></li>
+						<li><input type="checkbox" formControlName="subTaskDelete" ><b>Sub Task Delete</b></li>
+						<li><input type="checkbox" formControlName="doucmentView"><b>Document View</b></li>
+						<li><input type="checkbox" formControlName="documentEdit" ><b>Document Edit</b></li>
+						<li><input type="checkbox" formControlName="documentDelete"><b>Document Delete</b></li>
+						<li><input type="checkbox" formControlName="deputationView" ><b>Deputation View</b></li>
+						<li><input type="checkbox" formControlName="deputationEdit" ><b>Deputation Edit</b></li>
+						<li><input type="checkbox" formControlName="deputationDelete"><b>Deputation Delete</b></li>
 					</ul>
 					<div class="col-lg-12 form-group" style="margin-top: 20px;">
                         <button class="btn btn-primary" type="submit">Save</button>
