@@ -14,6 +14,7 @@ import { PrivilegesService } from '@app/privileges/privileges.service';
 export class PrivilegesComponent extends BaseComponent implements OnInit {
   
   public privilegesList : Array<any>;
+  public userRoleList : Array<any>;
  /*  public authorizationId : Array<any>;
   public userRoleId : Array<any>;
   public employeeView : Array<any>;
@@ -56,18 +57,19 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {    
-	this.getprivilegesList();
 	this.initializeForm(null)
+	this.getUserRole();
  }
   
-  protected getprivilegesList() {
-		this.PrivilegesService.getAdminDashBoard().subscribe((resp:any)=>{      
-		  this.authorizationEntity = resp.adminDashBoard.authorizationEntity['userRoleId'];
-		  const userRoleId=1;
-		  this.PrivilegesService.getprivilegesList(this.authorizationEntity).subscribe((resp:any)=>{      
+  getprivilegesList(item: any) {
+		//this.PrivilegesService.getAdminDashBoard().subscribe((resp:any)=>{      
+		  //this.authorizationEntity = resp.adminDashBoard.authorizationEntity['userRoleId'];
+		 const userRoleId=item;
+		 // this.PrivilegesService.getprivilegesList(this.authorizationEntity).subscribe((resp:any)=>{      
+		  this.PrivilegesService.getprivilegesList(userRoleId).subscribe((resp:any)=>{      
 		  this.privilegesList = resp["authorization"];
 		  this.addPrivilegeForm.patchValue({"authorizationId" : this.privilegesList['authorizationId']});
-	      this.addPrivilegeForm.patchValue({"userRoleId" : this.privilegesList['userRoleId']});
+	      //this.addPrivilegeForm.patchValue({"userRoleId" : this.privilegesList['userRoleId']});
 	      this.addPrivilegeForm.patchValue({"employeeView" : this.privilegesList['employeeView']});
 	      this.addPrivilegeForm.patchValue({"employeeEdit" : this.privilegesList['employeeEdit']});
 	      this.addPrivilegeForm.patchValue({"employeeDelete" : this.privilegesList['employeeDelete']});
@@ -87,15 +89,15 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
 	      this.addPrivilegeForm.patchValue({"deputationEdit" : this.privilegesList['deputationEdit']});
 	      this.addPrivilegeForm.patchValue({"deputationDelete" : this.privilegesList['deputationDelete']});
 		});
-	});
+	//});
 	
   }
   
   private initializeForm(data: any) {
 	this.addPrivilegeForm = new FormGroup({
       authorizationId : new FormControl((null != data ? data.authorizationId : '')),
-      userRoleId : new FormControl((null != data ? data.userRoleId : '')),
-      employeeView : new FormControl((null != data ? data.employeeView : '')),
+      userRoleId : new FormControl((null != data ? data.userRoleId : ''), Validators.required),
+	  employeeView : new FormControl((null != data ? data.employeeView : '')),
       employeeEdit : new FormControl((null != data ? data.employeeEdit : '')),
       employeeDelete : new FormControl((null != data ? data.employeeDelete : '')),
       departmentView : new FormControl((null != data ? data.departmentView : '')),
@@ -118,18 +120,19 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
   
   addPrivilege() { 
     this.isFormSubmitInitiated = true;
-      let submitData = this.addPrivilegeForm.value;
+    if( this.addPrivilegeForm.valid ) { 
+	  let submitData = this.addPrivilegeForm.value;
       let params = this.getPreparedParams(submitData);
 
       this.PrivilegesService.updateAuthorization(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
-         
-          this.getprivilegesList();
+          this.getprivilegesList(submitData.userRoleId);
         } else {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
         }
       });
+	}
   };
   private getPreparedParams(submitData: any) {
 
@@ -156,6 +159,11 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
       deputationDelete : submitData.deputationDelete,
     }
     return params;
+  }
+  protected getUserRole(){
+    this.PrivilegesService.getUserRole().subscribe((userRole: any) => {
+        this.userRoleList = userRole;
+    });
   }
   get privilegeForm() { return this.addPrivilegeForm.controls; }
 

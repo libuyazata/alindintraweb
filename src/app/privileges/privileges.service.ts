@@ -31,4 +31,14 @@ export class PrivilegesService extends BaseService {
   public deleteDeputation(data:any): Observable<any>{
     return this.httpClient.get("user/deleteDeputation/"+data);
   }
+  public getUserRole(): Observable<any>{
+    const userRole = [{
+      userRoleId : 1, userRoleName : "Super Admin"
+    },{
+      userRoleId : 2, userRoleName : "Admin"
+    },{
+      userRoleId : 3, userRoleName : "Employee"
+    }];
+    return of(userRole);
+  }
 }

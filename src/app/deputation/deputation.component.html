@@ -84,7 +84,7 @@
                         <option value="" selected>Choose Employee</option>
 						<option *ngFor="let employee of employeeList" [value]="employee.employeeId">{{employee.empCode}}-{{employee.firstName}}</option>
                          </select> 						
-						 <div *ngIf="isFormSubmitInitiated && itemForm.employeeId.errors" style="color:red;">Please enter a Type.</div>
+						 <div *ngIf="isFormSubmitInitiated && itemForm.employeeId.errors" style="color:red;">Please choose an Employee.</div>
                     </div>
 
                     <div class="col-lg-12">
