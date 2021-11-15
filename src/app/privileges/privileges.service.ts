@@ -33,9 +33,9 @@ export class PrivilegesService extends BaseService {
   }
   public getUserRole(): Observable<any>{
     const userRole = [{
-      userRoleId : 1, userRoleName : "Super Admin"
+      userRoleId : 1, userRoleName : "Admin"
     },{
-      userRoleId : 2, userRoleName : "Admin"
+      userRoleId : 2, userRoleName : "HOD"
     },{
       userRoleId : 3, userRoleName : "Employee"
     }];

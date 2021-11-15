@@ -119,7 +119,8 @@ export class AuthenticationService {
   }
 
   isAdminUser(){
-    return (this._credentials.userRole == 1 || this._credentials.userRole == 2);
+    //return (this._credentials.userRole == 1 || this._credentials.userRole == 2);
+    return (this._credentials.userRole == 1);
   }
 
   isAdmin(){
