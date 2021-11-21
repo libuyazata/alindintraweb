@@ -61,10 +61,10 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
 	this.getUserRole();
  }
   
-  getprivilegesList(item: any) {
+  getprivilegesList(item: any) { 
 		//this.PrivilegesService.getAdminDashBoard().subscribe((resp:any)=>{      
 		  //this.authorizationEntity = resp.adminDashBoard.authorizationEntity['userRoleId'];
-		 const userRoleId=item;
+		  const userRoleId=item;
 		 // this.PrivilegesService.getprivilegesList(this.authorizationEntity).subscribe((resp:any)=>{      
 		  this.PrivilegesService.getprivilegesList(userRoleId).subscribe((resp:any)=>{      
 		  this.privilegesList = resp["authorization"];
