@@ -40,10 +40,15 @@
                                 <td class="column6 col-md-2">{{item.endDate  | date :  "dd-MM-yyyy" }}</td> 
 								<td class="actions">
                                     <div class="link-holder">
-                                        <a class="link" title="Delete" (click)="deleteItem(item);" ><i class="fas fa-trash"></i></a>
-                                        <a class="link" title="Edit" (click)="editItem(item);"><i class="fas fa-edit"></i></a>
-                                    </div>
-                                </td>
+									<span *ngIf="prv_deputationDelete == 'true'">
+													<a class="link" title="Delete" (click)="deleteItem(item);" ><i class="fas fa-trash"></i></a>
+									 </span>  
+									<span *ngIf="prv_deputationEdit == 'true'">
+													<a class="link" title="Edit" (click)="editItem(item);"><i class="fas fa-edit"></i></a>
+											   
+									</span>
+									</div> 
+							   </td>
 							</tr>
 								
 						</tbody>

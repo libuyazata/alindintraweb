@@ -5,43 +5,54 @@
         <div class="menu-label">MENU</div>
     </li> -->
     <li>
-        <span *ngIf="isAdminUser">
-             <a class="menu-link" (click)=menuButtonClicked() routerLink="/home" routerLinkActive="active">
+<!--         <span *ngIf="isAdminUser">
+ -->        
+			
+			<a class="menu-link" (click)=menuButtonClicked() routerLink="/home" routerLinkActive="active">
                 <span class="fas fa-tachometer-alt"></span><span class="nav-label">Dashboard</span>
             </a> 
-            <a class="menu-link" (click)=menuButtonClicked() routerLink="/department" routerLinkActive="active">
+			<span *ngIf="prv_departmentView == 'true'">
+			<a class="menu-link" (click)=menuButtonClicked() routerLink="/department" routerLinkActive="active">
                 <span class="fas fa-university"></span><span class="nav-label">Department</span>
             </a>
-            <a class="menu-link" (click)=menuButtonClicked() routerLink="/employees" routerLinkActive="active">
+            </span>
+			<span *ngIf="prv_employeeView == 'true'">
+			<a class="menu-link" (click)=menuButtonClicked() routerLink="/employees" routerLinkActive="active">
                 <span class="fas fa-users"></span><span class="nav-label">Employees</span>
             </a>
-           <!--  <a class="menu-link" (click)=menuButtonClicked() routerLink="/project" routerLinkActive="active">
+            </span>
+		   <!--  <a class="menu-link" (click)=menuButtonClicked() routerLink="/project" routerLinkActive="active">
                 <span class="fas fa-phone-volume"></span><span class="nav-label">Projects</span>
             </a> -->
-            <a class="menu-link" (click)=menuButtonClicked() routerLink="/work-details" routerLinkActive="active">
+			<span *ngIf="prv_workView == 'true'">
+			<a class="menu-link" (click)=menuButtonClicked() routerLink="/work-details" routerLinkActive="active">
                 <span class="fas fa-info-circle"></span><span class="nav-label">Work</span>
             </a>
+            </span>
 			<a class="menu-link" (click)=menuButtonClicked() routerLink="/general-info/work-status" routerLinkActive="active">
                 <span class="fas fa-info-circle"></span><span class="nav-label">General Info</span>
             </a>
+			<span *ngIf="prv_deputationView == 'true'">
             <a><span class="fas fa-users"></span><span class="nav-label pl-2"> HR</span></a>
-            <a class="menu-link" routerLink="/deputation" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Deputation</span></a>
-		    <a><span class="fas fa-user-cog"></span><span class="nav-label pl-2"> ADMIN</span></a>
-            <a class="menu-link" routerLink="/privileges" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Privileges</span></a>
-          
-	   </span>
-        <span *ngIf="!isAdminUser">
+			<a class="menu-link" routerLink="/deputation" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Deputation</span></a>
+		    </span>
+			<span *ngIf="isAdminUser">
+			<a><span class="fas fa-user-cog"></span><span class="nav-label pl-2"> ADMIN</span></a>
+			<a class="menu-link" routerLink="/privileges" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Privileges</span></a>
+            </span>
+<!-- 	   </span>
+ -->        <!--<span *ngIf="!isAdminUser">
             <!-- <a class="menu-link" routerLink="/employee" routerLinkActive="active">
                 <span class="fas fa-user"></span><span class="nav-label pl-2">My View</span>
             </a> -->
             
-            <a class="menu-link" (click)=menuButtonClicked() routerLink="/new-work" routerLinkActive="active">
+            <!--<a class="menu-link" (click)=menuButtonClicked() routerLink="/new-work" routerLinkActive="active">
                 <span class="fas fa-briefcase"></span><span class="nav-label">Work Details</span>
             </a>
             <a class="menu-link" (click)=menuButtonClicked() routerLink="/material-request" routerLinkActive="active">
                 <span class="fas fa-puzzle-piece"></span><span class="nav-label">Material Request</span>
             </a> 
-        </span>
+        </span>-->
     </li>
 </ul>
 </nav>

@@ -84,8 +84,15 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
   
   public documentConfirmlabel: string= "documentConfirm";
   public documentApprovallabel: string= "documentApproval";
-
- 
+  
+  public prv_workEdit : string;
+  public prv_workDelete : string;
+  public prv_subTaskView : string;
+  public prv_subTaskEdit : string;
+  public prv_subTaskDelete : string;
+  public prv_doucmentView : string;
+  public prv_documentEdit : string;
+  public prv_documentDelete : string;
  constructor(private workDetailsService : WorkDetailsService,
 			  private alertService : AlertNotificationService, 
               private authenticationService: AuthenticationService,
@@ -125,6 +132,16 @@ export class WorkDetailsComponent extends BaseComponent implements OnInit {
       dateTo : new FormControl(''),
     })
 	this.materialRequestSearchForm.patchValue({"workTypeId" : 0});
+    
+	const storage = sessionStorage;
+	this.prv_workEdit = storage.getItem('prv_workEdit');
+	this.prv_workDelete = storage.getItem('prv_workDelete');
+	this.prv_subTaskView = storage.getItem('prv_subTaskView');
+	this.prv_subTaskEdit = storage.getItem('prv_subTaskEdit');
+	this.prv_subTaskDelete = storage.getItem('prv_subTaskDelete');
+	this.prv_doucmentView = storage.getItem('prv_doucmentView');
+	this.prv_documentEdit = storage.getItem('prv_documentEdit');
+	this.prv_documentDelete = storage.getItem('prv_documentDelete');
   }
 
   /*

@@ -32,9 +32,11 @@ export class AuthenticationService {
   private _credentials: Credentials | null;
   private _permissions: Array<string>;
   private _roles: Array<string>;
+  public privilegesList : Array<any>;
 
-  constructor(private injector: Injector) {
-    this._roles = new Array<string>();
+
+  constructor(private injector: Injector ) {
+	this._roles = new Array<string>();
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
@@ -42,6 +44,7 @@ export class AuthenticationService {
         this.setRolesAndPermissions(this._credentials);
       }
     }
+	
   }
 
   /**
@@ -168,6 +171,13 @@ export class AuthenticationService {
     }
     return token;
   }
+  getuserRole() : number | null {
+    var userRole = null;
+    if(this._credentials) {
+      userRole = this._credentials.userRole;
+    }
+    return userRole;
+  }
 
   saveCredentials(credentials?: Credentials, remember?: boolean){
     this.setCredentials(credentials, remember);
@@ -185,10 +195,29 @@ export class AuthenticationService {
     if (credentials) {
       const storage = remember ? localStorage : sessionStorage;
       storage.setItem(credentialsKey, JSON.stringify(credentials));
-    } else {
+      storage.setItem('userRole', JSON.stringify(credentials.userRole));
+      //let httpClient =  this.injector.get(HttpClient);
+	 //let previlegeList: Array<boolean> = new Array();
+	  //let previlegeList = httpClient.get("user/getAuthorization/"+credentials.userRole);
+   //privilegesList = resp["authorization"];
+  
+
+   /* this.privilegesService.getprivilegesList(credentials.userRole).subscribe((resp:any)=>{      
+		 
+		   alert('bb');
+		   this.privilegesList = resp["authorization"];
+		  //alert(this.privilegesList['authorizationId']);
+   }); */
+   //alert(this.previlegeList['authorization']['employeeView']);
+
+   } else {
       sessionStorage.removeItem(credentialsKey);
       localStorage.removeItem(credentialsKey);
     }
   }
-
+  public getprivilegesList(data:any): Observable<any>{
+	  
+    let httpClient =  this.injector.get(HttpClient);
+	return httpClient.get("user/getAuthorization/"+data);
+  }
 }

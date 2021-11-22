@@ -71,9 +71,13 @@
 <!-- 				<td class="actions" *allowUser="'admin'" [routerLink]="['/save-user/']" [queryParams]="{ 'uid': item.employeeId}">
  -->				<td class="actions">
                 <div class="link-holder">
-                    <a class="link" title="Delete" (click)="deleteEmployee(item);" ><i class="fas fa-trash"></i></a>
+					<span *ngIf="prv_employeeDelete == 'true'">
+					<a class="link" title="Delete" (click)="deleteEmployee(item);" ><i class="fas fa-trash"></i></a>
+					</span>
+					<span *ngIf="prv_employeeEdit == 'true'">
 					<a class="link" ><i class="fas fa-edit"></i></a>
-                  <!-- <a class="link" (click)="onUserEditClicked($event, item);"><i class="far fa-edit"></i></a> -->
+                    </span>
+				  <!-- <a class="link" (click)="onUserEditClicked($event, item);"><i class="far fa-edit"></i></a> -->
                 </div>
 				</td>
             </tr>

@@ -24,13 +24,14 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
   public departmentList : Array<any>;
   public departmentSearchForm : FormGroup;
   public itemName: string = "Department";
-
+  public prv_departmentEdit : string;
+  public prv_departmentDelete : string;
   constructor(private alertService : AlertNotificationService,private departmentService : DepartmentService) { 
 	super(departmentService);
   }
 
   ngOnInit() { 
-    /*
+	/*
     createdAt: 1527726446000
     departmentId: 1
     departmentName: "AFTER SALES"
@@ -40,6 +41,10 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
     mobileNo: "9446001704/320"
     updatedAt: 1527800257000
     */
+	const storage = sessionStorage;
+	this.prv_departmentEdit = storage.getItem('prv_departmentEdit');
+	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
+		 
     this.departmentSaveForm = new FormGroup({
       departmentId : new FormControl(''),
       departmentName : new FormControl('',  Validators.required),

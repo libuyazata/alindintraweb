@@ -28,7 +28,8 @@ export class DeputationComponent extends BaseComponent implements OnInit {
   public itemName: string = "Deputation";
   public materialRequestSearchForm : FormGroup;
   private previousItem : any;
-
+  public prv_deputationEdit : string;
+  public prv_deputationDelete : string;
 
   constructor(private DeputationService : DeputationService,
 			  private alertService : AlertNotificationService,  
@@ -48,6 +49,10 @@ export class DeputationComponent extends BaseComponent implements OnInit {
     })
 	this.getDepartmentList();
 	this.getAllEmployeeList();
+	 const storage = sessionStorage;
+	 this.prv_deputationEdit = storage.getItem('prv_deputationEdit');
+	 this.prv_deputationDelete = storage.getItem('prv_deputationDelete');
+
   }
 	
   protected getdeputationList() {

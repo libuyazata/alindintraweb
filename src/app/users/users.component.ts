@@ -31,6 +31,8 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   public sortBy = "firstName";
   public sortOrder = "asc";
   public empSearchForm:FormGroup;
+  public prv_employeeEdit : string;
+  public prv_employeeDelete : string;
   //public dateOfJoin:any;
   //public addEmployeeForm: FormGroup;
   //public departmentList:any;
@@ -50,7 +52,11 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   }
 
   ngOnInit() { 
-    this.getEmployeeList();
+    const storage = sessionStorage;
+    this.prv_employeeEdit = storage.getItem('prv_employeeEdit');
+	this.prv_employeeDelete = storage.getItem('prv_employeeDelete');
+	
+	this.getEmployeeList();
     //this.getDepartmentList();
     //this.getDesignationList();
 

@@ -80,10 +80,12 @@
                         </thead>
                         <tbody *ngFor="let item of mf.data;index as i">
                             <tr class="hover-action-row">
+								<span *ngIf="prv_subTaskView == 'true'">
 								<td class="column1"><a title="Open Material Request" class="link" (click)="openServiceRequest(item);">
                                 <i class="fas " [ngClass]="{'fa-plus-circle': !item.isDetailsSetVisible,'fa-minus-circle': item.isDetailsSetVisible }"></i></a>
 								</td>
-                                <td class="column2">{{item.workName}}</td>
+                                </span>
+								<td class="column2">{{item.workName}}</td>
                                 <td class="column3">{{item.description}}</td> 
                                 <td class="column4">{{item.departmentName}}</td> 
                                 <td class="column5">{{item.projectCoOrdinatorName}}</td> 
@@ -93,9 +95,13 @@
 								<td class="column9 col-md-2"></td>
 								<td class="actions">
                                     <div class="link-holder">
-                                        <a class="link" title="Delete" (click)="deleteItem(item);" ><i class="fas fa-trash"></i></a>
-                                        <a class="link" title="Edit" (click)="editItem(item);"><i class="fas fa-edit"></i></a>
-                                        <a class="link" title="Add Sub Task" (click)="openCreateSubForm(item);"><i class="fas fa-plus"></i></a>
+									<span *ngIf="prv_departmentDelete == 'true'">
+										<a class="link" title="Delete" (click)="deleteItem(item);" ><i class="fas fa-trash"></i></a>
+									</span>
+									<span *ngIf="prv_departmentDelete == 'true'">
+										<a class="link" title="Edit" (click)="editItem(item);"><i class="fas fa-edit"></i></a>
+									</span>
+										<a class="link" title="Add Sub Task" (click)="openCreateSubForm(item);"><i class="fas fa-plus"></i></a>
                                         <a class="link" title="View Allocated Work" (click)="openAllocatelistForm(item);"><i class="fas fa-eye"></i></a>
                                     </div>
                                 </td>
@@ -122,10 +128,13 @@
 																					</thead>
 																			<tbody *ngFor="let subData of subtaskDetailsList;index as i">
 																			<tr class="hover-action-row">
+																			<span *ngIf="prv_doucmentView == 'true'">
 																			<td class="column1">
 																			<a title="Open Document Request" class="link" (click)="openDocumentRequest(subData);">
 																			<i class="fas " [ngClass]="{'fa-plus-circle': !subData.isDocumentSetVisible,'fa-minus-circle': subData.isDocumentSetVisible }"></i></a>
-																			{{subData.subTaskName }}</td>
+																			{{subData.subTaskName }}
+																			</td>
+																			</span>	
 																			<td class="column2">{{subData.description }}</td>
 																			<td class="column3">{{subData.startDate  | date :  "dd-MM-yyyy" }}</td>
 																			<td class="column4">{{subData.endDate  | date :  "dd-MM-yyyy" }}</td>
@@ -133,9 +142,15 @@
 																			<td class="column7 col-md-2"></td>
 																			<td class="actions">
 																			<div class="link-holder">
+																			<span *ngIf="prv_subTaskDelete == 'true'">
 																				<a class="link" title="Delete" (click)="deletesubItem(subData);"><i class="fas fa-trash"></i></a>
+																			</span>
+																			<span *ngIf="prv_subTaskEdit == 'true'">
 																				<a class="link" title="Edit" (click)="editsubItem(subData);"><i class="fas fa-edit"></i></a>
+																			</span>	
+																			<span *ngIf="prv_documentEdit == 'true'">
 																				<a class="link" title="Upload Document" (click)="openUploadForm(subData);"><i class="fas fa-upload"></i></a>
+																			</span>	
 																				<a class="link" title="Employee Allocation" (click)="openAllocateForm(subData);"><i class="fas fa-user-plus"></i></a>
 																				<a class="link" title="View Allocated Work" (click)="openAllocatesublistForm(subData.subTaskId)"><i class="fas fa-eye"></i></a>
 																			</div>
