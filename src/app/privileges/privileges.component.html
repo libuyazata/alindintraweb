@@ -23,7 +23,7 @@
 					</div>
 					
 					<input formControlName="authorizationId"  type="hidden"/>  
-					<div class="col-lg-6">
+					<div class="col-lg-6" *ngIf="isShow">
 					<ul class="priv_list">
 		                <li>
 						<input type="checkbox" formControlName="employeeView" ><b>Employee View</b>

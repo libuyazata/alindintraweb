@@ -48,7 +48,7 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
   public itemName: string = "Privileges";
   public materialRequestSearchForm : FormGroup;
   private previousItem : any;
-
+  public isShow = false;
 
   constructor(private PrivilegesService : PrivilegesService,
 			  private alertService : AlertNotificationService,  
@@ -62,6 +62,7 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
  }
   
   getprivilegesList(item: any) { 
+		this.isShow = true;
 		//this.PrivilegesService.getAdminDashBoard().subscribe((resp:any)=>{      
 		  //this.authorizationEntity = resp.adminDashBoard.authorizationEntity['userRoleId'];
 		  const userRoleId=item;

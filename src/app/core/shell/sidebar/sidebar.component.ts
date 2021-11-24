@@ -44,8 +44,31 @@ export class SideBarComponent implements OnInit {
               public nav: SideBarService) { }
 
   ngOnInit() { 
-  	const storage = sessionStorage;
-    this.prv_employeeView = storage.getItem('prv_employeeView');
+  	
+	const userRoleId = this.authenticationService.getuserRole();
+		  this.nav.getprivilegesList(userRoleId).subscribe((resp:any)=>{      
+		  this.privilegesList = resp["authorization"];
+		  const storage = sessionStorage;
+		  storage.setItem('prv_employeeView', JSON.stringify(this.privilegesList['employeeView']));
+		  storage.setItem('prv_employeeEdit', JSON.stringify(this.privilegesList['employeeEdit']));
+		  storage.setItem('prv_employeeDelete', JSON.stringify(this.privilegesList['employeeDelete']));
+		  storage.setItem('prv_departmentView', JSON.stringify(this.privilegesList['departmentView']));
+		  storage.setItem('prv_departmentEdit', JSON.stringify(this.privilegesList['departmentEdit']));
+		  storage.setItem('prv_departmentDelete', JSON.stringify(this.privilegesList['departmentDelete']));
+		  storage.setItem('prv_workView', JSON.stringify(this.privilegesList['workView']));
+		  storage.setItem('prv_workEdit', JSON.stringify(this.privilegesList['workEdit']));
+		  storage.setItem('prv_workDelete', JSON.stringify(this.privilegesList['workDelete']));
+		  storage.setItem('prv_subTaskView', JSON.stringify(this.privilegesList['subTaskView']));
+		  storage.setItem('prv_subTaskEdit', JSON.stringify(this.privilegesList['subTaskEdit']));
+		  storage.setItem('prv_subTaskDelete', JSON.stringify(this.privilegesList['subTaskDelete']));
+		  storage.setItem('prv_doucmentView', JSON.stringify(this.privilegesList['doucmentView']));
+		  storage.setItem('prv_documentEdit', JSON.stringify(this.privilegesList['documentEdit']));
+		  storage.setItem('prv_documentDelete', JSON.stringify(this.privilegesList['documentDelete']));
+		  storage.setItem('prv_deputationView', JSON.stringify(this.privilegesList['deputationView']));
+		  storage.setItem('prv_deputationEdit', JSON.stringify(this.privilegesList['deputationEdit']));
+		  storage.setItem('prv_deputationDelete', JSON.stringify(this.privilegesList['deputationDelete']));
+		 
+		 this.prv_employeeView = storage.getItem('prv_employeeView');
 		 this.prv_employeeEdit = storage.getItem('prv_employeeEdit');
 		 this.prv_employeeDelete = storage.getItem('prv_employeeDelete');
 		 this.prv_departmentView = storage.getItem('prv_departmentView');
@@ -63,6 +86,9 @@ export class SideBarComponent implements OnInit {
 		 this.prv_deputationView = storage.getItem('prv_deputationView');
 		 this.prv_deputationEdit = storage.getItem('prv_deputationEdit');
 		 this.prv_deputationDelete = storage.getItem('prv_deputationDelete');
+
+		
+		});
 
 	this.isAdminUser = this.authenticationService.isAdminUser();
     this.updateLayout();

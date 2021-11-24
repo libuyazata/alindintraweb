@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -14,7 +14,7 @@ export class SideBarService extends BaseService {
     isScreenSmall: boolean
 
 
-  constructor(public httpClient: HttpClient) { 
+  constructor(public httpClient: HttpClient,private injector: Injector) { 
     super(httpClient);
     this.visible = true;
   }
@@ -24,6 +24,10 @@ export class SideBarService extends BaseService {
     this.visible = !this.visible;
   }
 
-
+public getprivilegesList(data:any): Observable<any>{
+	  
+    let httpClient =  this.injector.get(HttpClient);
+	return httpClient.get("user/getAuthorization/"+data);
+  }
   
 }

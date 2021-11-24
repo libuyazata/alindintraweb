@@ -25,11 +25,12 @@ public privilegesList : Array<any>;
       }
       if(this.authenticationService.hasPermission(route.data['role'])){
         hasPrivilege = true;
-		let storage = sessionStorage;
-	 const userRoleId = this.authenticationService.getuserRole();
+		/* const userRoleId = this.authenticationService.getuserRole();
 		this.authenticationService.getprivilegesList(userRoleId).subscribe((resp:any)=>{      
 		  this.privilegesList = resp["authorization"];
-		  const storage = sessionStorage;
+		  let storage = sessionStorage;
+		  alert('ppp');
+		  sessionStorage.clear();
 		  storage.setItem('prv_employeeView', JSON.stringify(this.privilegesList['employeeView']));
 		  storage.setItem('prv_employeeEdit', JSON.stringify(this.privilegesList['employeeEdit']));
 		  storage.setItem('prv_employeeDelete', JSON.stringify(this.privilegesList['employeeDelete']));
@@ -48,7 +49,7 @@ public privilegesList : Array<any>;
 		  storage.setItem('prv_deputationView', JSON.stringify(this.privilegesList['deputationView']));
 		  storage.setItem('prv_deputationEdit', JSON.stringify(this.privilegesList['deputationEdit']));
 		  storage.setItem('prv_deputationDelete', JSON.stringify(this.privilegesList['deputationDelete']));
-		});
+		}); */
 		
 	  }
     }
