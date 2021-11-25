@@ -37,6 +37,8 @@ export class SideBarComponent implements OnInit {
   public prv_deputationView : string;
   public prv_deputationEdit : string;
   public prv_deputationDelete : string;  
+  public isShowHr = false;
+  public isShowAdmin = false;
   
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
@@ -145,5 +147,11 @@ export class SideBarComponent implements OnInit {
     if(this.isMobileLayout) {
       this.nav.visible = false;
     }
+  }
+  openHr() { 
+    this.isShowHr = ! this.isShowHr;
+  }
+  openAdmin() { 
+    this.isShowAdmin = ! this.isShowAdmin;
   }
 }

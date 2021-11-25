@@ -33,13 +33,17 @@
                 <span class="fas fa-info-circle"></span><span class="nav-label">General Info</span>
             </a>
 			<span *ngIf="prv_deputationView == 'true'">
-            <a><span class="fas fa-users"></span><span class="nav-label pl-2"> HR</span></a>
+            <a><span class="fas fa-users"></span><span class="nav-label pl-2"> HR <i class="fas icon-margin" [ngClass]="{'fa-plus-circle': !isShowHr,'fa-minus-circle': isShowHr }" (click)="openHr();"></i></span></a>
+			<span *ngIf="isShowHr">
 			<a class="menu-link" routerLink="/deputation" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Deputation</span></a>
 		    </span>
+			</span>
 			<span *ngIf="isAdminUser">
-			<a><span class="fas fa-user-cog"></span><span class="nav-label pl-2"> ADMIN</span></a>
+			<a><span class="fas fa-user-cog"></span><span class="nav-label pl-2"> ADMIN<i class="fas icon-margin" [ngClass]="{'fa-plus-circle': !isShowAdmin,'fa-minus-circle': isShowAdmin }" (click)="openAdmin();"></i></span></a>
+			<span *ngIf="isShowAdmin">
 			<a class="menu-link" routerLink="/privileges" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Privileges</span></a>
             </span>
+			</span>
 <!-- 	   </span>
  -->        <!--<span *ngIf="!isAdminUser">
             <!-- <a class="menu-link" routerLink="/employee" routerLinkActive="active">

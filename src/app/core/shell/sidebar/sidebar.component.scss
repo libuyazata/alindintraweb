@@ -24,7 +24,10 @@
     margin: 0 auto;
   }
 }
-
+.icon-margin{
+	float:right;
+	margin-right:10px;
+}
 @media (max-width: 575px) {
 
   .navbar-primary {
