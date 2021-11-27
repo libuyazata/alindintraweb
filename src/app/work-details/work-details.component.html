@@ -99,10 +99,10 @@
 								<td class="column9 col-md-2"></td>
 								<td class="actions">
                                     <div class="link-holder">
-									<span *ngIf="prv_departmentDelete == 'true'">
+									<span *ngIf="prv_workDelete == 'true'">
 										<a class="link" title="Delete" (click)="deleteItem(item);" ><i class="fas fa-trash"></i></a>
 									</span>
-									<span *ngIf="prv_departmentDelete == 'true'">
+									<span *ngIf="prv_workEdit == 'true'">
 										<a class="link" title="Edit" (click)="editItem(item);"><i class="fas fa-edit"></i></a>
 									</span>
 										<a class="link" title="Add Sub Task" (click)="openCreateSubForm(item);"><i class="fas fa-plus"></i></a>

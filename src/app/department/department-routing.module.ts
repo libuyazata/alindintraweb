@@ -10,7 +10,7 @@ const routes: Routes = [
       path: 'department', 
       component: DepartmentComponent, 
       loadChildren: './department.module#DepartmentModule',
-      data: { title: extract('Department'), role: 'Admin' } 
+      data: { title: extract('Department')} 
     }
   ])  
 ];

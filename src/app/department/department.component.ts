@@ -14,7 +14,6 @@ import { AlertNotificationService } from '@app/shared/services/alertnotification
   styleUrls: ['./department.component.scss']
 })
 export class DepartmentComponent extends BaseComponent implements OnInit {
-
   version: string = environment.version;
   public departmentSaveForm : FormGroup;
   //public employeeList : Array<any>;
@@ -31,16 +30,6 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() { 
-	/*
-    createdAt: 1527726446000
-    departmentId: 1
-    departmentName: "AFTER SALES"
-    description: null
-    emailId: "aftersales@alindrelays.com"
-    isActive: 1
-    mobileNo: "9446001704/320"
-    updatedAt: 1527800257000
-    */
 	const storage = sessionStorage;
 	this.prv_departmentEdit = storage.getItem('prv_departmentEdit');
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
@@ -48,7 +37,7 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
     this.departmentSaveForm = new FormGroup({
       departmentId : new FormControl(''),
       departmentName : new FormControl('',  Validators.required),
-      description : new FormControl('',),
+      description : new FormControl('')
       //emailId : new FormControl('', Validators.required),
       //isActive : new FormControl('',  Validators.required),
       //mobileNo : new FormControl('',  Validators.required)

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '@app/shared';
 
 import { DepartmentRoutingModule } from './department-routing.module';
 import { DepartmentComponent } from './department.component';
@@ -14,7 +15,8 @@ import { DataTableModule } from 'angular-6-datatable';
     TranslateModule,
     DataTableModule,
     ReactiveFormsModule,
-    DepartmentRoutingModule
+    DepartmentRoutingModule,
+	SharedModule,
   ],
   declarations: [
     DepartmentComponent
