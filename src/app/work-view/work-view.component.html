@@ -1,0 +1,701 @@
+<style>
+#scrollMe {
+    height:150px;
+    overflow: inherit !important;
+    overflow-x:hidden;
+    padding:20px;
+}
+</style>
+<div class="page-header-container">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>
+                    <span>WORKS</span>                
+                </h4>    
+            </div>
+        </div>
+    </div>
+	 <div class="row">
+        <div class="col-lg-12 search-container">
+            <form novalidate [formGroup]="materialRequestSearchForm" (ngSubmit)="onWorkDetailsSearched();">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="search-label-container"><label>Search</label></div>
+                        <input formControlName="searchKeyWord" class="form-control" placeholder="Search Work"/>  
+                    </div> 
+					<div class="col-lg-2">
+                    <div class="search-label-container"><label>Type</label></div>
+                    <select class="form-control" formControlName="workTypeId">
+                        <option value="0" [selected] ="true">All</option>  
+                        <option *ngFor="let work of workTypeList" [ngValue]="work.workTypeId">{{work.workType}}</option>
+                    </select> 
+					</div>
+					<div class="col-lg-2">
+                        <div class="search-label-container"><label>Start Date</label></div>
+                        <input formControlName="dateFrom" class="form-control"  type="date"/>  
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="search-label-container"><label>End Date</label></div>
+                        <input formControlName="dateTo" class="form-control" type="date" />  
+                    </div>
+                     
+                    <div class="col-lg-4 pt-4">                    
+                        <span class="float-left">
+                            <button class="btn btn-info" type="submit">Search</button>  
+                            <button class="btn btn-danger" type="reset">Clear</button>
+                        	<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;">Create {{itemName}}</button>  
+
+						</span>
+                    </div> 
+                </div>
+            </form> 
+		<!-- 	<button (click)="openCreateSubForm()" class="btn btn-info mt-4">Create Sub Task</button>  
+			<button (click)="openUploadForm()" class="btn btn-info mt-4">Upload Document</button>  
+			<button (click)="openAllocateForm()" class="btn btn-info mt-4">Employee Allocation</button>  
+			<button (click)="openAllocatelistForm()" class="btn btn-success mt-4" style="background:#900C3F;">Allocated work for Employees</button>  
+		 --></div>
+    </div>
+	<div class="row">
+	 
+	</div>
+	</div>
+	<div class="page-body-container">
+    <div class="row">
+        <div class="col-lg-12">
+                <div class="table100">
+                    <table [mfData]="workDetailsList" #mf="mfDataTable" [mfRowsOnPage]="15">
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1"></th>
+                                <th class="column2"><mfDefaultSorter by="workName">Work</mfDefaultSorter></th>
+                                <th class="column3"><mfDefaultSorter by="description">Description</mfDefaultSorter></th>
+                                <th class="column4"><mfDefaultSorter by="departmentName">Department </mfDefaultSorter></th>
+                                <th class="column5"><mfDefaultSorter by="projectCoOrdinatorName">Project CoOrdinator </mfDefaultSorter></th>
+                                <th class="column6"><mfDefaultSorter by="workType">Type</mfDefaultSorter></th>
+                                <th class="column7"><mfDefaultSorter by="startDate">Start Date</mfDefaultSorter></th>
+                                <th class="column8"><mfDefaultSorter by="endDate">End Date</mfDefaultSorter></th>
+					            <th class="column9"></th>
+							</tr>
+                        </thead>
+                        <tbody *ngFor="let item of mf.data;index as i">
+                            <tr class="hover-action-row">
+								
+								<td class="column1">
+								<span *ngIf="prv_subTaskView == 'true'">
+									<a title="Open Material Request" class="link" (click)="openServiceRequest(item);">
+									<i class="fas " [ngClass]="{'fa-plus-circle': !item.isDetailsSetVisible,'fa-minus-circle': item.isDetailsSetVisible }"></i>
+									</a>
+								</span>
+								</td>
+                               
+								<td class="column2">{{item.workName}}</td>
+                                <td class="column3">{{item.description}}</td> 
+                                <td class="column4">{{item.departmentName}}</td> 
+                                <td class="column5">{{item.projectCoOrdinatorName}}</td> 
+                                <td class="column6">{{item.workType}}</td> 
+                                <td class="column7">{{item.startDate  | date :  "dd-MM-yyyy" }}</td>                        
+                                <td class="column8">{{item.endDate  | date :  "dd-MM-yyyy" }}</td> 
+								<td class="column9 col-md-2"></td>
+								<td class="actions" style="display:none;">
+                                    <div class="link-holder">
+									<span *ngIf="prv_workDelete == 'true'">
+										<a class="link" title="Delete" (click)="deleteItem(item);" ><i class="fas fa-trash"></i></a>
+									</span>
+									<span *ngIf="prv_workEdit == 'true'">
+										<a class="link" title="Edit" (click)="editItem(item);"><i class="fas fa-edit"></i></a>
+									</span>
+										<a class="link" title="Add Sub Task" (click)="openCreateSubForm(item);"><i class="fas fa-plus"></i></a>
+                                        <a class="link" title="View Allocated Work" (click)="openAllocatelistForm(item);"><i class="fas fa-eye"></i></a>
+                                    </div>
+                                </td>
+							</tr>
+								<tr *ngIf="item.isDetailsSetVisible">
+								   <td colspan="9" style="padding: 20px;">
+									<div class="row form-group">
+										<div class="col-lg-12">
+													<!-- <ngb-tabset class="tabset1" #tabs>
+														<ng-container *ngIf="subtaskDetailsList.length > 0; else noItems">														
+														<ngb-tab *ngFor="let subData of subtaskDetailsList; index as i" tabindex="{{i}}">
+															
+															<ng-template ngbTabTitle><span class="title1">{{subitemName}} {{i+1}}</span></ng-template>
+																<ng-template ngbTabContent> -->
+																<table [mfData]="subtaskDetailsList" #mf="mfDataTable" [mfRowsOnPage]="15">
+																			<thead>
+																				<tr> 
+																					<th class="column1"><mfDefaultSorter by="subTaskName">{{subitemName}}</mfDefaultSorter></th>
+																					<th class="column2"><mfDefaultSorter by="description">Description</mfDefaultSorter></th>
+																					<th class="column3"><mfDefaultSorter by="startDate">Start Date</mfDefaultSorter></th>
+																					<th class="column4"><mfDefaultSorter by="endDate">End Date</mfDefaultSorter></th>
+																					<th class="column5"><mfDefaultSorter by="Documentnumber">Uploaded By</mfDefaultSorter></th>
+																					<th class="column6"><mfDefaultSorter by="View"></mfDefaultSorter></th>
+																					</thead>
+																			<tbody *ngFor="let subData of subtaskDetailsList;index as i">
+																			<tr class="hover-action-row">
+																			
+																			<td class="column1">
+																			<span *ngIf="prv_doucmentView == 'true'">
+																			<a title="Open Document Request" class="link" (click)="openDocumentRequest(subData);">
+																			<i class="fas " [ngClass]="{'fa-plus-circle': !subData.isDocumentSetVisible,'fa-minus-circle': subData.isDocumentSetVisible }"></i>
+																			</a>
+</span>	
+																			{{subData.subTaskName }}
+																			
+																			</td>
+																			<td class="column2">{{subData.description }}</td>
+																			<td class="column3">{{subData.startDate  | date :  "dd-MM-yyyy" }}</td>
+																			<td class="column4">{{subData.endDate  | date :  "dd-MM-yyyy" }}</td>
+																			<td class="column5">{{subData.createdEmpName}}</td>
+																			<td class="column7 col-md-2"></td>
+																			<td class="actions" style="display:none;">
+																			<div class="link-holder">
+																			<span *ngIf="prv_subTaskDelete == 'true'">
+																				<a class="link" title="Delete" (click)="deletesubItem(subData);"><i class="fas fa-trash"></i></a>
+																			</span>
+																			<span *ngIf="prv_subTaskEdit == 'true'">
+																				<a class="link" title="Edit" (click)="editsubItem(subData);"><i class="fas fa-edit"></i></a>
+																			</span>	
+																			<span *ngIf="prv_documentEdit == 'true'">
+																				<a class="link" title="Upload Document" (click)="openUploadForm(subData);"><i class="fas fa-upload"></i></a>
+																			</span>	
+																				<a class="link" title="Employee Allocation" (click)="openAllocateForm(subData);"><i class="fas fa-user-plus"></i></a>
+																				<a class="link" title="View Allocated Work" (click)="openAllocatesublistForm(subData.subTaskId)"><i class="fas fa-eye"></i></a>
+																			</div>
+																			</td>
+																			</tr>
+																			<tr *ngIf="subData.isDocumentSetVisible">
+								   <td colspan="9" style="padding: 20px;">
+									<div class="row form-group">
+										<div class="col-lg-12">
+													<ngb-tabset class="tabset1" #tabs1>
+														<ng-container *ngIf="subtaskDocumentDetails.length > 0; else noItems">														
+														<ngb-tab *ngFor="let subDocument of subtaskDocumentDetails; index as i" tabindex="{{i}}">
+															<ng-template ngbTabTitle><span class="title1" title="{{subDocument.documentnumber}}">{{subDocument.documentnumber | slice:0:5}}</span></ng-template>
+																<ng-template ngbTabContent>
+																<table [mfData]="subtaskDocumentDetails" #mf="mfDataTable" [mfRowsOnPage]="15">
+																			<thead>
+																				<tr> 
+																					<th class="column1"><mfDefaultSorter by="DocumentName">Sub Task Name</mfDefaultSorter></th>
+																					<th class="column2"><mfDefaultSorter by="DocumentName">File Name</mfDefaultSorter></th>
+																					<th class="column3"><mfDefaultSorter by="DocumentName">Document Name</mfDefaultSorter></th>
+																					<th class="column4"><mfDefaultSorter by="Documentnumber">Document Number</mfDefaultSorter></th>
+																					<th class="column5"><mfDefaultSorter by="Documentnumber">Description</mfDefaultSorter></th>
+																					<th class="column6"><mfDefaultSorter by="Documentnumber">Uploaded By</mfDefaultSorter></th>
+<!-- 																					<th class="column7"><mfDefaultSorter by="Actions">Actions</mfDefaultSorter></th>
+ -->																					</tr>
+																			</thead>
+																			<tbody>
+																			<tr class="hover-action-row">
+																			<td class="column1">
+																				{{subDocument.subTaskName}}
+																			</td>
+																			<td class="column2">
+																				{{subDocument.originalFileName}}
+																			</td>
+																			<td class="column3" title="{{subDocument.documentName}}">
+																					{{subDocument.documentName | slice:0:20}}
+																			</td>
+																			<td class="column4">
+																				{{subDocument.documentnumber}}
+																			</td>
+																			<td class="column5">
+																				{{subDocument.description}}
+																			</td>
+																			<td class="column6">
+																				{{subDocument.createdEmpName}}
+																			</td>
+																			<td class="column7" style="display:none;">
+																			<span *ngIf="subDocument.verificationStatus == 0">
+																			<button class="btn {{btnClass1}}" type="button"  style1="float:right;margin-right:5px;">{{btnVal1}}</button>  
+																			</span>
+																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 0">
+																			<button class="btn {{btnClass2}}" type="button" style1="float:right;margin-right:5px;">{{btnVal2}}</button>  
+																			</span>
+																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 1">
+																			<button class="btn {{btnClass3}}" type="button" >{{btnVal3}}</button>  
+																			</span>
+																			<download-ctrl id="report-download-control" style="visibility:hidden;" ></download-ctrl>
+																			<button type="button" class="btn btn-primary" 
+																			style1="float:right;margin-right:5px;"> Download</button>
+
+																			</td>
+																			<!-- <td class="column7"></td>
+																			<td class="column8"></td>
+																			<td class="actions">
+																			<div class="link-holder">
+																			<span *ngIf="subDocument.verificationStatus == 0">
+																			<button class="btn {{btnClass1}}" type="button" (click)="documentConfirm(subDocument);"  style1="float:right;margin-right:5px;">{{btnVal1}}</button>  
+																			</span>
+																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 0">
+																			<button class="btn {{btnClass2}}" type="button" (click)="documentApproval(subDocument);" style1="float:right;margin-right:5px;">{{btnVal2}}</button>  
+																			</span>
+																			<span *ngIf="subDocument.verificationStatus == 1 && subDocument.approvalStatus == 1">
+																			<button class="btn {{btnClass3}}" type="button" >{{btnVal3}}</button>  
+																			</span>
+																			<download-ctrl id="report-download-control" style="visibility:hidden;" (click)="onDownloadPdfClicked(subDocument);"></download-ctrl>
+																			<button type="button" class="btn btn-primary" 
+																			(click)="print($event)" style1="float:right;margin-right:5px;"> Download</button>
+																			</div>
+																			</td> -->
+																			</tr>
+																			</tbody>
+																</table>
+															</ng-template>
+														</ngb-tab>
+														</ng-container>
+														<ng-template #noItems>
+														  <ngb-tab tabindex="0"> 
+															<ng-template ngbTabTitle><span class="title1">No Document</span></ng-template>
+															<ng-template ngbTabContent style="padding:5px;">No Document Found</ng-template>
+														  </ngb-tab>
+														</ng-template>
+														</ngb-tabset>
+										</div>
+									  </div>
+								   </td> 
+								</tr>
+																			</tbody>
+																</table>
+															<!-- </ng-template>
+														</ngb-tab>
+														</ng-container>
+														<ng-template #noItems>
+														  <ngb-tab tabindex="0"> 
+															<ng-template ngbTabTitle><span class="title1">No Data</span></ng-template>
+															<ng-template ngbTabContent>No Data Found</ng-template>
+														  </ngb-tab>
+														</ng-template>
+														</ngb-tabset> -->
+										</div>
+									  </div>
+								   </td> 
+								</tr>
+								
+								
+						</tbody>
+						<tbody *ngIf="workDetailsList && workDetailsList.length == 0">
+                            <tr>
+                                <td colspan="8">
+                                    <div class="text-center" style="padding:5px;">No Data Found</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[15,20,30,40,50]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Create/Update Form [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : isFormVisible}" id="createUpdateModal" *ngIf="isFormVisible">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{isEdit ? ('Update ' +itemName)  : ('Create ' +itemName)}}</h5>
+                <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePopup();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form novalidate [formGroup]="addItemForm" (ngSubmit)="onAddItem();">
+                    <div class="col-lg-12">
+                        <div><label>{{itemName}} :</label></div>
+                        <input class="form-control mandatory-field" formControlName="workName" type="text" 
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && itemForm.workName.errors }"/>
+                        <div *ngIf="isFormSubmitInitiated && itemForm.workName.errors" style="color:red;">Please enter a name.</div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div><label>Description : </label></div>
+                        <textarea class="form-control mandatory-field" formControlName="description"  type="text" maxlength="400"
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && itemForm.description.errors }"></textarea>
+
+                        <div *ngIf="isFormSubmitInitiated && itemForm.description.errors" style="color:red;">Please enter description.</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>Type : </label></div>
+                        <select class="form-control" formControlName="workTypeId">
+                        <option *ngFor="let work of workTypeList" [ngValue]="work.workTypeId">{{work.workType}}</option>
+                         </select> 
+                        <div *ngIf="isFormSubmitInitiated && itemForm.workTypeId.errors" style="color:red;">Please select Work Type</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>Department : </label></div>
+                        <select class="form-control" formControlName="departmentId">
+                        <option *ngFor="let department of departmentList" [ngValue]="department.departmentId">{{department.departmentName}}</option>
+                         </select> 
+                        <div *ngIf="isFormSubmitInitiated && itemForm.departmentId.errors" style="color:red;">Please select Department</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>Employee : </label></div>
+                        <select class="form-control" formControlName="projectCoOrdinatorEmpId">
+                        <option *ngFor="let employee of employeeList" [ngValue]="employee.employeeId">{{employee.firstName}}</option>
+                         </select> 
+                        <div *ngIf="isFormSubmitInitiated && itemForm.projectCoOrdinatorEmpId.errors" style="color:red;">Please select Employee</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>Work Status : </label></div>
+                        <select class="form-control" formControlName="workStatusId">
+                        <option *ngFor="let workStatus of workStatusList" [ngValue]="workStatus.workStatusId">{{workStatus.workStatusName}}</option>
+                         </select> 
+                        <div *ngIf="isFormSubmitInitiated && itemForm.workStatusId.errors" style="color:red;">Please select Work Status</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>Start Date : </label></div>
+                        <input formControlName="startDate" class="form-control"  type="date"/>  
+                        <input formControlName="workDetailsId" class="form-control"  type="hidden"/>  
+                        <input formControlName="createdOn" class="form-control"  type="hidden"/>  
+                        <input formControlName="updatedOn" class="form-control"  type="hidden"/>  
+						<div *ngIf="isFormSubmitInitiated && itemForm.startDate.errors" style="color:red;">Please select Start Date</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>End Date : </label></div>
+                        <input formControlName="endDate" class="form-control"  type="date"/>  
+<!--                         <div *ngIf="isFormSubmitInitiated && itemForm.endDate.errors" style="color:red;">Please select End Date</div>
+ -->						<div *ngIf="isFormSubmitInitiated && itemForm.endDate.invalid" style="color:red;">End Date should be greater than or equal to Start date</div>
+					</div>
+
+                    <div class="col-lg-12 form-group" style="margin-top: 20px;">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-danger" *ngIf=" ! isEdit" (click)="resetForm()"  type="reset">Clear</button>     
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Create/Update Form [END]-->
+<!-- Create/Update Sub Form [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : issubFormVisible}" id="createUpdateModal" *ngIf="issubFormVisible">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{issubEdit ? ('Update ' +subitemName)  : ('Create ' +subitemName)}}</h5>
+                <button class="close" type="button" data-dismiss="modal" appModal  (click)="closesubPopup();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form novalidate [formGroup]="addItemsubForm" (ngSubmit)="onAddsubItem();">
+                    <!-- <div class="col-lg-12">
+                        <div><label>{{itemName}} :</label></div>
+                        <select class="form-control" formControlName="workDetailsId">
+                        <option value="">Choose Work</option>
+						<option *ngFor="let work of workDetailsList" [ngValue]="work.workDetailsId">{{work.workName}}</option>
+                         </select> 
+                        <div *ngIf="issubFormSubmitInitiated && subitemForm.workDetailsId.errors" style="color:red;">Please select {{itemName}}</div>
+                      </div>-->
+					<div class="col-lg-12">
+                        <div><label>{{subitemName}} :</label></div>
+                        <input formControlName="workDetailsId" type="hidden" />
+						<input class="form-control mandatory-field" formControlName="subTaskName" type="text" 
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.subTaskName.errors }"/>
+                        <div *ngIf="issubFormSubmitInitiated && subitemForm.subTaskName.errors" style="color:red;">Please enter a {{subitemName}}.</div>
+                    </div> 
+                    <div class="col-lg-12">
+                        <div><label>Description : </label></div>
+                        <textarea class="form-control mandatory-field" formControlName="description"  type="text" maxlength="400"
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.description.errors }"></textarea>
+                        <div *ngIf="issubFormSubmitInitiated && subitemForm.description.errors" style="color:red;">Please enter description.</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>Work Status : </label></div>
+                        <select class="form-control" formControlName="workStatusId">
+                        <option *ngFor="let workStatus of workStatusList" [ngValue]="workStatus.workStatusId">{{workStatus.workStatusName}}</option>
+                         </select> 
+                        <div *ngIf="issubFormSubmitInitiated && subitemForm.workStatusId.errors" style="color:red;">Please select Work Status</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>Start Date : </label></div>
+                        <input formControlName="startDate" class="form-control"  type="date"/>  
+                        <input formControlName="subTaskId" class="form-control"  type="hidden"/>  
+                        <input formControlName="createdOn" class="form-control"  type="hidden"/>  
+                        <input formControlName="updatedOn" class="form-control"  type="hidden"/>  
+						<div *ngIf="issubFormSubmitInitiated && subitemForm.startDate.errors" style="color:red;">Please select Start Date</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>End Date : </label></div>
+                        <input formControlName="endDate" class="form-control"  type="date"/>  
+<!--                         <div *ngIf="issubFormSubmitInitiated && subitemForm.endDate.errors" style="color:red;">Please select End Date</div>
+ -->						<div *ngIf="issubFormSubmitInitiated && subitemForm.endDate.invalid" style="color:red;">End Date should be greater than or equal to Start date</div>
+				   </div>
+
+                    <div class="col-lg-12 form-group" style="margin-top: 20px;">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-danger" *ngIf=" ! issubEdit" (click)="resetsubForm()"  type="reset">Clear</button>     
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Create/Update Form [END]-->
+<!-- Create/Update Upload Form [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : isuploadFormVisible}" id="uploadFormModal" *ngIf="isuploadFormVisible">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{isuploadEdit ? ('Update ' +uploadName)  : ('Create ' +uploadName)}}</h5>
+				<button class="close" type="button" data-dismiss="modal" appModal  (click)="closeuploadPopup();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form novalidate [formGroup]="addItemuploadForm" (ngSubmit)="onAddDocument()">
+					  <!--<div class="col-lg-12">
+                       <input class="form-control mandatory-field" formControlName="departmentId" type="" 
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.documentName.errors }"/>
+                      
+					   <input class="form-control mandatory-field" formControlName="departmentId" type="" 
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.documentName.errors }"/>
+                        
+						
+						<div><label>{{itemName}} :</label></div>
+                        <select class="form-control" formControlName="workDetailsId" (change)="getSubTaskByWorkId($event.target.value);">
+                        <option value="">Choose Work</option>
+						<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
+                         </select> 
+                        <div *ngIf="isuploadFormInitiated && uploadForm.workDetailsId.errors" style="color:red;">Please select {{itemName}}</div>
+                      </div>
+					 <div class="col-lg-12">
+                        <div><label>{{subitemName}} :</label></div>
+                        <select class="form-control" formControlName="subTaskId" >
+                        <option value="">Choose {{subitemName}}</option>
+						<option *ngFor="let subwork of subtaskDetailsListbyId" [ngValue]="subwork.subTaskId">{{subwork.subTaskName}}</option>
+                         </select> 
+                        <div *ngIf="isuploadFormInitiated && uploadForm.subTaskId.errors" style="color:red;">Please select {{subitemName}}</div>
+                       </div>  -->
+                    <div class="col-lg-12">  
+						<input formControlName="departmentId" type="hidden" />
+						<input formControlName="workDetailsId" type="hidden" />
+                        <input formControlName="subTaskId" type="hidden" />
+						<div><label>Document Category :</label></div>
+						<select class="form-control" formControlName="documentCategoryId">
+							<option value="">Select</option>              
+							<option *ngFor="let documentCat of documentCatList"
+								[value]="documentCat.documentTypeId">
+								{{ documentCat.type }}
+							</option>
+						</select>
+						<div *ngIf="isuploadFormInitiated && uploadForm.documentTypeId.errors" style="color:red;">Please select a Document Category.</div>
+					</div> 
+					<div class="col-lg-12">  
+                        <div><label>Document Type :</label></div>
+						<select class="form-control" formControlName="documentTypeId">
+							<option value="">Select</option>              
+							<option *ngFor="let documentType of documentTypeList"
+								[value]="documentType.documentTypeId">
+								{{ documentType.type }}
+							</option>
+						</select>
+						<div *ngIf="isuploadFormInitiated && uploadForm.documentTypeId.errors" style="color:red;">Please select a Document Type.</div>
+					</div> 
+					<div class="col-lg-12">
+                        <div><label>Description : </label></div>
+                        <textarea class="form-control mandatory-field" formControlName="description"  type="text" maxlength="400"
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.description.errors }"></textarea>
+                        <div *ngIf="isuploadFormInitiated && uploadForm.description.errors" style="color:red;">Please enter description.</div>
+                    </div>
+					<div class="col-lg-12">
+                        <div><label>Document Name :</label></div>
+                        <input class="form-control mandatory-field" formControlName="documentName" type="text" 
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && subitemForm.documentName.errors }"/>
+                        <div *ngIf="isuploadFormInitiated && uploadForm.documentName.errors" style="color:red;">Please enter a Document Name.</div>
+                    </div>
+					<div class="col-lg-12">  
+								<label>Please select a Document to upload:</label>
+							</div> 
+							<div class="col-lg-12">  
+							<input type="file" formControlName="docfile" (change)="onFileSelect($event.target.files)" accept=".pdf"/>
+							<br/> 
+                    <div *ngIf="isuploadFormInitiated && uploadForm.docfile.errors" style="color:red;">Please choose a PDF Document.</div>
+							</div> 
+                    <div class="col-lg-12 form-group" style="margin-top: 20px;">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-danger" *ngIf=" ! isuploadEdit" (click)="resetuploadForm()"  type="reset">Clear</button>     
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Create/Update Form [END]-->
+
+<!-- Create/Update Upload Form [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : isempAllocateFormVisible}" id="allocateFormModal" *ngIf="isempAllocateFormVisible">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{isAllocateEdit ? ('Update ' +allocateName)  : ('Create ' +allocateName)}}</h5>
+				<button class="close" type="button" data-dismiss="modal" appModal  (click)="closeAllocatePopup();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form novalidate [formGroup]="addempAllocateForm" (ngSubmit)="onAddemployeeAllocate()">
+					<!-- <div class="col-lg-12">
+                        <input formControlName="departmentId" type="hidden">
+                  		<div><label>{{itemName}} :</label></div>
+                        <select class="form-control" formControlName="workDetailsId" (change)="getSubTaskByWorkId($event.target.value);">
+                        <option value="" selected>Choose Work</option>
+						<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
+                         </select> 
+                    <div *ngIf="isAllocateFormInitiated && allocateForm.workDetailsId.errors" style="color:red;">Please Choose Work</div>
+					  </div>
+					 <div class="col-lg-12">
+                        <div><label>{{subitemName}} :</label></div>
+                        <select class="form-control" formControlName="subTaskId" (change)="getAllocatedEmployeeList();">
+                        <option value="" selected>Choose {{subitemName}}</option>
+						<option *ngFor="let subwork of subtaskDetailsListbyId" [ngValue]="subwork.subTaskId">{{subwork.subTaskName}}</option>
+                         </select> 
+						<div *ngIf="isAllocateFormInitiated && allocateForm.subTaskId.errors" style="color:red;">Please Choose {{subitemName}}</div>
+					   </div> -->
+					   <div class="col-lg-12" id="scrollMe">
+                        <input formControlName="departmentId" type="hidden">
+						<input formControlName="workDetailsId" type="hidden" />
+                        <input formControlName="subTaskId" type="hidden" />
+						
+						<div><label>Choose Employee :</label></div>
+						
+						 <ng-multiselect-dropdown #multiSelect
+						  [placeholder]="'Choose Employee'" 
+						  [disabled]="false"
+						  [data]="allocatedEmployeeList" 
+						  name="employeeList"
+						  formControlName="employeeList" 
+						  [settings]="dropdownSettings"
+                          (onSelect)="onItemSelect($event)" 
+						  (onDeSelect)="onItemDeSelect($event)"
+      
+						  >
+						</ng-multiselect-dropdown>
+<!-- 						<div *ngIf="isAllocateFormInitiated && allocateForm.employeeList.errors" style="color:red;">Please Choose Employee</div>
+ -->					   
+                                 <div *ngIf="isAllocateFormInitiated && allocateForm.employeeList.errors" style="color:red;">Please select atleast one employee.</div>
+
+ </div> 
+                    <div class="col-lg-12 form-group">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-danger" *ngIf=" ! isAllocateEdit" (click)="resetAllocateForm()"  type="reset">Clear</button>     
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Create/Update Form [END]-->
+<!-- Employee allocate list  [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : empAllocatelistFormVisible}" id="createUpdateModal" *ngIf="empAllocatelistFormVisible">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Allocated work for Employees</h5>
+                <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePopupempAlloclist();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <!-- <div class="col-lg-4">
+				<form novalidate [formGroup]="addempAllocateList" >
+                <div><label>Choose Work :</label></div>
+				<select class="form-control" formControlName="workDetailsId" (change)="getAllocatelist($event.target.value);">
+                        <option value="" selected>Choose Work</option>
+						<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
+                </select>
+				
+				</form>
+				</div> -->
+				<div class="col-lg-12">
+                <div class="table100">
+                    <table [mfData]="employeeAllocatelist" #mf="mfDataTable" [mfRowsOnPage]="15">
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1"><mfDefaultSorter by="employeename">Emp. Name</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="employeeid">Emp. Code</mfDefaultSorter></th>
+                                <th class="column3"><mfDefaultSorter by="workname">Work Name</mfDefaultSorter></th>
+                                <th class="column4"><mfDefaultSorter by="subtaskname">Sub Task Name</mfDefaultSorter></th>
+					        </tr>
+                        </thead>
+                        <tbody *ngFor="let item of mf.data;index as i">
+                            <tr class="hover-action-row">
+                                <td class="column1">{{item.empName}}</td>
+                                <td class="column2">{{item.empCode}}</td> 
+                                <td class="column3">{{item.workName}}</td> 
+                                <td class="column4">{{item.subTaskName}}</td> 
+							</tr>
+								
+						</tbody>
+						<tbody *ngIf="employeeAllocatelist && employeeAllocatelist.length == 0">
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-center" style="padding:5px;">No Data Found</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[15,20,30,40,50]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+		</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Employee allocate list  [END]-->
+<!-- Employee allocate list  [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : empAllocatesublistFormVisible}" id="createUpdateModal" *ngIf="empAllocatesublistFormVisible">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Allocated work for Employees</h5>
+                <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePopupempAllocsublist();">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+				<div class="col-lg-12">
+                <div class="table100">
+                    <table [mfData]="employeeAllocatesublist" #mf="mfDataTable" [mfRowsOnPage]="15">
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1"><mfDefaultSorter by="employeename">Emp. Name</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="employeeid">Emp. Code</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="workname">Work Name</mfDefaultSorter></th>
+                                <th class="column2"><mfDefaultSorter by="subtaskname">Sub Task Name</mfDefaultSorter></th>
+					        </tr>
+                        </thead>
+                        <tbody *ngFor="let item of mf.data;index as i">
+                            <tr class="hover-action-row">
+                                <td class="column1">{{item.empName}}</td>
+                                <td class="column2">{{item.empCode}}</td> 
+                                <td class="column3">{{item.workName}}</td> 
+                                <td class="column4">{{item.subTaskName}}</td> 
+							</tr>
+								
+						</tbody>
+						<tbody *ngIf="employeeAllocatesublist && employeeAllocatesublist.length == 0">
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-center" style="padding:5px;">No Data Found</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[15,20,30,40,50]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+		</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Employee allocate list  [END]-->

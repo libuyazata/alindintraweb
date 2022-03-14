@@ -1,0 +1,35 @@
+@import "src/theme/table-theme.scss";
+
+@media screen and (max-width: 575px) {
+    table tbody tr td:nth-child(1):before {
+        content: "#";
+    }
+    table tbody tr td:nth-child(2):before {
+        content: "Customer Name";
+    }
+    table tbody tr td:nth-child(3):before {
+        content: "Address";
+    }
+    table tbody tr td:nth-child(4):before {
+        content: "Other Details";
+    }
+}
+.table {
+    tr {
+        th {
+            padding: 10px !important;
+        }
+        td {
+            padding: 10px !important;
+        }
+    }
+}
+.dropdown-list[_ngcontent-c6]{
+overflow-y: scroll !important;
+}
+#scrollMe[_ngcontent-c5]{
+	height:100px !important;
+}
+tr[_ngcontent-c5] td.actions[_ngcontent-c5] .link[_ngcontent-c5]:first-child{
+margin-right:10px !important;
+}
