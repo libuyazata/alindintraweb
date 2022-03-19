@@ -38,6 +38,7 @@ import { WorkDocumentModule } from '@app/general-info/work-document/work-documen
 import { DeputationModule } from '@app/deputation/deputation.module';
 import { PrivilegesModule } from '@app/privileges/privileges.module';
 import { WorkViewModule } from '@app/work-view/work-view.module';
+import { WorkHomeModule } from '@app/work-home/work-home.module';
 
 
 
@@ -75,6 +76,7 @@ import { WorkViewModule } from '@app/work-view/work-view.module';
 	DeputationModule,
 	PrivilegesModule,
 	WorkViewModule,
+	WorkHomeModule,
   ],
   declarations: [AppComponent, BaseComponent],
   providers: [
