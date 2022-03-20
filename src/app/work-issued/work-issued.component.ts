@@ -60,7 +60,7 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
   }
 	
   protected getWorkIssuedDetailsByDeptId() {
-	const departmentId = 1;
+	const departmentId = 0;
 	this.WorkissuedService.getWorkIssuedDetailsByDeptId(departmentId).subscribe((resp:any)=>{      
 	  this.workissuedList = resp["workIssuedModels"];
     });
