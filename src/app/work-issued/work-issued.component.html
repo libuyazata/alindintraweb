@@ -9,10 +9,43 @@
         </div>
     </div>
 	
-	<div class="row">
+	<!-- <div class="row">
 	 	<div class="col-lg-12">
 		<button (click)="openCreateForm()" class="btn btn-info mt-4">Create {{itemName}}</button>  
 		</div>
+	</div> -->
+	
+	 <div class="row">
+		<div class="col-lg-12 search-container">
+			<form novalidate [formGroup]="materialRequestSearchForm" (ngSubmit)="onDepartmentsSearched();">
+                <div class="row">
+					<div class="col-lg-2">
+                    <div class="search-label-container"><label>Department</label></div>
+                    <select class="form-control" formControlName="departmentId">
+                        <option value="" selected>All</option>  
+                        <option *ngFor="let department of departmentList" [ngValue]="department.departmentId">{{department.departmentName}}</option>
+                    </select> 
+					</div>
+                    <div class="col-lg-4 pt-4">                    
+                        <span class="float-left">
+                            <button class="btn btn-info" type="submit">Search</button>  
+                            <button class="btn btn-danger" type="reset">Clear</button>
+						</span>
+                    </div>
+					<div class="col-lg-6">                    
+                        <span class="float-right">
+                           <button (click)="openCreateForm()" class="btn btn-info mt-4">Create {{itemName}}</button>  
+						</span>
+                    </div> 
+                </div>
+            </form> 
+		<!-- 	<button (click)="openCreateSubForm()" class="btn btn-info mt-4">Create Sub Task</button>  
+			<button (click)="openUploadForm()" class="btn btn-info mt-4">Upload Document</button>  
+			<button (click)="openAllocateForm()" class="btn btn-info mt-4">Employee Allocation</button>  
+			<button (click)="openAllocatelistForm()" class="btn btn-success mt-4" style="background:#900C3F;">Allocated work for Employees</button>  
+		 -->
+		 </div>
+
 	</div>
 	</div>
 	<div class="page-body-container">

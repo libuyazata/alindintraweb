@@ -41,24 +41,27 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {    
-    this.serviceReportSearchForm = new FormGroup({
+    /* this.serviceReportSearchForm = new FormGroup({
       searchKeyWord : new FormControl(''),
      
-    });    
+    });  */   
 	this.getWorkIssuedDetailsByDeptId();
-	this.materialRequestSearchForm = new FormGroup({
-      type : new FormControl(''),
-      drawingSeries : new FormControl(''),
-    })
+	
 	this.getDepartmentList();
 	this.getAllEmployeeList();
 	this.getWorkDetailsList();
+	
 	const storage = sessionStorage;
 	this.prv_deputationEdit = storage.getItem('prv_deputationEdit');
 	this.prv_deputationDelete = storage.getItem('prv_deputationDelete');
-
+	this.initializeFormSearch(null)
   }
-	
+	private initializeFormSearch(data: any) {
+    this.materialRequestSearchForm = new FormGroup({
+      //type : new FormControl(''),
+      departmentId : new FormControl((null != data ? data.departmentId : ''), Validators.required),
+    });
+   }
   protected getWorkIssuedDetailsByDeptId() {
 	const departmentId = 0;
 	this.WorkissuedService.getWorkIssuedDetailsByDeptId(departmentId).subscribe((resp:any)=>{      
@@ -108,6 +111,16 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
   }
    resetForm() {
     this.addItemForm.reset();
+  }
+  protected getSearchParams(){
+    let searchFilter = this.materialRequestSearchForm.value;    
+    return searchFilter.departmentId == null ? "0" : searchFilter.departmentId;
+  }
+  public onDepartmentsSearched(){
+    const departmentId = this.getSearchParams();
+	this.WorkissuedService.getWorkIssuedDetailsByDeptId(departmentId).subscribe((resp:any)=>{
+	  this.workissuedList = resp["workIssuedModels"];
+    });
   }
   private initializeForm(data: any) {
     this.addItemForm = new FormGroup({
