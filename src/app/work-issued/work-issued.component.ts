@@ -58,7 +58,6 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
   }
 	private initializeFormSearch(data: any) {
     this.materialRequestSearchForm = new FormGroup({
-      //type : new FormControl(''),
       departmentId : new FormControl((null != data ? data.departmentId : ''), Validators.required),
     });
    }

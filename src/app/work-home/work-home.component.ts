@@ -20,19 +20,10 @@ export class WorkHomeComponent implements OnInit {
   nonAllottedCalls: Array<any>;
   
   constructor(private WorkHomeService: WorkHomeService, private datePipe: DatePipe) {
-    // this.WorkHomeService.getDashboardData({}).subscribe((resp:any) => {
-    //   this.dashboardData = resp.dashBoard;
-    //   let emp30DaysTrend = this.convertToChartData(this.dashboardData.dashBoardEmployeeStatus);
-    //   this.renderLast30DaysAttendanceTrend(emp30DaysTrend);
-    //   // this.getLeaveAlerts();
-    // });
   }
 
   ngOnInit() {  
     this.getAdminDashBoard();
-    //this.getCompletedCalls();
-    //this.getNonAllottedCalls();
-    //this.getOnGoingCalls();
   }
 
   protected renderLast30DaysAttendanceTrend(emp30DaysTrend:any) {

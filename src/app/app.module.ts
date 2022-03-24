@@ -40,6 +40,7 @@ import { PrivilegesModule } from '@app/privileges/privileges.module';
 import { WorkViewModule } from '@app/work-view/work-view.module';
 import { WorkHomeModule } from '@app/work-home/work-home.module';
 import { WorkissuedModule } from '@app/work-issued/work-issued.module';
+import { InterofficeCommunicationModule } from '@app/inter-office-communication/inter-office-communication.module';
 
 
 
@@ -79,6 +80,7 @@ import { WorkissuedModule } from '@app/work-issued/work-issued.module';
 	WorkViewModule,
 	WorkHomeModule,
 	WorkissuedModule,
+	InterofficeCommunicationModule,
   ],
   declarations: [AppComponent, BaseComponent],
   providers: [
