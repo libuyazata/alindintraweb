@@ -111,23 +111,14 @@
             </div>
             <div class="modal-body">
                 <form novalidate [formGroup]="addItemForm" (ngSubmit)="onAddItem();">
-                    <div class="col-lg-12">
+                    <!-- <div class="col-lg-12">
                         <div><label>Employee :</label></div>
 						<select class="form-control" formControlName="createdEmpId">
                         <option value="" selected>Choose Employee</option>
 						<option *ngFor="let employee of employeeList" [value]="employee.employeeId">{{employee.empCode}}-{{employee.firstName}}</option>
                          </select> 						
 						 <div *ngIf="isFormSubmitInitiated && itemForm.createdEmpId.errors" style="color:red;">Please choose an Employee.</div>
-                    </div>
-
-                    <div class="col-lg-12">
-                        <div><label>Department :</label></div>
-						<select class="form-control" formControlName="departmentId">
-                        <option value="" selected>Choose Department</option>
-						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
-                         </select> 						
-						 <div *ngIf="isFormSubmitInitiated && itemForm.departmentId.errors" style="color:red;">Please Choose a Department.</div>
-                    </div>
+                    </div> -->
 					<div class="col-lg-12">
                         <div><label>Work :</label></div>
 						<select class="form-control" formControlName="workDetailsId">
@@ -135,6 +126,15 @@
 						<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
                          </select> 						
 						 <div *ngIf="isFormSubmitInitiated && itemForm.workDetailsId.errors" style="color:red;">Please Choose a Work.</div>
+                    </div>
+					
+                    <div class="col-lg-12">
+                        <div><label>Department :</label></div>
+						<select class="form-control" formControlName="departmentId">
+                        <option value="" selected>Choose Department</option>
+						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
+                         </select> 						
+						 <div *ngIf="isFormSubmitInitiated && itemForm.departmentId.errors" style="color:red;">Please Choose a Department.</div>
                     </div>
 					
                     <div class="col-lg-12 form-group" style="margin-top: 20px;">

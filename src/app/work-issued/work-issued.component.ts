@@ -16,7 +16,8 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
   public onGoingServiceReportList : Array<any>;
   public deputationList : Array<any>;
   public workissuedList : Array<any>;
-  public employeeList : Array<any>;
+/*   public employeeList : Array<any>;
+ */
   public departmentList : Array<any>;
   public workDetailsList : Array<any>;
   
@@ -28,7 +29,7 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
   public isEdit : boolean = false;
   public isFormSubmitInitiated : boolean = false;
 
-  public itemName: string = "Work Issued Details";
+  public itemName: string = "Work Issued";
   public materialRequestSearchForm : FormGroup;
   private previousItem : any;
   public prv_deputationEdit : string;
@@ -48,8 +49,8 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
 	this.getWorkIssuedDetailsByDeptId();
 	
 	this.getDepartmentList();
-	this.getAllEmployeeList();
-	this.getWorkDetailsList();
+/* 	this.getAllEmployeeList();
+ */	this.getWorkDetailsList();
 	
 	const storage = sessionStorage;
 	this.prv_deputationEdit = storage.getItem('prv_deputationEdit');
@@ -78,14 +79,14 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
     });
   }
   
-  protected getAllEmployeeList() {
+  /* protected getAllEmployeeList() {
 	let params = {
       status : 1
     }
 	this.WorkissuedService.getAllEmployeeList(params).subscribe((resp:any)=>{      
 	  this.employeeList = resp["employees"];
     });
-  }
+  } */
   protected getDepartmentList() {
     let params = {
       status : 1
@@ -123,8 +124,9 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
   }
   private initializeForm(data: any) {
     this.addItemForm = new FormGroup({
-      createdEmpId : new FormControl((null != data ? data.createdEmpId : ''), Validators.required),
-	  departmentId : new FormControl((null != data ? data.departmentId : ''), Validators.required),
+/*       createdEmpId : new FormControl((null != data ? data.createdEmpId : ''), Validators.required),
+ */	  
+      departmentId : new FormControl((null != data ? data.departmentId : ''), Validators.required),
 	  workDetailsId : new FormControl((null != data ? data.workDetailsId : ''), Validators.required),
 	});
   }
@@ -152,8 +154,9 @@ export class WorkissuedComponent extends BaseComponent implements OnInit {
   private getPreparedParams(submitData: any) {
 
     let params : {[k : string]: any}= {
-      createdEmpId : submitData.createdEmpId,
-      departmentId : submitData.departmentId,
+/*       createdEmpId : submitData.createdEmpId,
+ */
+	  departmentId : submitData.departmentId,
       workDetailsId : submitData.workDetailsId,
     }
 

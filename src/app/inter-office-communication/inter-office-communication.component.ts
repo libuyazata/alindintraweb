@@ -40,10 +40,6 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
        workDetailsId : new FormControl('',Validators.required),
        departmentId : new FormControl('',  Validators.required),
        description : new FormControl('',  Validators.required),
-     // description : new FormControl('')
-      //emailId : new FormControl('', Validators.required),
-      //isActive : new FormControl('',  Validators.required),
-      //mobileNo : new FormControl('',  Validators.required)
     });
     
 	this.getWorkDetailsList();
@@ -89,7 +85,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	  status:1
     }
 	this.InterofficeCommunicationService.getworkDescription(params).subscribe((resp:any) => {
-		  this.workDescList = resp["model"];
+	  this.workDescList = resp["model"];
    });
   }
   
@@ -104,10 +100,13 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
         } else {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
         }
-		//window.location.reload();
-		this.initializeForm(null);
+		
       });
+	  this.isFormSubmitInitiated = false;		
     }
+	this.isDescription = false;
+	this.initializeForm(null);		
+
   };
   
   private getPreparedParams(submitData: any) {
@@ -122,10 +121,10 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   private initializeForm(data: any) {
     this.isDescription = false;
 	this.interCommForm = new FormGroup({
-      workDetailsId : new FormControl((null != data ? data.workDetailsId : '')),
-	  departmentId : new FormControl((null != data ? data.departmentId : '')),
-	  description : new FormControl((null != data ? data.description : '')),
-	});
+       workDetailsId : new FormControl('',Validators.required),
+       departmentId : new FormControl('',  Validators.required),
+       description : new FormControl('',  Validators.required),
+  	});
   }
   resetForm() {
     this.isDescription = false;
