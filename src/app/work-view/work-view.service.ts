@@ -25,6 +25,9 @@ export class WorkViewService extends BaseService {
   public getWorkDetailsById(data:any): Observable<any>{
     return this.httpClient.get("project/getWorkDetailsById",{ params: data });
   }
+  public getWorkDetailsListById(data:any): Observable<any>{
+    return this.httpClient.get("project/getWorkDetailsListById",{ params: data });
+  }
   public getSubTaskByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/getSubTaskByWorkId",{ params: data });
   }

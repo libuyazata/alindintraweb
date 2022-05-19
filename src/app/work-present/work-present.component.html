@@ -1,0 +1,43 @@
+<div class="main-content">
+                <div class="section__content section__content--p15">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">Present Work</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-t-25">
+                            <div class="col-sm-6 col-lg-3" *ngFor="let item of presentWorkList" 
+title="Name:{{item.workName}}
+Type: {{item.workType}}
+Description: {{item.description}}
+Department: {{item.departmentName}}
+Project Co Ordinator: {{item.projectCoOrdinatorName}}
+">
+                                <a class="link" [routerLink]="['/work-view/']" [queryParams]="{id:item.workDetailsId}">
+
+								<div class="overview-item overview-item--c1" style="background-image: -webkit-linear-gradient(90deg, #3f5efb 0%, #fc466b 100%);">
+                                    <div class="overview__inner">
+                                         <div class="overview-box clearfix">
+										   <div class="text">
+                                            <span class="btn-icon btn-icon-round btn-icon-lg-alt">
+												<h1><span class="fa fa-puzzle-piece"></span></h1>
+											</span>
+                                            <div class="box-info float-right">
+												<p><span class="float-right">{{item.workName}}</span></p>
+											</div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart1"></canvas>
+                                        </div>
+										</div>
+                                    </div>
+                                </div>
+								</a>
+                            </div>
+                    </div>
+                </div>
+            </div> 
+</div>

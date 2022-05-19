@@ -41,6 +41,7 @@ import { WorkViewModule } from '@app/work-view/work-view.module';
 import { WorkHomeModule } from '@app/work-home/work-home.module';
 import { WorkissuedModule } from '@app/work-issued/work-issued.module';
 import { InterofficeCommunicationModule } from '@app/inter-office-communication/inter-office-communication.module';
+import { WorkpresentModule } from '@app/work-present/work-present.module';
 
 
 
@@ -81,6 +82,7 @@ import { InterofficeCommunicationModule } from '@app/inter-office-communication/
 	WorkHomeModule,
 	WorkissuedModule,
 	InterofficeCommunicationModule,
+	WorkpresentModule,
   ],
   declarations: [AppComponent, BaseComponent],
   providers: [

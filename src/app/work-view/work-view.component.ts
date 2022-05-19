@@ -57,6 +57,8 @@ export class WorkViewComponent extends BaseComponent implements OnInit {
   public issubEdit : boolean = false;
   public isuploadEdit : boolean = false;
   public isAllocateEdit : boolean = false;
+  public issearchFormVisible : boolean = true;
+
   
   public isFormSubmitInitiated : boolean = false;
   public issubFormSubmitInitiated : boolean = false;
@@ -93,6 +95,8 @@ export class WorkViewComponent extends BaseComponent implements OnInit {
   public prv_doucmentView : string;
   public prv_documentEdit : string;
   public prv_documentDelete : string;
+  
+  public id: any;
  constructor(private WorkViewService : WorkViewService,
 			  private alertService : AlertNotificationService, 
               private authenticationService: AuthenticationService,
@@ -101,6 +105,12 @@ export class WorkViewComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {     
+this.route.queryParams.subscribe(
+      params => {
+        this.id =  params['id'];
+      }
+    )
+	const id = this.id;
 	this.dropdownSettings = {
       singleSelection: false,
       idField: 'employeeId',
@@ -120,7 +130,15 @@ export class WorkViewComponent extends BaseComponent implements OnInit {
       //dateTo : new FormControl('')
     });    
     //this.getOnGoingCallManagementList();
-	this.getWorkDetailsList();
+	if(id > 0){
+		this.getWorkDetailsLists(id);
+		this.issearchFormVisible = false;
+
+	}else{
+		this.getWorkDetailsList();
+		this.issearchFormVisible = true;
+	}
+
 	this.getWorkTypeList();
 	this.getDepartmentList();
 	this.getworkStatusList();
@@ -166,9 +184,28 @@ export class WorkViewComponent extends BaseComponent implements OnInit {
       departmentId : 1,
 	  status:1
     }
+	
 	this.WorkViewService.getWorkDetailsList(params).subscribe((resp:any)=>{      
 	  this.workDetailsList = resp["models"];
     });
+  }
+  protected getWorkDetailsLists(id:any) {
+	let params = {
+      workDetailsId : id
+    }
+	
+	this.WorkViewService.getWorkDetailsListById(params).subscribe((resp:any)=>{      
+	  this.workDetailsList = resp["listModel"];
+    });
+	
+	/* let params = {
+      departmentId : 1,
+	  status:1
+    }
+	
+	this.WorkViewService.getWorkDetailsList(params).subscribe((resp:any)=>{      
+	  this.workDetailsList = resp["models"];
+    }); */
   }
   protected getAllocatelist(item:any) {
     const workDetailsId = item;

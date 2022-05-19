@@ -11,12 +11,12 @@
         <div class="row">
             <div class="col-lg-12">
                 <h4>
-                    <span>WORKS</span>                
+                    <span>WORK</span>                
                 </h4>    
             </div>
         </div>
     </div>
-	 <div class="row">
+	 <div class="row" *ngIf="issearchFormVisible">
         <div class="col-lg-12 search-container">
             <form novalidate [formGroup]="materialRequestSearchForm" (ngSubmit)="onWorkDetailsSearched();">
                 <div class="row">
