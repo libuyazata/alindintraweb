@@ -26,6 +26,7 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
   ngOnInit() {    
 	this.getpresentWorkList();
   }
+  
 
   protected getpresentWorkList() {
 /* 	let params = {

@@ -3,3 +3,62 @@
 .main-content{
 padding-top:5px !important;
 }
+a.tip {
+    text-decoration: none
+}
+a.tip:hover {
+    cursor: hand;
+    position: relative
+}
+a.tip p {
+    display: none
+}
+a.tip:hover p {
+    border: #c0c0c0 1px dotted;
+    padding: 5px 20px 5px 5px;
+    display: block;
+    z-index: 100;
+    background: #f0f0f0 no-repeat 100% 5%;
+    left: 0px;
+    margin: 10px;
+    width: 250px;
+    position: absolute;
+    top: 10px;
+    text-decoration: none;
+	font-size:15px;
+	font-weight:bold;
+}
+.boxx0{
+background-image: -webkit-linear-gradient(90deg, #1003B4 0%, #B06473 100%);
+}
+.boxx1{
+background-image: -webkit-linear-gradient(90deg, #3f5efb 0%, #fc466b 100%);
+}
+.boxx2{
+background-image: -webkit-linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+}
+.boxx3{
+background-image: -webkit-linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+}
+.boxx4{
+background-image: -webkit-linear-gradient(90deg, #45b649 0%, #dce35b 100%);
+}
+.boxx5{
+background-image: -webkit-linear-gradient(90deg, #24B0E9 0%, #415B65 100%);
+}
+
+.boxx6{
+background-image: -webkit-linear-gradient(90deg, #09EFE8 0%, #6B9593 100%);
+}
+.boxx7{
+background-image: -webkit-linear-gradient(90deg, #2F4AF3 0%, #838BBB 100%);
+}
+.boxx8{
+background-image: -webkit-linear-gradient(90deg, #8D11E8 0%, #4B335D 100%);
+}
+.boxx9{
+background-image: -webkit-linear-gradient(90deg, #F165F7 0%, #9E6CA0 100%);
+}
+.boxx10{
+background-image: -webkit-linear-gradient(90deg, #E197BA 0%, #9C8992 100%);
+}
