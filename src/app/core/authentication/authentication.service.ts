@@ -40,7 +40,7 @@ export class AuthenticationService {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
-      if(this._roles.length == 0){
+	  if(this._roles.length == 0){
         this.setRolesAndPermissions(this._credentials);
       }
     }

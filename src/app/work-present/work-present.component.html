@@ -5,13 +5,49 @@
                         <div class="row">
                             <div class="col-md-12">
 								<div class="overview-wrap">
-                                    <h2 class="title-1">Present Work</h2>
+                                    <h2 class="title-1">Work Management</h2>
 									
 							   </div>
                             </div>
                         </div>
                         <div class="row m-t-25">
-                            <div class="col-sm-6 col-lg-3 tip" *ngFor="let item of presentWorkList;index as i;">
+                            <div class="col-lg-12 search-container">
+									<form novalidate [formGroup]="materialRequestSearchForm" (ngSubmit)="onWorkDetailsSearched();">
+										<div class="row">
+											<div class="col-lg-2">
+												<div class="search-label-container"><label>Search</label></div>
+												<input formControlName="searchKeyWord" class="form-control" placeholder="Search Work"/>  
+											</div> 
+											<div class="col-lg-2">
+											<div class="search-label-container"><label>Type</label></div>
+											<select class="form-control" formControlName="workTypeId">
+												<option value="0" [selected] ="true">All</option>  
+												<option *ngFor="let work of workTypeList" [ngValue]="work.workTypeId">{{work.workType}}</option>
+											</select> 
+											</div>
+											<div class="col-lg-2">
+												<div class="search-label-container"><label>Start Date</label></div>
+												<input formControlName="dateFrom" class="form-control"  type="date"/>  
+											</div>
+											<div class="col-lg-2">
+												<div class="search-label-container"><label>End Date</label></div>
+												<input formControlName="dateTo" class="form-control" type="date" />  
+											</div>
+											 
+											<div class="col-lg-4 pt-4">                    
+												<span class="float-left">
+													<button class="btn btn-info" type="submit">Search</button>  
+													<button class="btn btn-danger" type="reset">Clear</button>
+<!-- 													<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;">Create {{itemName}}</button>  
+ -->
+												</span>
+											</div> 
+										</div>
+									</form> 
+							</div>
+							</div>
+							<div class="row m-t-25">
+							<div class="col-sm-6 col-lg-3 tip" *ngFor="let item of presentWorkList;index as i;">
 
                                 <a class="link" [routerLink]="['/work-view/']" [queryParams]="{id:item.workDetailsId}" class="tip">
 
@@ -31,10 +67,12 @@
                                         </div>
 										</div>
                                     </div>
-                                </div><p>Name:  {{item.workName}}<br>
-Type:  {{item.workType}}<br>
+                                </div>
+<p>
+Tag:  {{item.workName}}<br>
 Description:  {{item.description}}<br>
-Department:  {{item.departmentName}}<br>
+Client:  <br>
+Started On:  {{item.startDate  | date :  "dd-MM-yyyy"}}<br>
 Co Ordinator:  {{item.projectCoOrdinatorName}}</p>
 								</a>
                             </div>

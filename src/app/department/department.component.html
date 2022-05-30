@@ -134,17 +134,28 @@ updatedAt: 1527800257000
                     </div>
                   </div>
                 </div>
-              <div class="row form-group">
+              <!-- <div class="row form-group">
                 <div class="col-lg-12">
                     <label>Objectives</label>
                     <input formControlName="description" class="form-control"
                       [ngClass]="{ 'is-invalid': isDepartmentFormAttemptSubmit && departmentForm.description?.errors }"/>
-                    <div *ngIf="isDepartmentFormAttemptSubmit && departmentForm.description?.errors" class="invalid-feedback">
+                    
+                </div>
+              </div> -->
+              <div class="row form-group">
+                <div class="col-lg-12">
+                    <label>Objectives</label>
+                      <textarea class="form-control mandatory-field" formControlName="description"  maxlength="400"
+                        [ngClass]="{ 'is-invalid': isDepartmentFormAttemptSubmit && departmentForm.description?.errors }" ></textarea>
+
+					<div *ngIf="isDepartmentFormAttemptSubmit && departmentForm.description?.errors" class="invalid-feedback">
                         <div *ngIf="departmentForm.description?.errors.required">Please provide objectives.</div>
                     </div>
+<!-- 					<div *ngIf="isDepartmentFormAttemptSubmit && departmentForm.description.errors" class="invalid-feedback">Please enter Description.</div>
+ -->
                 </div>
               </div>
-              <!-- <div class="row form-group">
+			  <!-- <div class="row form-group">
                 <div class="col-lg-12">
                     <div><label>Email</label></div>
                     <input formControlName="emailId" class="form-control"

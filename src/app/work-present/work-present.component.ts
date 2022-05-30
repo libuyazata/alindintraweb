@@ -15,7 +15,10 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
    
   public onGoingServiceReportList : Array<any>;
   public presentWorkList : Array<any> = [];
-  
+  public workTypeList : Array<any>;
+  public workDetailsList : Array<any>;
+  public materialRequestSearchForm : FormGroup;
+
 
   constructor(private WorkpresentService : WorkpresentService,
 			  private alertService : AlertNotificationService,  
@@ -25,6 +28,14 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {    
 	this.getpresentWorkList();
+	this.getWorkTypeList();
+	this.materialRequestSearchForm = new FormGroup({
+      searchKeyWord : new FormControl(''),
+      workTypeId : new FormControl(''),
+      dateFrom : new FormControl(''),
+      dateTo : new FormControl(''),
+    })
+	this.materialRequestSearchForm.patchValue({"workTypeId" : 0});
   }
   
 
@@ -37,8 +48,33 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
 	    const startDate = '2021-08-23';
 	    const endDate = '2021-08-23';
 	    const departmentId = 0;
-const params = startDate+'/'+endDate+'/'+departmentId;
+	const params = startDate+'/'+endDate+'/'+departmentId;
 	this.WorkpresentService.getWorkDetailsByDate(params).subscribe((resp:any)=>{      
+	  this.presentWorkList = resp["models"];
+    });
+  }
+  
+  protected getWorkTypeList() {
+	let params = {
+      status : 1
+    }
+	this.WorkpresentService.getWorkTypeList(params).subscribe((resp:any)=>{      
+	  this.workTypeList = resp["workStatusList"];
+    });
+  }
+  protected getSearchParams(){
+    let searchFilter = this.materialRequestSearchForm.value;    
+    let params = {
+      "startDate" : searchFilter.dateFrom == null ? "" : searchFilter.dateFrom,
+      "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
+      "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
+      "workTypeId" : searchFilter.workTypeId == null ? "0" : searchFilter.workTypeId,
+    }
+    return params;
+  }
+  public onWorkDetailsSearched(){
+    let params = this.getSearchParams();
+    this.WorkpresentService.getWorkDetailsBySearch(params).subscribe((resp:any)=>{
 	  this.presentWorkList = resp["models"];
     });
   }
