@@ -24,6 +24,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
   public workDescList : Array<any>;
+  public communicationList : Array<any>;
   public itemName: string = "Inter Office Communication";
   public prv_departmentEdit : string;
   public prv_departmentDelete : string;
@@ -43,7 +44,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
     });
     
 	this.getWorkDetailsList();
-	//this.getDepartmentList();
+	this.getcommunicationList();
 	//this.initializeForm(null);
   }
 
@@ -54,6 +55,12 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
     }
 	this.InterofficeCommunicationService.getWorkDetailsList(params).subscribe((resp:any)=>{      
 	  this.workDetailsList = resp["models"];
+    });
+  }
+  protected getcommunicationList() {
+	const departmentId = 1;
+	this.InterofficeCommunicationService.getcommunicationList(departmentId).subscribe((resp:any)=>{      
+	  this.communicationList = resp["communicationList"];
     });
   }
   
