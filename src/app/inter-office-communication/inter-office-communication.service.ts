@@ -24,6 +24,9 @@ export class InterofficeCommunicationService extends BaseService {
   public getdepartmentListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/departmentListByWorkId/"+data);
   }
+  public getsubtaskListByWorkId(data:any): Observable<any>{
+    return this.httpClient.get("project/getSubTaskByWorkId",{ params: data });
+  }
   public getworkDescription(data:any): Observable<any>{
     return this.httpClient.get("project/getWorkDetailsById/",{ params: data });
   }
