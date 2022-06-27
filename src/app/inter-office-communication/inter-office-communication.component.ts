@@ -17,11 +17,13 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   version: string = environment.version;
   public interCommForm : FormGroup;
   public replyForm : FormGroup;
+  public viewForm : FormGroup;
   public isDepartmentFormAttemptSubmit :Boolean = false;
   public isFormSubmitInitiated : boolean = false;
   public isreplyFormSubmitInitiated : boolean = false;
   public isEdit : boolean = false;
   public isDescription : boolean = false;
+  public isFormVisible : boolean = false;
 
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
@@ -47,24 +49,53 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
        workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
        departmentId : new FormControl('',  Validators.required),
+       subject : new FormControl('',  Validators.required),
        description : new FormControl('',  Validators.required),
     });
 	this.replyForm = new FormGroup({
        workName : new FormControl('',Validators.required),
        subTaskName : new FormControl('',Validators.required),
-       
+       departmentName : new FormControl('',Validators.required),
 	   workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
-       departmentId : new FormControl('',  Validators.required),
-	   subject : new FormControl('',  Validators.required),
-	   description : new FormControl('',  Validators.required),
+       departmentId : new FormControl('',Validators.required),
+	   subject : new FormControl('',Validators.required),
+	   description : new FormControl('',Validators.required),
   	});
+	this.viewForm = new FormGroup({
+       employeeName : new FormControl(),
+       workName : new FormControl(),
+       subTaskName : new FormControl(),
+       departmentName : new FormControl(),
+	   subject : new FormControl(),
+	   description : new FormControl(),
+	   createdOn : new FormControl(),
+	   });
 	
 	this.getWorkDetailsList();
 	this.getcommunicationList();
-	//this.initializeForm(null);
+	this.initializeForm(null);
+	this.initializeviewForm(null);
   }
+  
+  openCreateForm() {
+    this.isFormVisible = true;
+    this.isEdit = false;
 
+    this.initializeForm(null)
+  }
+  closePopup() {
+    this.clearinterCommForm();
+    this.resetinterCommForm();
+  }
+  private clearinterCommForm() {
+    this.isEdit = false;
+    this.isFormVisible = false;
+    this.isFormSubmitInitiated = false;
+  }
+  resetinterCommForm() {
+    this.interCommForm.reset();
+  }
   protected getWorkDetailsList() {
 	let params = {
       departmentId : 1,
@@ -139,8 +170,11 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
       this.InterofficeCommunicationService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
-			this.clearForms();
-		} else {
+			this.clearinterCommForm();
+			//this.resetForm();
+			//this.clearForm();
+			this.getcommunicationList();
+		  } else {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
         }
 		
@@ -165,6 +199,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), true);
           this.clearForm();
+		  this.getcommunicationList();
 		} else {
           this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), false);
         }
@@ -177,10 +212,13 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   
   private getPreparedParams(submitData: any) {
     let params : {[k : string]: any}= {
-      workDetailsId : submitData.workDetailsId,
+	  workDetailsId : submitData.workDetailsId,
       subTaskId : submitData.subTaskId,
       departmentId : submitData.departmentId,
+      subject : submitData.subject,
       description : submitData.description,
+	  createdOn: "2022-06-22",
+      updatedOn: "2022-06-22" 
     }
     return params;
   }
@@ -191,6 +229,8 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
       departmentId : submitDataReply.departmentId,
       subject : submitDataReply.subject,
       description : submitDataReply.description,
+	  createdOn: "2022-06-22",
+      updatedOn: "2022-06-22" 
     }
     return params;
   }
@@ -200,9 +240,22 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	this.interCommForm = new FormGroup({
        workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
-       departmentId : new FormControl('',  Validators.required),
-       description : new FormControl('',  Validators.required),
+       departmentId : new FormControl('',Validators.required),
+       subject : new FormControl('',Validators.required),
+       description : new FormControl('',Validators.required),
   	});
+  }
+  private initializeviewForm(data: any) {
+    this.isDescription = false;
+	this.viewForm = new FormGroup({
+       employeeName : new FormControl(),
+       workName : new FormControl(),
+       subTaskName : new FormControl(),
+       departmentName : new FormControl(),
+	   subject : new FormControl(),
+	   description : new FormControl(),
+	   createdOn : new FormControl(),
+	   });
   }
   private initializeReplyForm(data: any) {
     this.isDescription = false;
@@ -210,11 +263,24 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 		workDetailsId : new FormControl((null != data ? data.workDetailsId : '')),
 		subTaskId : new FormControl((null != data ? data.subTaskId : '')),
 		departmentId : new FormControl((null != data ? data.departmentId : '')),
-        description : new FormControl('',  Validators.required),
-        subject : new FormControl('',  Validators.required),
+        description : new FormControl('',Validators.required),
+        subject : new FormControl('',Validators.required),
 		subTaskName : new FormControl((null != data ? data.subTaskName : '')),
 		workName : new FormControl((null != data ? data.workName : '')),
+		departmentName : new FormControl((null != data ? data.departmentName : '')),
 	});
+  }
+  private initializeViewForm(data: any) {
+    //this.isDescription = false;
+	 this.viewForm = new FormGroup({
+       employeeName : new FormControl(),
+       workName : new FormControl(),
+       subTaskName : new FormControl(),
+       departmentName : new FormControl(),
+	   subject : new FormControl(),
+	   description : new FormControl(),
+	   createdOn : new FormControl(),
+	   });
   }
   resetForm() {
     this.isDescription = false;
@@ -223,14 +289,16 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   
   public viewDetails(item:any){
 	//this.detailsId=item;
-	const departmentId = 1;
-	this.InterofficeCommunicationService.getcommunicationList(departmentId).subscribe((resp:any)=>{      
-	  this.communicationList2 = resp["communicationList"];
-    });
-	this.openDescriptionForm();
+		//this.initializeViewForm(item);
+	this.openDescriptionForm(item);
   }
-  public openDescriptionForm() {    
-    document.getElementById('descriptionModal').classList.toggle('d-block');
+  public openDescriptionForm(item:any) {    
+	//this.communicationList2 = item;
+	const officeCommunicationId = item;
+	this.InterofficeCommunicationService.getCommunicationById(officeCommunicationId).subscribe((resp:any)=>{      
+	  this.communicationList2 = resp["communicationModel"];
+    });
+	document.getElementById('descriptionModal').classList.toggle('d-block');
   }
   public closeDescriptionModal() {
     document.getElementById('descriptionModal').classList.toggle('d-block');
@@ -257,5 +325,6 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   
   get interCommForms() { return this.interCommForm.controls; }
   get replyForms() { return this.replyForm.controls; }
+  get viewForms() { return this.viewForm.controls; }
 
 }

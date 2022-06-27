@@ -24,6 +24,9 @@ export class InterofficeCommunicationService extends BaseService {
   public getdepartmentListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/departmentListByWorkId/"+data);
   }
+  public getCommunicationById(data:any): Observable<any>{
+    return this.httpClient.get("project/getCommunicationById/"+data);
+  }
   public getsubtaskListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/getSubTaskByWorkId",{ params: data });
   }
@@ -35,7 +38,7 @@ export class InterofficeCommunicationService extends BaseService {
   }
 
   public saveInterOfficeCommunication(data:any): Observable<any>{
-    return this.httpClient.post("project/saveInterOfficeCommunication/", { params: data });
+	return this.httpClient.post("project/saveInterOfficeCommunication", data);
   }
   
   public deleteDepartment(data:any): Observable<any>{

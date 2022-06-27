@@ -8,60 +8,17 @@
             </div>
         </div>
     </div>
-    <div class="row">
+</div>
+<div class="row">
         <div class="col-lg-12 search-container">
-            <form novalidate [formGroup]="interCommForm" (ngSubmit)="onAddItem();">
-			<div class="row">
-				<div class="col-lg-3">
-					<div><label>Work List :</label></div>
-						<select class="form-control" formControlName="workDetailsId" (change)="getDepartmentList($event);">
-							<option value="" selected>Choose Work</option>
-							<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
-						</select> 						
-					<div *ngIf="isFormSubmitInitiated && interCommForms.workDetailsId.errors" style="color:red;">Please choose Work</div>
-				</div>
-				<div class="col-lg-3" *ngIf="isDescription">
-					<div><strong>Work Description :</strong></div>
-					<div><label>{{workDescList.description}}</label></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-3">
-					<div><label>Sub Task List :</label></div>
-						<select class="form-control" formControlName="subTaskId">
-                        <option value="" selected>Choose Sub Task</option>
-						<option *ngFor="let subtask of subtaskList" [value]="subtask.subTaskId">{{subtask.subTaskName}}</option>
-                        </select> 						
-						<div *ngIf="isFormSubmitInitiated && interCommForms.subTaskId.errors" style="color:red;">Please Choose Sub Task</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-3">
-					<div><label>Department List :</label></div>
-						<select class="form-control" formControlName="departmentId">
-                        <option value="" selected>Choose Department</option>
-						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
-                         </select> 						
-						 <div *ngIf="isFormSubmitInitiated && interCommForms.departmentId.errors" style="color:red;">Please choose Department</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-3">
-                        <div><label>Description : </label></div>
-                        <textarea class="form-control mandatory-field" formControlName="description"  maxlength="400"
-                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.description.errors }"></textarea>
-                        <div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">Please enter Description.</div>
+                <div class="row">
+                    <div class="col-lg-12 pt-4">                    
+                        <span class="float-right">
+                        	<button class="btn btn-info" style="background:#C70039;" (click)="openCreateForm()" >Create {{itemName}}</button>  
+						</span>
+                    </div> 
                 </div>
-			</div>	
-			<div class="row">
-				<div class="col-lg-3 mt-2">
-                        <button class="btn btn-primary" type="submit">Save</button>
-                        <button class="btn btn-danger" *ngIf=" ! isEdit" (click)="resetForm()"  type="reset">Clear</button>     
-            </div>
-            </div>
-            </form>
-        </div>
-    </div>
+		</div>
 </div>
 <div class="page-body-container">
   <div class="row">
@@ -77,16 +34,16 @@
 						<mfDefaultSorter by="employeeName">Employee Name</mfDefaultSorter>
                     </th>    
                     <th class="column3">
+						<mfDefaultSorter by="departmentName">Ref.No.</mfDefaultSorter>
+                    </th>
+					<th class="column3">
 						<mfDefaultSorter by="departmentName">Department Name</mfDefaultSorter>
                     </th>    
                     <th class="column4">
 						<mfDefaultSorter by="workName">Work Name</mfDefaultSorter>
                     </th>    
-                    <!-- <th class="column6">
-						<mfDefaultSorter by="description">Description</mfDefaultSorter>
-                    </th>  -->   
-                    <th class="column7">
-						<mfDefaultSorter by="createdOn">Created On</mfDefaultSorter>
+                    <th class="column6">
+						<mfDefaultSorter by="subject">Subject</mfDefaultSorter>
                     </th>    
                     <th class="column7">
 						<mfDefaultSorter by="View">View / Reply</mfDefaultSorter>
@@ -97,9 +54,10 @@
                     <tr class="hover-action-row">
                     <td class="column1">{{item.empCode}}</td>
                     <td class="column1">{{item.employeeName}}</td>
+                    <td class="column1">{{item.referenceNo}}</td>
                     <td class="column1">{{item.departmentName}}</td>
                     <td class="column1">{{item.workName}}</td>
-                    <td class="column1">{{item.description}}</td>
+                    <td class="column1">{{item.subject}}</td>
 <!--                     <td class="column1">{{item.createdOn  | date :  "dd-MM-yyyy"}}</td>
  -->                       <td class="column1">
 								<div class="link-holder">
@@ -124,6 +82,78 @@
       </div>
   </div>
 </div>
+<!-- Create/Update Inter Office Communication Form [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : isFormVisible}" id="createUpdateModal" *ngIf="isFormVisible">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{isEdit ? ('Update ' +itemName)  : ('Create ' +itemName)}}</h5>
+                <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePopup();">&times;</button>
+            </div>
+            <div class="modal-body">
+            <form novalidate [formGroup]="interCommForm" (ngSubmit)="onAddItem();">
+			<div class="row">
+				<div class="col-lg-12">
+					<div><label>Work List :</label></div>
+						<select class="form-control" formControlName="workDetailsId" (change)="getDepartmentList($event);">
+							<option value="" selected>Choose Work</option>
+							<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
+						</select> 						
+					<div *ngIf="isFormSubmitInitiated && interCommForms.workDetailsId.errors" style="color:red;">Please choose Work</div>
+				</div>
+				<div class="col-lg-12" *ngIf="isDescription">
+					<div><strong>Work Description :</strong></div>
+					<div><label>{{workDescList.description}}</label></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div><label>Sub Task :</label></div>
+						<select class="form-control" formControlName="subTaskId">
+                        <option value="" selected>Choose Sub Task</option>
+						<option *ngFor="let subtask of subtaskList" [value]="subtask.subTaskId">{{subtask.subTaskName}}</option>
+                        </select> 						
+						<div *ngIf="isFormSubmitInitiated && interCommForms.subTaskId.errors" style="color:red;">Please Choose Sub Task</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div><label>Department (To)  :</label></div>
+						<select class="form-control" formControlName="departmentId">
+                        <option value="" selected>Choose Department</option>
+						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
+                         </select> 						
+						 <div *ngIf="isFormSubmitInitiated && interCommForms.departmentId.errors" style="color:red;">Please choose Department</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+                        <div><label>Subject : </label></div>
+					    <input  type="text" class="form-control" formControlName="subject" [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.subject.errors }">
+						<div *ngIf="isFormSubmitInitiated && interCommForms.subject.errors" style="color:red;">Please enter Subject</div>
+                </div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+                        <div><label>Description : </label></div>
+                        <textarea class="form-control mandatory-field" formControlName="description"  maxlength="400"
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.description.errors }"></textarea>
+                        <div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">Please enter Description.</div>
+                </div>
+			</div>	
+			<div class="row">
+				<div class="col-lg-12 mt-2">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-danger" *ngIf=" ! isEdit" (click)="resetForm()"  type="reset">Clear</button>     
+            </div>
+            </div>
+            </form>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- Create/Update Form [END]-->
+
 <!-- Communication details Modal Form -->
   <div class="modal salary-info-model" id="descriptionModal">
       <div class="modal-dialog">
@@ -132,38 +162,45 @@
             <h5 class="modal-title">View Details</h5>
             <button class="close" type="button" data-dismiss="modal" appModal  (click)="closeDescriptionModal();">&times;</button>
           </div>
+           <form novalidate [formGroup]="viewForm">
 			<div class="modal-body">
-                <div class="row form-group">
+			    <div class="row form-group">
                   <div class="col-lg-12">
-					Employee Name : <b>{{communicationList2[0].employeeName}}</b>                 
+					Employee Name : <b>{{communicationList2['employeeName']}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Department Name : <b>{{communicationList2[0].departmentName}} </b>                
+					Department Name (To): <b>{{communicationList2.departmentName}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Work Name : <b>{{communicationList2[0].workName}}  </b>               
+					Work Name : <b>{{communicationList2.workName}}  </b>               
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Sub Task Name : <b>{{communicationList2[0].subTaskName}} </b>                
+					Sub Task Name : <b>{{communicationList2.subTaskName}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Description : <b>{{communicationList2[0].description}}</b>                 
+					Subject : <b>{{communicationList2.subject}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Created On : <b>{{communicationList2[0].createdOn   | date :  "dd-MM-yyyy"}}</b>                 
+					Description : <b>{{communicationList2.description}}</b>                 
+				  </div>
+                </div>
+				<div class="row form-group">
+                  <div class="col-lg-12">
+					Created On : <b>{{communicationList2.createdOn   | date :  "dd-MM-yyyy"}}</b>                 
 				  </div>
                 </div>
             </div>
+			</form>
 			<div class="modal-footer">
               <button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closeDescriptionModal();">Close</button>
             </div>
@@ -194,6 +231,12 @@
 					<input  type="hidden"  formControlName="departmentId">
 					<input  type="hidden" formControlName="subTaskId">
 					<input  class="form-control" formControlName="subTaskName" readonly>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div><label>To :</label></div>
+					<input  class="form-control" formControlName="departmentName" readonly>
 				</div>
 			</div>
 			<div class="row">
