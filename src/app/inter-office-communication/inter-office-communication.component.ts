@@ -24,6 +24,8 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public isEdit : boolean = false;
   public isDescription : boolean = false;
   public isFormVisible : boolean = false;
+  public isNotDepartmentSelected: boolean = false; // For Call allotment
+  public isNotDepartmentSelectedReply: boolean = false; // For Call allotment
 
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
@@ -36,6 +38,9 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public prv_departmentEdit : string;
   public prv_departmentDelete : string;
   public detailsId : string;
+  
+  public dropdownSettings: any = {};
+  public dropdownSettingsReply: any = {};
   constructor(private alertService : AlertNotificationService,private InterofficeCommunicationService : InterofficeCommunicationService) { 
 	super(InterofficeCommunicationService);
   }
@@ -76,6 +81,45 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	this.getcommunicationList();
 	this.initializeForm(null);
 	this.initializeviewForm(null);
+	
+	 this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'departmentId',
+      textField: 'departmentName',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 10,
+      allowSearchFilter: true
+    };
+	this.dropdownSettingsReply = {
+      singleSelection: false,
+      idField: 'departmentId',
+      textField: 'departmentName',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 10,
+      allowSearchFilter: true
+    };
+  }
+ 
+  public onItemSelect(event:any){    
+    this.isNotDepartmentSelected = !(this.interCommForm.value.departmentId && 
+                                    this.interCommForm.value.departmentId.length > 0);    
+  }
+
+  public onItemDeSelect(event:any){    
+    this.isNotDepartmentSelected = (!this.interCommForm.value.departmentId || 
+                                    this.interCommForm.value.departmentId.length == 0);
+  }
+  
+  public onItemSelectReply(event:any){    
+    this.isNotDepartmentSelectedReply = !(this.replyForm.value.departmentId && 
+                                    this.replyForm.value.departmentId.length > 0);    
+  }
+
+  public onItemDeSelectReply(event:any){    
+    this.isNotDepartmentSelectedReply = (!this.replyForm.value.departmentId || 
+                                    this.replyForm.value.departmentId.length == 0);
   }
   
   openCreateForm() {
@@ -181,6 +225,9 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
       });
 	  this.isFormSubmitInitiated = false;		
     }
+	else{
+	this.isNotDepartmentSelected = true;
+	}
 	this.isDescription = false;
 	//this.initializeForm(null);		
 

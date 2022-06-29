@@ -119,12 +119,19 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div><label>Department (To)  :</label></div>
-						<select class="form-control" formControlName="departmentId">
-                        <option value="" selected>Choose Department</option>
-						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
-                         </select> 						
-						 <div *ngIf="isFormSubmitInitiated && interCommForms.departmentId.errors" style="color:red;">Please choose Department</div>
-				</div>
+						<ng-multiselect-dropdown 
+                                class="mandatory-field"
+                                [ngClass]="{ 'is-invalid': isFormSubmitInitiated }"
+                                name="departmentId"
+                                [placeholder]="'Select Department'"
+                                [data]="departmentList"
+                                formControlName="departmentId"                                
+                                [settings]="dropdownSettings"
+                                (onDeSelect)="onItemDeSelect($event)"
+                                (onSelect)="onItemSelect($event)">
+                            </ng-multiselect-dropdown>
+						    <div *ngIf="isFormSubmitInitiated && interCommForms.departmentId.errors" style="color:red;">Please Choose Department</div>
+                            </div>  
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
@@ -236,7 +243,18 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div><label>To :</label></div>
-					<input  class="form-control" formControlName="departmentName" readonly>
+								<ng-multiselect-dropdown 
+                                class="mandatory-field"
+                                [ngClass]="{ 'is-invalid': isFormSubmitInitiated }"
+                                name="departmentId"
+                                [placeholder]="'Select Department'"
+                                [data]="departmentList"
+                                formControlName="departmentId"                                
+                                [settings]="dropdownSettings"
+                                (onDeSelect)="onItemDeSelectReply($event)"
+                                (onSelect)="onItemSelectReply($event)">
+                            </ng-multiselect-dropdown>
+						    <div *ngIf="isFormSubmitInitiated && interCommForms.departmentId.errors" style="color:red;">Please Choose Department</div>
 				</div>
 			</div>
 			<div class="row">

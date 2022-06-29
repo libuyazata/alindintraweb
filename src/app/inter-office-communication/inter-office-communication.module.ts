@@ -8,7 +8,7 @@ import { InterofficeCommunicationComponent } from './inter-office-communication.
 import { InterofficeCommunicationService } from '@app/inter-office-communication/inter-office-communication.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataTableModule } from 'angular-6-datatable';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +17,8 @@ import { DataTableModule } from 'angular-6-datatable';
     ReactiveFormsModule,
     InterofficeCommunicationRoutingModule,
 	SharedModule,
-  ],
+    NgMultiSelectDropDownModule.forRoot(),
+ ],
   declarations: [
     InterofficeCommunicationComponent
   ],
