@@ -36,12 +36,14 @@ export class InterofficeCommunicationService extends BaseService {
   public getDepartmentList(data:any): Observable<any>{
     return this.httpClient.get("user/getAllDepartment/");
   }
-
   public saveInterOfficeCommunication(data:any): Observable<any>{
 	return this.httpClient.post("project/saveInterOfficeCommunication", data);
   }
-  
   public deleteDepartment(data:any): Observable<any>{
     return this.httpClient.get("/user/deleteDepartment/", { params : data});
   }
+  public viewUpdateDepartmentCommunicationMessage(data:any): Observable<any>{
+    return this.httpClient.get("project/viewUpdateDepartmentCommunicationMessage/"+data);
+  }
+
 }

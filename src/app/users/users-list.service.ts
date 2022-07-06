@@ -43,6 +43,9 @@ export class UsersService extends BaseService {
     return this.httpClient.post("user/saveOrUpdateEmployee", employeeData);
   }
   public deleteEmployee(data:any): Observable<any>{
-    return this.httpClient.get("/user/deleteEmployee/", { params : data});
+    return this.httpClient.get("user/deleteEmployee/", { params : data});
+  }
+  public uploadDocument(data:any): Observable<any>{
+    return this.httpClient.get("user/uploadEmployeeProfilePic/"+data);
   }
 }

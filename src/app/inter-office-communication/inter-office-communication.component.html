@@ -50,22 +50,21 @@
                     </th>    
                 </tr>
                 </thead>
-                <tbody *ngFor="let item of mf.data">
-                    <tr class="hover-action-row">
+				<tbody *ngFor="let item of mf.data">
+                    <tr class="hover-action-row" [ngClass]="{'rowbg': item.deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(item.deptCommList);" >
                     <td class="column1">{{item.empCode}}</td>
                     <td class="column1">{{item.employeeName}}</td>
                     <td class="column1">{{item.referenceNo}}</td>
                     <td class="column1">{{item.departmentName}}</td>
                     <td class="column1">{{item.workName}}</td>
                     <td class="column1">{{item.subject}}</td>
-<!--                     <td class="column1">{{item.createdOn  | date :  "dd-MM-yyyy"}}</td>
- -->                       <td class="column1">
+                    <td class="column1">
 								<div class="link-holder">
 								 <a class="link" title="View Details" (click)="viewDetails(item.officeCommunicationId);"><i class="fas fa-eye"></i></a>
 								 <button (click)="replyMessage(item);" class="btn btn-success" style="margin-left:5px;">Reply</button>  
 								</div>
-						    </td>
-                </tr>
+				    </td>
+					</tr>
                 
 				
 				
@@ -161,7 +160,7 @@
 </div>
 <!-- Create/Update Form [END]-->
 
-<!-- Communication details Modal Form -->
+<!-- View Communication details Modal Form -->
   <div class="modal salary-info-model" id="descriptionModal">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -171,42 +170,44 @@
           </div>
            <form novalidate [formGroup]="viewForm">
 			<div class="modal-body">
-			    <div class="row form-group">
-                  <div class="col-lg-12">
-					Employee Name : <b>{{communicationList2['employeeName']}} </b>                
+				<div *ngFor="let com2 of communicationList2">
+				<div class="row form-group">
+                  <div class="col-lg-12" >
+					Employee Name : <b>{{com2.employeeName}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Department Name (To): <b>{{communicationList2['departmentName']}} </b>                
+					Department Name (To): <b>{{com2.departmentName}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Work Name : <b>{{communicationList2['workName']}}  </b>               
+					Work Name : <b>{{com2.workName}}  </b>               
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Sub Task Name : <b>{{communicationList2['subTaskName']}} </b>                
+					Sub Task Name : <b>{{com2.subTaskName}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Subject : <b>{{communicationList2['subject']}} </b>                
+					Subject : <b>{{com2.subject}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Description : <b>{{communicationList2['description']}}</b>                 
+					Description : <b>{{com2.description}}</b>                 
 				  </div>
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Created On : <b>{{communicationList2['createdOn']   | date :  "dd-MM-yyyy"}}</b>                 
+					Created On : <b>{{com2.createdOn   | date :  "dd-MM-yyyy"}}</b>                 
 				  </div>
                 </div>
             </div>
+        </div>
 			</form>
 			<div class="modal-footer">
               <button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closeDescriptionModal();">Close</button>
@@ -214,7 +215,6 @@
         </div>
       </div>
     </div>
-<!-- Communication details Modal Form End-->
 <!-- Reply Modal Form -->
   <div class="modal salary-info-model" id="replyModal">
       <div class="modal-dialog">
@@ -246,15 +246,15 @@
 								<ng-multiselect-dropdown 
                                 class="mandatory-field"
                                 [ngClass]="{ 'is-invalid': isFormSubmitInitiated }"
-                                name="departmentId"
+                                name="departmentIds"
                                 [placeholder]="'Select Department'"
                                 [data]="departmentList"
-                                formControlName="departmentId"                                
+                                formControlName="departmentIds"                                
                                 [settings]="dropdownSettings"
                                 (onDeSelect)="onItemDeSelectReply($event)"
                                 (onSelect)="onItemSelectReply($event)">
                             </ng-multiselect-dropdown>
-						    <div *ngIf="isFormSubmitInitiated && interCommForms.departmentId.errors" style="color:red;">Please Choose Department</div>
+						    <div *ngIf="isFormSubmitInitiated && interCommForms.departmentIds.errors" style="color:red;">Please Choose Department</div>
 				</div>
 			</div>
 			<div class="row">
@@ -272,19 +272,12 @@
                         <div *ngIf="isreplyFormSubmitInitiated && replyForms.description.errors" style="color:red;">Please enter Message</div>
                 </div>
 			</div>
-			
-			
-            
             </div>
 			<div class="modal-footer">
               <button class="btn btn-primary" type="submit">Save</button>
 			  <button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closeReplyModal();">Close</button>
             </div>
 			</form>
-  
-
-		   
-		   
         </div>
       </div>
     </div>

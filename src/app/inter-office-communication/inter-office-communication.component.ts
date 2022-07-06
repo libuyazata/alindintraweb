@@ -32,6 +32,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public workDescList : Array<any>;
   public communicationList : Array<any>;
   public communicationList2 : Array<any>;
+  public communicationList3 : Array<any>;
   public subtaskList : Array<any>;
   public itemName: string = "Inter Office Communication";
   public itemNameReply: string = "Inter Office Communication Reply";
@@ -64,6 +65,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	   workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
        departmentId : new FormControl('',Validators.required),
+       departmentIds : new FormControl('',Validators.required),
 	   subject : new FormControl('',Validators.required),
 	   description : new FormControl('',Validators.required),
   	});
@@ -138,6 +140,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
     this.isFormSubmitInitiated = false;
   }
   resetinterCommForm() {
+	this.departmentList = []; // Reset it.
     this.interCommForm.reset();
   }
   protected getWorkDetailsList() {
@@ -310,6 +313,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 		workDetailsId : new FormControl((null != data ? data.workDetailsId : '')),
 		subTaskId : new FormControl((null != data ? data.subTaskId : '')),
 		departmentId : new FormControl((null != data ? data.departmentId : '')),
+		//departmentIds : new FormControl((null != data ? data.departmentId : '')),
         description : new FormControl('',Validators.required),
         subject : new FormControl('',Validators.required),
 		subTaskName : new FormControl((null != data ? data.subTaskName : '')),
@@ -343,7 +347,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	//this.communicationList2 = item;
 	const officeCommunicationId = item;
 	this.InterofficeCommunicationService.getCommunicationById(officeCommunicationId).subscribe((resp:any)=>{      
-	  this.communicationList2 = resp["communicationModel"];
+	  this.communicationList2 = resp["communicationModelList"];
     });
 	document.getElementById('descriptionModal').classList.toggle('d-block');
   }
@@ -353,15 +357,20 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   
   public replyMessage(item:any){
 	//this.detailsId=item;
-	/* const departmentId = 1;
-	this.InterofficeCommunicationService.getcommunicationList(departmentId).subscribe((resp:any)=>{      
-	  this.communicationList2 = resp["communicationList"];
-    }); */
+	const workId = item.workDetailsId;
+	this.InterofficeCommunicationService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
+      if(resp["deptList"] != null){
+		  this.departmentList = resp["deptList"];
+	  }
+	  else{
+		  this.departmentList = [];
+	  }
+   });
 	this.initializeReplyForm(item);
 	this.openReplyForm();
   }
-  public openReplyForm() {    
-    document.getElementById('replyModal').classList.toggle('d-block');
+  public openReplyForm() {
+	document.getElementById('replyModal').classList.toggle('d-block');
   }
   public closeReplyModal() {
     document.getElementById('replyModal').classList.toggle('d-block');
@@ -369,7 +378,16 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
    private clearForm() {
     document.getElementById('replyModal').classList.toggle('d-block');
   }
-  
+  updateMessage(item:any){
+	  const viewStatus = item[0]['viewStatus'];
+	  const deptCommId = item[0]['deptCommId'];
+	  
+	  if(viewStatus == 1){
+			alert('AA');
+			this.InterofficeCommunicationService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
+			});
+	 }	  
+  }
   get interCommForms() { return this.interCommForm.controls; }
   get replyForms() { return this.replyForm.controls; }
   get viewForms() { return this.viewForm.controls; }

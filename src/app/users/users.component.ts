@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectorRef  } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 // import * as $ from 'jquery';
 // import 'datatables.net';
@@ -33,11 +34,18 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   public empSearchForm:FormGroup;
   public prv_employeeEdit : string;
   public prv_employeeDelete : string;
+  public minsOfMeetingForm : FormGroup;
+  protected fileToUpload : any; // MoM files
+
   //public dateOfJoin:any;
   //public addEmployeeForm: FormGroup;
   //public departmentList:any;
   //public designationList:any;
   //public isEmployeeFormAttemptSubmit = false;
+  public uploadPerCent : string;
+  public userprofilepicUploadsForm : FormGroup;
+  public isMomFormAttemptSubmit : boolean = false;
+
 
   public myDatePickerOptions: IMyDpOptions = {
       // other options...
@@ -57,7 +65,10 @@ export class UserListComponent extends BaseComponent  implements OnInit {
 	this.prv_employeeDelete = storage.getItem('prv_employeeDelete');
 	
 	this.getEmployeeList();
-    //this.getDepartmentList();
+    this.initializeprofilepicUploadForm(); 
+
+
+   //this.getDepartmentList();
     //this.getDesignationList();
 
     // this.addEmployeeForm = new FormGroup({
@@ -73,8 +84,20 @@ export class UserListComponent extends BaseComponent  implements OnInit {
 
     //let defaultDate = this.datePipe.transform(new Date(), 'MMM dd, yyyy');     
     //this.addEmployeeForm.patchValue({"doj": defaultDate });
+  this.minsOfMeetingForm = new FormGroup({
+      employeeId : new FormControl(''),
+    });
   }
+  protected initializeprofilepicUploadForm() {
+    this.userprofilepicUploadsForm = new FormGroup({
+      employeeId : new FormControl(''),
+      document : new FormControl(''),
+    });
 
+  
+  
+  }
+  
   protected getEmployeeList(){
     // var searchFilterData = this.getSearchFilter();
     this.employeeService.getEmployeeList()
@@ -141,6 +164,67 @@ export class UserListComponent extends BaseComponent  implements OnInit {
       _self.getEmployeeList();
     });
 	}
+	
+	public openUploadprofileModal(){
+		//this.openDescriptionForm(item);
+	    document.getElementById('profilePhotoModal').classList.toggle('d-block');
+    }
+	public closeprofilePictureModal() {
+		document.getElementById('profilePhotoModal').classList.toggle('d-block');
+	}
+	public onMoMFileSelected(files: FileList) {
+		this.fileToUpload = files.item(0);
+    }
+	public onMoMDetailsSubmitted(){
+    this.isMomFormAttemptSubmit = true;
+    if(!this.minsOfMeetingForm.invalid) {      
+      //alert(this.momForm.employeeId.value);
+	  var formData = new FormData();     
+      if(this.fileToUpload){
+         // Array.from(files).forEach(f => formData.append('file', f, f.name));
+        formData.append('momFile', this.fileToUpload, this.fileToUpload.name);
+      }
+      //formData.append("employeeId", this.momForm.employeeId.value);
+      formData.append("employeeId", "1");
+      //console.log(formData);
+      this.employeeService.uploadDocument(formData).subscribe((event:any)=>{        
+        if (event && event instanceof HttpResponse) {
+          //this.closeMoMModalView();
+          //this.getNewWorkDetails();
+          alert("The details has been submitted successfully.");
+        }
+      })
+    }
+    console.log(this.minsOfMeetingForm.value);
+  }
+
+	
+	public upload(files: File[]){
+/*     if(this.userDocumentUploadsForm.get("documentTypeId").value > 0) {
+ */   
+     var formData = new FormData();
+      Array.from(files).forEach(f => formData.append('file', f, f.name));
+      //formData.append("userId", this.employeeId.toString());
+      //formData.append("documentTypeId", this.userDocumentUploadsForm.get("documentTypeId").value);
+      const userId = 1;
+	  this.employeeService.uploadDocument(userId).subscribe((event:any) => {
+        if (event && event.type === HttpEventType.UploadProgress) {
+          let percentDone = Math.round(100 * event.loaded / event.total);
+          this.uploadPerCent = percentDone.toString();
+          console.log("Percentage Done " + percentDone);
+        } else if (event && event instanceof HttpResponse) {
+          let uploadSuccess = true;
+          this.uploadPerCent = '0';
+          this.userprofilepicUploadsForm.reset();
+          console.log("Upload Success " + uploadSuccess);
+          //this.getEmployeeDocuments(this.employeeId);
+        }
+      });
+    /* } else {      
+      this.userDocumentUploadsForm.reset();
+      this.showAlert("Please select the document type");
+    } */
+  }
   // public openAddEmployeeView(){
   //   this.addEmployeeForm.reset();
   //   this.toggleField(this.addEmployeeForm,"employeeCode", true);
@@ -195,4 +279,6 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   //       day: date.getDate()}
   //   }});
   // }
+  get momForm() { return this.minsOfMeetingForm.controls; }
+
 } 
