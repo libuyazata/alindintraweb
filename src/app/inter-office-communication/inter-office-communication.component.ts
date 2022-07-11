@@ -57,7 +57,6 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
        workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
        deptCommList : new FormControl('',  Validators.required),
-       referenceNo : new FormControl('',  Validators.required),
        subject : new FormControl('',  Validators.required),
        description : new FormControl('',  Validators.required),
     });
@@ -278,7 +277,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	  workDetailsId : Number(submitData.workDetailsId),
       subTaskId : Number(submitData.subTaskId),
       deptCommList : submitData.deptCommList,
-      referenceNo : submitData.referenceNo,
+      referenceNo : null,
       subject : submitData.subject,
       description : submitData.description
     }
@@ -317,7 +316,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
        workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
        deptCommList : new FormControl('',Validators.required),
-       referenceNo : new FormControl('',Validators.required),
+       referenceNo : new FormControl(''),
        subject : new FormControl('',Validators.required),
        description : new FormControl('',Validators.required),
   	});

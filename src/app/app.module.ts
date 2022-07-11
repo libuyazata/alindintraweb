@@ -21,6 +21,7 @@ import { UserListModule } from '@app/users/users.module';
 
 import { AttendanceModule } from '@app/attendance/attendance.module';
 import { AddUserModule } from '@app/add-user/add-user.module';
+import { EditUserModule } from '@app/edit-user/edit-user.module';
 import { UserInfoModule } from '@app/user-info/user-info.module';
 import { NotificationModule } from '@app/notifications/notification.module';
 
@@ -68,6 +69,7 @@ import { WorkpresentModule } from '@app/work-present/work-present.module';
     CallManagementModule,
     WorkDetailsModule,
     AddUserModule,
+    EditUserModule,
     UserInfoModule,
     UserListModule,
     AppRoutingModule,

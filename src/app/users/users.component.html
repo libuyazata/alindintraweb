@@ -75,7 +75,7 @@
 					<a class="link" title="Delete" (click)="deleteEmployee(item);" ><i class="fas fa-trash"></i></a>
 					</span>
 					<span *ngIf="prv_employeeEdit == 'true'">
-					<a class="link" routerLink="/department"><i class="fas fa-edit"></i></a>
+					<a class="link" [routerLink]="['/edit-user/']"  [queryParams]="{ 'uid': item.employeeId}"><i class="fas fa-edit"></i></a>
                     </span>
 					<span>
 					<a class="link" ><i class="fas fa-plus" title="Upload Profile Picture" (click)="openUploadprofileModal()"></i></a>
