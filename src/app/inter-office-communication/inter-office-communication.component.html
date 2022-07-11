@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-lg-12 pt-4">                    
                         <span class="float-right">
-                        	<button class="btn btn-info" style="background:#C70039;" (click)="openCreateForm()" >Create {{itemName}}</button>  
+                        	<button class="btn btn-info float-right" (click)="openCreateForm()" >New Message</button>  
 						</span>
                     </div> 
                 </div>
@@ -51,7 +51,7 @@
                 </tr>
                 </thead>
 				<tbody *ngFor="let item of mf.data">
-                    <tr class="hover-action-row" [ngClass]="{'rowbg': item.deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(item.deptCommList);" >
+                    <tr class="hover-action-row" *ngIf="item.deptCommList.length > 0" [ngClass]="{'rowbg': item.deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(item.deptCommList);" >
                     <td class="column1">{{item.empCode}}</td>
                     <td class="column1">{{item.employeeName}}</td>
                     <td class="column1">{{item.referenceNo}}</td>
@@ -81,19 +81,100 @@
       </div>
   </div>
 </div>
+
+<!-- Reply Modal Form -->
+  <div class="modal salary-info-model" id="replyModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Reply</h5>
+            <button class="close" type="button" data-dismiss="modal" appModal  (click)="closeReplyModal();">&times;</button>
+          </div>
+			<div class="modal-body">
+            <form novalidate [formGroup]="replyForm" (ngSubmit)="submitReply();">
+			<div class="row">
+				<div class="col-lg-12">
+					<div><label>Main Task :</label></div>
+					<input type="hidden" formControlName="workDetailsId" >
+					<input class="form-control" formControlName="workName" readonly>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div><label>Sub Task :</label></div>
+					<input  type="hidden" formControlName="subTaskId">
+					<input  class="form-control" formControlName="subTaskName" readonly>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div><label>Department (To)  :</label></div>
+						    <ng-multiselect-dropdown 
+                                class="mandatory-field"
+                                [ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated }"
+								formControlName="deptCommList"                                
+								name="deptCommList"
+                                [placeholder]="'Select Department'"
+                                [data]="departmentList"
+                                [settings]="dropdownSettingsReply"
+                                (onDeSelect)="onItemDeSelectReply($event)"
+                                (onSelect)="onItemSelectReply($event)">
+                            </ng-multiselect-dropdown>
+							<div *ngIf="isreplyFormSubmitInitiated && replyForms.deptCommList.errors" style="color:red;">Please Choose Department</div>
+                            </div>  
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+                        <div><label>Reference No : </label></div>
+					    <input  type="text" class="form-control" formControlName="referenceNo" [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.referenceNo.errors }">
+						<div *ngIf="isreplyFormSubmitInitiated && replyForms.referenceNo.errors" style="color:red;">Please enter Reference No.</div>
+                </div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+                        <div><label>Subject : </label></div>
+					    <input  type="text" class="form-control" formControlName="subject" [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.subject.errors }">
+						<div *ngIf="isreplyFormSubmitInitiated && replyForms.subject.errors" style="color:red;">Please enter Subject</div>
+                </div>
+			</div>
+			
+			<div class="row">
+				<div class="col-lg-12">
+                        <div><label>Description : </label></div>
+                        <textarea class="form-control mandatory-field" formControlName="description"  maxlength="400"
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.description.errors }"></textarea>
+                        <div *ngIf="isreplyFormSubmitInitiated && replyForms.description.errors" style="color:red;">Please enter Description.</div>
+                </div>
+			</div>	
+			<div class="row">
+				<div class="col-lg-12 mt-2">
+				<button class="btn btn-primary" type="submit">Save</button>
+				<button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closeReplyModal();">Close</button>
+            	</div>
+            </div>
+            </form>
+			</div>
+        </div>
+      </div>
+    </div>
+<!-- Reply Modal Form End-->
+
 <!-- Create/Update Inter Office Communication Form [BEGIN]-->
 <div class="modal" [ngClass]="{ 'd-block' : isFormVisible}" id="createUpdateModal" *ngIf="isFormVisible">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{isEdit ? ('Update ' +itemName)  : ('Create ' +itemName)}}</h5>
+<!--                 <h5 class="modal-title">{{isEdit ? ('Update ' +itemName)  : ('Create ' +itemName)}}</h5>
+ -->                
+				<h5 class="modal-title">New Message</h5>
                 <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePopup();">&times;</button>
             </div>
             <div class="modal-body">
             <form novalidate [formGroup]="interCommForm" (ngSubmit)="onAddItem();">
 			<div class="row">
 				<div class="col-lg-12">
-					<div><label>Work List :</label></div>
+						<div><label>Work List :</label></div>
 						<select class="form-control" formControlName="workDetailsId" (change)="getDepartmentList($event);">
 							<option value="" selected>Choose Work</option>
 							<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">{{work.workName}}</option>
@@ -121,16 +202,23 @@
 						<ng-multiselect-dropdown 
                                 class="mandatory-field"
                                 [ngClass]="{ 'is-invalid': isFormSubmitInitiated }"
-                                name="departmentId"
+                                name="deptCommList"
                                 [placeholder]="'Select Department'"
                                 [data]="departmentList"
-                                formControlName="departmentId"                                
+                                formControlName="deptCommList"                                
                                 [settings]="dropdownSettings"
                                 (onDeSelect)="onItemDeSelect($event)"
                                 (onSelect)="onItemSelect($event)">
                             </ng-multiselect-dropdown>
-						    <div *ngIf="isFormSubmitInitiated && interCommForms.departmentId.errors" style="color:red;">Please Choose Department</div>
+						    <div *ngIf="isFormSubmitInitiated && interCommForms.deptCommList.errors" style="color:red;">Please Choose Department</div>
                             </div>  
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+                        <div><label>Reference No : </label></div>
+					    <input  type="text" class="form-control" formControlName="referenceNo" [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.referenceNo.errors }">
+						<div *ngIf="isFormSubmitInitiated && interCommForms.referenceNo.errors" style="color:red;">Please enter Reference No.</div>
+                </div>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
@@ -215,72 +303,5 @@
         </div>
       </div>
     </div>
-<!-- Reply Modal Form -->
-  <div class="modal salary-info-model" id="replyModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Reply</h5>
-            <button class="close" type="button" data-dismiss="modal" appModal  (click)="closeReplyModal();">&times;</button>
-          </div>
-           <form novalidate [formGroup]="replyForm" (ngSubmit)="submitReply();">
-			<div class="modal-body">
-			<div class="row">
-				<div class="col-lg-12">
-					<div><label>Main Task :</label></div>
-					<input type="hidden" formControlName="workDetailsId" >
-					<input class="form-control" formControlName="workName" readonly>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div><label>Sub Task :</label></div>
-					<input  type="hidden"  formControlName="departmentId">
-					<input  type="hidden" formControlName="subTaskId">
-					<input  class="form-control" formControlName="subTaskName" readonly>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div><label>To :</label></div>
-								<ng-multiselect-dropdown 
-                                class="mandatory-field"
-                                [ngClass]="{ 'is-invalid': isFormSubmitInitiated }"
-                                name="departmentIds"
-                                [placeholder]="'Select Department'"
-                                [data]="departmentList"
-                                formControlName="departmentIds"                                
-                                [settings]="dropdownSettings"
-                                (onDeSelect)="onItemDeSelectReply($event)"
-                                (onSelect)="onItemSelectReply($event)">
-                            </ng-multiselect-dropdown>
-						    <div *ngIf="isFormSubmitInitiated && interCommForms.departmentIds.errors" style="color:red;">Please Choose Department</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-                        <div><label>Subject : </label></div>
-					    <input  type="text" class="form-control" formControlName="subject" [ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && replyForms.subject.errors }">
-						<div *ngIf="isreplyFormSubmitInitiated && replyForms.subject.errors" style="color:red;">Please enter Subject</div>
-                </div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-                        <div><label>Message : </label></div>
-                        <textarea class="form-control mandatory-field" formControlName="description"  maxlength="400"
-                        [ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && replyForms.description.errors }"></textarea>
-                        <div *ngIf="isreplyFormSubmitInitiated && replyForms.description.errors" style="color:red;">Please enter Message</div>
-                </div>
-			</div>
-            </div>
-			<div class="modal-footer">
-              <button class="btn btn-primary" type="submit">Save</button>
-			  <button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closeReplyModal();">Close</button>
-            </div>
-			</form>
-        </div>
-      </div>
-    </div>
-<!-- Reply Modal Form End-->
 
 

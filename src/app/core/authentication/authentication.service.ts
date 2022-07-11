@@ -11,6 +11,7 @@ export interface Credentials {
   userName: string;
   token: string;
   userRole:number;
+  departmentId:number;
   name:string;
 }
 
@@ -62,6 +63,7 @@ export class AuthenticationService {
         userName: "Administrator", //context.username,
         token: 'xyzabcqwe',
         userRole : 1,
+        departmentId : 1,
         name : "",
         userId: 1
       };      
@@ -73,6 +75,7 @@ export class AuthenticationService {
         userName: "John Doe", //context.username,
         token: '123456',
         userRole : 3,
+		departmentId : 1,
         name : "",
         userId: 2
       };      
@@ -196,6 +199,7 @@ export class AuthenticationService {
       const storage = remember ? localStorage : sessionStorage;
       storage.setItem(credentialsKey, JSON.stringify(credentials));
       storage.setItem('userRole', JSON.stringify(credentials.userRole));
+      storage.setItem('departmentId', JSON.stringify(credentials.departmentId));
       //let httpClient =  this.injector.get(HttpClient);
 	 //let previlegeList: Array<boolean> = new Array();
 	  //let previlegeList = httpClient.get("user/getAuthorization/"+credentials.userRole);

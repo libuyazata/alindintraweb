@@ -9,6 +9,7 @@ export class MockAuthenticationService {
     userName: 'test',
     token: '123',
     userRole : 1,
+    departmentId : 1,
     name : "test user"
   };
 
@@ -18,6 +19,7 @@ export class MockAuthenticationService {
       userName: context.username,
       token: '123456',
       userRole : 1,
+      departmentId : 1,
       name : "test user"
     });
   }

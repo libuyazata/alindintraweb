@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InterofficeCommunicationService } from '@app/inter-office-communication/inter-office-communication.service';
 import { BaseComponent } from '@app/core/component/base.component';
 import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 
 // import { stat } from 'fs';
 
@@ -33,6 +34,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public communicationList : Array<any>;
   public communicationList2 : Array<any>;
   public communicationList3 : Array<any>;
+  public communicationList4 : Array<any>;
   public subtaskList : Array<any>;
   public itemName: string = "Inter Office Communication";
   public itemNameReply: string = "Inter Office Communication Reply";
@@ -42,7 +44,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
-  constructor(private alertService : AlertNotificationService,private InterofficeCommunicationService : InterofficeCommunicationService) { 
+  constructor(private alertService : AlertNotificationService,private InterofficeCommunicationService : InterofficeCommunicationService,private authenticationService: AuthenticationService) { 
 	super(InterofficeCommunicationService);
   }
 
@@ -54,18 +56,17 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
     this.interCommForm = new FormGroup({
        workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
-       departmentId : new FormControl('',  Validators.required),
+       deptCommList : new FormControl('',  Validators.required),
+       referenceNo : new FormControl('',  Validators.required),
        subject : new FormControl('',  Validators.required),
        description : new FormControl('',  Validators.required),
     });
 	this.replyForm = new FormGroup({
        workName : new FormControl('',Validators.required),
        subTaskName : new FormControl('',Validators.required),
-       departmentName : new FormControl('',Validators.required),
 	   workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
-       departmentId : new FormControl('',Validators.required),
-       departmentIds : new FormControl('',Validators.required),
+       deptCommList : new FormControl('',  Validators.required),
 	   subject : new FormControl('',Validators.required),
 	   description : new FormControl('',Validators.required),
   	});
@@ -82,6 +83,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	this.getWorkDetailsList();
 	this.getcommunicationList();
 	this.initializeForm(null);
+	this.initializeReplyForm(null);
 	this.initializeviewForm(null);
 	
 	 this.dropdownSettings = {
@@ -102,32 +104,32 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
       itemsShowLimit: 10,
       allowSearchFilter: true
     };
-  }
+    this.workDescList = [];
+}
  
   public onItemSelect(event:any){    
-    this.isNotDepartmentSelected = !(this.interCommForm.value.departmentId && 
-                                    this.interCommForm.value.departmentId.length > 0);    
+    this.isNotDepartmentSelected = !(this.interCommForm.value.deptCommList && 
+                                    this.interCommForm.value.deptCommList.length > 0);    
   }
 
   public onItemDeSelect(event:any){    
-    this.isNotDepartmentSelected = (!this.interCommForm.value.departmentId || 
-                                    this.interCommForm.value.departmentId.length == 0);
+    this.isNotDepartmentSelected = (!this.interCommForm.value.deptCommList || 
+                                    this.interCommForm.value.deptCommList.length == 0);
   }
   
   public onItemSelectReply(event:any){    
-    this.isNotDepartmentSelectedReply = !(this.replyForm.value.departmentId && 
-                                    this.replyForm.value.departmentId.length > 0);    
+    this.isNotDepartmentSelectedReply = !(this.replyForm.value.deptCommList && 
+                                    this.replyForm.value.deptCommList.length > 0);    
   }
 
   public onItemDeSelectReply(event:any){    
-    this.isNotDepartmentSelectedReply = (!this.replyForm.value.departmentId || 
-                                    this.replyForm.value.departmentId.length == 0);
+    this.isNotDepartmentSelectedReply = (!this.replyForm.value.deptCommList || 
+                                    this.replyForm.value.deptCommList.length == 0);
   }
   
   openCreateForm() {
     this.isFormVisible = true;
     this.isEdit = false;
-
     this.initializeForm(null)
   }
   closePopup() {
@@ -212,9 +214,15 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   onAddItem() { 
     this.isFormSubmitInitiated = true;
     if( this.interCommForm.valid ) { 
-      let submitData = this.interCommForm.value;
-      let params = this.getPreparedParams(submitData);
-      this.InterofficeCommunicationService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
+    const credentials = this.authenticationService.credentials;
+    const userId = credentials.userId;
+    const departmentId = credentials.departmentId;
+    
+	  let submitData = this.interCommForm.value;
+	  let params = this.getPreparedParams(submitData);
+      params.departmentId=departmentId;
+      params.employeeId=userId;
+	  this.InterofficeCommunicationService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
@@ -243,9 +251,14 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   submitReply() { 
     this.isreplyFormSubmitInitiated = true;
     if( this.replyForm.valid ) { 
-      let submitDataReply = this.replyForm.value;
+      const credentials = this.authenticationService.credentials;
+      const userId = credentials.userId;
+      const departmentId = credentials.departmentId;
+	  let submitDataReply = this.replyForm.value;
       let params = this.getPreparedReplyParams(submitDataReply);
-      this.InterofficeCommunicationService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
+      params.departmentId=departmentId;
+      params.employeeId=userId;
+	  this.InterofficeCommunicationService.replyInterOfficeCommunication(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), true);
           this.clearForm();
@@ -262,25 +275,38 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   
   private getPreparedParams(submitData: any) {
     let params : {[k : string]: any}= {
-	  workDetailsId : submitData.workDetailsId,
-      subTaskId : submitData.subTaskId,
-      departmentId : submitData.departmentId,
+	  workDetailsId : Number(submitData.workDetailsId),
+      subTaskId : Number(submitData.subTaskId),
+      deptCommList : submitData.deptCommList,
+      referenceNo : submitData.referenceNo,
       subject : submitData.subject,
-      description : submitData.description,
-	  createdOn: "2022-06-22",
-      updatedOn: "2022-06-22" 
+      description : submitData.description
     }
     return params;
   }
-  private getPreparedReplyParams(submitDataReply: any) {
+/*   
+ {
+  "departmentId": 1,
+  "deptCommList": [
+    {
+      "departmentId": 4,      
+      "viewStatus": 0
+    }
+  ],
+  "description": "Test Message 08",  
+  "employeeId": 1,
+  "subTaskId": 1,  
+  "subject": "Test Subject10",
+  "workDetailsId": 1
+}
+ */ 
+ private getPreparedReplyParams(submitDataReply: any) {
 	let params : {[k : string]: any}= {
-      workDetailsId : submitDataReply.workDetailsId,
-      subTaskId : submitDataReply.subTaskId,
-      departmentId : submitDataReply.departmentId,
+      workDetailsId : Number(submitDataReply.workDetailsId),
+      subTaskId : Number(submitDataReply.subTaskId),
+      deptCommList : submitDataReply.deptCommList,
       subject : submitDataReply.subject,
-      description : submitDataReply.description,
-	  createdOn: "2022-06-22",
-      updatedOn: "2022-06-22" 
+      description : submitDataReply.description
     }
     return params;
   }
@@ -290,7 +316,8 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	this.interCommForm = new FormGroup({
        workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
-       departmentId : new FormControl('',Validators.required),
+       deptCommList : new FormControl('',Validators.required),
+       referenceNo : new FormControl('',Validators.required),
        subject : new FormControl('',Validators.required),
        description : new FormControl('',Validators.required),
   	});
@@ -310,15 +337,14 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   private initializeReplyForm(data: any) {
     this.isDescription = false;
 	this.replyForm = new FormGroup({
-		workDetailsId : new FormControl((null != data ? data.workDetailsId : '')),
-		subTaskId : new FormControl((null != data ? data.subTaskId : '')),
-		departmentId : new FormControl((null != data ? data.departmentId : '')),
-		//departmentIds : new FormControl((null != data ? data.departmentId : '')),
-        description : new FormControl('',Validators.required),
-        subject : new FormControl('',Validators.required),
+		workDetailsId : new FormControl((null != data ? data.workDetailsId : ''),Validators.required),
+		subTaskId : new FormControl((null != data ? data.subTaskId : ''),Validators.required),
+		deptCommList : new FormControl((null != data ? data.deptCommList : ''),Validators.required),
+        description : new FormControl((null != data ? '' : ''),Validators.required),
+        subject : new FormControl((null != data ? '' : ''),Validators.required),
 		subTaskName : new FormControl((null != data ? data.subTaskName : '')),
+		referenceNo : new FormControl((null != data ? data.referenceNo : '')),
 		workName : new FormControl((null != data ? data.workName : '')),
-		departmentName : new FormControl((null != data ? data.departmentName : '')),
 	});
   }
   private initializeViewForm(data: any) {
@@ -364,16 +390,26 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	  }
 	  else{
 		  this.departmentList = [];
-	  }
-   });
-	this.initializeReplyForm(item);
+	  } 
+    });
+	this.replyForm.get("deptCommList").setValue(this.departmentList);
+	this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
+    this.replyForm.get("workName").setValue(item.workName);
+    this.replyForm.get("subTaskId").setValue(item.subTaskId);
+    this.replyForm.get("subTaskName").setValue(item.subTaskName);
+    this.replyForm.get("referenceNo").setValue(item.referenceNo);
+
+	//this.initializeReplyForm(item);
+	
 	this.openReplyForm();
   }
   public openReplyForm() {
 	document.getElementById('replyModal').classList.toggle('d-block');
   }
   public closeReplyModal() {
-    document.getElementById('replyModal').classList.toggle('d-block');
+    	this.replyForm.reset();
+
+	document.getElementById('replyModal').classList.toggle('d-block');
   } 
    private clearForm() {
     document.getElementById('replyModal').classList.toggle('d-block');
@@ -382,9 +418,9 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	  const viewStatus = item[0]['viewStatus'];
 	  const deptCommId = item[0]['deptCommId'];
 	  
-	  if(viewStatus == 1){
-			alert('AA');
+	  if(viewStatus == 0){
 			this.InterofficeCommunicationService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
+			this.getcommunicationList();
 			});
 	 }	  
   }
