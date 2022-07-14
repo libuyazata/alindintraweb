@@ -288,8 +288,11 @@
     <div class="row form-group">
     <div class="col-lg-6">
         <div><label>Insurance Policy Number</label></div>
-        <input formControlName="insurancePolicyNo" class="form-control"/>
+        <input formControlName="insurancePolicyNo" class="form-control" [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.insurancePolicyNo.errors }"/>
+    <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.insurancePolicyNo.errors" class="invalid-feedback">
+            <div *ngIf="employeeForm.insurancePolicyNo.errors.required">Please provide the Insurance Policy Number.</div>
     </div>
+	</div>
     <div class="col-lg-6">
         <div><label>Insurance Validity</label></div>
         <my-date-picker name="insuranceValidity" [options]="myDatePickerOptions" class="form-control"

@@ -48,5 +48,8 @@ export class InterofficeCommunicationService extends BaseService {
   public viewUpdateDepartmentCommunicationMessage(data:any): Observable<any>{
     return this.httpClient.get("project/viewUpdateDepartmentCommunicationMessage/"+data);
   }
+  public searchInterDeptCommList(data:any): Observable<any>{
+    return this.httpClient.get("project/searchInterDeptCommList", { params : data});
+  }
 
 }

@@ -12,6 +12,7 @@ export interface Credentials {
   token: string;
   userRole:number;
   departmentId:number;
+  profilePicPath:string;
   name:string;
 }
 
@@ -64,6 +65,7 @@ export class AuthenticationService {
         token: 'xyzabcqwe',
         userRole : 1,
         departmentId : 1,
+		profilePicPath:'test.jpg',
         name : "",
         userId: 1
       };      
@@ -77,6 +79,7 @@ export class AuthenticationService {
         userRole : 3,
 		departmentId : 1,
         name : "",
+		profilePicPath:'test.jpg',
         userId: 2
       };      
       this.setCredentials(data, context.remember);
@@ -200,6 +203,7 @@ export class AuthenticationService {
       storage.setItem(credentialsKey, JSON.stringify(credentials));
       storage.setItem('userRole', JSON.stringify(credentials.userRole));
       storage.setItem('departmentId', JSON.stringify(credentials.departmentId));
+      storage.setItem('profilePicPath', JSON.stringify(credentials.profilePicPath));
       //let httpClient =  this.injector.get(HttpClient);
 	 //let previlegeList: Array<boolean> = new Array();
 	  //let previlegeList = httpClient.get("user/getAuthorization/"+credentials.userRole);

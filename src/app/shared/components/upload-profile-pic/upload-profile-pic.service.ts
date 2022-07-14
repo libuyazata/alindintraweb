@@ -28,4 +28,10 @@ export class UploadProfilepicService extends BaseService {
   public deleteEmployeeDocumentById(documentInfo:any){
     return this.httpClient.post('deleteUsersFile', documentInfo);
   }
+ /*  public uploadEmployeeProfilePic(data:any): Observable<any>{
+    return this.httpClient.get("user/uploadEmployeeProfilePic/"+data);
+  } */
+  public uploadEmployeeProfilePic(formData:FormData){
+    return this.httpClient.post('user/uploadEmployeeProfilePic/1', formData, {reportProgress: true, observe: 'events'});
+  }
 }

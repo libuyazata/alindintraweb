@@ -10,6 +10,7 @@ export class MockAuthenticationService {
     token: '123',
     userRole : 1,
     departmentId : 1,
+	profilePicPath:'test.jpg',
     name : "test user"
   };
 
@@ -20,6 +21,7 @@ export class MockAuthenticationService {
       token: '123456',
       userRole : 1,
       departmentId : 1,
+	  profilePicPath:'test.jpg',
       name : "test user"
     });
   }

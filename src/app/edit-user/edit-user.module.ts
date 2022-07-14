@@ -15,6 +15,7 @@ import { EditUserManagementService } from './edit-user.service';
 import { DataFilterPipeModule } from '@app/shared/pipes/data-filter/data-filter-pipe.module';
 import { CreateUserModule } from '@app/shared/components/create-user/create-user.module';
 import { UserDocumentsModule } from '@app/shared/components/user-documents/user-docs.module';
+import { UploadProfilepicModule } from '@app/shared/components/upload-profile-pic/upload-profile-pic.module';
 
 //import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 //import { NgDatepickerModule } from 'ng2-datepicker';
@@ -29,6 +30,7 @@ import { UserDocumentsModule } from '@app/shared/components/user-documents/user-
     CreateUserModule,
     UserDocumentsModule,
     NgbModule.forRoot(),
+	UploadProfilepicModule,
     //MyDatePickerModule,
     //DataTableModule,
     //DataFilterPipeModule,

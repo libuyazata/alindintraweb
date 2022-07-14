@@ -8,9 +8,36 @@
             </div>
         </div>
     </div>
-</div>
 <div class="row">
-        <div class="col-lg-12 search-container">
+                            <div class="col-lg-12 search-container">
+									<form novalidate [formGroup]="materialRequestSearchForm" (ngSubmit)="onCommunicationDetailsSearched();">
+										<div class="row">
+											<div class="col-lg-2">
+												<div class="search-label-container"><label>Search</label></div>
+												<input formControlName="searchKeyWord" class="form-control" placeholder="Search.."/>  
+											</div> 
+											<div class="col-lg-2">
+												<div class="search-label-container"><label>Start Date</label></div>
+												<input formControlName="dateFrom" class="form-control"  type="date"/>  
+											</div>
+											<div class="col-lg-2">
+												<div class="search-label-container"><label>End Date</label></div>
+												<input formControlName="dateTo" class="form-control" type="date" />  
+											</div>
+											 
+											<div class="col-lg-4 pt-4">                    
+												<span class="float-left">
+													<button class="btn btn-info" type="submit">Search</button>  
+													<button class="btn btn-danger" type="reset">Clear</button>
+													<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;">New Message</button>  
+												</span>
+											</div> 
+										</div>
+									</form> 
+							</div>
+</div>
+
+		<!-- <div class="col-lg-12 search-container">
                 <div class="row">
                     <div class="col-lg-12 pt-4">                    
                         <span class="float-right">
@@ -18,8 +45,10 @@
 						</span>
                     </div> 
                 </div>
-		</div>
+		</div> 
+</div>-->
 </div>
+
 <div class="page-body-container">
   <div class="row">
       <div class="col-lg-12">

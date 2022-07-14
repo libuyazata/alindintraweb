@@ -19,6 +19,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public interCommForm : FormGroup;
   public replyForm : FormGroup;
   public viewForm : FormGroup;
+  public materialRequestSearchForm : FormGroup;
   public isDepartmentFormAttemptSubmit :Boolean = false;
   public isFormSubmitInitiated : boolean = false;
   public isreplyFormSubmitInitiated : boolean = false;
@@ -35,6 +36,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public communicationList2 : Array<any>;
   public communicationList3 : Array<any>;
   public communicationList4 : Array<any>;
+  public searchcommunicationList : Array<any>;
   public subtaskList : Array<any>;
   public itemName: string = "Inter Office Communication";
   public itemNameReply: string = "Inter Office Communication Reply";
@@ -104,8 +106,34 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
       allowSearchFilter: true
     };
     this.workDescList = [];
+	this.materialRequestSearchForm = new FormGroup({
+      searchKeyWord : new FormControl(''),
+      dateFrom : new FormControl(''),
+      dateTo : new FormControl(''),
+    })
 }
  
+	
+	protected getSearchParams(){
+    const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	let searchFilter = this.materialRequestSearchForm.value;    
+    let params = {
+      "startDate" : searchFilter.dateFrom == null ? "" : searchFilter.dateFrom,
+      "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
+      "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
+      "departmentId" : departmentId,
+    }
+    return params;
+  }
+  public onCommunicationDetailsSearched(){
+    
+	  let params = this.getSearchParams();
+     // params.departmentId=departmentId;
+	  this.InterofficeCommunicationService.searchInterDeptCommList(params).subscribe((resp:any)=>{
+	  this.communicationList = resp["communicationModelList"];
+    });
+  }
   public onItemSelect(event:any){    
     this.isNotDepartmentSelected = !(this.interCommForm.value.deptCommList && 
                                     this.interCommForm.value.deptCommList.length > 0);    
@@ -145,8 +173,10 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
     this.interCommForm.reset();
   }
   protected getWorkDetailsList() {
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
 	let params = {
-      departmentId : 1,
+      departmentId : departmentId,
 	  status:1
     }
 	this.InterofficeCommunicationService.getWorkDetailsList(params).subscribe((resp:any)=>{      
@@ -154,7 +184,10 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
     });
   }
   protected getcommunicationList() {
-	const departmentId = 1;
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	//const departmentId = 1;
+	
 	this.InterofficeCommunicationService.getcommunicationList(departmentId).subscribe((resp:any)=>{      
 	  this.communicationList = resp["communicationList"];
     });
@@ -184,9 +217,11 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
    });
   }
   protected getsubtaskListByWorkId(workDetailsId:number){
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
 	let params = {
       workDetailsId:workDetailsId,
-	  departmentId : 1,
+	  departmentId : departmentId,
 	  status:1
     }
 	this.InterofficeCommunicationService.getsubtaskListByWorkId(params).subscribe((resp:any) => {

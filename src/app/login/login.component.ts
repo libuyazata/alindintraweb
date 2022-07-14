@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
         if (loginData && loginData.status == "success" && loginData.loginDetails) {
 		  const credentials = {
             userId : loginData.loginDetails.employeeId,
+            profilePicPath : loginData.loginDetails.profilePicPath,
             departmentId : loginData.loginDetails.department.departmentId,
 			userName : loginData.loginDetails.userName,
             token : loginData.token,

@@ -29,7 +29,7 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
 	super(departmentService);
   }
 
-  ngOnInit() { 
+  ngOnInit() {
 	const storage = sessionStorage;
 	this.prv_departmentEdit = storage.getItem('prv_departmentEdit');
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
