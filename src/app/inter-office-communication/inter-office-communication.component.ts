@@ -129,7 +129,6 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public onCommunicationDetailsSearched(){
     
 	  let params = this.getSearchParams();
-     // params.departmentId=departmentId;
 	  this.InterofficeCommunicationService.searchInterDeptCommList(params).subscribe((resp:any)=>{
 	  this.communicationList = resp["communicationModelList"];
     });
