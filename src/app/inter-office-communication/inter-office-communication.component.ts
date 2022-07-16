@@ -112,7 +112,9 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
       dateTo : new FormControl(''),
     })
 }
- 
+	clearSearchForm(){
+	this.getcommunicationList();
+	}
 	
 	protected getSearchParams(){
     const credentials = this.authenticationService.credentials;
@@ -374,7 +376,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 		subTaskId : new FormControl((null != data ? data.subTaskId : ''),Validators.required),
 		deptCommList : new FormControl((null != data ? data.deptCommList : ''),Validators.required),
         description : new FormControl((null != data ? '' : ''),Validators.required),
-        subject : new FormControl((null != data ? '' : ''),Validators.required),
+        subject : new FormControl((null != data ? data.subject : '')),
 		subTaskName : new FormControl((null != data ? data.subTaskName : '')),
 		referenceNo : new FormControl((null != data ? data.referenceNo : '')),
 		workName : new FormControl((null != data ? data.workName : '')),
@@ -424,13 +426,14 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	  else{
 		  this.departmentList = [];
 	  } 
-    });
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
+    });
 	this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
     this.replyForm.get("workName").setValue(item.workName);
     this.replyForm.get("subTaskId").setValue(item.subTaskId);
     this.replyForm.get("subTaskName").setValue(item.subTaskName);
     this.replyForm.get("referenceNo").setValue(item.referenceNo);
+    this.replyForm.get("subject").setValue(item.subject);
 
 	//this.initializeReplyForm(item);
 	

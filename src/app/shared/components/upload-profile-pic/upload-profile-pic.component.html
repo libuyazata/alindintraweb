@@ -9,9 +9,9 @@
                 </div> 
                 <div class="col-lg-12">  
                     <input type="hidden" name="employeeId" formControlName="employeeId">
-                    <input type="file" id="profilePic" formControlName="profilePic" (change)="onMoMFileSelected($event.target.files);">
+                    <input type="file" id="profilePic" formControlName="profilePic" (change)="onMoMFileSelected($event.target.files);" accept="image/png, image/gif, image/jpeg">
 						<div *ngIf="isMomFormAttemptSubmit && momForm.profilePic.errors" style="color:red;">Please choose Image file</div>
-                    <img *ngIf="isShown" id="divshow" [src]="imageSrc" alt="Profile picture" />
+                    <img *ngIf="isShown" id="divshow" [src]="imageSrc" alt="Profile picture" style="width:15%;"/>
 					<br/> 
                 </div> 
                  <br/>  <br/> 
