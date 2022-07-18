@@ -70,6 +70,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
        deptCommList : new FormControl('',  Validators.required),
 	   subject : new FormControl('',Validators.required),
 	   description : new FormControl('',Validators.required),
+	   description_old : new FormControl('',Validators.required),
   	});
 	this.viewForm = new FormGroup({
        employeeName : new FormControl(),
@@ -380,6 +381,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 		subTaskName : new FormControl((null != data ? data.subTaskName : '')),
 		referenceNo : new FormControl((null != data ? data.referenceNo : '')),
 		workName : new FormControl((null != data ? data.workName : '')),
+		description_old : new FormControl((null != data ? data.description : '')),
 	});
   }
   private initializeViewForm(data: any) {
@@ -434,6 +436,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
     this.replyForm.get("subTaskName").setValue(item.subTaskName);
     this.replyForm.get("referenceNo").setValue(item.referenceNo);
     this.replyForm.get("subject").setValue(item.subject);
+    this.replyForm.get("description_old").setValue(item.description);
 
 	//this.initializeReplyForm(item);
 	

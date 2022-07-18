@@ -167,6 +167,12 @@
 						<div *ngIf="isreplyFormSubmitInitiated && replyForms.subject.errors" style="color:red;">Please enter Subject</div>
                 </div>
 			</div>
+			<div class="row">
+				<div class="col-lg-12">
+                        <div><label>Message : </label></div>
+					    <textarea class="form-control mandatory-field" formControlName="description_old"  maxlength="400" readonly></textarea>
+				</div>
+			</div>
 			
 			<div class="row">
 				<div class="col-lg-12">
