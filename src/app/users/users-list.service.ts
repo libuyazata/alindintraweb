@@ -48,4 +48,7 @@ export class UsersService extends BaseService {
   public uploadDocument(data:any): Observable<any>{
     return this.httpClient.get("user/uploadEmployeeProfilePic/"+data);
   }
+  public searchEmployee(data:any): Observable<any>{
+    return this.httpClient.get("user/searchEmployee", { params : data});
+  }
 }

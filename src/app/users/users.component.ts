@@ -35,6 +35,7 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   public prv_employeeEdit : string;
   public prv_employeeDelete : string;
   public minsOfMeetingForm : FormGroup;
+  //public communicationList : Array<any>;
   protected fileToUpload : any; // MoM files
 
   //public dateOfJoin:any;
@@ -45,7 +46,7 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   public uploadPerCent : string;
   public userprofilepicUploadsForm : FormGroup;
   public isMomFormAttemptSubmit : boolean = false;
-
+  public materialRequestSearchForm : FormGroup;
 
   public myDatePickerOptions: IMyDpOptions = {
       // other options...
@@ -84,20 +85,38 @@ export class UserListComponent extends BaseComponent  implements OnInit {
 
     //let defaultDate = this.datePipe.transform(new Date(), 'MMM dd, yyyy');     
     //this.addEmployeeForm.patchValue({"doj": defaultDate });
-  this.minsOfMeetingForm = new FormGroup({
+    this.minsOfMeetingForm = new FormGroup({
       employeeId : new FormControl(''),
     });
+	
+	this.materialRequestSearchForm = new FormGroup({
+      searchKeyWord : new FormControl(''),
+    })
   }
   protected initializeprofilepicUploadForm() {
     this.userprofilepicUploadsForm = new FormGroup({
       employeeId : new FormControl(''),
       document : new FormControl(''),
     });
-
-  
-  
   }
-  
+  public onEmployeeSearched(){
+	  let params = this.getSearchParams();
+	  this.employeeService.searchEmployee(params).subscribe((resp:any)=>{
+	  this.employeeList = resp["empModels"];
+    });
+  }
+  protected getSearchParams(){
+    //const credentials = this.authenticationService.credentials;
+    //const departmentId = credentials.departmentId;
+    const departmentId = 0;
+	
+	let searchFilter = this.materialRequestSearchForm.value;    
+    let params = {
+      "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
+      "departmentId" : departmentId,
+    }
+    return params;
+  }
   protected getEmployeeList(){
     // var searchFilterData = this.getSearchFilter();
     this.employeeService.getEmployeeList()
@@ -142,6 +161,9 @@ export class UserListComponent extends BaseComponent  implements OnInit {
    
   }
 
+  clearSearchForm(){
+	this.getEmployeeList();
+  }
   public onUserEditClicked(event:any, userData:any){ // TODO: Redefine the logic to go to add-user in edit mode
     event.preventDefault();
     //console.log(JSON.stringify(userData));

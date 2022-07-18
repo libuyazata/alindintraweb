@@ -8,9 +8,8 @@
             </div>
         </div>
     </div>
-    <div class="row" *allowUser="'admin'">
+   <!--  <div class="row" *allowUser="'admin'">
         <div class="col-lg-12 search-container">
-            <!-- <form novalidate [formGroup]="empSearchForm"> -->
                 <div class="row">
                     <div class="col-lg-12 pt-4">
                         <span class="float-right">
@@ -18,9 +17,28 @@
                         </span>
                     </div>
                 </div>
-            <!-- </form> -->
         </div>
-    </div>
+    </div> -->
+	<div class="row">
+                            <div class="col-lg-12 search-container">
+									<form novalidate [formGroup]="materialRequestSearchForm" (ngSubmit)="onEmployeeSearched();">
+										<div class="row">
+											<div class="col-lg-2">
+												<div class="search-label-container"><label>Search</label></div>
+												<input formControlName="searchKeyWord" class="form-control" placeholder="Search.."/>  
+											</div> 
+											<div class="col-lg-4 pt-4">                    
+												<span class="float-left">
+													<button class="btn btn-info" type="submit">Search</button>  
+													<button class="btn btn-danger" type="reset" (click)="clearSearchForm()">Clear</button>
+													<button class="btn btn-info" [routerLink]="['/save-user/']" [queryParams]="{ 'uid': '0'}"><i class="fa fa-plus"></i> Manage Employee</button>
+												</span>
+											</div> 
+										</div>
+									</form> 
+							</div>
+</div>
+
 </div><br/>
 
 <div class="page-content">
@@ -65,7 +83,7 @@
                 <td class="column2"><a class="link">{{item.firstName | uppercase}} {{item.lastName | uppercase}}</a></td>
                 <!-- <td><a class="link">{{item.lastName | uppercase}}</a></td> -->
                 <td class="column3">{{item.emailId | uppercase}}</td>
-                <td class="column4">{{item.department.departmentName | uppercase}}</td>
+                <td class="column4">{{item.departmentName | uppercase}}</td>
                 <td class="column5">{{item.primaryMobileNo | uppercase }}</td>
 				<td class="column6 col-md-2"></td>
 <!-- 				<td class="actions" *allowUser="'admin'" [routerLink]="['/save-user/']" [queryParams]="{ 'uid': item.employeeId}">
