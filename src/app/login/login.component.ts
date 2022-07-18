@@ -63,10 +63,10 @@ export class LoginComponent implements OnInit {
 		  const credentials = {
             userId : loginData.loginDetails.employeeId,
             profilePicPath : loginData.loginDetails.profilePicPath,
-            departmentId : loginData.loginDetails.department.departmentId,
+            departmentId : loginData.loginDetails.departmentId,
 			userName : loginData.loginDetails.userName,
             token : loginData.token,
-           userRole : this.getUserRole(loginData.loginDetails.usrRole.roleName),
+            userRole : this.getUserRole(loginData.loginDetails.roleName),
              //userRole : 1,
             name : loginData.loginDetails.firstName + " " + loginData.loginDetails.lastName
           }
