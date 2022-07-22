@@ -6,7 +6,7 @@ import { BaseComponent } from '@app/core/component/base.component';
 import { CreateUserService } from '@app/shared/components/create-user/create-user.service';
 import { DepartmentService } from '@app/department/department.service';
 import { Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
 
 
@@ -44,7 +44,8 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
   constructor(private userService:CreateUserService,
               private departmentService: DepartmentService,
 			  private alertService : AlertNotificationService,
-			  private route: ActivatedRoute) {
+			  private route: ActivatedRoute,
+			  private router:Router) {
     super(userService);
   }
 
@@ -92,7 +93,8 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
   }
 
   public onEmployeeDataSubmitClicked(){ 
-    this.isEmployeeFormAttemptSubmit = true;
+    
+	this.isEmployeeFormAttemptSubmit = true;
     if(this.addEmployeeForm.valid){
       this.toggleField(this.addEmployeeForm, "empCode", true);
       let employeeData = this.addEmployeeForm.value;
@@ -118,9 +120,16 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
       //employeeData.uploadId = -1;
 	  //employeeData.isActive = employeeData.isActive ? 1 : 0;
       console.log(this.addEmployeeForm.value);
+	  if(employeeData.employeeId == 0){
+	  this.userService.saveEmployee(employeeData).subscribe((resp: any) =>{
+		this.alertService.showSaveStatus("Employee details", true);
+      });
+	  }else{
 	  this.userService.updateEmployee(employeeData).subscribe((resp: any) =>{
 		this.alertService.showSaveStatus("Employee details", true);
       });
+	  }
+	   this.router.navigate(['/employees']);
     }
   }
 

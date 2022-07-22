@@ -12,9 +12,12 @@ export class CreateUserService extends BaseService {
     super(httpClient);
   }
 
+  public saveEmployee(employeeData:any): Observable<any> {
+	return this.httpClient.post("user/saveEmployee", employeeData);
+  }
+  
   public updateEmployee(employeeData:any): Observable<any> {
-    return this.httpClient.post("user/updateEmployee", employeeData);
-    // return this.httpClient.post("saveOrUpdateUser", employeeData);
+	return this.httpClient.post("user/updateEmployee", employeeData);
   }
   
   public getEmployeeDetailsById(employeeId:any): Observable<any> {
