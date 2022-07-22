@@ -66,8 +66,8 @@ export class LoginComponent implements OnInit {
             departmentId : loginData.loginDetails.departmentId,
 			userName : loginData.loginDetails.userName,
             token : loginData.token,
-            userRole : this.getUserRole(loginData.loginDetails.roleName),
-             //userRole : 1,
+             userRole : this.getUserRole(loginData.loginDetails.roleName),
+            // userRole : 1,
             name : loginData.loginDetails.firstName + " " + loginData.loginDetails.lastName
           }
           this.authenticationService.setRolesAndPermissions(credentials);

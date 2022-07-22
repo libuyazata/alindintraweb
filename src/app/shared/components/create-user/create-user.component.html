@@ -13,15 +13,14 @@
     <div class="row form-group">
         <div class="col-lg-3">
             <div><label>First Name</label></div>
-            <input formControlName="firstName" class="form-control" [attr.disabled]="isEmployeeEdit?'':null"
-            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.firstName.errors }"/>
+            <input formControlName="firstName" class="form-control"  [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.firstName.errors }" [attr.disabled]="isEmployeeEdit ? true:null"/>
             <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.firstName.errors" class="invalid-feedback">
                 <div *ngIf="employeeForm.firstName.errors.required">Please provide the first name.</div>
             </div>
         </div>
         <div class="col-lg-3">
             <div><label>Second Name</label></div>
-            <input formControlName="lastName" class="form-control" [attr.disabled]="isEmployeeEdit?'':null"
+            <input formControlName="lastName" class="form-control" [attr.disabled]="isEmployeeEdit ? true:null"
             [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.lastName.errors }"/>
             <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.lastName.errors" class="invalid-feedback">
                 <div *ngIf="employeeForm.lastName.errors.required">Please provide the second name.</div>
@@ -96,7 +95,7 @@
     <div class="row form-group">
     <div class="col-lg-6">
         <div><label>Employee Code</label></div>
-        <input formControlName="empCode" class="form-control" [attr.disabled]="isEmployeeEdit?'':null"
+        <input formControlName="empCode" class="form-control" [attr.disabled]="isEmployeeEdit ? true:null"
         [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.empCode.errors }"/>
         <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.empCode.errors" class="invalid-feedback">
             <div *ngIf="employeeForm.empCode.errors.required">Please provide the Employee Code.</div>

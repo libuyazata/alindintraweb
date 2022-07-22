@@ -12,8 +12,8 @@ export class CreateUserService extends BaseService {
     super(httpClient);
   }
 
-  public submitEmployeeDetails(employeeData:any): Observable<any> {
-    return this.httpClient.post("user/saveOrUpdateEmployee", employeeData);
+  public updateEmployee(employeeData:any): Observable<any> {
+    return this.httpClient.post("user/updateEmployee", employeeData);
     // return this.httpClient.post("saveOrUpdateUser", employeeData);
   }
   

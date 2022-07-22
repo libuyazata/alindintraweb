@@ -26,7 +26,10 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
   public employmentRemarkList:any;
   public addEmployeeForm: FormGroup;
   public isEmployeeFormAttemptSubmit = false;
-  public isEmployeeEdit = false;
+ // public isEmployeeEdit = false;
+ // public isEmployeeEdit : boolean = false;
+ // isEmployeeEdit = false;
+  isEmployeeEdit: boolean = false;
 
   public myDatePickerOptions: IMyDpOptions = {
     // other options...
@@ -49,6 +52,17 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
     if(!this.employeeData) {
       this.employeeData = [];
     }
+	this.route.queryParams.subscribe((params:any) => {
+      let employeeId = params['uid'];
+      if(employeeId && employeeId != 0) {
+        // employeeId = 0;
+        this.isEmployeeEdit = true;
+        this.getEmployeeDetailsById(employeeId);
+      }else{
+        this.isEmployeeEdit = false;
+	  }
+
+    })
     this.initialize();
   }
 
@@ -64,18 +78,20 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
   }
 
   ngAfterViewInit(){
-    this.route.queryParams.subscribe((params:any) => {
+    /* this.route.queryParams.subscribe((params:any) => {
       let employeeId = params['uid'];
       if(employeeId && employeeId != 0) {
         // employeeId = 0;
         this.isEmployeeEdit = true;
         this.getEmployeeDetailsById(employeeId);
-      }
+      }else{
+        this.isEmployeeEdit = false;
+	  }
 
-    })
+    }) */
   }
 
-  public onEmployeeDataSubmitClicked(){
+  public onEmployeeDataSubmitClicked(){ 
     this.isEmployeeFormAttemptSubmit = true;
     if(this.addEmployeeForm.valid){
       this.toggleField(this.addEmployeeForm, "empCode", true);
@@ -99,11 +115,11 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
       // employeeData.insuranceValidity = (employeeData.insuranceValidity && employeeData.insuranceValidity.jsdate) ? employeeData.insuranceValidity.jsdate : "";
       // employeeData.qatarIdValidity = (employeeData.qatarIdValidity && employeeData.qatarIdValidity.jsdate) ? employeeData.qatarIdValidity.jsdate : "";
       employeeData.employeeId = (employeeData.employeeId) ? employeeData.employeeId : 0;
-      //employeeData.isActive = employeeData.isActive ? 1 : 0;
+      //employeeData.uploadId = -1;
+	  //employeeData.isActive = employeeData.isActive ? 1 : 0;
       console.log(this.addEmployeeForm.value);
-	  this.userService.submitEmployeeDetails(employeeData).subscribe((resp: any) =>{
+	  this.userService.updateEmployee(employeeData).subscribe((resp: any) =>{
 		this.alertService.showSaveStatus("Employee details", true);
-		//alert("Employee details has been submitted successfully");
       });
     }
   }
@@ -213,7 +229,7 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
     this.getCountries();
     this.getEmployeeStatus();
     this.getDepartmentList();
-     this.getDesignationList();
+    //this.getDesignationList();
     this.getEmployeeTypeList();
     this.getEmploymentRemarkList();
 
@@ -233,7 +249,7 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
       accommodationLocation : new FormControl(''),
 
       emergencyContactName : new FormControl(''),
-      emergencyContactPhone : new FormControl('', Validators.required),
+      emergencyContactPhone : new FormControl(''),
       relationship : new FormControl(''),
       // homeCountryPhone: new FormControl(''),
 
@@ -248,15 +264,15 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
       //lastWorkingDay: new FormControl('', Validators.required),
 
       // visaProfession: new FormControl('', Validators.required),
-      passportNo: new FormControl('', Validators.required),
+      passportNo: new FormControl(''),
       // passportValidity: new FormControl('', Validators.required),
       // visa: new FormControl('', Validators.required),
       // workingCountryIdNo: new FormControl('', Validators.required),
       // visaValidity: new FormControl('', Validators.required),
-      healthCardValidity: new FormControl('', Validators.required),
-      healthCardNo: new FormControl('', Validators.required),
-      insurancePolicyNo: new FormControl('', Validators.required),
-      insuranceValidity: new FormControl('', Validators.required),
+      healthCardValidity: new FormControl(''),
+      healthCardNo: new FormControl(''),
+      insurancePolicyNo: new FormControl(''),
+      insuranceValidity: new FormControl(''),
 
       // qatarId : new FormControl('', Validators.required),
       // qatarIdValidity: new FormControl('', Validators.required),
