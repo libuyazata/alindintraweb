@@ -337,7 +337,7 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
       "designationId" : -1
     }
   }
-
+ 
   // Convenience getter for easy access to attendance form fields.
   get employeeForm() { return this.addEmployeeForm.controls; }
 

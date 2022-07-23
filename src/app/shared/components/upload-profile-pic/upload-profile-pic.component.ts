@@ -10,7 +10,6 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
 
-
 @Component({
   selector: 'upload-profile-pic',
   templateUrl: './upload-profile-pic.component.html',
@@ -25,6 +24,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
   public employeeId:number = 0;
   public uploadPerCent : string;
   public imageSrc : string;
+  public profilepic : string;
   public documentList: Array<any>;
   public documentTypeList : Array<any>;
   public userDocumentUploadsForm : FormGroup;
@@ -50,10 +50,13 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
 	this.initializeForm(null);
 	this.route.queryParams.subscribe((params:any) => {
       this.employeeId = params['uid'];
+	  this.getEmployeeDetailsById(this.employeeId);
 	  this.minsOfMeetingForm.patchValue({
 		employeeId: this.employeeId,
 		});
     })	
+	//this.profilepic = "AlindUploadFiles/Employee/ProfilePic/default/default.jpg";
+
   }
 
   ngOnChanges(){
@@ -69,6 +72,13 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
     })
   }
   
+  protected getEmployeeDetailsById(employeeId:number){
+    let empParams = { "employeeId" : employeeId};
+    this.uploadProfileService.getEmployeeDetailsById(empParams).subscribe((emp: any) => {
+      this.profilepic = emp.employee.profilePicPath;
+	  //alert(emp.employee.profilePicPath);
+    });
+  }
   public onMoMFileSelected(files: FileList) {
     this.isShown = true;
 	this.fileToUpload = files.item(0);
@@ -176,6 +186,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
   protected resetMoMView(){
     this.minsOfMeetingForm.reset();
   }
+   
   get momForm() { return this.minsOfMeetingForm.controls; }
 
 }

@@ -12,6 +12,7 @@
                     <input type="file" id="profilePic" formControlName="profilePic" (change)="onMoMFileSelected($event.target.files);" accept="image/png, image/gif, image/jpeg">
 						<div *ngIf="isMomFormAttemptSubmit && momForm.profilePic.errors" style="color:red;">Please choose Image file</div>
                     <img *ngIf="isShown" id="divshow" [src]="imageSrc" alt="Profile picture" style="width:15%;"/>
+					 <img src="http://97.74.85.211:8080/{{profilepic}}" style="border-radius: 0%;width:50px;" class="pr-1 pl-2">
 					<br/> 
                 </div> 
                  <br/>  <br/> 
