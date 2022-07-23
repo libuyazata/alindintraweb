@@ -33,6 +33,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
   protected fileToUpload : any; // MoM files
   public isMomFormAttemptSubmit: Boolean;
   public isShown : boolean = false;
+  public isShownPreview : boolean = true;
 
   constructor(private uploadProfileService:UploadProfilepicService,private alertService : AlertNotificationService,
               private route: ActivatedRoute) {
@@ -81,6 +82,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
   }
   public onMoMFileSelected(files: FileList) {
     this.isShown = true;
+    this.isShownPreview = false;
 	this.fileToUpload = files.item(0);
 	const file = files.item(0);
 
@@ -105,6 +107,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
           //alert("The details has been submitted successfully.");
           this.isMomFormAttemptSubmit = false;
 		  this.isShown = false;
+		  this.isShownPreview = false;
 		  this.alertService.showSaveStatus("Profile picture", true);
 		  this.resetMoMView();
 
