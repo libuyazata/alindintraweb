@@ -31,8 +31,8 @@ export class UploadProfilepicService extends BaseService {
  /*  public uploadEmployeeProfilePic(data:any): Observable<any>{
     return this.httpClient.get("user/uploadEmployeeProfilePic/"+data);
   } */
-  public uploadEmployeeProfilePic(formData:FormData){
-    return this.httpClient.post('user/uploadEmployeeProfilePic/1', formData, {reportProgress: true, observe: 'events'});
+  public uploadEmployeeProfilePic(employeeId:any,formData:FormData){
+	return this.httpClient.post('user/uploadEmployeeProfilePic/'+employeeId, formData, {reportProgress: true, observe: 'events'});
   }
   public getEmployeeDetailsById(employeeId:any): Observable<any> {
     return this.httpClient.get("user/getEmployeeById", { params : employeeId });

@@ -7,8 +7,8 @@ import { BaseComponent } from '@app/core/component/base.component';
 import { UploadProfilepicService } from '@app/shared/components/upload-profile-pic/upload-profile-pic.service';
 import { Subject } from 'rxjs';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
 import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'upload-profile-pic',
@@ -36,7 +36,8 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
   public isShownPreview : boolean = true;
 
   constructor(private uploadProfileService:UploadProfilepicService,private alertService : AlertNotificationService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+			  private router:Router) {
     super(uploadProfileService);
 	this.isMomFormAttemptSubmit = false;
 
@@ -100,7 +101,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
       }
       formData.append("employeeId", this.momForm.employeeId.value);
       //console.log(formData);
-      this.uploadProfileService.uploadEmployeeProfilePic(formData).subscribe((event:any)=>{        
+      this.uploadProfileService.uploadEmployeeProfilePic(this.momForm.employeeId.value,formData).subscribe((event:any)=>{        
         if (event && event instanceof HttpResponse) {
           //this.closeMoMModalView();
           //this.getNewWorkDetails();
@@ -113,6 +114,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
 
 		}
       })
+	  this.router.navigate(['/employees']);
     }
     console.log(this.minsOfMeetingForm.value);
   }
