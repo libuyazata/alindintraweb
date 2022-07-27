@@ -8,7 +8,7 @@ import { BaseService } from './../core/services/base.service';
 
 
 @Injectable()
-export class InterofficeCommunicationService extends BaseService {
+export class InboxService extends BaseService {
 
   studentList: any[];
 
@@ -18,9 +18,9 @@ export class InterofficeCommunicationService extends BaseService {
   public getWorkDetailsList(data:any): Observable<any>{
     return this.httpClient.get("project/getWorkDetailsByDeptId",{ params: data });
   }
-   public getcommunicationList(data:any): Observable<any>{
-    return this.httpClient.get("project/communicationListByDeptId/"+data);
-  } 
+  public getInboxMessageByDeptId(data:any): Observable<any>{
+    return this.httpClient.get("project/getInboxMessageByDeptId/"+data);
+  }
   public getdepartmentListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/departmentListByWorkId/"+data);
   }

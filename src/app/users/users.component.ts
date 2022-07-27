@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 
 // import * as $ from 'jquery';
 // import 'datatables.net';
@@ -32,12 +33,13 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   public sortBy = "firstName";
   public sortOrder = "asc";
   public empSearchForm:FormGroup;
+  public viewForm : FormGroup;
   public prv_employeeEdit : string;
   public prv_employeeDelete : string;
   public minsOfMeetingForm : FormGroup;
-  //public communicationList : Array<any>;
+  public employeeDetails : Array<any>;
   protected fileToUpload : any; // MoM files
-
+  isAdminUser:Boolean;
   //public dateOfJoin:any;
   //public addEmployeeForm: FormGroup;
   //public departmentList:any;
@@ -56,6 +58,7 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   constructor(private alertService : AlertNotificationService,
 			  protected employeeService: UsersService,
               private chRef: ChangeDetectorRef,
+			  private authenticationService: AuthenticationService,
               private datePipe: DatePipe) { 
                 super(employeeService);
   }
@@ -68,23 +71,6 @@ export class UserListComponent extends BaseComponent  implements OnInit {
 	this.getEmployeeList();
     this.initializeprofilepicUploadForm(); 
 
-
-   //this.getDepartmentList();
-    //this.getDesignationList();
-
-    // this.addEmployeeForm = new FormGroup({
-    //   userId : new FormControl(),
-    //   employeeCode : new FormControl(),
-    //   firstName : new FormControl('', Validators.required),
-    //   lastName : new FormControl('', Validators.required),
-    //   designationId : new FormControl('', Validators.required),
-    //   departmentId: new FormControl('', Validators.required),
-    //   doj : new FormControl(),
-    //   isActive : new FormControl()
-    // });
-
-    //let defaultDate = this.datePipe.transform(new Date(), 'MMM dd, yyyy');     
-    //this.addEmployeeForm.patchValue({"doj": defaultDate });
     this.minsOfMeetingForm = new FormGroup({
       employeeId : new FormControl(''),
     });
@@ -92,6 +78,8 @@ export class UserListComponent extends BaseComponent  implements OnInit {
 	this.materialRequestSearchForm = new FormGroup({
       searchKeyWord : new FormControl(''),
     })
+	this.isAdminUser = this.authenticationService.isAdminUser();
+
   }
   protected initializeprofilepicUploadForm() {
     this.userprofilepicUploadsForm = new FormGroup({
@@ -301,6 +289,22 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   //       day: date.getDate()}
   //   }});
   // }
+  public viewDetails(item:any){
+	this.openDescriptionForm(item);
+  }
+  public openDescriptionForm(item:any) {    
+	let params = {
+      employeeId : item
+    }
+	this.employeeService.getEmployeeById(params).subscribe((resp:any)=>{      
+	  this.employeeDetails = resp["employee"];
+    });
+	document.getElementById('descriptionModal').classList.toggle('d-block');
+  }
+  public closeDescriptionModal() {
+    document.getElementById('descriptionModal').classList.toggle('d-block');
+  } 
+  
   get momForm() { return this.minsOfMeetingForm.controls; }
 
 } 

@@ -39,6 +39,8 @@ export class SideBarComponent implements OnInit {
   public prv_deputationDelete : string;  
   public isShowHr = false;
   public isShowAdmin = false;
+  public isShowInbox = false;
+  public isShowSent = false;
   
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
@@ -154,4 +156,9 @@ export class SideBarComponent implements OnInit {
   openAdmin() { 
     this.isShowAdmin = ! this.isShowAdmin;
   }
+  openInbox() { 
+    this.isShowInbox = ! this.isShowInbox;
+    this.isShowSent = ! this.isShowSent;
+  }
+  
 }

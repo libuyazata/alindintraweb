@@ -93,14 +93,14 @@
     </div>
     </div>
     <div class="row form-group">
-    <div class="col-lg-6">
+   <!--  <div class="col-lg-6">
         <div><label>Employee Code</label></div>
         <input formControlName="empCode" class="form-control" [attr.disabled]="isEmployeeEdit ? true:null"
         [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.empCode.errors }"/>
         <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.empCode.errors" class="invalid-feedback">
             <div *ngIf="employeeForm.empCode.errors.required">Please provide the Employee Code.</div>
         </div>
-    </div>
+    </div> -->
     <div class="col-lg-6">
         <div><label>Employee Type</label></div>
         <select class="form-control" formControlName="empolyeeTypeId"

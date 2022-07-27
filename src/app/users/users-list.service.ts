@@ -51,4 +51,7 @@ export class UsersService extends BaseService {
   public searchEmployee(data:any): Observable<any>{
     return this.httpClient.get("user/searchEmployee", { params : data});
   }
+  public getEmployeeById(data:any): Observable<any>{
+    return this.httpClient.get("user/getEmployeeById", { params : data});
+  }
 }

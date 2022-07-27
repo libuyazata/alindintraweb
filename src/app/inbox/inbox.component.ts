@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { environment } from '@env/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { InterofficeCommunicationService } from '@app/inter-office-communication/inter-office-communication.service';
+import { InboxService } from '@app/inbox/inbox.service';
 import { BaseComponent } from '@app/core/component/base.component';
 import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
@@ -10,11 +10,11 @@ import { AuthenticationService } from '@app/core/authentication/authentication.s
 // import { stat } from 'fs';
 
 @Component({
-  selector: 'app-inter-office-communication',
-  templateUrl: './inter-office-communication.component.html',
-  styleUrls: ['./inter-office-communication.component.scss']
+  selector: 'app-inbox',
+  templateUrl: './inbox.component.html',
+  styleUrls: ['./inbox.component.scss']
 })
-export class InterofficeCommunicationComponent extends BaseComponent implements OnInit {
+export class InboxComponent extends BaseComponent implements OnInit {
   version: string = environment.version;
   public interCommForm : FormGroup;
   public replyForm : FormGroup;
@@ -47,8 +47,8 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
-  constructor(private alertService : AlertNotificationService,private InterofficeCommunicationService : InterofficeCommunicationService,private authenticationService: AuthenticationService) { 
-	super(InterofficeCommunicationService);
+  constructor(private alertService : AlertNotificationService,private InboxService : InboxService,private authenticationService: AuthenticationService) { 
+	super(InboxService);
   }
 
   ngOnInit() { 
@@ -133,7 +133,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   }
   public onCommunicationDetailsSearched(){
 	  let params = this.getSearchParams();
-	  this.InterofficeCommunicationService.searchInterDeptCommList(params).subscribe((resp:any)=>{
+	  this.InboxService.searchInterDeptCommList(params).subscribe((resp:any)=>{
 	  this.communicationList = resp["communicationModelList"];
     });
   }
@@ -182,7 +182,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
       departmentId : departmentId,
 	  status:1
     }
-	this.InterofficeCommunicationService.getWorkDetailsList(params).subscribe((resp:any)=>{      
+	this.InboxService.getWorkDetailsList(params).subscribe((resp:any)=>{      
 	  this.workDetailsList = resp["models"];
     });
   }
@@ -191,8 +191,8 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
 	
-	this.InterofficeCommunicationService.getcommunicationList(departmentId).subscribe((resp:any)=>{      
-	  this.communicationList = resp["communicationList"];
+	this.InboxService.getInboxMessageByDeptId(departmentId).subscribe((resp:any)=>{      
+	  this.communicationList = resp["inboxMessages"];
     });
   }
   
@@ -210,7 +210,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   
   protected getdepartmentListByWorkId(workDetailsId:number){
 	const workId = workDetailsId;
-	this.InterofficeCommunicationService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
+	this.InboxService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
       if(resp["deptList"] != null){
 		  this.departmentList = resp["deptList"];
 	  }
@@ -227,7 +227,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	  departmentId : departmentId,
 	  status:1
     }
-	this.InterofficeCommunicationService.getsubtaskListByWorkId(params).subscribe((resp:any) => {
+	this.InboxService.getsubtaskListByWorkId(params).subscribe((resp:any) => {
 		//  this.subtaskList = resp["models"];
 		if(resp["models"] != null){
 			  this.subtaskList = resp["models"];
@@ -243,7 +243,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
       workDetailsId : workDetailsId,
 	  status:1
     }
-	this.InterofficeCommunicationService.getworkDescription(params).subscribe((resp:any) => {
+	this.InboxService.getworkDescription(params).subscribe((resp:any) => {
 	  this.workDescList = resp["model"];
    });
   }
@@ -259,7 +259,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	  let params = this.getPreparedParams(submitData);
       params.departmentId=departmentId;
       params.employeeId=userId;
-	  this.InterofficeCommunicationService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
+	  this.InboxService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
@@ -295,7 +295,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
       let params = this.getPreparedReplyParams(submitDataReply);
       params.departmentId=departmentId;
       params.employeeId=userId;
-	  this.InterofficeCommunicationService.replyInterOfficeCommunication(params).subscribe((resp:any)=>{      
+	  this.InboxService.replyInterOfficeCommunication(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), true);
           this.clearForm();
@@ -410,7 +410,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public openDescriptionForm(item:any) {    
 	//this.communicationList2 = item;
 	const officeCommunicationId = item;
-	this.InterofficeCommunicationService.getCommunicationById(officeCommunicationId).subscribe((resp:any)=>{      
+	this.InboxService.getCommunicationById(officeCommunicationId).subscribe((resp:any)=>{      
 	  this.communicationList2 = resp["communicationModelList"];
     });
 	document.getElementById('descriptionModal').classList.toggle('d-block');
@@ -422,7 +422,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
   public replyMessage(item:any){
 	//this.detailsId=item;
 	const workId = item.workDetailsId;
-	this.InterofficeCommunicationService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
+	this.InboxService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
       if(resp["deptList"] != null){
 		  this.departmentList = resp["deptList"];
 	  }
@@ -459,7 +459,7 @@ export class InterofficeCommunicationComponent extends BaseComponent implements 
 	  const deptCommId = item[0]['deptCommId'];
 	  
 	  if(viewStatus == 0){
-			this.InterofficeCommunicationService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
+			this.InboxService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
 			this.getcommunicationList();
 			});
 	 }	  

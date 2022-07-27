@@ -1,0 +1,31 @@
+@import "src/theme/table-theme.scss";
+
+@media screen and (max-width: 575px) {
+    table tbody tr td:nth-child(1):before {
+        content: "#";
+    }
+    table tbody tr td:nth-child(2):before {
+        content: "Customer Name";
+    }
+    table tbody tr td:nth-child(3):before {
+        content: "Address";
+    }
+    table tbody tr td:nth-child(4):before {
+        content: "Other Details";
+    }
+}
+.table {
+    tr {
+        th {
+            padding: 10px !important;
+        }
+        td {
+            padding: 10px !important;
+        }
+    }
+}
+.rowbg{
+	background:#FFFFFF !important;
+	font-size:16px !important;
+	font-weight:bold !important;
+}

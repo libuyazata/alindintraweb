@@ -50,6 +50,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
 	
 	//this.initialize(); 
 	this.initializeForm(null);
+	this.profilepic = "AlindUploadFiles/Employee/ProfilePic/default/default.jpg";
 	this.route.queryParams.subscribe((params:any) => {
       this.employeeId = params['uid'];
 	  this.getEmployeeDetailsById(this.employeeId);

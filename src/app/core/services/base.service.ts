@@ -103,19 +103,11 @@ export class BaseService {
 
   public getEmployeeType(): Observable<any>{
     const employeeType = [{
-      employeeTypeId : 1, employeeTypeName : "Office"
+      employeeTypeId : 1, employeeTypeName : "Permanent"
     },{
-      employeeTypeId : 2, employeeTypeName : "PMT"
+      employeeTypeId : 2, employeeTypeName : "Contract"
     },{
-      employeeTypeId : 3, employeeTypeName : "MKT"
-    },{
-      employeeTypeId : 4, employeeTypeName : "Workers"
-    },{
-      employeeTypeId : 5, employeeTypeName : "Stores"
-    },{
-      employeeTypeId : 5, employeeTypeName : "Trans"
-    },{
-      employeeTypeId : 5, employeeTypeName : "Al Balagh"
+      employeeTypeId : 3, employeeTypeName : "Temporary"
     }]
     return of(employeeType);
   }

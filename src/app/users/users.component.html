@@ -31,7 +31,9 @@
 												<span class="float-left">
 													<button class="btn btn-info" type="submit">Search</button>  
 													<button class="btn btn-danger" type="reset" (click)="clearSearchForm()">Clear</button>
+													<span *ngIf="isAdminUser">
 													<button class="btn btn-info" [routerLink]="['/save-user/']" [queryParams]="{ 'uid': '0'}"><i class="fa fa-plus"></i> Manage Employee</button>
+													</span>
 												</span>
 											</div> 
 										</div>
@@ -89,12 +91,13 @@
 <!-- 				<td class="actions" *allowUser="'admin'" [routerLink]="['/save-user/']" [queryParams]="{ 'uid': item.employeeId}">
  -->				<td class="actions">
                 <div class="link-holder">
-					<span *ngIf="prv_employeeDelete == 'true'">
+					<span *ngIf="prv_employeeDelete == 'true' && isAdminUser">
 					<a class="link" title="Delete" (click)="deleteEmployee(item);" ><i class="fas fa-trash"></i></a>
 					</span>
-					<span *ngIf="prv_employeeEdit == 'true'">
+					<span *ngIf="prv_employeeEdit == 'true' && isAdminUser" >
 					<a class="link" [routerLink]="['/edit-user/']"  [queryParams]="{ 'uid': item.employeeId}"><i class="fas fa-edit"></i></a>
                     </span>
+					<a class="link" title="View Details" (click)="viewDetails(item.employeeId);"><i class="fas fa-eye"></i></a>
 					<!-- <span>
 					<a class="link" ><i class="fas fa-plus" title="Upload Profile Picture" (click)="openUploadprofileModal()"></i></a>
                     </span> -->
@@ -154,3 +157,47 @@
         </div>
       </div>
     </div>
+	<!-- View Employee details Modal Form -->
+  <div class="modal salary-info-model" id="descriptionModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">View Employee Details</h5>
+            <button class="close" type="button" data-dismiss="modal" appModal  (click)="closeDescriptionModal();">&times;</button>
+          </div>
+           <form novalidate [formGroup]="viewForm">
+			<div class="modal-body">
+<!-- 				<div *ngFor="let empData of employeeDetails">
+ -->					<div class="row form-group">
+					  <div class="col-lg-12" >
+						First Name : <b>{{employeeDetails['firstName']}} </b>                
+					  </div>
+					  <div class="col-lg-12" >
+						Last Name : <b>{{employeeDetails['lastName']}} </b>                
+					  </div>
+					  <div class="col-lg-12" >
+						Nationality : <b>{{employeeDetails['nationality']}} </b>                
+					  </div>
+					  <div class="col-lg-12" >
+						Employee Code : <b>{{employeeDetails['empCode']}} </b>                
+					  </div>
+					  <div class="col-lg-12" >
+						Employee Type : <b>{{employeeDetails['employeeTypeName']}} </b>                
+					  </div>
+					  <div class="col-lg-12" >
+						Employee Role : <b>{{employeeDetails['roleName']}} </b>                
+					  </div>
+					  <div class="col-lg-12" >
+						Department : <b>{{employeeDetails['departmentName']}} </b>                
+					  </div>
+					</div>
+<!-- 				</div>
+ -->            </div>
+			</form>
+			<div class="modal-footer">
+              <button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closeDescriptionModal();">Close</button>
+            </div>
+        </div>
+      </div>
+    </div>
+

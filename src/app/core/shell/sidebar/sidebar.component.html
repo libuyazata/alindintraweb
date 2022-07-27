@@ -20,9 +20,16 @@
             </span>
 	</li>
 	<li>
+			<span *ngIf="!isAdminUser">
+			<a class="menu-link" (click)=menuButtonClicked() routerLink="/inter-office-communication" routerLinkActive="active">
+                <span class="fas fa-envelope"></span><span class="nav-label">Inter Office Communication</span>
+            </a>
+            </span>
+	</li>
+	<li>
 			<span *ngIf="prv_workView == 'true'">
 			<a class="menu-link" (click)=menuButtonClicked() routerLink="/work-home" routerLinkActive="active">
-                <span class="fas fa-info-circle"></span><span class="nav-label">Work</span>
+                <span class="fa fa-cogs"></span><span class="nav-label">Work</span>
             </a>
             </span>
 	</li>
@@ -30,6 +37,15 @@
 			<a class="menu-link" (click)=menuButtonClicked() routerLink="/general-info/work-status" routerLinkActive="active">
                 <span class="fas fa-info-circle"></span><span class="nav-label">General Info</span>
             </a>
+	</li>
+	<li>
+            <a><span class="fas fa-envelope"></span><span class="nav-label pl-2"> Inter Office Communication <i class="fas icon-margin" [ngClass]="{'fa-plus-circle': !isShowInbox,'fa-minus-circle': isShowInbox }" (click)="openInbox();"></i></span></a>
+			<span *ngIf="isShowInbox">
+			<a class="menu-link" routerLink="/inbox" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Inbox</span></a>
+		    </span>
+			<span *ngIf="isShowSent">
+			<a class="menu-link" routerLink="/sent" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Sent</span></a>
+		    </span>
 	</li>
 	<li>
 			<span *ngIf="prv_deputationView == 'true'">
