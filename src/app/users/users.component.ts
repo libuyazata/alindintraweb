@@ -297,7 +297,7 @@ export class UserListComponent extends BaseComponent  implements OnInit {
       employeeId : item
     }
 	this.employeeService.getEmployeeById(params).subscribe((resp:any)=>{      
-	  this.employeeDetails = resp["employee"];
+	  this.employeeDetails = resp["employeeList"];
     });
 	document.getElementById('descriptionModal').classList.toggle('d-block');
   }
@@ -306,5 +306,6 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   } 
   
   get momForm() { return this.minsOfMeetingForm.controls; }
+  get viewForms() { return this.viewForm.controls; }
 
 } 

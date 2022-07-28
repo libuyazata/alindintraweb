@@ -23,4 +23,8 @@ export class CreateUserService extends BaseService {
   public getEmployeeDetailsById(employeeId:any): Observable<any> {
     return this.httpClient.get("user/getEmployeeById", { params : employeeId });
   }
+  
+  public getAllEmployeeTypes(data:any): Observable<any> {
+    return this.httpClient.get("user/getAllEmployeeTypes/");
+  }
 }

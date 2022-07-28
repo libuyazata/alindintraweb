@@ -141,9 +141,9 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
   protected getEmployeeDetailsById(employeeId:number){
     let empParams = { "employeeId" : employeeId};
     this.userService.getEmployeeDetailsById(empParams).subscribe((emp: any) => {
-      if(emp.employee) {
-        this.addEmployeeForm.patchValue(emp.employee);
-        this.setDates(emp.employee);
+      if(emp.employeeList[0]) {
+		this.addEmployeeForm.patchValue(emp.employeeList[0]);
+        this.setDates(emp.employeeList[0]);
       } else {
         this.showAlert("An error occured while processing your request.");
       }
@@ -159,7 +159,7 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
     }
   }
 
-  protected setDates(employeeInfo:any): void {
+protected setDates(employeeInfo:any): void {
     let date = new Date();
 
     if(employeeInfo.dob) {
@@ -307,8 +307,11 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
   }
 
   protected getEmployeeTypeList(){
-    this.userService.getEmployeeType().subscribe((empTypes: any) => {
+    /* this.userService.getEmployeeType().subscribe((empTypes: any) => {
         this.employeeTypeList = empTypes;
+    }); */
+	this.userService.getAllEmployeeTypes({}).subscribe((empTypes: any) => {
+        this.employeeTypeList = empTypes.employeeTypes;
     });
   }
 

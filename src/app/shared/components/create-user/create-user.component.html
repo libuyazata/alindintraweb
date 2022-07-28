@@ -106,7 +106,7 @@
         <select class="form-control" formControlName="empolyeeTypeId"
         [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.empolyeeTypeId.errors }" >
         <option value="">Select</option>
-        <option *ngFor="let employeeType of employeeTypeList" [ngValue]="employeeType.employeeTypeId">{{employeeType.employeeTypeName}}</option>
+        <option *ngFor="let employeeType of employeeTypeList" [ngValue]="employeeType.empolyeeTypeId">{{employeeType.employeeTypeName}}</option>
         </select>
         <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.empolyeeTypeId.errors" class="invalid-feedback">
             <div *ngIf="employeeForm.empolyeeTypeId.errors.required">Please select a employee type.</div>
