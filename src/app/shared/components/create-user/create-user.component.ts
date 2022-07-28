@@ -96,7 +96,7 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
     
 	this.isEmployeeFormAttemptSubmit = true;
     if(this.addEmployeeForm.valid){
-      //this.toggleField(this.addEmployeeForm, "empCode", true);
+      this.toggleField(this.addEmployeeForm, "empCode", true);
       let employeeData = this.addEmployeeForm.value;
 
       // employeeData.doj = this.getDateFromMyDP(employeeData.doj);
@@ -263,7 +263,7 @@ protected setDates(employeeInfo:any): void {
       // homeCountryPhone: new FormControl(''),
 
       // employmentRemark : new FormControl('', Validators.required),
-     // empCode : new FormControl('', Validators.required),
+      empCode : new FormControl(''),
       empolyeeTypeId: new FormControl('', Validators.required),
       // designationId : new FormControl('', Validators.required),
       departmentId: new FormControl('', Validators.required),
