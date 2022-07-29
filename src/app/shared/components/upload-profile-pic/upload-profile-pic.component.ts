@@ -78,7 +78,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
   protected getEmployeeDetailsById(employeeId:number){
     let empParams = { "employeeId" : employeeId};
     this.uploadProfileService.getEmployeeDetailsById(empParams).subscribe((emp: any) => {
-      this.profilepic = emp.employee.profilePicPath;
+      this.profilepic = emp.employeeList[0]['profilePicPath'];
 	  //alert(emp.employee.profilePicPath);
     });
   }
