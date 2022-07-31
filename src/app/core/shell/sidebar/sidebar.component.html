@@ -41,10 +41,10 @@
 	<li>
             <a><span class="fas fa-envelope"></span><span class="nav-label pl-2"> Inter Office Communication <i class="fas icon-margin" [ngClass]="{'fa-plus-circle': !isShowInbox,'fa-minus-circle': isShowInbox }" (click)="openInbox();"></i></span></a>
 			<span *ngIf="isShowInbox">
-			<a class="menu-link" routerLink="/inbox" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Inbox</span></a>
+			<a class="menu-link" routerLink="/inbox" routerLinkActive="active"><span class="fas fa-inbox ml-5"></span><span class="nav-label pl-2"> Inbox</span></a>
 		    </span>
 			<span *ngIf="isShowSent">
-			<a class="menu-link" routerLink="/sent" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Sent</span></a>
+			<a class="menu-link" routerLink="/sent" routerLinkActive="active"><span class="fas fa-paper-plane ml-5"></span><span class="nav-label pl-2"> Sent</span></a>
 		    </span>
 	</li>
 	<li>
