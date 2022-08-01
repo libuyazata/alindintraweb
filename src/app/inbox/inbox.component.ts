@@ -72,6 +72,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	   subject : new FormControl('',Validators.required),
 	   description : new FormControl('',Validators.required),
 	   description_old : new FormControl('',Validators.required),
+	   referenceNo : new FormControl(''),
   	});
 	this.viewForm = new FormGroup({
        employeeName : new FormControl(),
@@ -295,6 +296,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
       let params = this.getPreparedReplyParams(submitDataReply);
       params.departmentId=departmentId;
       params.employeeId=userId;
+	  //console.log(params);
 	  this.InboxService.replyInterOfficeCommunication(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), true);
@@ -343,7 +345,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
       subTaskId : Number(submitDataReply.subTaskId),
       deptCommList : submitDataReply.deptCommList,
       subject : submitDataReply.subject,
-      description : submitDataReply.description
+      description : submitDataReply.description,
+      referenceNo : submitDataReply.referenceNo
     }
     return params;
   }
@@ -420,6 +423,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   } 
   
   public replyMessage(item:any){
+    this.replyForm.reset();
 	//this.detailsId=item;
 	const workId = item.workDetailsId;
 	this.InboxService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
@@ -447,8 +451,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	document.getElementById('replyModal').classList.toggle('d-block');
   }
   public closeReplyModal() {
-    	this.replyForm.reset();
-
+    this.replyForm.reset();
 	document.getElementById('replyModal').classList.toggle('d-block');
   } 
    private clearForm() {

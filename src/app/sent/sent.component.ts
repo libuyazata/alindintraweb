@@ -72,6 +72,7 @@ export class SentComponent extends BaseComponent implements OnInit {
 	   subject : new FormControl('',Validators.required),
 	   description : new FormControl('',Validators.required),
 	   description_old : new FormControl('',Validators.required),
+	   referenceNo : new FormControl(''),
   	});
 	this.viewForm = new FormGroup({
        employeeName : new FormControl(),
@@ -343,7 +344,8 @@ export class SentComponent extends BaseComponent implements OnInit {
       subTaskId : Number(submitDataReply.subTaskId),
       deptCommList : submitDataReply.deptCommList,
       subject : submitDataReply.subject,
-      description : submitDataReply.description
+      description : submitDataReply.description,
+      referenceNo : submitDataReply.referenceNo
     }
     return params;
   }
@@ -420,6 +422,7 @@ export class SentComponent extends BaseComponent implements OnInit {
   } 
   
   public replyMessage(item:any){
+	this.replyForm.reset();
 	//this.detailsId=item;
 	const workId = item.workDetailsId;
 	this.SentService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
@@ -447,8 +450,7 @@ export class SentComponent extends BaseComponent implements OnInit {
 	document.getElementById('replyModal').classList.toggle('d-block');
   }
   public closeReplyModal() {
-    	this.replyForm.reset();
-
+    this.replyForm.reset();
 	document.getElementById('replyModal').classList.toggle('d-block');
   } 
    private clearForm() {
