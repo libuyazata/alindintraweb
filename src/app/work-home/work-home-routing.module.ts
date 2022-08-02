@@ -17,7 +17,7 @@ const routes: Routes = [
       path: 'work-home', component: WorkHomeComponent, 
       canActivate : [AuthenticationGuard],
       loadChildren: './work-home.module#WorkHomeModule',
-      data: { title: extract('Work Home'), role: 'HOD' } // 
+      data: { title: extract('Work Home') } // 
     }
   ])
 ];
