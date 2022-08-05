@@ -424,7 +424,7 @@ export class SentComponent extends BaseComponent implements OnInit {
   public replyMessage(item:any){
 	this.replyForm.reset();
 	//this.detailsId=item;
-	const workId = item.workDetailsId;
+	/* const workId = item.workDetailsId;
 	this.SentService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
       if(resp["deptList"] != null){
 		  this.departmentList = resp["deptList"];
@@ -433,7 +433,9 @@ export class SentComponent extends BaseComponent implements OnInit {
 		  this.departmentList = [];
 	  } 
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
-    });
+    }); */
+	this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
+	this.replyForm.get("deptCommList").setValue(this.departmentList);
 	this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
     this.replyForm.get("workName").setValue(item.workName);
     this.replyForm.get("subTaskId").setValue(item.subTaskId);
