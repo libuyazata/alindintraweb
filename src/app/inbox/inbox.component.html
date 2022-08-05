@@ -58,18 +58,18 @@
 		   <table [mfData]="communicationList" #mf="mfDataTable" [mfRowsOnPage]="50">
                 <thead>
                 <tr class="table100-head">
-                    <th class="column1">
+                    <!-- <th class="column1">
                         <mfDefaultSorter by="empCode">Emp.Code</mfDefaultSorter>
-                    </th>    
-                    <th class="column2">
+                    </th>  -->   
+					<th class="column3">
+						<mfDefaultSorter by="departmentName">Department Name</mfDefaultSorter>
+                    </th>  
+					<th class="column2">
 						<mfDefaultSorter by="employeeName">Employee Name</mfDefaultSorter>
                     </th>    
                     <th class="column3">
 						<mfDefaultSorter by="departmentName">Ref.No.</mfDefaultSorter>
                     </th>
-					<th class="column3">
-						<mfDefaultSorter by="departmentName">Department Name</mfDefaultSorter>
-                    </th>    
                     <th class="column4">
 						<mfDefaultSorter by="workName">Work Name</mfDefaultSorter>
                     </th>    
@@ -86,10 +86,11 @@
                 </thead>
 				<tbody *ngFor="let item of mf.data">
                     <tr class="hover-action-row" *ngIf="item.deptCommList.length > 0" [ngClass]="{'rowbg': item.deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(item.deptCommList);" >
-                    <td class="column1">{{item.empCode}}</td>
-                    <td class="column1">{{item.employeeName}}</td>
-                    <td class="column1">{{item.referenceNo}}</td>
+<!--                     <td class="column1">{{item.empCode}}</td>
+ -->                
                     <td class="column1">{{item.departmentName}}</td>
+					<td class="column1">{{item.employeeName}}</td>
+                    <td class="column1">{{item.referenceNo}}</td>
                     <td class="column1">{{item.workName}}</td>
                     <td class="column1">{{item.subject}}</td>
                     <td class="column1">{{item.createdOn   | date :  "dd-MM-yyyy" }}</td>
@@ -145,7 +146,7 @@
 				<div class="col-lg-12">
 					<div><label>Department (To)  :</label></div>
 						    <ng-multiselect-dropdown 
-                                class="mandatory-field"
+                                class="mandatory-field pointer-none"
                                 [ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated }"
 								formControlName="deptCommList"                                
 								name="deptCommList"
@@ -153,7 +154,9 @@
                                 [data]="departmentList"
                                 [settings]="dropdownSettingsReply"
                                 (onDeSelect)="onItemDeSelectReply($event)"
-                                (onSelect)="onItemSelectReply($event)">
+                                (onSelect)="onItemSelectReply($event)"
+								[disabled]='true'
+								>
                             </ng-multiselect-dropdown>
 							<div *ngIf="isreplyFormSubmitInitiated && replyForms.deptCommList.errors" style="color:red;">Please Choose Department</div>
                             </div>  

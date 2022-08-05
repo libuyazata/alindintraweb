@@ -106,7 +106,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 10,
-      allowSearchFilter: true
+      allowSearchFilter: true,
+	  readonly:true
     };
     this.workDescList = [];
 	this.materialRequestSearchForm = new FormGroup({
@@ -425,7 +426,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public replyMessage(item:any){
     this.replyForm.reset();
 	//this.detailsId=item;
-	const workId = item.workDetailsId;
+	/* const workId = item.workDetailsId;
 	this.InboxService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
       if(resp["deptList"] != null){
 		  this.departmentList = resp["deptList"];
@@ -433,8 +434,13 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	  else{
 		  this.departmentList = [];
 	  } 
+	
+	
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
-    });
+    }); */
+	this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
+	this.replyForm.get("deptCommList").setValue(this.departmentList);
+
 	this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
     this.replyForm.get("workName").setValue(item.workName);
     this.replyForm.get("subTaskId").setValue(item.subTaskId);
