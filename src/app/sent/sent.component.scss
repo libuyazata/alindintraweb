@@ -32,3 +32,21 @@
 .pointer-none{
 	pointer-events: none !important;
 }
+a.tip p {
+    display: none
+}
+a.tip:hover p {
+    border: #c0c0c0 1px dotted;
+    padding: 5px 10px 5px -10px;
+    display: block;
+    z-index: 100;
+    background: #f0f0f0 no-repeat 100% 5%;
+    left: 0px;
+    margin: 10px;
+    width: 450px;
+    position: absolute;
+    top: 20px;
+    text-decoration: none;
+	font-size:15px;
+	font-weight:bold;
+}
