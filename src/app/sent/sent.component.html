@@ -101,7 +101,7 @@
                     <td class="column1">{{item.referenceNo}}</td>
                     <td class="column1">{{item.workName}}</td>
                     <td class="column1">{{item.subject}}</td>
-                    <td class="column1">{{item.createdOn   | date :  "dd-MM-yyyy" }}</td>
+                    <td class="column1">{{item.updatedOn   | date :  "medium" }}</td>
                     <td class="column1">
 								<div class="link-holder">
 								 <a class="link" title="View Details" (click)="viewDetails(item.officeCommunicationId);"><i class="fas fa-eye"></i></a>
@@ -154,7 +154,7 @@
 				<div class="col-lg-12">
 					<div><label>Department (To)  :</label></div>
 						    <ng-multiselect-dropdown 
-                                class="mandatory-field  pointer-none"
+                                class="mandatory-field"
                                 [ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated }"
 								formControlName="deptCommList"                                
 								name="deptCommList"
@@ -163,7 +163,6 @@
                                 [settings]="dropdownSettingsReply"
                                 (onDeSelect)="onItemDeSelectReply($event)"
                                 (onSelect)="onItemSelectReply($event)"
-								[disabled]='true'
 								>
                             </ng-multiselect-dropdown>
 							<div *ngIf="isreplyFormSubmitInitiated && replyForms.deptCommList.errors" style="color:red;">Please Choose Department</div>
@@ -344,7 +343,7 @@
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Created On : <b>{{com2.createdOn   | date :  "dd-MM-yyyy"}}</b>                 
+					Created On : <b>{{com2.updatedOn   | date :  "medium"}}</b>                 
 				  </div>
                 </div>
             </div>

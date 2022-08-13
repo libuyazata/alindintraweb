@@ -434,7 +434,8 @@ export class SentComponent extends BaseComponent implements OnInit {
 	  } 
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
     }); */
-	this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
+	//this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
+	this.departmentList=item.deptCommList;
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
 	this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
     this.replyForm.get("workName").setValue(item.workName);
