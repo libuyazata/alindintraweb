@@ -44,7 +44,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public prv_departmentEdit : string;
   public prv_departmentDelete : string;
   public detailsId : string;
-  
+  private previousItem : any;
+
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
   constructor(private alertService : AlertNotificationService,private InboxService : InboxService,private authenticationService: AuthenticationService) { 
@@ -193,9 +194,16 @@ export class InboxComponent extends BaseComponent implements OnInit {
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
 	
-	this.InboxService.getInboxMessageByDeptId(departmentId).subscribe((resp:any)=>{      
+	/* this.InboxService.getInboxMessageByDeptId(departmentId).subscribe((resp:any)=>{      
 	  this.communicationList = resp["inboxMessages"];
+    }); */
+	let params = {
+         "departmentId" : 3,
+    }
+	this.InboxService.getInboxMessageByDeptId(params).subscribe((resp:any)=>{      
+	  this.communicationList = resp["modelMap"];
     });
+	
   }
   
   public getDepartmentList(event:any){
@@ -474,6 +482,17 @@ export class InboxComponent extends BaseComponent implements OnInit {
 			});
 	 }	  
   }
+  openMessageList(item : any) { 
+    item.isDetailsSetVisible = ! item.isDetailsSetVisible;
+
+    if(this.previousItem != null && item != this.previousItem) {
+      this.previousItem.isDetailsSetVisible = false;
+    }
+
+    this.previousItem = item;
+	//this.getSubtaskDetails(item.workDetailsId);
+  }
+  
   get interCommForms() { return this.interCommForm.controls; }
   get replyForms() { return this.replyForm.controls; }
   get viewForms() { return this.viewForm.controls; }

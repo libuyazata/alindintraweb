@@ -60,12 +60,12 @@
       <div class="col-lg-12">
            <div class="table100">
 		   <table [mfData]="communicationList" #mf="mfDataTable" [mfRowsOnPage]="50">
-                <thead>
-                <tr class="table100-head">
-                    <!-- <th class="column1">
+<!--                <thead>
+                 <tr class="table100-head">
+ -->                    <!-- <th class="column1">
                         <mfDefaultSorter by="empCode">Emp.Code</mfDefaultSorter>
                     </th>  -->   
-					<th class="column3">
+					<!-- <th class="column3">
 						<mfDefaultSorter by="departmentName">Department Name</mfDefaultSorter>
                     </th>  
 					<th class="column2">
@@ -89,29 +89,40 @@
                     <th class="column8">
 						<mfDefaultSorter by="View">View / Reply</mfDefaultSorter>
                     </th>    
-                </tr>
-                </thead>
-				<tbody *ngFor="let item of mf.data">
-                    <tr class="hover-action-row" *ngIf="item.deptCommList.length > 0" [ngClass]="{'rowbg': item.deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(item.deptCommList);" >
-<!--                     <td class="column1">{{item.empCode}}</td>
- -->                
-                    <td class="column1">{{item.departmentName}}</td>
-					<td class="column1">{{item.employeeName}}</td>
-					<td class="column1"><a class="tip"><span *ngFor="let dept of item.deptCommList">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of item.deptCommList">{{dept.departmentName +','}}</span></p></a></td>
-                    <td class="column1">{{item.referenceNo}}</td>
-                    <td class="column1">{{item.workName}}</td>
-                    <td class="column1">{{item.subject}}</td>
-                    <td class="column1">{{item.updatedOn   | date :  "medium" }}</td>
-                    <td class="column1">
-								<div class="link-holder">
-								 <a class="link" title="View Details" (click)="viewDetails(item.officeCommunicationId);"><i class="fas fa-eye"></i></a>
-								 <button (click)="replyMessage(item);" class="btn btn-success" style="margin-left:5px;">Reply</button>  
-								</div>
-				    </td>
+                </tr> 
+                </thead>-->
+				<tbody *ngFor="let msg of mf.data[0].comMsgRefList">
+<!--                     <tr class="hover-action-row" *ngIf="item.deptCommList.length > 0" [ngClass]="{'rowbg': item.deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(item.deptCommList);" >
+ --><!--                     <td class="column1">{{item.empCode}}</td>
+ -->   
+<!--                     <tr *ngFor="let msg of item.comMsgRefList">
+ -->                    <tr>
+								<td class="column1">
+									<a class="link" (click)="openMessageList(msg);">
+										<i class="fas " [ngClass]="{'fa-plus-circle': !msg.isDetailsSetVisible,'fa-minus-circle': msg.isDetailsSetVisible }"></i>
+									</a>
+								</td>
+					<td>{{msg.titleRefNo}} ({{msg.offCommList.length}})</td>
+					<td class="column1">{{mf.data[0].titleDate | date :  "medium"}}</td>
+					<td colspan="5"></td>
 					</tr>
-                
-				
-				
+					<ng-container *ngIf="msg.isDetailsSetVisible">
+						<tr *ngFor="let content of msg.offCommList">
+						<td class="column1">{{content.departmentName}}</td>
+						<td class="column1">{{content.employeeName}}</td>
+						<td class="column1"><a class="tip"><span *ngFor="let dept of content.deptCommList">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of content.deptCommList">{{dept.departmentName +','}}</span></p></a></td>
+						<td class="column1">{{content.referenceNo}}</td>
+						<td class="column1">{{content.workName}}</td>
+						<td class="column1">{{content.subject}}</td>
+						<td class="column1">{{content.updatedOn   | date :  "medium" }}</td>
+						<td class="column1">
+									<div class="link-holder">
+									 <a class="link" title="View Details" (click)="viewDetails(content.officeCommunicationId);"><i class="fas fa-eye"></i></a>
+									 <button (click)="replyMessage(content);" class="btn btn-success" style="margin-left:5px;">Reply</button>  
+									</div>
+						</td>
+						</tr>
+					</ng-container>
 				</tbody>
                 <tfoot>
                 <tr>
