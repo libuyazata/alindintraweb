@@ -68,16 +68,25 @@
 				<thead>
                    <tr class="table100-head">
 					 <th class="column3">
-						<mfDefaultSorter by=""></mfDefaultSorter>
-					 </th>
+                    </th> 
 					 <th class="column3">
-						<mfDefaultSorter by="">Ref.No.</mfDefaultSorter>
-					 </th>
-					 <th class="column3">
-						<mfDefaultSorter by="">Date</mfDefaultSorter>
-					 </th>
-					 <th class="column3">
-					 </th>
+						<mfDefaultSorter by="departmentName">Department Name</mfDefaultSorter>
+                    </th>  
+					<th class="column2">
+						<mfDefaultSorter by="employeeName">Sender</mfDefaultSorter>
+                    </th> 
+                    <th class="column3">
+						<mfDefaultSorter by="departmentName">Ref.No.</mfDefaultSorter>
+                    </th>
+                    <th class="column4">
+						<mfDefaultSorter by="workName">Work Name</mfDefaultSorter>
+                    </th>    
+                    <th class="column6">
+						<mfDefaultSorter by="subject">Subject</mfDefaultSorter>
+                    </th>    
+                    <th class="column7">
+						<mfDefaultSorter by="subject">Date</mfDefaultSorter>
+                    </th>    
 				</thead>
 				<tbody *ngFor="let msg of mf.data[0].comMsgRefList">
 							<tr>
@@ -86,13 +95,16 @@
 										<i class="fas " [ngClass]="{'fa-plus-circle': !msg.isDetailsSetVisible,'fa-minus-circle': msg.isDetailsSetVisible }"></i>
 									</a>
 								</td>
-								<td>{{msg.titleRefNo}} ({{msg.offCommList.length}})</td>
-								<td class="column1">{{mf.data[0].titleDate | date :  "medium"}}</td>
-								<td colspan="5"></td>
+								<td>{{msg.offCommList[0].departmentName}} ({{msg.offCommList.length}})</td>
+								<td>{{msg.offCommList[0].employeeName}}</td>
+								<td>{{msg.offCommList[0].referenceNo}}</td>
+								<td>{{msg.offCommList[0].workName}}</td>
+								<td>{{msg.offCommList[0].subject}}</td>
+								<td>{{msg.offCommList[0].updatedOn | date :  "medium"}}</td>
 						</tr>
 
 
-					<ng-container *ngIf="msg.isDetailsSetVisible">
+				 <ng-container *ngIf="msg.isDetailsSetVisible">
 				   <tr>
 				   <td colspan="8">
 				   <table>
