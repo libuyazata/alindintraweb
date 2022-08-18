@@ -60,12 +60,45 @@
       <div class="col-lg-12">
            <div class="table100">
 		   <table [mfData]="communicationList" #mf="mfDataTable" [mfRowsOnPage]="50">
-<!--                <thead>
-                 <tr class="table100-head">
- -->                    <!-- <th class="column1">
-                        <mfDefaultSorter by="empCode">Emp.Code</mfDefaultSorter>
-                    </th>  -->   
-					<!-- <th class="column3">
+<!--                     <tr class="hover-action-row" *ngIf="item.deptCommList.length > 0" [ngClass]="{'rowbg': item.deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(item.deptCommList);" >
+ --><!--                     <td class="column1">{{item.empCode}}</td>
+ -->   
+<!--                     <tr *ngFor="let msg of item.comMsgRefList">
+ -->                    
+				<thead>
+                   <tr class="table100-head">
+					 <th class="column3">
+						<mfDefaultSorter by=""></mfDefaultSorter>
+					 </th>
+					 <th class="column3">
+						<mfDefaultSorter by="">Ref.No.</mfDefaultSorter>
+					 </th>
+					 <th class="column3">
+						<mfDefaultSorter by="">Date</mfDefaultSorter>
+					 </th>
+					 <th class="column3">
+					 </th>
+				</thead>
+				<tbody *ngFor="let msg of mf.data[0].comMsgRefList">
+							<tr>
+								<td class="column1">
+									<a class="link" (click)="openMessageList(msg);">
+										<i class="fas " [ngClass]="{'fa-plus-circle': !msg.isDetailsSetVisible,'fa-minus-circle': msg.isDetailsSetVisible }"></i>
+									</a>
+								</td>
+								<td>{{msg.titleRefNo}} ({{msg.offCommList.length}})</td>
+								<td class="column1">{{mf.data[0].titleDate | date :  "medium"}}</td>
+								<td colspan="5"></td>
+						</tr>
+
+
+					<ng-container *ngIf="msg.isDetailsSetVisible">
+				   <tr>
+				   <td colspan="8">
+				   <table>
+				   <thead>
+                   <tr class="table100-head">
+					 <th class="column3">
 						<mfDefaultSorter by="departmentName">Department Name</mfDefaultSorter>
                     </th>  
 					<th class="column2">
@@ -89,25 +122,10 @@
                     <th class="column8">
 						<mfDefaultSorter by="View">View / Reply</mfDefaultSorter>
                     </th>    
-                </tr> 
-                </thead>-->
-				<tbody *ngFor="let msg of mf.data[0].comMsgRefList">
-<!--                     <tr class="hover-action-row" *ngIf="item.deptCommList.length > 0" [ngClass]="{'rowbg': item.deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(item.deptCommList);" >
- --><!--                     <td class="column1">{{item.empCode}}</td>
- -->   
-<!--                     <tr *ngFor="let msg of item.comMsgRefList">
- -->                    <tr>
-								<td class="column1">
-									<a class="link" (click)="openMessageList(msg);">
-										<i class="fas " [ngClass]="{'fa-plus-circle': !msg.isDetailsSetVisible,'fa-minus-circle': msg.isDetailsSetVisible }"></i>
-									</a>
-								</td>
-					<td>{{msg.titleRefNo}} ({{msg.offCommList.length}})</td>
-					<td class="column1">{{mf.data[0].titleDate | date :  "medium"}}</td>
-					<td colspan="5"></td>
 					</tr>
-					<ng-container *ngIf="msg.isDetailsSetVisible">
-						<tr *ngFor="let content of msg.offCommList">
+					</thead>
+				    <tbody *ngFor="let content of msg.offCommList">
+						<tr>
 						<td class="column1">{{content.departmentName}}</td>
 						<td class="column1">{{content.employeeName}}</td>
 						<td class="column1"><a class="tip"><span *ngFor="let dept of content.deptCommList">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of content.deptCommList">{{dept.departmentName +','}}</span></p></a></td>
@@ -122,9 +140,13 @@
 									</div>
 						</td>
 						</tr>
+						</tbody>
+						</table>
+						</td>
+					    </tr>
 					</ng-container>
 				</tbody>
-                <tfoot>
+				<tfoot>
                 <tr>
                     <td colspan="6">
                         <mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
