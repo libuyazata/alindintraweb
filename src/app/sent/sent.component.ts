@@ -44,7 +44,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   public prv_departmentEdit : string;
   public prv_departmentDelete : string;
   public detailsId : string;
-  
+  private previousItem : any;
+
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
   constructor(private alertService : AlertNotificationService,private SentService : SentService,private authenticationService: AuthenticationService) { 
@@ -468,6 +469,16 @@ export class SentComponent extends BaseComponent implements OnInit {
 			this.getcommunicationList();
 			});
 	 }	  
+  }
+  openMessageList(item : any) { 
+    item.isDetailsSetVisible = ! item.isDetailsSetVisible;
+
+    if(this.previousItem != null && item != this.previousItem) {
+      this.previousItem.isDetailsSetVisible = false;
+    }
+
+    this.previousItem = item;
+	//this.getSubtaskDetails(item.workDetailsId);
   }
   get interCommForms() { return this.interCommForm.controls; }
   get replyForms() { return this.replyForm.controls; }

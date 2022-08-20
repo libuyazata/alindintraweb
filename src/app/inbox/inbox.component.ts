@@ -194,15 +194,15 @@ export class InboxComponent extends BaseComponent implements OnInit {
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
 	
-	/* this.InboxService.getInboxMessageByDeptId(departmentId).subscribe((resp:any)=>{      
+	this.InboxService.getInboxMessageByDeptId(departmentId).subscribe((resp:any)=>{      
 	  this.communicationList = resp["inboxMessages"];
-    }); */
-	let params = {
+    });
+	/* let params = {
          "departmentId" : 3,
     }
 	this.InboxService.getInboxMessageByDeptId(params).subscribe((resp:any)=>{      
 	  this.communicationList = resp["modelMap"];
-    });
+    }); */
 	
   }
   

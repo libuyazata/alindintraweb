@@ -32,7 +32,7 @@
 <!-- 													<span *ngIf="isAdminUser">
  -->													<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;" type="button">New Message</button>  
 <!-- 													</span>
- -->												
+ -->											
 													<a class="link" [routerLink]="['/inbox/']">
 													<button class="btn btn-success ml-5" type="button">View Inbox Message</button>  
 													</a>
@@ -42,17 +42,6 @@
 									</form> 
 							</div>
 </div>
-
-		<!-- <div class="col-lg-12 search-container">
-                <div class="row">
-                    <div class="col-lg-12 pt-4">                    
-                        <span class="float-right">
-                        	<button class="btn btn-info float-right" (click)="openCreateForm()" >New Message</button>  
-						</span>
-                    </div> 
-                </div>
-		</div> 
-</div>-->
 </div>
 
 <div class="page-body-container">
@@ -60,20 +49,16 @@
       <div class="col-lg-12">
            <div class="table100">
 		   <table [mfData]="communicationList" #mf="mfDataTable" [mfRowsOnPage]="50">
-                <thead>
-                <tr class="table100-head">
-                    <!-- <th class="column1">
-                        <mfDefaultSorter by="empCode">Emp.Code</mfDefaultSorter>
-                    </th>   -->  
-					<th class="column3">
+				<thead>
+                   <tr class="table100-head">
+					 <th class="column3">
+                    </th> 
+					 <th class="column3">
 						<mfDefaultSorter by="departmentName">Department Name</mfDefaultSorter>
-                    </th>    
+                    </th>  
 					<th class="column2">
 						<mfDefaultSorter by="employeeName">Sender</mfDefaultSorter>
-                    </th> 
-					<th class="column2">
-						<mfDefaultSorter by="employeeName">To</mfDefaultSorter>
-                    </th>    
+                    </th>
                     <th class="column3">
 						<mfDefaultSorter by="departmentName">Ref.No.</mfDefaultSorter>
                     </th>
@@ -85,35 +70,54 @@
                     </th>    
                     <th class="column7">
 						<mfDefaultSorter by="subject">Date</mfDefaultSorter>
-                    </th>    
-                    <th class="column8">
+                    </th>  
+					<th class="column8">
 						<mfDefaultSorter by="View">View / Reply</mfDefaultSorter>
-                    </th>    
-                </tr>
-                </thead>
-				<tbody *ngFor="let item of mf.data">
-                    <tr class="hover-action-row" *ngIf="item.deptCommList.length > 0" [ngClass]="{'rowbg': item.deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(item.deptCommList);" >
-<!--                     <td class="column1">{{item.empCode}}</td>
- -->                
-                    <td class="column1">{{item.departmentName}}</td>
-					<td class="column1">{{item.employeeName}}</td>
-					<td class="column1"><a class="tip"><span *ngFor="let dept of item.deptCommList">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of item.deptCommList">{{dept.departmentName +','}}</span></p></a></td>
-                    <td class="column1">{{item.referenceNo}}</td>
-                    <td class="column1">{{item.workName}}</td>
-                    <td class="column1">{{item.subject}}</td>
-                    <td class="column1">{{item.updatedOn   | date :  "medium" }}</td>
-                    <td class="column1">
-								<div class="link-holder">
-								 <a class="link" title="View Details" (click)="viewDetails(item.officeCommunicationId);"><i class="fas fa-eye"></i></a>
-								 <button (click)="replyMessage(item);" class="btn btn-success" style="margin-left:5px;">Reply</button>  
-								</div>
-				    </td>
-					</tr>
-                
-				
-				
+                    </th> 					
+				</thead>
+				<tbody *ngFor="let msg of mf.data[0].comMsgRefList">
+							<tr>
+								<td class="column1">
+									<a class="link" (click)="openMessageList(msg);">
+										<i class="fas " [ngClass]="{'fa-plus-circle': !msg.isDetailsSetVisible,'fa-minus-circle': msg.isDetailsSetVisible }" *ngIf="msg.offCommList.length>1"></i>
+									</a>
+								</td>
+								<td>{{msg.offCommList[0].departmentName}}</td>
+								<td>{{msg.offCommList[0].employeeName}}</td>
+<!-- 								<td class="column1"><a class="tip"><span *ngFor="let dept of msg.offCommList[0].deptCommList">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of msg.offCommList[0].deptCommList">{{dept.departmentName +','}}</span></p></a></td>
+ -->								<td>{{msg.offCommList[0].referenceNo}}({{msg.offCommList.length}})</td>
+								<td>{{msg.offCommList[0].workName}}</td>
+								<td>{{msg.offCommList[0].subject}}</td>
+								<td>{{msg.offCommList[0].updatedOn | date :  "medium"}}</td>
+								<td class="column1">
+									<div class="link-holder">
+									 <a class="link" title="View Details" (click)="viewDetails(msg.offCommList[0].officeCommunicationId);"><i class="fas fa-eye"></i></a>
+									 <button (click)="replyMessage(msg.offCommList[0]);" class="btn btn-success" style="margin-left:5px;">Reply</button>  
+									</div>
+								</td>
+						</tr>
+
+
+				 <ng-container *ngIf="msg.isDetailsSetVisible">
+				 <ng-container *ngFor="let content of msg.offCommList;index as i">
+						<tr *ngIf="i>0">
+						<td class="column1"><i class="fa fa-angle-double-right" aria-hidden="true"></i></td>
+						<td class="column1">{{content.departmentName}}</td>
+						<td class="column1">{{content.employeeName}}</td>
+ 					    <td class="column1">{{content.referenceNo}}</td>
+						<td class="column1">{{content.workName}}</td>
+						<td class="column1">{{content.subject}}</td>
+						<td class="column1">{{content.updatedOn   | date :  "medium" }}</td>
+						<td class="column1">
+									<div class="link-holder">
+									 <a class="link" title="View Details" (click)="viewDetails(content.officeCommunicationId);"><i class="fas fa-eye"></i></a>
+									</div>
+						</td>
+						</tr>
+					    </ng-container>
+					</ng-container>
 				</tbody>
-                <tfoot>
+				<tfoot>
                 <tr>
                     <td colspan="6">
                         <mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
@@ -186,15 +190,15 @@
 			<div class="row">
 				<div class="col-lg-12">
                         <div><label>Message : </label></div>
-					    <textarea class="form-control mandatory-field" formControlName="description_old"  maxlength="400" readonly></textarea>
+					    <textarea class="form-control mandatory-field" formControlName="description_old"  maxlength="400" readonly  style="height:200px !important;"></textarea>
 				</div>
 			</div>
 			
 			<div class="row">
 				<div class="col-lg-12">
                         <div><label>Description : </label></div>
-                        <textarea class="form-control mandatory-field" formControlName="description"  maxlength="400" style="height:200px !important;"
-                        [ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }"></textarea>
+                        <textarea class="form-control mandatory-field" formControlName="description"  maxlength="400"
+                        [ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }"  style="height:200px !important;"></textarea>
                         <div *ngIf="isreplyFormSubmitInitiated && replyForms.description.errors" style="color:red;">Please enter Description.</div>
                 </div>
 			</div>	
@@ -216,8 +220,6 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-<!--                 <h5 class="modal-title">{{isEdit ? ('Update ' +itemName)  : ('Create ' +itemName)}}</h5>
- -->                
 				<h5 class="modal-title">New Message</h5>
                 <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePopup();">&times;</button>
             </div>
@@ -264,13 +266,6 @@
 						    <div *ngIf="isFormSubmitInitiated && interCommForms.deptCommList.errors" style="color:red;">Please Choose Department</div>
                             </div>  
 			</div>
-			<!-- <div class="row">
-				<div class="col-lg-12">
-                        <div><label>Reference No : </label></div>
-					    <input  type="text" class="form-control" formControlName="referenceNo" [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.referenceNo.errors }">
-						<div *ngIf="isFormSubmitInitiated && interCommForms.referenceNo.errors" style="color:red;">Please enter Reference No.</div>
-                </div>
-			</div> -->
 			<div class="row">
 				<div class="col-lg-12">
                         <div><label>Subject : </label></div>
@@ -281,8 +276,8 @@
 			<div class="row">
 				<div class="col-lg-12">
                         <div><label>Description : </label></div>
-                        <textarea class="form-control mandatory-field" formControlName="description"  maxlength="400" style="height:200px !important;"
-                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.description.errors }"></textarea>
+                        <textarea class="form-control mandatory-field" formControlName="description"  maxlength="400"
+                        [ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.description.errors }" style="height:200px !important;"></textarea>
                         <div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">Please enter Description.</div>
                 </div>
 			</div>	
@@ -312,7 +307,7 @@
 				<div *ngFor="let com2 of communicationList2">
 				<div class="row form-group">
                   <div class="col-lg-12" >
-					Employee Name : <b>{{com2.employeeName}} </b>                
+					Sender : <b>{{com2.employeeName}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
@@ -343,7 +338,7 @@
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Created On : <b>{{com2.updatedOn   | date :  "medium"}}</b>                 
+					Date : <b>{{com2.updatedOn   | date :  "medium"}}</b>                 
 				  </div>
                 </div>
             </div>
