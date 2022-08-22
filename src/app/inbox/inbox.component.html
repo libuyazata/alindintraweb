@@ -75,9 +75,21 @@
 						<mfDefaultSorter by="View">View / Reply</mfDefaultSorter>
                     </th> 					
 				</thead>
+				<tbody *ngIf="mf.data.length == 0">
+                            <tr>
+                                <td colspan="8">
+                                    <div class="text-center" style="padding:5px;">No Data Found</div>
+                                </td>
+                            </tr>
+                </tbody>
+				
+<ng-container *ngIf="mf.data.length > 0">
 				<tbody *ngFor="let msg of mf.data[0].comMsgRefList">
-							<tr>
-								<td class="column1">
+<!--                     <tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
+                     <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
+-->								
+                        <tr>
+						<td class="column1">
 									<a class="link" (click)="openMessageList(msg);">
 										<i class="fas " [ngClass]="{'fa-plus-circle': !msg.isDetailsSetVisible,'fa-minus-circle': msg.isDetailsSetVisible }" *ngIf="msg.offCommList.length>1"></i>
 									</a>
@@ -88,7 +100,7 @@
  -->								<td>{{msg.offCommList[0].referenceNo}}({{msg.offCommList.length}})</td>
 								<td>{{msg.offCommList[0].workName}}</td>
 								<td>{{msg.offCommList[0].subject}}</td>
-								<td>{{msg.offCommList[0].updatedOn | date :  "medium"}}</td>
+								<td>{{msg.offCommList[0].createdOn | date :  "medium"}}</td>
 								<td class="column1">
 									<div class="link-holder">
 									 <a class="link" title="View Details" (click)="viewDetails(msg.offCommList[0].officeCommunicationId);"><i class="fas fa-eye"></i></a>
@@ -107,7 +119,7 @@
  					    <td class="column1">{{content.referenceNo}}</td>
 						<td class="column1">{{content.workName}}</td>
 						<td class="column1">{{content.subject}}</td>
-						<td class="column1">{{content.updatedOn   | date :  "medium" }}</td>
+						<td class="column1">{{content.createdOn   | date :  "medium" }}</td>
 						<td class="column1">
 									<div class="link-holder">
 									 <a class="link" title="View Details" (click)="viewDetails(content.officeCommunicationId);"><i class="fas fa-eye"></i></a>
@@ -117,6 +129,7 @@
 					    </ng-container>
 					</ng-container>
 				</tbody>
+				</ng-container>
 				<tfoot>
                 <tr>
                     <td colspan="6">
