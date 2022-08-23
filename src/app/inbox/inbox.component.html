@@ -319,8 +319,18 @@
 			<div class="modal-body">
 				<div *ngFor="let com2 of communicationList2">
 				<div class="row form-group">
+                  <div class="col-lg-12">
+					Date : <b>{{com2.updatedOn   | date :  "medium"}}</b>                 
+				  </div>
+                </div>	
+				<div class="row form-group">
                   <div class="col-lg-12" >
 					Sender : <b>{{com2.employeeName}} </b>                
+				  </div>
+                </div>
+				<div class="row form-group">
+                  <div class="col-lg-12" >
+					Ref.No. : <b>{{com2.referenceNo}} </b>                
 				  </div>
                 </div>
 				<div class="row form-group">
@@ -346,12 +356,7 @@
                 </div>
 				<div class="row form-group">
                   <div class="col-lg-12">
-					Description : <b>{{com2.description}}</b>                 
-				  </div>
-                </div>
-				<div class="row form-group">
-                  <div class="col-lg-12">
-					Date : <b>{{com2.updatedOn   | date :  "medium"}}</b>                 
+					Message : <b>{{com2.description}}</b>                 
 				  </div>
                 </div>
             </div>
