@@ -413,7 +413,6 @@ export class InboxComponent extends BaseComponent implements OnInit {
     this.isDescription = false;
 	this.interCommForm.reset();
   }
-  
   public viewDetails(item:any,viewItem:any){
 	//this.detailsId=item;
 		//this.initializeViewForm(item);
