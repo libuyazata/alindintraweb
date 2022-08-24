@@ -85,11 +85,11 @@
 				
 <ng-container *ngIf="mf.data.length > 0">
 				<tbody *ngFor="let msg of mf.data[0].comMsgRefList">
-<!--                     <tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
-                     <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
+                    <tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}">
+     <!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
 -->								
-                        <tr>
-						<td class="column1">
+<!--                         <tr>
+ -->						<td class="column1">
 									<a class="link" (click)="openMessageList(msg);">
 										<i class="fas " [ngClass]="{'fa-plus-circle': !msg.isDetailsSetVisible,'fa-minus-circle': msg.isDetailsSetVisible }" *ngIf="msg.offCommList.length>1"></i>
 									</a>
@@ -103,7 +103,7 @@
 								<td>{{msg.offCommList[0].createdOn | date :  "medium"}}</td>
 								<td class="column1">
 									<div class="link-holder">
-									 <a class="link" title="View Details" (click)="viewDetails(msg.offCommList[0].officeCommunicationId);"><i class="fas fa-eye"></i></a>
+									 <a class="link" title="View Details" (click)="viewDetails(msg.offCommList[0].officeCommunicationId,msg.offCommList[0].deptCommList);"><i class="fas fa-eye"></i></a>
 									 <button (click)="replyMessage(msg.offCommList[0]);" class="btn btn-success" style="margin-left:5px;">Reply</button>  
 									</div>
 								</td>

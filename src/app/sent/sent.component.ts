@@ -405,9 +405,17 @@ export class SentComponent extends BaseComponent implements OnInit {
 	this.interCommForm.reset();
   }
   
-  public viewDetails(item:any){
+  public viewDetails(item:any,viewItem:any){
 	//this.detailsId=item;
 		//this.initializeViewForm(item);
+	const viewStatus = viewItem[0]['viewStatus'];
+	const deptCommId = viewItem[0]['deptCommId'];
+	  
+	  if(viewStatus == 0){
+			this.SentService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
+			this.getcommunicationList();
+			});
+	 }		
 	this.openDescriptionForm(item);
   }
   public openDescriptionForm(item:any) {    
