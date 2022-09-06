@@ -8,6 +8,7 @@ import { SentComponent } from './sent.component';
 import { SentService } from '@app/sent/sent.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataTableModule } from 'angular-6-datatable';
+import { CKEditorModule } from 'ckeditor4-angular';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     ReactiveFormsModule,
     SentRoutingModule,
 	SharedModule,
+	CKEditorModule,
     NgMultiSelectDropDownModule.forRoot(),
  ],
   declarations: [

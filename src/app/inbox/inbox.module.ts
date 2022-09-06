@@ -8,6 +8,7 @@ import { InboxComponent } from './inbox.component';
 import { InboxService } from '@app/inbox/inbox.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataTableModule } from 'angular-6-datatable';
+import { CKEditorModule } from 'ckeditor4-angular';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     ReactiveFormsModule,
     InboxRoutingModule,
 	SharedModule,
+	CKEditorModule,
     NgMultiSelectDropDownModule.forRoot(),
  ],
   declarations: [

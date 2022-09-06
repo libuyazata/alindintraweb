@@ -384,7 +384,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	   });
   }
   private initializeReplyForm(data: any) {
-    this.isDescription = false;
+	this.isDescription = false;
 	this.replyForm = new FormGroup({
 		workDetailsId : new FormControl((null != data ? data.workDetailsId : ''),Validators.required),
 		subTaskId : new FormControl((null != data ? data.subTaskId : ''),Validators.required),
@@ -431,6 +431,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	const officeCommunicationId = item;
 	this.InboxService.getCommunicationById(officeCommunicationId).subscribe((resp:any)=>{      
 	  this.communicationList2 = resp["communicationModelList"];
+	  document.getElementById('htmlDescription1').innerHTML= this.communicationList2[0]['description'];
     });
 	document.getElementById('descriptionModal').classList.toggle('d-block');
   }
@@ -439,7 +440,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
   } 
   
   public replyMessage(item:any){
-    this.replyForm.reset();
+    this.replyForm.get("description").setValue("");
+	this.replyForm.reset();
 	//this.detailsId=item;
 	/* const workId = item.workDetailsId;
 	this.InboxService.getdepartmentListByWorkId(workId).subscribe((resp:any) => {
@@ -465,6 +467,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
     this.replyForm.get("subject").setValue(item.subject);
     this.replyForm.get("description_old").setValue(item.description);
 
+	const htmlDescription = document.querySelector('.htmlDescription');
+	htmlDescription.innerHTML  = item.description;
 	//this.initializeReplyForm(item);
 	
 	this.openReplyForm();

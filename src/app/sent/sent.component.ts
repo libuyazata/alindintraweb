@@ -422,7 +422,8 @@ export class SentComponent extends BaseComponent implements OnInit {
 	const officeCommunicationId = item;
 	this.SentService.getCommunicationById(officeCommunicationId).subscribe((resp:any)=>{      
 	  this.communicationList2 = resp["communicationModelList"];
-    });
+	  document.getElementById('htmlDescription1').innerHTML= this.communicationList2[0]['description'];
+	});
 	document.getElementById('descriptionModal').classList.toggle('d-block');
   }
   public closeDescriptionModal() {
@@ -430,6 +431,7 @@ export class SentComponent extends BaseComponent implements OnInit {
   } 
   
   public replyMessage(item:any){
+    this.replyForm.get("description").setValue("");
 	this.replyForm.reset();
 	//this.detailsId=item;
 	/* const workId = item.workDetailsId;
@@ -452,7 +454,10 @@ export class SentComponent extends BaseComponent implements OnInit {
     this.replyForm.get("referenceNo").setValue(item.referenceNo);
     this.replyForm.get("subject").setValue(item.subject);
     this.replyForm.get("description_old").setValue(item.description);
-
+	
+	const htmlDescription = document.querySelector('.htmlDescription');
+	htmlDescription.innerHTML  = item.description;
+	
 	//this.initializeReplyForm(item);
 	
 	this.openReplyForm();
