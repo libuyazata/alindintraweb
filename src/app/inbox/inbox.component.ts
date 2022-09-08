@@ -507,5 +507,4 @@ export class InboxComponent extends BaseComponent implements OnInit {
   get interCommForms() { return this.interCommForm.controls; }
   get replyForms() { return this.replyForm.controls; }
   get viewForms() { return this.viewForm.controls; }
-
 }

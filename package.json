@@ -35,6 +35,7 @@
     "angular-6-datatable": "^0.8.0",
     "angular-highcharts": "^6.2.6",
     "bootstrap": "^4.4.1",
+    "ckeditor4-angular": "^3.1.1",
     "core-js": "^2.5.6",
     "datatables.net": "^1.10.19",
     "datatables.net-bs4": "^1.10.19",
