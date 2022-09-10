@@ -30,6 +30,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public isNotDepartmentSelectedReply: boolean = false; // For Call allotment
   public isAdminUser: boolean = false; // For Call allotment
 
+  public config : any;
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
   public workDescList : Array<any>;
@@ -50,6 +51,12 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public dropdownSettingsReply: any = {};
   constructor(private alertService : AlertNotificationService,private InboxService : InboxService,private authenticationService: AuthenticationService) { 
 	super(InboxService);
+	this.config = {toolbarLocation:'bottom',toolbarGroups: [
+        { name: 'clipboard', groups: ['undo'] },
+        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+        { name: 'paragraph', groups: ['list','align','paragraph'] },
+        { name: 'colors', groups: ['colors'] },
+      ],};
   }
 
   ngOnInit() { 

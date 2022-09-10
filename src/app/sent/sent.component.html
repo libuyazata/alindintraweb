@@ -153,7 +153,7 @@
 
 <!-- Reply Modal Form -->
 <div class="modal salary-info-model" id="replyModal">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">Reply</h5>
@@ -227,7 +227,7 @@
 								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }"
 								style="height:200px !important;"></textarea>
 							 -->
-							 <ckeditor name="ckeditor_text" formControlName="description" maxlength="400"
+							 <ckeditor [config]="config" name="ckeditor_text" formControlName="description" maxlength="400"
 								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }" editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></ckeditor>
 								<div *ngIf="isreplyFormSubmitInitiated && replyForms.description.errors" style="color:red;">
 								Please enter Description.
@@ -250,7 +250,7 @@
 
 <!-- Create/Update Inter Office Communication Form [BEGIN]-->
 <div class="modal" [ngClass]="{ 'd-block' : isFormVisible}" id="createUpdateModal" *ngIf="isFormVisible">
-	<div class="modal-dialog modal-md">
+	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">New Message</h5>
@@ -319,7 +319,7 @@
 							<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">
 								Please enter Description.</div> -->
 						
-								<ckeditor name="ckeditor_text" formControlName="description" maxlength="400"
+								<ckeditor [config]="config" name="ckeditor_text" formControlName="description" maxlength="400"
 								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }" editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></ckeditor>
 								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">
 								Please enter Description.
