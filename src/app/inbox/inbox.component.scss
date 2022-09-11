@@ -51,6 +51,18 @@ a.tip:hover p {
 	font-size:15px;
 	font-weight:bold;
 }
-#cke_140,.cke_toolbar_separator{
-	display:none !important;
+.image-upload > input
+{
+    display: none !important;
+}
+
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
+}
+
+.modal-body{
+	overflow : hidden !important; 
+    max-height: 900vh !important;
 }

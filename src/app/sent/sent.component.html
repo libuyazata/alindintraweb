@@ -83,7 +83,7 @@
 						</tr>
 					</tbody>
 					<ng-container *ngIf="mf.data.length > 0">
-						<tbody *ngFor="let msg of mf.data[0].comMsgRefList">
+						<tbody *ngFor="let msg of mf.data[0].comMsgRefList;index as i">
 							<!--                     <tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
  -->
 							<tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0"
@@ -102,7 +102,9 @@
 								<td>{{msg.offCommList[0].referenceNo}}({{msg.offCommList.length}})</td>
 								<td>{{msg.offCommList[0].workName}}</td>
 								<td>{{msg.offCommList[0].subject}}</td>
-								<td>{{msg.offCommList[0].createdOn | date : "medium"}}</td>
+<!-- 								<td>{{msg.offCommList[0].createdOn | date : "medium"}}</td>
+ -->							
+								<td>{{mf.data[i].titleDate | date : "medium"}}</td>
 								<td class="column1">
 									<div class="link-holder">
 										<a class="link" title="View Details"

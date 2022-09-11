@@ -50,3 +50,7 @@ a.tip:hover p {
 	font-size:15px;
 	font-weight:bold;
 }
+.modal-body{
+	overflow : hidden !important; 
+    max-height: 900vh !important;
+}

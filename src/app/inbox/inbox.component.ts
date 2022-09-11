@@ -29,6 +29,9 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public isNotDepartmentSelected: boolean = false; // For Call allotment
   public isNotDepartmentSelectedReply: boolean = false; // For Call allotment
   public isAdminUser: boolean = false; // For Call allotment
+  public isShown : boolean = false;
+  public isShownPreview : boolean = false;
+  public imageSrc : string;
 
   public config : any;
   public workDetailsList : Array<any>;
@@ -49,6 +52,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
 
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
+  protected fileToUpload : any; // MoM files
+  
   constructor(private alertService : AlertNotificationService,private InboxService : InboxService,private authenticationService: AuthenticationService) { 
 	super(InboxService);
 	this.config = {toolbarLocation:'bottom',toolbarGroups: [
@@ -56,7 +61,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
         { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
         { name: 'paragraph', groups: ['list','align','paragraph'] },
         { name: 'colors', groups: ['colors'] },
-      ],};
+      ],height: 75,};
   }
 
   ngOnInit() { 
@@ -509,6 +514,17 @@ export class InboxComponent extends BaseComponent implements OnInit {
 
     this.previousItem = item;
 	//this.getSubtaskDetails(item.workDetailsId);
+  }
+  
+  public onMoMFileSelected(files: FileList) {
+    this.isShown = true;
+    this.isShownPreview = false;
+	this.fileToUpload = files.item(0);
+	const file = files.item(0);
+
+    const reader = new FileReader();
+    reader.onload = e => this.imageSrc = reader.result;
+    reader.readAsDataURL(file);
   }
   
   get interCommForms() { return this.interCommForm.controls; }

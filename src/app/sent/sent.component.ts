@@ -56,7 +56,7 @@ export class SentComponent extends BaseComponent implements OnInit {
         { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
         { name: 'paragraph', groups: ['list','align','paragraph'] },
         { name: 'colors', groups: ['colors'] },
-      ],};
+      ],height: 60,};
   }
 
   ngOnInit() { 
