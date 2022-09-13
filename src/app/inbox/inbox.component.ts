@@ -61,7 +61,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
         { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
         { name: 'paragraph', groups: ['list','align','paragraph'] },
         { name: 'colors', groups: ['colors'] },
-      ],height: 75,};
+      ],height: 150,};
   }
 
   ngOnInit() { 
@@ -296,8 +296,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	  
 	  //this.InboxService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
 	  this.InboxService.saveInterOfficeCommunication(formData).subscribe((resp:any)=>{      
-		//if(resp.status == "success") {
-		if(resp.status == 200) {
+		if(resp.status == "success") {
+		//if(resp.status == 200) {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
 			//this.resetForm();

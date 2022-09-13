@@ -166,21 +166,21 @@
 			<div class="modal-body">
 				<form novalidate [formGroup]="replyForm" (ngSubmit)="submitReply();">
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div><label>Main Task :</label></div>
 							<input type="hidden" formControlName="workDetailsId">
 							<input class="form-control" formControlName="workName" readonly>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-12">
+					<!-- </div>
+					<div class="row"> -->
+						<div class="col-lg-6">
 							<div><label>Sub Task :</label></div>
 							<input type="hidden" formControlName="subTaskId">
 							<input class="form-control" formControlName="subTaskName" readonly>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div><label>Department (To) :</label></div>
 							<ng-multiselect-dropdown class="mandatory-field"
 								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated }" formControlName="deptCommList"
@@ -191,9 +191,9 @@
 							<div *ngIf="isreplyFormSubmitInitiated && replyForms.deptCommList.errors"
 								style="color:red;">Please Choose Department</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-12">
+<!-- 					</div>
+					<div class="row"> -->
+						<div class="col-lg-6">
 							<div><label>Reference No : </label></div>
 							<input type="text" class="form-control" formControlName="referenceNo"
 								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && replyForms.referenceNo.errors }"
@@ -204,7 +204,7 @@
 					</div>
 
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div><label>Subject : </label></div>
 							<input type="text" class="form-control" formControlName="subject"
 								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.subject.errors }"
@@ -212,13 +212,13 @@
 							<div *ngIf="isreplyFormSubmitInitiated && replyForms.subject.errors" style="color:red;">
 								Please enter Subject</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-12">
+					<!-- </div>
+					<div class="row"> -->
+						<div class="col-lg-6">
 							<div><label>Message : </label></div>
 							<!-- <textarea class="form-control mandatory-field" formControlName="description_old"
 								maxlength="400" readonly style="height:200px !important;"></textarea>
- -->						<div class="htmlDescription"></div>
+ -->						<div class="htmlDescription" style="background:#e9ecef;padding:10px;"></div>
 						</div>
 					</div>
 
@@ -261,7 +261,7 @@
 			<div class="modal-body">
 				<form novalidate [formGroup]="interCommForm" (ngSubmit)="onAddItem();">
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div><label>Work List :</label></div>
 							<select class="form-control" formControlName="workDetailsId"
 								(change)="getDepartmentList($event);">
@@ -271,14 +271,15 @@
 							</select>
 							<div *ngIf="isFormSubmitInitiated && interCommForms.workDetailsId.errors"
 								style="color:red;">Please choose Work</div>
-						</div>
-						<div class="col-lg-12" *ngIf="isDescription">
+						<span class="col-lg-6" *ngIf="isDescription">
 							<div><strong>Work Description :</strong></div>
 							<div><label>{{workDescList.description}}</label></div>
+						</span>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-12">
+						
+					<!-- </div>
+					<div class="row"> -->
+						<div class="col-lg-6">
 							<div><label>Sub Task :</label></div>
 							<select class="form-control" formControlName="subTaskId">
 								<option value="" selected>Choose Sub Task</option>
@@ -290,7 +291,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div><label>Department (To) :</label></div>
 							<ng-multiselect-dropdown class="mandatory-field"
 								[ngClass]="{ 'is-invalid': isFormSubmitInitiated }" name="deptCommList"
@@ -301,9 +302,9 @@
 							<div *ngIf="isFormSubmitInitiated && interCommForms.deptCommList.errors" style="color:red;">
 								Please Choose Department</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-12">
+					<!-- </div>
+					<div class="row"> -->
+						<div class="col-lg-6">
 							<div><label>Subject : </label></div>
 							<input type="text" class="form-control" formControlName="subject"
 								[ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.subject.errors }">
@@ -324,17 +325,18 @@
 								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">
 								Please enter Description.
 								</div>
+								<div  style="margin-top:15px;"><label>File Attachment : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/></div>
 								</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-12 mt-2">
 							<div class="image-upload">
-							<label for="file-input">
+<!-- 							<label for="file-input">
 								<i class="fa fa-paperclip fa-2x" aria-hidden="true" style="color:#484848;"></i>
 								</label>
-<!-- 								<input id="file-input" type="file"/>
- -->								<input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
-							<button class="btn btn-primary" type="submit">Send</button>
+								<input id="file-input" type="file"/>
+								<input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
+							 --><button class="btn btn-primary" type="submit">Send</button>
 							<button class="btn btn-danger" *ngIf=" ! isEdit" (click)="resetForm()" type="reset">Clear</button>
 							</div>
 							</div>
