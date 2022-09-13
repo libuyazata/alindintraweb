@@ -325,19 +325,20 @@
 								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">
 								Please enter Description.
 								</div>
-								<div  style="margin-top:15px;"><label>File Attachment : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/></div>
 								</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-12 mt-2">
-							<div class="image-upload">
+							<div class="image-upload1">
+							<button class="btn btn-primary" type="submit">Send</button>
+							<button class="btn btn-danger" *ngIf=" ! isEdit" (click)="resetForm()" type="reset">Clear</button>
 <!-- 							<label for="file-input">
 								<i class="fa fa-paperclip fa-2x" aria-hidden="true" style="color:#484848;"></i>
 								</label>
 								<input id="file-input" type="file"/>
 								<input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
-							 --><button class="btn btn-primary" type="submit">Send</button>
-							<button class="btn btn-danger" *ngIf=" ! isEdit" (click)="resetForm()" type="reset">Clear</button>
+ -->							
+							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
 							</div>
 							</div>
 					</div>
