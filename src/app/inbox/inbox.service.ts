@@ -37,8 +37,11 @@ export class InboxService extends BaseService {
   public getDepartmentList(data:any): Observable<any>{
     return this.httpClient.get("user/getAllDepartment/");
   }
-  public saveInterOfficeCommunication(data:any): Observable<any>{
+  /* public saveInterOfficeCommunication(data:any): Observable<any>{
 	return this.httpClient.post("project/saveInterOfficeCommunication", data);
+  } */
+  public saveInterOfficeCommunication(formData:FormData){
+	return this.httpClient.post('project/sendWorkMessage/', formData, {reportProgress: true, observe: 'events'});
   }
   public replyInterOfficeCommunication(data:any): Observable<any>{
 	return this.httpClient.post("project/replyInterOfficeCommunication", data);

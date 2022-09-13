@@ -281,8 +281,23 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	  let params = this.getPreparedParams(submitData);
       params.departmentId=departmentId;
       params.employeeId=userId;
-	  this.InboxService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
-		if(resp.status == "success") {
+	  
+	  var formData = new FormData(); 
+      if(this.fileToUpload){
+        formData.append('file', this.fileToUpload, this.fileToUpload.name);
+      }
+	  formData.append("employeeId", params.employeeId);
+      //formData.append("toDeptList", params.deptCommList);
+      formData.append("toDeptList", params.departmentId);
+      formData.append("workDetailsId", params.workDetailsId);
+      formData.append("subTaskId", params.subTaskId);
+      formData.append("subject", params.subject);
+      formData.append("description", params.description);
+	  
+	  //this.InboxService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
+	  this.InboxService.saveInterOfficeCommunication(formData).subscribe((resp:any)=>{      
+		//if(resp.status == "success") {
+		if(resp.status == 200) {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
 			//this.resetForm();
