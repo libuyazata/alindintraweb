@@ -183,7 +183,7 @@
 						<div class="col-lg-6">
 							<div><label>Department (To) :</label></div>
 							<ng-multiselect-dropdown class="mandatory-field"
-								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated }" formControlName="deptCommList"
+								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && replyForms.deptCommList.errors }" formControlName="deptCommList"
 								name="deptCommList" [placeholder]="'Select Department'" [data]="departmentList"
 								[settings]="dropdownSettingsReply" (onDeSelect)="onItemDeSelectReply($event)"
 								(onSelect)="onItemSelectReply($event)">
@@ -206,9 +206,7 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div><label>Subject : </label></div>
-							<input type="text" class="form-control" formControlName="subject"
-								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.subject.errors }"
-								readonly>
+							<input type="text" class="form-control" formControlName="subject" readonly>
 							<div *ngIf="isreplyFormSubmitInitiated && replyForms.subject.errors" style="color:red;">
 								Please enter Subject</div>
 						</div>
@@ -218,7 +216,7 @@
 							<div><label>Message : </label></div>
 							<!-- <textarea class="form-control mandatory-field" formControlName="description_old"
 								maxlength="400" readonly style="height:200px !important;"></textarea>
- -->						<div class="htmlDescription" style="background:#e9ecef;padding:10px;"></div>
+ -->						<div class="htmlDescription" style="background:#FAD4E9;padding:10px;border:1px solid #CCCCCC;"></div>
 						</div>
 					</div>
 
@@ -228,9 +226,16 @@
 							<!--< textarea class="form-control mandatory-field" formControlName="description" maxlength="400"
 								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }"
 								style="height:200px !important;"></textarea> -->
-								<ckeditor  [config]="config" name="ckeditor_text" formControlName="description" maxlength="400"
+								<ckeditor  [config]="config" name="ckeditor_text" formControlName="description" maxlength="8000"
 								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }" editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></ckeditor>
-								<div *ngIf="isreplyFormSubmitInitiated && replyForms.description.errors" style="color:red;">
+								
+								<div style="color:green;">
+                                <strong><i>Maximum character limit 7000 allowed.</i></strong>
+								</div>
+								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors?.maxlength" style="color:red;">
+                                Maximum character limit Exceeded.
+								</div> 
+								<div *ngIf="isreplyFormSubmitInitiated && replyForms.description.errors && interCommForms.description.value==''" style="color:red;">
 								Please enter Description.
 								</div>
 						</div>
@@ -271,14 +276,13 @@
 							</select>
 							<div *ngIf="isFormSubmitInitiated && interCommForms.workDetailsId.errors"
 								style="color:red;">Please choose Work</div>
-						<span class="col-lg-6" *ngIf="isDescription">
-							<div><strong>Work Description :</strong></div>
-							<div><label>{{workDescList.description}}</label></div>
-						</span>
 						</div>
-						
-					<!-- </div>
-					<div class="row"> -->
+						<div class="col-lg-6" *ngIf="isDescription">
+									<div><strong>Work Description :</strong></div>
+									<div><label>{{workDescList.description}}</label></div>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-lg-6">
 							<div><label>Sub Task :</label></div>
 							<select class="form-control" formControlName="subTaskId">
@@ -294,7 +298,7 @@
 						<div class="col-lg-6">
 							<div><label>Department (To) :</label></div>
 							<ng-multiselect-dropdown class="mandatory-field"
-								[ngClass]="{ 'is-invalid': isFormSubmitInitiated }" name="deptCommList"
+								[ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.deptCommList.errors }" name="deptCommList"
 								[placeholder]="'Select Department'" [data]="departmentList"
 								formControlName="deptCommList" [settings]="dropdownSettings"
 								(onDeSelect)="onItemDeSelect($event)" (onSelect)="onItemSelect($event)">
@@ -320,11 +324,22 @@
 								style="height:200px !important;"></textarea>
 								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">
 								Please enter Description.</div> -->
-								<ckeditor [config]="config" name="ckeditor_text" formControlName="description" maxlength="400"
-								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }" editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></ckeditor>
-								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">
+								<ckeditor [config]="config" name="ckeditor_text" formControlName="description" maxlength="8000"
+								[ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.description.errors }" editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></ckeditor>
+								
+								<div style="color:green;">
+                                <strong><i>Maximum character limit 7000 allowed.</i></strong>
+								</div>
+								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors?.maxlength" style="color:red;">
+                                Maximum character limit Exceeded.
+								</div> 
+								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors && interCommForms.description.value==''" style="color:red;">
 								Please enter Description.
 								</div>
+								
+								<!-- <div *ngIf="interCommForms.description.maxlength && isFormSubmitInitiated" style="color:red;">
+                                Maximum character limit Exceeded.
+								</div> -->
 								</div>
 					</div>
 					<div class="row">

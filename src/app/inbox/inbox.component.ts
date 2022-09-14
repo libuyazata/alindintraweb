@@ -75,7 +75,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
        deptCommList : new FormControl('',  Validators.required),
        subject : new FormControl('',  Validators.required),
        description : new FormControl('',  Validators.required),
-    });
+       //description : new FormControl('',[Validators.required, Validators.maxLength(50)]),
+	});
 	this.replyForm = new FormGroup({
        workName : new FormControl('',Validators.required),
        subTaskName : new FormControl('',Validators.required),
