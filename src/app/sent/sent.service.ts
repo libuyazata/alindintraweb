@@ -51,5 +51,7 @@ export class SentService extends BaseService {
   public searchInterDeptCommList(data:any): Observable<any>{
     return this.httpClient.get("project/searchInterDeptCommList", { params : data});
   }
-
+  public downloadWorkMessageAttachmentByOffComId(data:any): Observable<any>{
+	return this.httpClient.get("project/downloadWorkMessageAttachmentByOffComId/"+data);
+  }
 }

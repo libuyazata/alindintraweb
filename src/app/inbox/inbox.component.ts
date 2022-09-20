@@ -461,12 +461,16 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	  this.communicationList2 = resp["communicationModelList"];
 	  document.getElementById('htmlDescription1').innerHTML= this.communicationList2[0]['description'];
     });
+	
 	document.getElementById('descriptionModal').classList.toggle('d-block');
   }
   public closeDescriptionModal() {
     document.getElementById('descriptionModal').classList.toggle('d-block');
+  }
+  public downloadAttachment(deptCommId:any) {
+	this.InboxService.downloadWorkMessageAttachmentByOffComId(deptCommId).subscribe((resp:any)=>{      
+	});
   } 
-  
   public replyMessage(item:any){
     this.replyForm.get("description").setValue("");
 	this.replyForm.reset();

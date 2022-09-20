@@ -436,7 +436,10 @@ export class SentComponent extends BaseComponent implements OnInit {
   public closeDescriptionModal() {
     document.getElementById('descriptionModal').classList.toggle('d-block');
   } 
-  
+  public downloadAttachment(deptCommId:any) {
+	this.SentService.downloadWorkMessageAttachmentByOffComId(deptCommId).subscribe((resp:any)=>{      
+	});
+  } 
   public replyMessage(item:any){
     this.replyForm.get("description").setValue("");
 	this.replyForm.reset();
