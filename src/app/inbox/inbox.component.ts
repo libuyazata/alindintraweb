@@ -288,8 +288,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
       }
 	  formData.append("employeeId", params.employeeId);
-      //formData.append("toDeptList", params.deptCommList);
-      formData.append("toDeptList", params.departmentId);
+      formData.append("toDeptList", params.deptCommList);
+      //formData.append("toDeptList", params.departmentId);
       formData.append("workDetailsId", params.workDetailsId);
       formData.append("subTaskId", params.subTaskId);
       formData.append("subject", params.subject);

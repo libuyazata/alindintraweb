@@ -42,6 +42,7 @@ export class InboxService extends BaseService {
   } */
   public saveInterOfficeCommunication(formData:FormData){
 	return this.httpClient.post('project/sendWorkMessage/', formData, {reportProgress: true, observe: 'events'});
+	//return this.httpClient.post('project/sendWorkMessage/', formData);
   }
   public replyInterOfficeCommunication(data:any): Observable<any>{
 	return this.httpClient.post("project/replyInterOfficeCommunication", data);
