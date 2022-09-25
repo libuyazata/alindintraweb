@@ -82,8 +82,8 @@
 							</td>
 						</tr>
 					</tbody>
-					<ng-container *ngIf="mf.data.length > 0">
-						<tbody *ngFor="let msg of mf.data[0].comMsgRefList;index as i">
+					<ng-container *ngFor="let msg of mf.data;index as i">
+						<tbody *ngFor="let msg of mf.data[i].comMsgRefList">
 							<tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0"
 								[ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}">
 								<!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
@@ -245,6 +245,7 @@
 							<button class="btn btn-primary" type="submit">Send</button>
 							<button class="btn btn-danger" type="button" data-dismiss="modal" appModal
 								(click)="closeReplyModal();">Close</button>
+							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
 						</div>
 					</div>
 				</form>

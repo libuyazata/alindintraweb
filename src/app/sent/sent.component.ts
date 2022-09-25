@@ -29,6 +29,9 @@ export class SentComponent extends BaseComponent implements OnInit {
   public isNotDepartmentSelected: boolean = false; // For Call allotment
   public isNotDepartmentSelectedReply: boolean = false; // For Call allotment
   public isAdminUser: boolean = false; // For Call allotment
+  public isShown : boolean = false;
+  public isShownPreview : boolean = false;
+  public imageSrc : string;
 
   public config : any;
   public workDetailsList : Array<any>;
@@ -49,6 +52,8 @@ export class SentComponent extends BaseComponent implements OnInit {
 
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
+  protected fileToUpload : any; // MoM files
+  
   constructor(private alertService : AlertNotificationService,private SentService : SentService,private authenticationService: AuthenticationService) { 
 	super(SentService);
 	this.config = {toolbarLocation:'bottom',toolbarGroups: [
@@ -56,7 +61,7 @@ export class SentComponent extends BaseComponent implements OnInit {
         { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
         { name: 'paragraph', groups: ['list','align','paragraph'] },
         { name: 'colors', groups: ['colors'] },
-      ],height: 60,};
+      ],height: 150,};
   }
 
   ngOnInit() { 
@@ -70,7 +75,8 @@ export class SentComponent extends BaseComponent implements OnInit {
        deptCommList : new FormControl('',  Validators.required),
        subject : new FormControl('',  Validators.required),
        description : new FormControl('',  Validators.required),
-    });
+       //description : new FormControl('',[Validators.required, Validators.maxLength(50)]),
+	});
 	this.replyForm = new FormGroup({
        workName : new FormControl('',Validators.required),
        subTaskName : new FormControl('',Validators.required),
@@ -114,7 +120,8 @@ export class SentComponent extends BaseComponent implements OnInit {
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 10,
-      allowSearchFilter: true
+      allowSearchFilter: true,
+	  readonly:true
     };
     this.workDescList = [];
 	this.materialRequestSearchForm = new FormGroup({
@@ -203,6 +210,13 @@ export class SentComponent extends BaseComponent implements OnInit {
 	this.SentService.getSentMessageListByDeptId(departmentId).subscribe((resp:any)=>{      
 	  this.communicationList = resp["communicationList"];
     });
+	/* let params = {
+         "departmentId" : 3,
+    }
+	this.SentService.getInboxMessageByDeptId(params).subscribe((resp:any)=>{      
+	  this.communicationList = resp["modelMap"];
+    }); */
+	
   }
   
   public getDepartmentList(event:any){
@@ -263,17 +277,38 @@ export class SentComponent extends BaseComponent implements OnInit {
     const credentials = this.authenticationService.credentials;
     const userId = credentials.userId;
     const departmentId = credentials.departmentId;
-    
 	  let submitData = this.interCommForm.value;
 	  let params = this.getPreparedParams(submitData);
       params.departmentId=departmentId;
       params.employeeId=userId;
-	  this.SentService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
+	  var formData = new FormData(); 
+      if(this.fileToUpload){
+        formData.append('file', this.fileToUpload, this.fileToUpload.name);
+      }
+	  formData.append("employeeId", params.employeeId);
+      
+	  let deptIds="";
+	  params.deptCommList.forEach(function (value:any) {
+	  deptIds += value.departmentId+',';
+	  }); 
+	  deptIds = deptIds.replace(/,\s*$/, "");
+
+	  formData.append("toDeptList", deptIds);
+	  //formData.append("toDeptList", params.deptCommList);
+      //formData.append("toDeptList", params.departmentId);
+      formData.append("workDetailsId", params.workDetailsId);
+      formData.append("subTaskId", params.subTaskId);
+      formData.append("subject", params.subject);
+      formData.append("description", params.description);
+	  
+	  //this.SentService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
+	  this.SentService.saveInterOfficeCommunication(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
+		//if(resp.status == 200) {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
 			//this.resetForm();
-			//this.clearForm();
+			this.clearNewForm();
 			this.getcommunicationList();
 		  } else {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
@@ -296,7 +331,7 @@ export class SentComponent extends BaseComponent implements OnInit {
   }
   submitReply() { 
     this.isreplyFormSubmitInitiated = true;
-    if( this.replyForm.valid ) { 
+/*     if( this.replyForm.valid ) { 
       const credentials = this.authenticationService.credentials;
       const userId = credentials.userId;
       const departmentId = credentials.departmentId;
@@ -304,6 +339,7 @@ export class SentComponent extends BaseComponent implements OnInit {
       let params = this.getPreparedReplyParams(submitDataReply);
       params.departmentId=departmentId;
       params.employeeId=userId;
+	  //console.log(params);
 	  this.SentService.replyInterOfficeCommunication(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
           this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), true);
@@ -314,6 +350,50 @@ export class SentComponent extends BaseComponent implements OnInit {
         }
       });
 	  this.isreplyFormSubmitInitiated = false;	
+    } */
+	if( this.replyForm.valid ) { 
+    const credentials = this.authenticationService.credentials;
+    const userId = credentials.userId;
+    const departmentId = credentials.departmentId;
+	  let submitData = this.replyForm.value;
+	  let params = this.getPreparedReplyParams(submitData);
+      params.departmentId=departmentId;
+      params.employeeId=userId;
+	  var formData = new FormData(); 
+      if(this.fileToUpload){
+        formData.append('file', this.fileToUpload, this.fileToUpload.name);
+      }
+	  formData.append("employeeId", params.employeeId);
+      
+	  let deptIds="";
+	  params.deptCommList.forEach(function (value:any) {
+	  deptIds += value.departmentId+',';
+	  }); 
+	  deptIds = deptIds.replace(/,\s*$/, "");
+
+	  formData.append("toDeptList", deptIds);
+	  //formData.append("toDeptList", params.deptCommList);
+      //formData.append("toDeptList", params.departmentId);
+      formData.append("workDetailsId", params.workDetailsId);
+      formData.append("subTaskId", params.subTaskId);
+      formData.append("subject", params.subject);
+      formData.append("description", params.description);
+	  
+	  //this.SentService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
+	  this.SentService.replyInterOfficeCommunication(formData).subscribe((resp:any)=>{      
+		if(resp.status == "success") {
+		//if(resp.status == 200) {
+          this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
+			this.clearinterCommForm();
+			//this.resetForm();
+			this.clearForm();
+			this.getcommunicationList();
+		  } else {
+          this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
+        }
+		
+      });
+	  this.isreplyFormSubmitInitiated = false;		
     }
 	this.isDescription = false;
 	//this.initializeReplyForm(null);		
@@ -382,7 +462,7 @@ export class SentComponent extends BaseComponent implements OnInit {
 	   });
   }
   private initializeReplyForm(data: any) {
-    this.isDescription = false;
+	this.isDescription = false;
 	this.replyForm = new FormGroup({
 		workDetailsId : new FormControl((null != data ? data.workDetailsId : ''),Validators.required),
 		subTaskId : new FormControl((null != data ? data.subTaskId : ''),Validators.required),
@@ -430,12 +510,13 @@ export class SentComponent extends BaseComponent implements OnInit {
 	this.SentService.getCommunicationById(officeCommunicationId).subscribe((resp:any)=>{      
 	  this.communicationList2 = resp["communicationModelList"];
 	  document.getElementById('htmlDescription1').innerHTML= this.communicationList2[0]['description'];
-	});
+    });
+	
 	document.getElementById('descriptionModal').classList.toggle('d-block');
   }
   public closeDescriptionModal() {
     document.getElementById('descriptionModal').classList.toggle('d-block');
-  } 
+  }
   public downloadAttachment(deptCommId:any) {
 	this.SentService.downloadWorkMessageAttachmentByOffComId(deptCommId).subscribe((resp:any)=>{      
 	});
@@ -452,11 +533,14 @@ export class SentComponent extends BaseComponent implements OnInit {
 	  else{
 		  this.departmentList = [];
 	  } 
+	
+	
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
     }); */
 	//this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
 	this.departmentList=item.deptCommList;
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
+
 	this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
     this.replyForm.get("workName").setValue(item.workName);
     this.replyForm.get("subTaskId").setValue(item.subTaskId);
@@ -464,10 +548,9 @@ export class SentComponent extends BaseComponent implements OnInit {
     this.replyForm.get("referenceNo").setValue(item.referenceNo);
     this.replyForm.get("subject").setValue(item.subject);
     this.replyForm.get("description_old").setValue(item.description);
-	
+
 	const htmlDescription = document.querySelector('.htmlDescription');
 	htmlDescription.innerHTML  = item.description;
-	
 	//this.initializeReplyForm(item);
 	
 	this.openReplyForm();
@@ -479,8 +562,11 @@ export class SentComponent extends BaseComponent implements OnInit {
     this.replyForm.reset();
 	document.getElementById('replyModal').classList.toggle('d-block');
   } 
-   private clearForm() {
+  private clearForm() {
     document.getElementById('replyModal').classList.toggle('d-block');
+  }
+  private clearNewForm() {
+    document.getElementById('createUpdateModal').classList.toggle('d-block');
   }
   updateMessage(item:any){
 	  const viewStatus = item[0]['viewStatus'];
@@ -502,6 +588,18 @@ export class SentComponent extends BaseComponent implements OnInit {
     this.previousItem = item;
 	//this.getSubtaskDetails(item.workDetailsId);
   }
+  
+  public onMoMFileSelected(files: FileList) {
+    this.isShown = true;
+    this.isShownPreview = false;
+	this.fileToUpload = files.item(0);
+	const file = files.item(0);
+
+    const reader = new FileReader();
+    reader.onload = e => this.imageSrc = reader.result;
+    reader.readAsDataURL(file);
+  }
+  
   get interCommForms() { return this.interCommForm.controls; }
   get replyForms() { return this.replyForm.controls; }
   get viewForms() { return this.viewForm.controls; }

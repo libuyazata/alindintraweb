@@ -41,11 +41,13 @@ export class InboxService extends BaseService {
 	return this.httpClient.post("project/saveInterOfficeCommunication", data);
   } */
   public saveInterOfficeCommunication(formData:FormData){
-	return this.httpClient.post('project/sendWorkMessage/', formData, {reportProgress: true, observe: 'events'});
-	//return this.httpClient.post('project/sendWorkMessage/', formData);
+	//return this.httpClient.post('project/sendWorkMessage/', formData, {reportProgress: true, observe: 'events'});
+	return this.httpClient.post('project/sendWorkMessage/', formData);
   }
-  public replyInterOfficeCommunication(data:any): Observable<any>{
-	return this.httpClient.post("project/replyInterOfficeCommunication", data);
+  //public replyInterOfficeCommunication(data:any): Observable<any>{
+  public replyInterOfficeCommunication(formData:FormData){
+	//return this.httpClient.post("project/replyInterOfficeCommunication", data);
+  	return this.httpClient.post('project/replyInterOfficeCommunication/', formData);
   }
   public deleteDepartment(data:any): Observable<any>{
     return this.httpClient.get("/user/deleteDepartment/", { params : data});

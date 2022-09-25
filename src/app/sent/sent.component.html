@@ -82,12 +82,14 @@
 							</td>
 						</tr>
 					</tbody>
-					<ng-container *ngIf="mf.data.length > 0">
-						<tbody *ngFor="let msg of mf.data[0].comMsgRefList;index as i">
-							<!--                     <tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
- -->
+					<ng-container *ngFor="let msg of mf.data;index as i">
+						<tbody *ngFor="let msg of mf.data[i].comMsgRefList">
 							<tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0"
 								[ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}">
+								<!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
+-->
+								<!--                         <tr>
+ -->
 								<td class="column1">
 									<a class="link" (click)="openMessageList(msg);">
 										<i class="fas "
@@ -102,8 +104,7 @@
 								<td>{{msg.offCommList[0].referenceNo}}({{msg.offCommList.length}})</td>
 								<td>{{msg.offCommList[0].workName}}</td>
 								<td>{{msg.offCommList[0].subject}}</td>
-<!-- 								<td>{{msg.offCommList[0].createdOn | date : "medium"}}</td>
- -->							
+								<!-- <td>{{msg.offCommList[0].createdOn | date : "medium"}}</td> -->
 								<td>{{mf.data[i].titleDate | date : "medium"}}</td>
 								<td class="column1">
 									<div class="link-holder">
@@ -244,6 +245,7 @@
 							<button class="btn btn-primary" type="submit">Send</button>
 							<button class="btn btn-danger" type="button" data-dismiss="modal" appModal
 								(click)="closeReplyModal();">Close</button>
+							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
 						</div>
 					</div>
 				</form>
@@ -416,8 +418,14 @@
 						<!-- <div class="row form-group">
 							<div class="col-lg-12">
 								Message : <b>{{com2.description}}</b>
+								
+									Message : <div [innerHtml]="com2.description"></div>
+									
+
 							</div>
 						</div> -->
+<!-- 					Message : <div id="htmlDescription12" >{{com2.description}}</div>
+ -->					
 					<div class="row form-group" *ngIf="com2.attachementStatus == 1">
 							<div class="col-lg-12" *ngIf="com2.orginalFileName == null">
 							<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">Download Attachment</span>
@@ -428,7 +436,6 @@
 					</div>
 					</div>
 					Message : <div id="htmlDescription1"></div>
-
 				</div>
 			</form>
 			<div class="modal-footer">
@@ -438,3 +445,7 @@
 		</div>
 	</div>
 </div>
+<!-- <ckeditor name="ckeditor_text" formControlName="description" maxlength="400"
+								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }"
+								 editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js" ></ckeditor>
+ -->

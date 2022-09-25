@@ -277,18 +277,24 @@ export class InboxComponent extends BaseComponent implements OnInit {
     const credentials = this.authenticationService.credentials;
     const userId = credentials.userId;
     const departmentId = credentials.departmentId;
-    
 	  let submitData = this.interCommForm.value;
 	  let params = this.getPreparedParams(submitData);
       params.departmentId=departmentId;
       params.employeeId=userId;
-	  
 	  var formData = new FormData(); 
       if(this.fileToUpload){
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
       }
 	  formData.append("employeeId", params.employeeId);
-      formData.append("toDeptList", params.deptCommList);
+      
+	  let deptIds="";
+	  params.deptCommList.forEach(function (value:any) {
+	  deptIds += value.departmentId+',';
+	  }); 
+	  deptIds = deptIds.replace(/,\s*$/, "");
+
+	  formData.append("toDeptList", deptIds);
+	  //formData.append("toDeptList", params.deptCommList);
       //formData.append("toDeptList", params.departmentId);
       formData.append("workDetailsId", params.workDetailsId);
       formData.append("subTaskId", params.subTaskId);
@@ -302,7 +308,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
 			//this.resetForm();
-			//this.clearForm();
+			this.clearNewForm();
 			this.getcommunicationList();
 		  } else {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
@@ -325,7 +331,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   }
   submitReply() { 
     this.isreplyFormSubmitInitiated = true;
-    if( this.replyForm.valid ) { 
+/*     if( this.replyForm.valid ) { 
       const credentials = this.authenticationService.credentials;
       const userId = credentials.userId;
       const departmentId = credentials.departmentId;
@@ -344,6 +350,50 @@ export class InboxComponent extends BaseComponent implements OnInit {
         }
       });
 	  this.isreplyFormSubmitInitiated = false;	
+    } */
+	if( this.replyForm.valid ) { 
+    const credentials = this.authenticationService.credentials;
+    const userId = credentials.userId;
+    const departmentId = credentials.departmentId;
+	  let submitData = this.replyForm.value;
+	  let params = this.getPreparedReplyParams(submitData);
+      params.departmentId=departmentId;
+      params.employeeId=userId;
+	  var formData = new FormData(); 
+      if(this.fileToUpload){
+        formData.append('file', this.fileToUpload, this.fileToUpload.name);
+      }
+	  formData.append("employeeId", params.employeeId);
+      
+	  let deptIds="";
+	  params.deptCommList.forEach(function (value:any) {
+	  deptIds += value.departmentId+',';
+	  }); 
+	  deptIds = deptIds.replace(/,\s*$/, "");
+
+	  formData.append("toDeptList", deptIds);
+	  //formData.append("toDeptList", params.deptCommList);
+      //formData.append("toDeptList", params.departmentId);
+      formData.append("workDetailsId", params.workDetailsId);
+      formData.append("subTaskId", params.subTaskId);
+      formData.append("subject", params.subject);
+      formData.append("description", params.description);
+	  
+	  //this.InboxService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
+	  this.InboxService.replyInterOfficeCommunication(formData).subscribe((resp:any)=>{      
+		if(resp.status == "success") {
+		//if(resp.status == 200) {
+          this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
+			this.clearinterCommForm();
+			//this.resetForm();
+			this.clearForm();
+			this.getcommunicationList();
+		  } else {
+          this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
+        }
+		
+      });
+	  this.isreplyFormSubmitInitiated = false;		
     }
 	this.isDescription = false;
 	//this.initializeReplyForm(null);		
@@ -514,6 +564,9 @@ export class InboxComponent extends BaseComponent implements OnInit {
   } 
    private clearForm() {
     document.getElementById('replyModal').classList.toggle('d-block');
+  }
+  private clearNewForm() {
+    document.getElementById('createUpdateModal').classList.toggle('d-block');
   }
   updateMessage(item:any){
 	  const viewStatus = item[0]['viewStatus'];
