@@ -428,14 +428,29 @@
  -->					
 					<div class="row form-group" *ngIf="com2.attachementStatus == 1">
 							<div class="col-lg-12" *ngIf="com2.orginalFileName == null">
-							<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">Download Attachment</span>
+							<b>Click here to Download</b> :<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">Download Attachment</span>
 							</div>
 							<div class="col-lg-12" *ngIf="com2.orginalFileName != null">
-							<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">{{com2.orginalFileName}}</span>
+							<b>Click here to Download</b> :<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">{{com2.orginalFileName}}</span>
+							</div>
+							<div class="col-lg-12">
+							<div id="downloadUrl"></div>
 							</div>
 					</div>
-					</div>
+					<!-- <div class="row form-group" *ngIf="com2.attachementStatus == 1">
+							<div class="col-lg-12" *ngIf="com2.orginalFileName == null">
+							<a href="http://97.74.85.211:8080/AlindUploadFiles/Employee/ProfilePic/1/20220725124011.jpg" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;">Download Attachment</a>
+							</div>
+							<div class="col-lg-12" *ngIf="com2.orginalFileName != null">
+ 							<a href="/AlindUploadFiles/Employee/ProfilePic/1/20220725124011.jpg" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;">{{com2.orginalFileName}}</a>
+							<a href="http://97.74.85.211:8080/AlindUploadFiles/Employee/ProfilePic/1/20220725124011.jpg" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;">{{com2.orginalFileName}}</a>
+							</div>
+					</div> -->
+					<!-- <a href="http://97.74.85.211:8080/AlindUploadFiles/Employee/ProfilePic/1/20220725124011.jpg" download>download</a>
+					<a href="test_file.zip" download>Download File</a>
+				 -->	</div>
 					Message : <div id="htmlDescription1"></div>
+				
 				</div>
 			</form>
 			<div class="modal-footer">
@@ -445,7 +460,3 @@
 		</div>
 	</div>
 </div>
-<!-- <ckeditor name="ckeditor_text" formControlName="description" maxlength="400"
-								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }"
-								 editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js" ></ckeditor>
- -->

@@ -428,10 +428,13 @@
  -->					
 					<div class="row form-group" *ngIf="com2.attachementStatus == 1">
 							<div class="col-lg-12" *ngIf="com2.orginalFileName == null">
-							<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">Download Attachment</span>
+							<b>Click here to Download</b> :<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">Download Attachment</span>
 							</div>
 							<div class="col-lg-12" *ngIf="com2.orginalFileName != null">
-							<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">{{com2.orginalFileName}}</span>
+							<b>Click here to Download</b> :<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">{{com2.orginalFileName}}</span>
+							</div>
+							<div class="col-lg-12">
+							<div id="downloadUrl"></div>
 							</div>
 					</div>
 					</div>

@@ -53,6 +53,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
   protected fileToUpload : any; // MoM files
+  public downloadFiles : Array<any>;
+
   
   constructor(private alertService : AlertNotificationService,private SentService : SentService,private authenticationService: AuthenticationService) { 
 	super(SentService);
@@ -519,6 +521,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   }
   public downloadAttachment(deptCommId:any) {
 	this.SentService.downloadWorkMessageAttachmentByOffComId(deptCommId).subscribe((resp:any)=>{      
+		this.downloadFiles = resp["workMesageModel"];
+	    document.getElementById('downloadUrl').innerHTML= '<a href="http://97.74.85.211:8080/'+this.downloadFiles['fileLocation']+'" target="_blank"><b>Download Now</b></a>';
 	});
   } 
   public replyMessage(item:any){

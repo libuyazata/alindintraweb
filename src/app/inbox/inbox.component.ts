@@ -8,7 +8,6 @@ import { AlertNotificationService } from '@app/shared/services/alertnotification
 import { AuthenticationService } from '@app/core/authentication/authentication.service';
 
 // import { stat } from 'fs';
-
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.component.html',
@@ -39,6 +38,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public workDescList : Array<any>;
   public communicationList : Array<any>;
   public communicationList2 : Array<any>;
+  public downloadFiles : Array<any>;
   public communicationList3 : Array<any>;
   public communicationList4 : Array<any>;
   public searchcommunicationList : Array<any>;
@@ -53,7 +53,6 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
   protected fileToUpload : any; // MoM files
-  
   constructor(private alertService : AlertNotificationService,private InboxService : InboxService,private authenticationService: AuthenticationService) { 
 	super(InboxService);
 	this.config = {toolbarLocation:'bottom',toolbarGroups: [
@@ -130,7 +129,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
       dateTo : new FormControl(''),
     })
 	this.isAdminUser = this.authenticationService.isAdminUser();
-}
+	//this.download();
+	}
 	clearSearchForm(){
 	this.getcommunicationList();
 	}
@@ -374,6 +374,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	  formData.append("toDeptList", deptIds);
 	  //formData.append("toDeptList", params.deptCommList);
       //formData.append("toDeptList", params.departmentId);
+      formData.append("referenceNo", params.referenceNo);
       formData.append("workDetailsId", params.workDetailsId);
       formData.append("subTaskId", params.subTaskId);
       formData.append("subject", params.subject);
@@ -519,6 +520,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
   }
   public downloadAttachment(deptCommId:any) {
 	this.InboxService.downloadWorkMessageAttachmentByOffComId(deptCommId).subscribe((resp:any)=>{      
+		this.downloadFiles = resp["workMesageModel"];
+	    document.getElementById('downloadUrl').innerHTML= '<a href="http://97.74.85.211:8080/'+this.downloadFiles['fileLocation']+'" target="_blank"><b>Download Now</b></a>';
 	});
   } 
   public replyMessage(item:any){
