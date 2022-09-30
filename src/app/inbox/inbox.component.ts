@@ -53,6 +53,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
   protected fileToUpload : any; // MoM files
+  public myFiles:string [] = [];
   constructor(private alertService : AlertNotificationService,private InboxService : InboxService,private authenticationService: AuthenticationService) { 
 	super(InboxService);
 	this.config = {toolbarLocation:'bottom',toolbarGroups: [
@@ -282,9 +283,13 @@ export class InboxComponent extends BaseComponent implements OnInit {
       params.departmentId=departmentId;
       params.employeeId=userId;
 	  var formData = new FormData(); 
-      if(this.fileToUpload){
+      /* if(this.fileToUpload){
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
-      }
+      } */
+	  //alert(this.myFiles.length);
+	  for (var i = 0; i < this.myFiles.length; i++) { 
+      formData.append("file", this.myFiles[i]);
+	  }
 	  formData.append("employeeId", params.employeeId);
       
 	  let deptIds="";
@@ -601,6 +606,14 @@ export class InboxComponent extends BaseComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = e => this.imageSrc = reader.result;
     reader.readAsDataURL(file);
+  }
+  getFileDetails(e:any) {
+    //console.log(e.target.files);
+	//alert(e.target.files.length);
+    for(var i = 0; i < e.target.files.length; i++){ 
+      this.myFiles.push(e.target.files[i]);
+    }
+	console.log(this.myFiles)
   }
   
   get interCommForms() { return this.interCommForm.controls; }

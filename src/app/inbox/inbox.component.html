@@ -354,7 +354,8 @@
 								<input id="file-input" type="file"/>
 								<input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
  -->							
-							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
+<!-- 							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
+ -->							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple/>
 							</div>
 							</div>
 					</div>
