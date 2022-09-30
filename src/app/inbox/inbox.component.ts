@@ -75,6 +75,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
        deptCommList : new FormControl('',  Validators.required),
        subject : new FormControl('',  Validators.required),
        description : new FormControl('',  Validators.required),
+       file : new FormControl(''),
        //description : new FormControl('',[Validators.required, Validators.maxLength(50)]),
 	});
 	this.replyForm = new FormGroup({
@@ -87,6 +88,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	   description : new FormControl('',Validators.required),
 	   description_old : new FormControl('',Validators.required),
 	   referenceNo : new FormControl(''),
+       file : new FormControl(''),
   	});
 	this.viewForm = new FormGroup({
        employeeName : new FormControl(),
@@ -305,7 +307,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
       formData.append("subTaskId", params.subTaskId);
       formData.append("subject", params.subject);
       formData.append("description", params.description);
-	  
+      this.myFiles =[];
 	  //this.InboxService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
 	  this.InboxService.saveInterOfficeCommunication(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
@@ -365,9 +367,12 @@ export class InboxComponent extends BaseComponent implements OnInit {
       params.departmentId=departmentId;
       params.employeeId=userId;
 	  var formData = new FormData(); 
-      if(this.fileToUpload){
+      /* if(this.fileToUpload){
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
-      }
+      } */
+	  for (var i = 0; i < this.myFiles.length; i++) { 
+      formData.append("file", this.myFiles[i]);
+	  }
 	  formData.append("employeeId", params.employeeId);
       
 	  let deptIds="";
@@ -384,7 +389,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
       formData.append("subTaskId", params.subTaskId);
       formData.append("subject", params.subject);
       formData.append("description", params.description);
-	  
+	  this.myFiles =[];
+
 	  //this.InboxService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
 	  this.InboxService.replyInterOfficeCommunication(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
@@ -453,7 +459,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
        referenceNo : new FormControl(''),
        subject : new FormControl('',Validators.required),
        description : new FormControl('',Validators.required),
-  	});
+       file : new FormControl(''),
+	});
   }
   private initializeviewForm(data: any) {
     this.isDescription = false;
@@ -479,6 +486,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 		referenceNo : new FormControl((null != data ? data.referenceNo : '')),
 		workName : new FormControl((null != data ? data.workName : '')),
 		description_old : new FormControl((null != data ? data.description : '')),
+        file : new FormControl(''),
 	});
   }
   private initializeViewForm(data: any) {
@@ -613,7 +621,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
     for(var i = 0; i < e.target.files.length; i++){ 
       this.myFiles.push(e.target.files[i]);
     }
-	console.log(this.myFiles)
+	//console.log(this.myFiles)
   }
   
   get interCommForms() { return this.interCommForm.controls; }

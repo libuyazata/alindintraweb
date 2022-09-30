@@ -245,8 +245,9 @@
 							<button class="btn btn-primary" type="submit">Send</button>
 							<button class="btn btn-danger" type="button" data-dismiss="modal" appModal
 								(click)="closeReplyModal();">Close</button>
-							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
-						</div>
+<!-- 							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
+ -->&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple/>
+					</div>
 					</div>
 				</form>
 			</div>
@@ -448,11 +449,7 @@
 								</div>
 							</div>	
 						</div>
-					
-					
-					<!-- <a href="http://97.74.85.211:8080/AlindUploadFiles/Employee/ProfilePic/1/20220725124011.jpg" download>download</a>
-					<a href="test_file.zip" download>Download File</a>
-				 -->	</div>
+						</div>
 					Message : <div id="htmlDescription1"></div>
 				
 				</div>

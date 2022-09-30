@@ -54,6 +54,7 @@ export class SentComponent extends BaseComponent implements OnInit {
   public dropdownSettingsReply: any = {};
   protected fileToUpload : any; // MoM files
   public downloadFiles : Array<any>;
+  public myFiles:string [] = [];
 
   
   constructor(private alertService : AlertNotificationService,private SentService : SentService,private authenticationService: AuthenticationService) { 
@@ -78,6 +79,7 @@ export class SentComponent extends BaseComponent implements OnInit {
        subject : new FormControl('',  Validators.required),
        description : new FormControl('',  Validators.required),
        //description : new FormControl('',[Validators.required, Validators.maxLength(50)]),
+       file : new FormControl(''),
 	});
 	this.replyForm = new FormGroup({
        workName : new FormControl('',Validators.required),
@@ -89,6 +91,7 @@ export class SentComponent extends BaseComponent implements OnInit {
 	   description : new FormControl('',Validators.required),
 	   description_old : new FormControl('',Validators.required),
 	   referenceNo : new FormControl(''),
+       file : new FormControl(''),
   	});
 	this.viewForm = new FormGroup({
        employeeName : new FormControl(),
@@ -274,7 +277,7 @@ export class SentComponent extends BaseComponent implements OnInit {
   }
   
   onAddItem() { 
-    this.isFormSubmitInitiated = true;
+	this.isFormSubmitInitiated = true;
     if( this.interCommForm.valid ) { 
     const credentials = this.authenticationService.credentials;
     const userId = credentials.userId;
@@ -284,9 +287,12 @@ export class SentComponent extends BaseComponent implements OnInit {
       params.departmentId=departmentId;
       params.employeeId=userId;
 	  var formData = new FormData(); 
-      if(this.fileToUpload){
+      /* if(this.fileToUpload){
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
-      }
+      } */
+	  for (var i = 0; i < this.myFiles.length; i++) { 
+      formData.append("file", this.myFiles[i]);
+	  }
 	  formData.append("employeeId", params.employeeId);
       
 	  let deptIds="";
@@ -302,7 +308,8 @@ export class SentComponent extends BaseComponent implements OnInit {
       formData.append("subTaskId", params.subTaskId);
       formData.append("subject", params.subject);
       formData.append("description", params.description);
-	  
+	  this.myFiles =[];
+
 	  //this.SentService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
 	  this.SentService.saveInterOfficeCommunication(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
@@ -362,9 +369,12 @@ export class SentComponent extends BaseComponent implements OnInit {
       params.departmentId=departmentId;
       params.employeeId=userId;
 	  var formData = new FormData(); 
-      if(this.fileToUpload){
+      /* if(this.fileToUpload){
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
-      }
+      } */
+	  for (var i = 0; i < this.myFiles.length; i++) { 
+      formData.append("file", this.myFiles[i]);
+	  }
 	  formData.append("employeeId", params.employeeId);
       
 	  let deptIds="";
@@ -376,11 +386,13 @@ export class SentComponent extends BaseComponent implements OnInit {
 	  formData.append("toDeptList", deptIds);
 	  //formData.append("toDeptList", params.deptCommList);
       //formData.append("toDeptList", params.departmentId);
+      formData.append("referenceNo", params.referenceNo);
       formData.append("workDetailsId", params.workDetailsId);
       formData.append("subTaskId", params.subTaskId);
       formData.append("subject", params.subject);
       formData.append("description", params.description);
-	  
+	  this.myFiles =[];
+
 	  //this.SentService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
 	  this.SentService.replyInterOfficeCommunication(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
@@ -449,7 +461,8 @@ export class SentComponent extends BaseComponent implements OnInit {
        referenceNo : new FormControl(''),
        subject : new FormControl('',Validators.required),
        description : new FormControl('',Validators.required),
-  	});
+       file : new FormControl(''),
+	});
   }
   private initializeviewForm(data: any) {
     this.isDescription = false;
@@ -475,6 +488,7 @@ export class SentComponent extends BaseComponent implements OnInit {
 		referenceNo : new FormControl((null != data ? data.referenceNo : '')),
 		workName : new FormControl((null != data ? data.workName : '')),
 		description_old : new FormControl((null != data ? data.description : '')),
+        file : new FormControl(''),
 	});
   }
   private initializeViewForm(data: any) {
@@ -603,7 +617,14 @@ export class SentComponent extends BaseComponent implements OnInit {
     reader.onload = e => this.imageSrc = reader.result;
     reader.readAsDataURL(file);
   }
-  
+  getFileDetails(e:any) {
+    //console.log(e.target.files);
+	//alert(e.target.files.length);
+    for(var i = 0; i < e.target.files.length; i++){ 
+      this.myFiles.push(e.target.files[i]);
+    }
+	//console.log(this.myFiles)
+  }
   get interCommForms() { return this.interCommForm.controls; }
   get replyForms() { return this.replyForm.controls; }
   get viewForms() { return this.viewForm.controls; }

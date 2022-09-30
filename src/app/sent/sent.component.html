@@ -245,8 +245,7 @@
 							<button class="btn btn-primary" type="submit">Send</button>
 							<button class="btn btn-danger" type="button" data-dismiss="modal" appModal
 								(click)="closeReplyModal();">Close</button>
-							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
-						</div>
+						&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple/>						</div>
 					</div>
 				</form>
 			</div>
@@ -354,8 +353,7 @@
 								<input id="file-input" type="file"/>
 								<input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
  -->							
-							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
-							</div>
+							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple/>							</div>
 							</div>
 					</div>
 				</form>
@@ -426,7 +424,7 @@
 						</div> -->
 <!-- 					Message : <div id="htmlDescription12" >{{com2.description}}</div>
  -->					
-					<div class="row form-group" *ngIf="com2.attachementStatus == 1">
+					<!-- <div class="row form-group" *ngIf="com2.attachementStatus == 1">
 							<div class="col-lg-12" *ngIf="com2.orginalFileName == null">
 							<b>Click here to Download</b> :<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">Download Attachment</span>
 							</div>
@@ -436,7 +434,18 @@
 							<div class="col-lg-12">
 							<div id="downloadUrl"></div>
 							</div>
-					</div>
+					</div> -->
+					<div class="row form-group" *ngIf="com2.attachementStatus == 1">
+							<div *ngFor="let attachment of com2.attachmentModels">	
+								<div class="col-lg-12" *ngIf="attachment.orginalFileName == null">
+								<b>Click here to Download</b> :<a href="{{'http://97.74.85.211:8080/'+attachment.fileLocation}}" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" target="_blank">Download Attachment</a>
+								</div>
+								<div class="col-lg-12" *ngIf="com2.orginalFileName != null">
+								<b>Click here to Download</b> :<a href="{{'http://97.74.85.211:8080/'+attachment.fileLocation}}" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" target="_blank">{{attachment.orginalFileName}}</a>
+								</div>
+							</div>	
+						</div>
+					
 					</div>
 					Message : <div id="htmlDescription1"></div>
 				</div>
