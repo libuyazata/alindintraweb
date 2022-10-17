@@ -54,6 +54,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   public dropdownSettingsReply: any = {};
   protected fileToUpload : any; // MoM files
   public myFiles:string [] = [];
+  
   constructor(private alertService : AlertNotificationService,private GeneralmessageinboxService : GeneralmessageinboxService,private authenticationService: AuthenticationService) { 
 	super(GeneralmessageinboxService);
 	this.config = {toolbarLocation:'bottom',toolbarGroups: [
@@ -177,8 +178,9 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
                                     this.replyForm.value.deptCommList.length == 0);
   }
   
-  openCreateForm() {
-    this.isFormVisible = true;
+  openCreateForm() { 
+	this.resetinterCommForm();
+	this.isFormVisible = true;
     this.isEdit = false;
     this.initializeForm(null)
   }
@@ -192,8 +194,9 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
     this.isFormSubmitInitiated = false;
   }
   resetinterCommForm() {
-	this.departmentList = []; // Reset it.
-    this.interCommForm.reset();
+	//this.departmentList = []; // Reset it.
+	this.myFiles =[];
+	this.interCommForm.reset();
   }
   protected getWorkDetailsList() {
 	const credentials = this.authenticationService.credentials;
@@ -511,7 +514,8 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	   });
   }
   resetForm() {
-    this.isDescription = false;
+    this.myFiles =[];
+	this.isDescription = false;
 	this.interCommForm.reset();
   }
   public viewDetails(item:any,viewItem:any){
@@ -531,7 +535,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	//this.communicationList2 = item;
 	const genMessageId = item;
 	this.GeneralmessageinboxService.getGeneralMessageById(genMessageId).subscribe((resp:any)=>{      
-	  this.communicationList2 = resp["model"];
+	  this.communicationList2 = resp["generalMsgList"];
 	  document.getElementById('htmlDescription1').innerHTML= this.communicationList2[0]['description'];
     });
 	
