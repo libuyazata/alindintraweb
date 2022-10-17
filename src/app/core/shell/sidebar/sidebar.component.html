@@ -34,6 +34,13 @@
             </span>
 	</li>
 	<li>
+			<span *ngIf="prv_workView == 'true'">
+			<a class="menu-link" (click)=menuButtonClicked() routerLink="/general-message-inbox" routerLinkActive="active">
+                <span class="fa fa-envelope"></span><span class="nav-label">General Message</span>
+            </a>
+            </span>
+	</li>
+	<li>
 			<a class="menu-link" (click)=menuButtonClicked() routerLink="/general-info/work-status" routerLinkActive="active">
                 <span class="fas fa-info-circle"></span><span class="nav-label">General Info</span>
             </a>

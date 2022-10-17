@@ -1,0 +1,463 @@
+<div class="page-header-container">
+	<div class="page-header">
+		<div class="row">
+			<div class="col-lg-12">
+				<h4>
+					<span>GENERAL MESSAGE - Sent</span>
+				</h4>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12 search-container">
+			<form novalidate [formGroup]="materialRequestSearchForm" (ngSubmit)="onCommunicationDetailsSearched();">
+				<div class="row">
+					<div class="col-lg-2">
+						<div class="search-label-container"><label>Search</label></div>
+						<input formControlName="searchKeyWord" class="form-control" placeholder="Search.." />
+					</div>
+					<div class="col-lg-2">
+						<div class="search-label-container"><label>Start Date</label></div>
+						<input formControlName="dateFrom" class="form-control" type="date" />
+					</div>
+					<div class="col-lg-2">
+						<div class="search-label-container"><label>End Date</label></div>
+						<input formControlName="dateTo" class="form-control" type="date" />
+					</div>
+
+					<div class="col-lg-6 pt-4">
+						<span class="float-left">
+							<button class="btn btn-info" type="submit">Search</button>
+							<button class="btn btn-danger" type="reset" (click)="clearSearchForm()">Clear</button>
+							<!-- 													<span *ngIf="isAdminUser">
+ --> <button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;" type="button">New
+								Message</button>
+							<!-- 													</span>
+ -->
+							<a class="link" [routerLink]="['/general-message-inbox/']">
+								<button class="btn btn-success ml-5" type="button">View Inbox Message</button>
+							</a>
+						</span>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="page-body-container">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="table100">
+				<table [mfData]="communicationList" #mf="mfDataTable" [mfRowsOnPage]="50">
+					<thead>
+						<tr class="table100-head">
+							<th class="column3">
+							</th>
+							<th class="column3">
+								<mfDefaultSorter by="departmentName">Department Name</mfDefaultSorter>
+							</th>
+							<th class="column2">
+								<mfDefaultSorter by="employeeName">Sender</mfDefaultSorter>
+							</th>
+							<th class="column3">
+								<mfDefaultSorter by="departmentName">Ref.No.</mfDefaultSorter>
+							</th>
+							<th class="column4">
+								<mfDefaultSorter by="workName">Work Name</mfDefaultSorter>
+							</th>
+							<th class="column6">
+								<mfDefaultSorter by="subject">Subject</mfDefaultSorter>
+							</th>
+							<th class="column7">
+								<mfDefaultSorter by="subject">Date</mfDefaultSorter>
+							</th>
+							<th class="column8">
+								<mfDefaultSorter by="View">View / Reply</mfDefaultSorter>
+							</th>
+					</thead>
+					<tbody *ngIf="mf.data.length == 0">
+						<tr>
+							<td colspan="8">
+								<div class="text-center" style="padding:5px;">No Data Found</div>
+							</td>
+						</tr>
+					</tbody>
+					<ng-container *ngFor="let msg of mf.data;index as i">
+						<tbody *ngFor="let msg of mf.data[i].comMsgRefList">
+							<tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0"
+								[ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}">
+								<!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
+-->
+								<!--                         <tr>
+ -->
+								<td class="column1">
+									<a class="link" (click)="openMessageList(msg);">
+										<i class="fas "
+											[ngClass]="{'fa-plus-circle': !msg.isDetailsSetVisible,'fa-minus-circle': msg.isDetailsSetVisible }"
+											*ngIf="msg.offCommList.length>1"></i>
+									</a>
+								</td>
+								<td>{{msg.offCommList[0].departmentName}}</td>
+								<td>{{msg.offCommList[0].employeeName}}</td>
+								<!-- 								<td class="column1"><a class="tip"><span *ngFor="let dept of msg.offCommList[0].deptCommList">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of msg.offCommList[0].deptCommList">{{dept.departmentName +','}}</span></p></a></td>
+ -->
+								<td>{{msg.offCommList[0].referenceNo}}({{msg.offCommList.length}})</td>
+								<td>{{msg.offCommList[0].workName}}</td>
+								<td>{{msg.offCommList[0].subject}}</td>
+								<!-- <td>{{msg.offCommList[0].createdOn | date : "medium"}}</td> -->
+								<td>{{mf.data[i].titleDate | date : "medium"}}</td>
+								<td class="column1">
+									<div class="link-holder">
+										<a class="link" title="View Details"
+											(click)="viewDetails(msg.offCommList[0].officeCommunicationId,msg.offCommList[0].deptCommList);"><i
+												class="fas fa-eye"></i></a>
+										<button (click)="replyMessage(msg.offCommList[0]);" class="btn btn-success"
+											style="margin-left:5px;">Reply</button>
+									</div>
+								</td>
+							</tr>
+
+
+							<ng-container *ngIf="msg.isDetailsSetVisible">
+								<ng-container *ngFor="let content of msg.offCommList;index as i">
+									<tr *ngIf="i>0">
+										<td class="column1"><i class="fa fa-angle-double-right" aria-hidden="true"></i>
+										</td>
+										<td class="column1">{{content.departmentName}}</td>
+										<td class="column1">{{content.employeeName}}</td>
+										<td class="column1">{{content.referenceNo}}</td>
+										<td class="column1">{{content.workName}}</td>
+										<td class="column1">{{content.subject}}</td>
+										<td class="column1">{{content.createdOn | date : "medium" }}</td>
+										<td class="column1">
+											<div class="link-holder">
+												<a class="link" title="View Details"
+													(click)="viewDetails(content.officeCommunicationId,content.deptCommList);"><i
+														class="fas fa-eye"></i></a>
+											</div>
+										</td>
+									</tr>
+								</ng-container>
+							</ng-container>
+						</tbody>
+					</ng-container>
+					<tfoot>
+						<tr>
+							<td colspan="6">
+								<mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Reply Modal Form -->
+<div class="modal salary-info-model" id="replyModal">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Reply</h5>
+				<button class="close" type="button" data-dismiss="modal" appModal
+					(click)="closeReplyModal();">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form novalidate [formGroup]="replyForm" (ngSubmit)="submitReply();">
+					<div class="row">
+						<div class="col-lg-6">
+							<div><label>Main Task :</label></div>
+							<input type="hidden" formControlName="workDetailsId">
+							<input class="form-control" formControlName="workName" readonly>
+						</div>
+					<!-- </div>
+					<div class="row"> -->
+						<div class="col-lg-6">
+							<div><label>Sub Task :</label></div>
+							<input type="hidden" formControlName="subTaskId">
+							<input class="form-control" formControlName="subTaskName" readonly>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div><label>Department (To) :</label></div>
+							<ng-multiselect-dropdown class="mandatory-field"
+								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && replyForms.deptCommList.errors }" formControlName="deptCommList"
+								name="deptCommList" [placeholder]="'Select Department'" [data]="departmentList"
+								[settings]="dropdownSettingsReply" (onDeSelect)="onItemDeSelectReply($event)"
+								(onSelect)="onItemSelectReply($event)">
+							</ng-multiselect-dropdown>
+							<div *ngIf="isreplyFormSubmitInitiated && replyForms.deptCommList.errors"
+								style="color:red;">Please Choose Department</div>
+						</div>
+<!-- 					</div>
+					<div class="row"> -->
+						<div class="col-lg-6">
+							<div><label>Reference No : </label></div>
+							<input type="text" class="form-control" formControlName="referenceNo"
+								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && replyForms.referenceNo.errors }"
+								readonly>
+							<div *ngIf="isreplyFormSubmitInitiated && replyForms.referenceNo.errors" style="color:red;">
+								Please enter Reference No.</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-6">
+							<div><label>Subject : </label></div>
+							<input type="text" class="form-control" formControlName="subject" readonly>
+							<div *ngIf="isreplyFormSubmitInitiated && replyForms.subject.errors" style="color:red;">
+								Please enter Subject</div>
+						</div>
+					<!-- </div>
+					<div class="row"> -->
+						<div class="col-lg-6">
+							<div><label>Message : </label></div>
+							<!-- <textarea class="form-control mandatory-field" formControlName="description_old"
+								maxlength="400" readonly style="height:200px !important;"></textarea>
+ -->						<div class="htmlDescription" style="background:#FAD4E9;padding:10px;border:1px solid #CCCCCC;"></div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-12">
+							<div><label>Description : </label></div>
+							<!--< textarea class="form-control mandatory-field" formControlName="description" maxlength="400"
+								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }"
+								style="height:200px !important;"></textarea> -->
+								<ckeditor  [config]="config" name="ckeditor_text" formControlName="description" maxlength="8000"
+								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }" editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></ckeditor>
+								
+								<div style="color:green;">
+                                <strong><i>Maximum character limit 7000 allowed.</i></strong>
+								</div>
+								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors?.maxlength" style="color:red;">
+                                Maximum character limit Exceeded.
+								</div> 
+								<div *ngIf="isreplyFormSubmitInitiated && replyForms.description.errors && interCommForms.description.value==''" style="color:red;">
+								Please enter Description.
+								</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12 mt-2">
+							<button class="btn btn-primary" type="submit">Send</button>
+							<button class="btn btn-danger" type="button" data-dismiss="modal" appModal
+								(click)="closeReplyModal();">Close</button>
+<!-- 							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
+ -->&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple/>
+					</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Reply Modal Form End-->
+
+<!-- Create/Update Inter Office Communication Form [BEGIN]-->
+<div class="modal" [ngClass]="{ 'd-block' : isFormVisible}" id="createUpdateModal" *ngIf="isFormVisible">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">New Message</h5>
+				<button class="close" type="button" data-dismiss="modal" appModal
+					(click)="closePopup();">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form novalidate [formGroup]="interCommForm" (ngSubmit)="onAddItem();">
+					<div class="row">
+						<div class="col-lg-6">
+							<div><label>Work List :</label></div>
+							<select class="form-control" formControlName="workDetailsId"
+								(change)="getDepartmentList($event);">
+								<option value="" selected>Choose Work</option>
+								<option *ngFor="let work of workDetailsList" [value]="work.workDetailsId">
+									{{work.workName}}</option>
+							</select>
+							<div *ngIf="isFormSubmitInitiated && interCommForms.workDetailsId.errors"
+								style="color:red;">Please choose Work</div>
+						</div>
+						<div class="col-lg-6" *ngIf="isDescription">
+									<div><strong>Work Description :</strong></div>
+									<div><label>{{workDescList.description}}</label></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div><label>Sub Task :</label></div>
+							<select class="form-control" formControlName="subTaskId">
+								<option value="" selected>Choose Sub Task</option>
+								<option *ngFor="let subtask of subtaskList" [value]="subtask.subTaskId">
+									{{subtask.subTaskName}}</option>
+							</select>
+							<div *ngIf="isFormSubmitInitiated && interCommForms.subTaskId.errors" style="color:red;">
+								Please Choose Sub Task</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<div><label>Department (To) :</label></div>
+							<ng-multiselect-dropdown class="mandatory-field"
+								[ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.deptCommList.errors }" name="deptCommList"
+								[placeholder]="'Select Department'" [data]="departmentList"
+								formControlName="deptCommList" [settings]="dropdownSettings"
+								(onDeSelect)="onItemDeSelect($event)" (onSelect)="onItemSelect($event)">
+							</ng-multiselect-dropdown>
+							<div *ngIf="isFormSubmitInitiated && interCommForms.deptCommList.errors" style="color:red;">
+								Please Choose Department</div>
+						</div>
+					<!-- </div>
+					<div class="row"> -->
+						<div class="col-lg-6">
+							<div><label>Subject : </label></div>
+							<input type="text" class="form-control" formControlName="subject"
+								[ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.subject.errors }">
+							<div *ngIf="isFormSubmitInitiated && interCommForms.subject.errors" style="color:red;">
+								Please enter Subject</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div><label>Description : </label></div>
+							<!-- <textarea class="form-control mandatory-field" formControlName="description" maxlength="400"
+								[ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.description.errors }"
+								style="height:200px !important;"></textarea>
+								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors" style="color:red;">
+								Please enter Description.</div> -->
+								<ckeditor [config]="config" name="ckeditor_text" formControlName="description" maxlength="8000"
+								[ngClass]="{ 'is-invalid': isFormSubmitInitiated && interCommForms.description.errors }" editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"></ckeditor>
+								
+								<div style="color:green;">
+                                <strong><i>Maximum character limit 7000 allowed.</i></strong>
+								</div>
+								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors?.maxlength" style="color:red;">
+                                Maximum character limit Exceeded.
+								</div> 
+								<div *ngIf="isFormSubmitInitiated && interCommForms.description.errors && interCommForms.description.value==''" style="color:red;">
+								Please enter Description.
+								</div>
+								
+								<!-- <div *ngIf="interCommForms.description.maxlength && isFormSubmitInitiated" style="color:red;">
+                                Maximum character limit Exceeded.
+								</div> -->
+								</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12 mt-2">
+							<div class="image-upload1">
+							<button class="btn btn-primary" type="submit">Send</button>
+							<button class="btn btn-danger" *ngIf=" ! isEdit" (click)="resetForm()" type="reset">Clear</button>
+<!-- 							<label for="file-input">
+								<i class="fa fa-paperclip fa-2x" aria-hidden="true" style="color:#484848;"></i>
+								</label>
+								<input id="file-input" type="file"/>
+								<input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
+ -->							
+<!-- 							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
+ -->							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple/>
+							</div>
+							</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Create/Update Form [END]-->
+
+<!-- View Communication details Modal Form -->
+<div class="modal salary-info-model" id="descriptionModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">View Details</h5>
+				<button class="close" type="button" data-dismiss="modal" appModal
+					(click)="closeDescriptionModal();">&times;</button>
+			</div>
+			<form novalidate [formGroup]="viewForm">
+				<div class="modal-body">
+					<div *ngFor="let com2 of communicationList2">
+						<div class="row form-group">
+							<div class="col-lg-12">
+								Date : <b>{{com2.updatedOn | date : "medium"}}</b>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-lg-12">
+								Sender : <b>{{com2.employeeName}} </b>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-lg-12">
+								Ref.No. : <b>{{com2.referenceNo}} </b>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-lg-12">
+								<!-- 					Department Name (To): <b>{{com2.departmentName}} </b> 
+ --> Department Name (To):<span *ngFor="let dept of com2.deptCommList"><b>{{(dept.departmentName.length>1000)?
+										(dept.departmentName +',' | slice:0:1000)+'..':(dept.departmentName +',')
+										}}</b></span>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-lg-12">
+								Work Name : <b>{{com2.workName}} </b>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-lg-12">
+								Sub Task Name : <b>{{com2.subTaskName}} </b>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-lg-12">
+								Subject : <b>{{com2.subject}} </b>
+							</div>
+						</div>
+						<!-- <div class="row form-group">
+							<div class="col-lg-12">
+								Message : <b>{{com2.description}}</b>
+								
+									Message : <div [innerHtml]="com2.description"></div>
+									
+
+							</div>
+						</div> -->
+<!-- 					Message : <div id="htmlDescription12" >{{com2.description}}</div>
+ -->					
+					<!-- <div class="row form-group" *ngIf="com2.attachementStatus == 1">
+							<div class="col-lg-12" *ngIf="com2.orginalFileName == null">
+							<b>Click here to Download</b> :<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">Download Attachment</span>
+							</div>
+							<div class="col-lg-12" *ngIf="com2.orginalFileName != null">
+							<b>Click here to Download</b> :<span style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" (click)="downloadAttachment(com2.officeCommunicationId)">{{com2.orginalFileName}}</span>
+							</div>
+							<div class="col-lg-12">
+							<div id="downloadUrl"></div>
+							</div>
+					</div> -->
+						<div class="row form-group" *ngIf="com2.attachementStatus == 1">
+							<div *ngFor="let attachment of com2.attachmentModels">	
+								<div class="col-lg-12" *ngIf="attachment.orginalFileName == null">
+								<b>Click here to Download</b> :<a href="{{'http://97.74.85.211:8080/'+attachment.fileLocation}}" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" target="_blank">Download Attachment</a>
+								</div>
+								<div class="col-lg-12" *ngIf="com2.orginalFileName != null">
+								<b>Click here to Download</b> :<a href="{{'http://97.74.85.211:8080/'+attachment.fileLocation}}" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" target="_blank">{{attachment.orginalFileName}}</a>
+								</div>
+							</div>	
+						</div>
+						</div>
+					Message : <div id="htmlDescription1"></div>
+				
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button class="btn btn-danger" type="button" data-dismiss="modal" appModal
+					(click)="closeDescriptionModal();">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

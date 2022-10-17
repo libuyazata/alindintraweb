@@ -45,6 +45,8 @@ import { InterofficeCommunicationModule } from '@app/inter-office-communication/
 import { WorkpresentModule } from '@app/work-present/work-present.module';
 import { InboxModule } from '@app/inbox/inbox.module';
 import { SentModule } from '@app/sent/sent.module';
+import { GeneralmessageinboxModule } from '@app/general-message-inbox/general-message-inbox.module';
+import { GeneralmessagesentModule } from '@app/general-message-sent/general-message-sent.module';
 
 
 
@@ -88,7 +90,9 @@ import { SentModule } from '@app/sent/sent.module';
 	InterofficeCommunicationModule,
 	WorkpresentModule,
 	InboxModule,
-	SentModule
+	SentModule,
+	GeneralmessageinboxModule,
+	GeneralmessagesentModule
   ],
   declarations: [AppComponent, BaseComponent],
   providers: [

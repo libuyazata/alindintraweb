@@ -1,0 +1,68 @@
+@import "src/theme/table-theme.scss";
+
+@media screen and (max-width: 575px) {
+    table tbody tr td:nth-child(1):before {
+        content: "#";
+    }
+    table tbody tr td:nth-child(2):before {
+        content: "Customer Name";
+    }
+    table tbody tr td:nth-child(3):before {
+        content: "Address";
+    }
+    table tbody tr td:nth-child(4):before {
+        content: "Other Details";
+    }
+}
+.table {
+    tr {
+        th {
+            padding: 10px !important;
+        }
+        td {
+            padding: 10px !important;
+        }
+    }
+}
+.rowbg{
+	background:#FFFFFF !important;
+	font-size:16px !important;
+	font-weight:bold !important;
+}
+
+.pointer-none{
+	pointer-events: none !important;
+}
+a.tip p {
+    display: none
+}
+a.tip:hover p {
+    border: #c0c0c0 1px dotted;
+    padding: 5px 10px 5px -10px;
+    display: block;
+    z-index: 100;
+    background: #f0f0f0 no-repeat 100% 5%;
+    left: 0px;
+    margin: 10px;
+    width: 450px;
+    position: absolute;
+    top: 20px;
+    text-decoration: none;
+	font-size:15px;
+	font-weight:bold;
+}
+.image-upload > input
+{
+    display: none !important;
+}
+
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
+}
+
+.modal-body{
+	overflow : hidden !important; 
+    max-height: 900vh !important;
+}
