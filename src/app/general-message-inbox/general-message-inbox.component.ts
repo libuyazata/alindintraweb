@@ -524,11 +524,11 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	const viewStatus = viewItem[0]['viewStatus'];
 	const deptCommId = viewItem[0]['deptGeneralMsgId'];
 	  
-	  /* if(viewStatus == 0){
-			this.GeneralmessageinboxService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
+	  if(viewStatus == 0){
+			this.GeneralmessageinboxService.viewUpdateDepartmentGenMessage(deptCommId).subscribe((resp:any)=>{      
 			this.getcommunicationList();
 			});
-	 }	 */	
+	 }		
 	this.openDescriptionForm(item);
   }
   public openDescriptionForm(item:any) {    
@@ -602,7 +602,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	  const deptCommId = item[0]['deptCommId'];
 	  
 	  if(viewStatus == 0){
-			this.GeneralmessageinboxService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
+			this.GeneralmessageinboxService.viewUpdateDepartmentGenMessage(deptCommId).subscribe((resp:any)=>{      
 			this.getcommunicationList();
 			});
 	 }	  

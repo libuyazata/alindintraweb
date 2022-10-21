@@ -177,7 +177,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
   }
   
   openCreateForm() {
-    this.isFormVisible = true;
+    this.resetinterCommForm();
+	this.isFormVisible = true;
     this.isEdit = false;
     this.initializeForm(null)
   }
@@ -192,6 +193,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   }
   resetinterCommForm() {
 	this.departmentList = []; // Reset it.
+	this.myFiles =[];
     this.interCommForm.reset();
   }
   protected getWorkDetailsList() {

@@ -52,8 +52,8 @@ export class GeneralmessageinboxService extends BaseService {
   public deleteDepartment(data:any): Observable<any>{
     return this.httpClient.get("/user/deleteDepartment/", { params : data});
   }
-  public viewUpdateDepartmentCommunicationMessage(data:any): Observable<any>{
-    return this.httpClient.get("project/viewUpdateDepartmentCommunicationMessage/"+data);
+  public viewUpdateDepartmentGenMessage(data:any): Observable<any>{
+    return this.httpClient.get("project/viewUpdateDepartmentGenMessage/"+data);
   }
   public searchInterDeptCommList(data:any): Observable<any>{
     return this.httpClient.get("project/searchInterDeptCommList", { params : data});
