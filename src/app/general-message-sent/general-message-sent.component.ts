@@ -70,8 +70,8 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
 		 
     this.interCommForm = new FormGroup({
-       workDetailsId : new FormControl('',Validators.required),
-       subTaskId : new FormControl('',Validators.required),
+       //workDetailsId : new FormControl('',Validators.required),
+       //subTaskId : new FormControl('',Validators.required),
        deptCommList : new FormControl('',  Validators.required),
        subject : new FormControl('',  Validators.required),
        description : new FormControl('',  Validators.required),
@@ -79,10 +79,10 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
        //description : new FormControl('',[Validators.required, Validators.maxLength(50)]),
 	});
 	this.replyForm = new FormGroup({
-       workName : new FormControl('',Validators.required),
-       subTaskName : new FormControl('',Validators.required),
-	   workDetailsId : new FormControl('',Validators.required),
-       subTaskId : new FormControl('',Validators.required),
+       //workName : new FormControl('',Validators.required),
+       //subTaskName : new FormControl('',Validators.required),
+	   //workDetailsId : new FormControl('',Validators.required),
+      // subTaskId : new FormControl('',Validators.required),
        deptCommList : new FormControl('',  Validators.required),
 	   subject : new FormControl('',Validators.required),
 	   description : new FormControl('',Validators.required),
@@ -105,6 +105,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	this.initializeForm(null);
 	this.initializeReplyForm(null);
 	this.initializeviewForm(null);
+	this.getDepartmentList();
 	
 	 this.dropdownSettings = {
       singleSelection: false,
@@ -177,6 +178,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   }
   
   openCreateForm() {
+	this.resetinterCommForm();
     this.isFormVisible = true;
     this.isEdit = false;
     this.initializeForm(null)
@@ -191,8 +193,9 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
     this.isFormSubmitInitiated = false;
   }
   resetinterCommForm() {
-	this.departmentList = []; // Reset it.
-    this.interCommForm.reset();
+	//this.departmentList = []; // Reset it.
+	this.myFiles =[];
+	this.interCommForm.reset();
   }
   protected getWorkDetailsList() {
 	const credentials = this.authenticationService.credentials;
@@ -210,8 +213,8 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
 	
-	this.GeneralmessagesentService.getInboxMessageByDeptId(departmentId).subscribe((resp:any)=>{      
-	  this.communicationList = resp["inboxMessages"];
+	this.GeneralmessagesentService.sentGeneralMessageListByDeptId(departmentId).subscribe((resp:any)=>{      
+	  this.communicationList = resp["models"];
     });
 	/* let params = {
          "departmentId" : 3,
@@ -222,7 +225,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	
   }
   
-  public getDepartmentList(event:any){
+  /* public getDepartmentList(event:any){
     let workDetailsId = event.target.value;
     if(workDetailsId != "") {
 	  this.isDescription = true;
@@ -232,6 +235,14 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
     } else {
       this.departmentList = []; // Reset it.
     }
+  } */
+  protected getDepartmentList() {
+    let params = {
+      status : 1
+    }
+    this.GeneralmessagesentService.getDepartmentList(params).subscribe((resp:any)=>{      
+      this.departmentList = resp["departments"];
+    });
   }
   
   protected getdepartmentListByWorkId(workDetailsId:number){
@@ -303,13 +314,13 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	  formData.append("toDeptList", deptIds);
 	  //formData.append("toDeptList", params.deptCommList);
       //formData.append("toDeptList", params.departmentId);
-      formData.append("workDetailsId", params.workDetailsId);
-      formData.append("subTaskId", params.subTaskId);
+      //formData.append("workDetailsId", params.workDetailsId);
+     // formData.append("subTaskId", params.subTaskId);
       formData.append("subject", params.subject);
       formData.append("description", params.description);
       this.myFiles =[];
 	  //this.GeneralmessagesentService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
-	  this.GeneralmessagesentService.saveInterOfficeCommunication(formData).subscribe((resp:any)=>{      
+	  this.GeneralmessagesentService.sendToGeneralMessage(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
 		//if(resp.status == 200) {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
@@ -371,7 +382,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
       } */
 	  for (var i = 0; i < this.myFiles.length; i++) { 
-      formData.append("file", this.myFiles[i]);
+      formData.append("files", this.myFiles[i]);
 	  }
 	  formData.append("employeeId", params.employeeId);
       
@@ -385,14 +396,14 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	  //formData.append("toDeptList", params.deptCommList);
       //formData.append("toDeptList", params.departmentId);
       formData.append("referenceNo", params.referenceNo);
-      formData.append("workDetailsId", params.workDetailsId);
+      /* formData.append("workDetailsId", params.workDetailsId);
       formData.append("subTaskId", params.subTaskId);
-      formData.append("subject", params.subject);
+     */  formData.append("subject", params.subject);
       formData.append("description", params.description);
 	  this.myFiles =[];
 
 	  //this.GeneralmessagesentService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
-	  this.GeneralmessagesentService.replyInterOfficeCommunication(formData).subscribe((resp:any)=>{      
+	  this.GeneralmessagesentService.replyGeneralMessage(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
 		//if(resp.status == 200) {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
@@ -413,9 +424,9 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   
   private getPreparedParams(submitData: any) {
     let params : {[k : string]: any}= {
-	  workDetailsId : Number(submitData.workDetailsId),
+	 /*  workDetailsId : Number(submitData.workDetailsId),
       subTaskId : Number(submitData.subTaskId),
-      deptCommList : submitData.deptCommList,
+     */  deptCommList : submitData.deptCommList,
       referenceNo : null,
       subject : submitData.subject,
       description : submitData.description
@@ -440,8 +451,8 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
  */ 
  private getPreparedReplyParams(submitDataReply: any) {
 	let params : {[k : string]: any}= {
-      workDetailsId : Number(submitDataReply.workDetailsId),
-      subTaskId : Number(submitDataReply.subTaskId),
+      //workDetailsId : Number(submitDataReply.workDetailsId),
+      //subTaskId : Number(submitDataReply.subTaskId),
       deptCommList : submitDataReply.deptCommList,
       subject : submitDataReply.subject,
       description : submitDataReply.description,
@@ -453,8 +464,8 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   private initializeForm(data: any) {
     this.isDescription = false;
 	this.interCommForm = new FormGroup({
-       workDetailsId : new FormControl('',Validators.required),
-       subTaskId : new FormControl('',Validators.required),
+      // workDetailsId : new FormControl('',Validators.required),
+      // subTaskId : new FormControl('',Validators.required),
        deptCommList : new FormControl('',Validators.required),
        referenceNo : new FormControl(''),
        subject : new FormControl('',Validators.required),
@@ -477,14 +488,14 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   private initializeReplyForm(data: any) {
 	this.isDescription = false;
 	this.replyForm = new FormGroup({
-		workDetailsId : new FormControl((null != data ? data.workDetailsId : ''),Validators.required),
-		subTaskId : new FormControl((null != data ? data.subTaskId : ''),Validators.required),
+		//workDetailsId : new FormControl((null != data ? data.workDetailsId : ''),Validators.required),
+		//subTaskId : new FormControl((null != data ? data.subTaskId : ''),Validators.required),
 		deptCommList : new FormControl((null != data ? data.deptCommList : ''),Validators.required),
         description : new FormControl((null != data ? '' : ''),Validators.required),
         subject : new FormControl((null != data ? data.subject : '')),
-		subTaskName : new FormControl((null != data ? data.subTaskName : '')),
+		//subTaskName : new FormControl((null != data ? data.subTaskName : '')),
 		referenceNo : new FormControl((null != data ? data.referenceNo : '')),
-		workName : new FormControl((null != data ? data.workName : '')),
+		//workName : new FormControl((null != data ? data.workName : '')),
 		description_old : new FormControl((null != data ? data.description : '')),
         file : new FormControl(''),
 	});
@@ -509,10 +520,10 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	//this.detailsId=item;
 		//this.initializeViewForm(item);
 	const viewStatus = viewItem[0]['viewStatus'];
-	const deptCommId = viewItem[0]['deptCommId'];
+	const deptCommId = viewItem[0]['deptGeneralMsgId'];
 	  
 	  if(viewStatus == 0){
-			this.GeneralmessagesentService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
+			this.GeneralmessagesentService.viewUpdateDepartmentGenMessage(deptCommId).subscribe((resp:any)=>{      
 			this.getcommunicationList();
 			});
 	 }		
@@ -520,9 +531,9 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   }
   public openDescriptionForm(item:any) {    
 	//this.communicationList2 = item;
-	const officeCommunicationId = item;
-	this.GeneralmessagesentService.getCommunicationById(officeCommunicationId).subscribe((resp:any)=>{      
-	  this.communicationList2 = resp["communicationModelList"];
+	const genMessageId = item;
+	this.GeneralmessagesentService.getGeneralMessageById(genMessageId).subscribe((resp:any)=>{      
+	  this.communicationList2 = resp["generalMsgList"];
 	  document.getElementById('htmlDescription1').innerHTML= this.communicationList2[0]['description'];
     });
 	
@@ -554,13 +565,13 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
     }); */
 	//this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
-	this.departmentList=item.deptCommList;
+	this.departmentList=item.departmentGeneralMessageModels;
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
 
-	this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
-    this.replyForm.get("workName").setValue(item.workName);
-    this.replyForm.get("subTaskId").setValue(item.subTaskId);
-    this.replyForm.get("subTaskName").setValue(item.subTaskName);
+	//this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
+    //this.replyForm.get("workName").setValue(item.workName);
+    //this.replyForm.get("subTaskId").setValue(item.subTaskId);
+    //this.replyForm.get("subTaskName").setValue(item.subTaskName);
     this.replyForm.get("referenceNo").setValue(item.referenceNo);
     this.replyForm.get("subject").setValue(item.subject);
     this.replyForm.get("description_old").setValue(item.description);
@@ -572,6 +583,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	this.openReplyForm();
   }
   public openReplyForm() {
+    this.myFiles =[];
 	document.getElementById('replyModal').classList.toggle('d-block');
   }
   public closeReplyModal() {

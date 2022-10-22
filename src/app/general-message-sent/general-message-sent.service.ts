@@ -18,15 +18,15 @@ export class GeneralmessagesentService extends BaseService {
   public getWorkDetailsList(data:any): Observable<any>{
     return this.httpClient.get("project/getWorkDetailsByDeptId",{ params: data });
   }
-  public getInboxMessageByDeptId(data:any): Observable<any>{
-    return this.httpClient.get("project/getInboxMessageByDeptId/"+data);
+  public sentGeneralMessageListByDeptId(data:any): Observable<any>{
+    return this.httpClient.get("project/sentGeneralMessageListByDeptId/"+data);
     //return this.httpClient.get("project/test/",{ params: data });
   }
   public getdepartmentListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/departmentListByWorkId/"+data);
   }
-  public getCommunicationById(data:any): Observable<any>{
-    return this.httpClient.get("project/getCommunicationById/"+data);
+  public getGeneralMessageById(data:any): Observable<any>{
+    return this.httpClient.get("project/getGeneralMessageById/"+data);
   }
   public getsubtaskListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/getSubTaskByWorkId",{ params: data });
@@ -40,20 +40,23 @@ export class GeneralmessagesentService extends BaseService {
   /* public saveInterOfficeCommunication(data:any): Observable<any>{
 	return this.httpClient.post("project/saveInterOfficeCommunication", data);
   } */
-  public saveInterOfficeCommunication(formData:FormData){
+  public sendToGeneralMessage(formData:FormData){
 	//return this.httpClient.post('project/sendWorkMessage/', formData, {reportProgress: true, observe: 'events'});
-	return this.httpClient.post('project/sendWorkMessage/', formData);
+	return this.httpClient.post('project/sendToGeneralMessage/', formData);
   }
   //public replyInterOfficeCommunication(data:any): Observable<any>{
-  public replyInterOfficeCommunication(formData:FormData){
+  public replyGeneralMessage(formData:FormData){
 	//return this.httpClient.post("project/replyInterOfficeCommunication", data);
-  	return this.httpClient.post('project/replyInterOfficeCommunication/', formData);
+  	return this.httpClient.post('project/replyGeneralMessage/', formData);
   }
   public deleteDepartment(data:any): Observable<any>{
     return this.httpClient.get("/user/deleteDepartment/", { params : data});
   }
   public viewUpdateDepartmentCommunicationMessage(data:any): Observable<any>{
     return this.httpClient.get("project/viewUpdateDepartmentCommunicationMessage/"+data);
+  }
+  public viewUpdateDepartmentGenMessage(data:any): Observable<any>{
+    return this.httpClient.get("project/viewUpdateDepartmentGenMessage/"+data);
   }
   public searchInterDeptCommList(data:any): Observable<any>{
     return this.httpClient.get("project/searchInterDeptCommList", { params : data});

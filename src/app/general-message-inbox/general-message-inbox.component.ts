@@ -80,11 +80,11 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
        //description : new FormControl('',[Validators.required, Validators.maxLength(50)]),
 	});
 	this.replyForm = new FormGroup({
-       workName : new FormControl('',Validators.required),
+      /*  workName : new FormControl('',Validators.required),
        subTaskName : new FormControl('',Validators.required),
 	   workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
-       deptCommList : new FormControl('',  Validators.required),
+       */ deptCommList : new FormControl('',  Validators.required),
 	   subject : new FormControl('',Validators.required),
 	   description : new FormControl('',Validators.required),
 	   description_old : new FormControl('',Validators.required),
@@ -321,7 +321,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
       formData.append("description", params.description);
       //this.myFiles =[];
 	  //this.GeneralmessageinboxService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
-	  this.GeneralmessageinboxService.saveInterOfficeCommunication(formData).subscribe((resp:any)=>{      
+	  this.GeneralmessageinboxService.sendToGeneralMessage(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
 		//if(resp.status == 200) {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
@@ -383,7 +383,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
       } */
 	  for (var i = 0; i < this.myFiles.length; i++) { 
-      formData.append("file", this.myFiles[i]);
+      formData.append("files", this.myFiles[i]);
 	  }
 	  formData.append("employeeId", params.employeeId);
       
@@ -404,7 +404,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	  this.myFiles =[];
 
 	  //this.GeneralmessageinboxService.saveInterOfficeCommunication(params).subscribe((resp:any)=>{      
-	  this.GeneralmessageinboxService.replyInterOfficeCommunication(formData).subscribe((resp:any)=>{      
+	  this.GeneralmessageinboxService.replyGeneralMessage(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
 		//if(resp.status == 200) {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
@@ -452,9 +452,9 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
  */ 
  private getPreparedReplyParams(submitDataReply: any) {
 	let params : {[k : string]: any}= {
-      workDetailsId : Number(submitDataReply.workDetailsId),
+     /*  workDetailsId : Number(submitDataReply.workDetailsId),
       subTaskId : Number(submitDataReply.subTaskId),
-      deptCommList : submitDataReply.deptCommList,
+      */ deptCommList : submitDataReply.deptCommList,
       subject : submitDataReply.subject,
       description : submitDataReply.description,
       referenceNo : submitDataReply.referenceNo
@@ -489,9 +489,9 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   private initializeReplyForm(data: any) {
 	this.isDescription = false;
 	this.replyForm = new FormGroup({
-		workDetailsId : new FormControl((null != data ? data.workDetailsId : ''),Validators.required),
+		/* workDetailsId : new FormControl((null != data ? data.workDetailsId : ''),Validators.required),
 		subTaskId : new FormControl((null != data ? data.subTaskId : ''),Validators.required),
-		deptCommList : new FormControl((null != data ? data.deptCommList : ''),Validators.required),
+		 */deptCommList : new FormControl((null != data ? data.deptCommList : ''),Validators.required),
         description : new FormControl((null != data ? '' : ''),Validators.required),
         subject : new FormControl((null != data ? data.subject : '')),
 		subTaskName : new FormControl((null != data ? data.subTaskName : '')),
@@ -567,14 +567,14 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
     }); */
 	//this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
-	this.departmentList=item.deptCommList;
+	this.departmentList=item.departmentGeneralMessageModels;
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
 
-	this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
+	/* this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
     this.replyForm.get("workName").setValue(item.workName);
     this.replyForm.get("subTaskId").setValue(item.subTaskId);
     this.replyForm.get("subTaskName").setValue(item.subTaskName);
-    this.replyForm.get("referenceNo").setValue(item.referenceNo);
+    */ this.replyForm.get("referenceNo").setValue(item.referenceNo);
     this.replyForm.get("subject").setValue(item.subject);
     this.replyForm.get("description_old").setValue(item.description);
 
@@ -585,10 +585,11 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	this.openReplyForm();
   }
   public openReplyForm() {
+    this.myFiles =[];
 	document.getElementById('replyModal').classList.toggle('d-block');
   }
   public closeReplyModal() {
-    this.replyForm.reset();
+	this.replyForm.reset();
 	document.getElementById('replyModal').classList.toggle('d-block');
   } 
    private clearForm() {

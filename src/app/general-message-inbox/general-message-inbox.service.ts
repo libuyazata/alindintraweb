@@ -40,14 +40,14 @@ export class GeneralmessageinboxService extends BaseService {
   /* public saveInterOfficeCommunication(data:any): Observable<any>{
 	return this.httpClient.post("project/saveInterOfficeCommunication", data);
   } */
-  public saveInterOfficeCommunication(formData:FormData){
+  public sendToGeneralMessage(formData:FormData){
 	//return this.httpClient.post('project/sendWorkMessage/', formData, {reportProgress: true, observe: 'events'});
 	return this.httpClient.post('project/sendToGeneralMessage/', formData);
   }
   //public replyInterOfficeCommunication(data:any): Observable<any>{
-  public replyInterOfficeCommunication(formData:FormData){
+  public replyGeneralMessage(formData:FormData){
 	//return this.httpClient.post("project/replyInterOfficeCommunication", data);
-  	return this.httpClient.post('project/replyInterOfficeCommunication/', formData);
+  	return this.httpClient.post('project/replyGeneralMessage/', formData);
   }
   public deleteDepartment(data:any): Observable<any>{
     return this.httpClient.get("/user/deleteDepartment/", { params : data});
