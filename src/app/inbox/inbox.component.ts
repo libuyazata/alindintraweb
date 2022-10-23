@@ -574,6 +574,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	this.openReplyForm();
   }
   public openReplyForm() {
+    this.myFiles =[];
 	document.getElementById('replyModal').classList.toggle('d-block');
   }
   public closeReplyModal() {

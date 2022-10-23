@@ -245,7 +245,11 @@
 							<button class="btn btn-primary" type="submit">Send</button>
 							<button class="btn btn-danger" type="button" data-dismiss="modal" appModal
 								(click)="closeReplyModal();">Close</button>
-						&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple/>						</div>
+							&nbsp;&nbsp;<label><strong>Add File(s)</strong> : </label><input #fileInput type="file" id="file-input" formControlName="file" name="file" hidden (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple />
+							<i class="fa fa-plus fa-1x" aria-hidden="true" style="color:#8C001C;" (click)="fileInput.click()"></i>
+							<div *ngFor="let file of myFiles">
+								<div>{{file.name}}</div> 
+							</div>						</div>
 					</div>
 				</form>
 			</div>
@@ -353,7 +357,11 @@
 								<input id="file-input" type="file"/>
 								<input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
  -->							
-							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple/>							</div>
+							&nbsp;&nbsp;<label><strong>Add File(s)</strong> : </label><input #fileInput type="file" id="file-input" formControlName="file" name="file" hidden (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple />
+							<i class="fa fa-plus fa-1x" aria-hidden="true" style="color:#8C001C;" (click)="fileInput.click()"></i>
+							<div *ngFor="let file of myFiles">
+								<div>{{file.name}}</div> 
+							</div>							</div>
 							</div>
 					</div>
 				</form>

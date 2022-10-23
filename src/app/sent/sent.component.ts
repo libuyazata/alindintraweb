@@ -179,7 +179,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   }
   
   openCreateForm() {
-    this.isFormVisible = true;
+    this.resetinterCommForm();
+	this.isFormVisible = true;
     this.isEdit = false;
     this.initializeForm(null)
   }
@@ -194,7 +195,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   }
   resetinterCommForm() {
 	this.departmentList = []; // Reset it.
-    this.interCommForm.reset();
+	this.myFiles =[];
+	this.interCommForm.reset();
   }
   protected getWorkDetailsList() {
 	const credentials = this.authenticationService.credentials;
@@ -574,6 +576,7 @@ export class SentComponent extends BaseComponent implements OnInit {
 	this.openReplyForm();
   }
   public openReplyForm() {
+    this.myFiles =[];
 	document.getElementById('replyModal').classList.toggle('d-block');
   }
   public closeReplyModal() {
