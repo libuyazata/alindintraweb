@@ -449,14 +449,15 @@
 							<div id="downloadUrl"></div>
 							</div>
 					</div> -->
-						<div class="row form-group" *ngIf="com2.attachementStatus == 1">
-							<div *ngFor="let attachment of com2.attachmentModels">	
+						<div *ngIf="com2.attachementStatus == 1">
+							<div  class="row form-group" *ngFor="let attachment of com2.attachmentModels">	
 								<div class="col-lg-12" *ngIf="attachment.orginalFileName == null">
 								<b>Click here to Download</b> :<a href="{{'http://97.74.85.211:8080/'+attachment.fileLocation}}" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" target="_blank">Download Attachment</a>
 								</div>
 								<div class="col-lg-12" *ngIf="attachment.orginalFileName != null">
 								<b>Click here to Download</b> :<a href="{{'http://97.74.85.211:8080/'+attachment.fileLocation}}" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" target="_blank">{{attachment.orginalFileName}}</a>
 								</div>
+								
 							</div>	
 						</div>
 						</div>

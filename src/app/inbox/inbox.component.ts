@@ -513,11 +513,11 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	const viewStatus = viewItem[0]['viewStatus'];
 	const deptCommId = viewItem[0]['deptCommId'];
 	  
-	  if(viewStatus == 0){
+	  //if(viewStatus == 0){
 			this.InboxService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
 			this.getcommunicationList();
 			});
-	 }		
+	 //}		
 	this.openDescriptionForm(item);
   }
   public openDescriptionForm(item:any) {    
