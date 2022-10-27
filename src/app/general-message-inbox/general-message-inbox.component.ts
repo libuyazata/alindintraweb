@@ -149,9 +149,9 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
     const departmentId = credentials.departmentId;
 	let searchFilter = this.materialRequestSearchForm.value;    
     let params = {
-     /*  "startDate" : searchFilter.dateFrom == null ? "" : searchFilter.dateFrom,
+      "startDate" : searchFilter.dateFrom == null ? "" : searchFilter.dateFrom,
       "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
-     */  "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
+      "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
       "departmentId" : departmentId,
     }
     return params;
