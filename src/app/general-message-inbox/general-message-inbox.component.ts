@@ -54,7 +54,8 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   public dropdownSettingsReply: any = {};
   protected fileToUpload : any; // MoM files
   public myFiles:string [] = [];
-  
+  public sessionstorage: any = sessionStorage;
+
   constructor(private alertService : AlertNotificationService,private GeneralmessageinboxService : GeneralmessageinboxService,private authenticationService: AuthenticationService) { 
 	super(GeneralmessageinboxService);
 	this.config = {toolbarLocation:'bottom',toolbarGroups: [
@@ -63,6 +64,9 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
         { name: 'paragraph', groups: ['list','align','paragraph'] },
         { name: 'colors', groups: ['colors'] },
       ],height: 150,};
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	this.sessionstorage.setItem("sessiondeptId", departmentId);
   }
 
   ngOnInit() { 
@@ -145,9 +149,9 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
     const departmentId = credentials.departmentId;
 	let searchFilter = this.materialRequestSearchForm.value;    
     let params = {
-      "startDate" : searchFilter.dateFrom == null ? "" : searchFilter.dateFrom,
+     /*  "startDate" : searchFilter.dateFrom == null ? "" : searchFilter.dateFrom,
       "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
-      "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
+     */  "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
       "departmentId" : departmentId,
     }
     return params;
@@ -155,7 +159,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   public onCommunicationDetailsSearched(){
 	  let params = this.getSearchParams();
 	  this.GeneralmessageinboxService.searchInterDeptCommList(params).subscribe((resp:any)=>{
-	  this.communicationList = resp["communicationModelList"];
+	  this.communicationList = resp["genMsgModelList"];
     });
   }
   public onItemSelect(event:any){    
@@ -518,11 +522,11 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	this.isDescription = false;
 	this.interCommForm.reset();
   }
-  public viewDetails(item:any,viewItem:any){
+ public viewDetails(item:any,statusview:any,commId:any){
 	//this.detailsId=item;
 		//this.initializeViewForm(item);
-	const viewStatus = viewItem[0]['viewStatus'];
-	const deptCommId = viewItem[0]['deptGeneralMsgId'];
+	const viewStatus = statusview;
+	const deptCommId = commId;
 	  
 	  if(viewStatus == 0){
 			this.GeneralmessageinboxService.viewUpdateDepartmentGenMessage(deptCommId).subscribe((resp:any)=>{      

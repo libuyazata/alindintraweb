@@ -54,6 +54,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public dropdownSettingsReply: any = {};
   protected fileToUpload : any; // MoM files
   public myFiles:string [] = [];
+  public sessionstorage: any = sessionStorage;
   constructor(private alertService : AlertNotificationService,private InboxService : InboxService,private authenticationService: AuthenticationService) { 
 	super(InboxService);
 	this.config = {toolbarLocation:'bottom',toolbarGroups: [
@@ -62,13 +63,17 @@ export class InboxComponent extends BaseComponent implements OnInit {
         { name: 'paragraph', groups: ['list','align','paragraph'] },
         { name: 'colors', groups: ['colors'] },
       ],height: 150,};
+	    
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	this.sessionstorage.setItem("sessiondeptId", departmentId);
+
   }
 
   ngOnInit() { 
 	const storage = sessionStorage;
 	this.prv_departmentEdit = storage.getItem('prv_departmentEdit');
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
-		 
     this.interCommForm = new FormGroup({
        workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
@@ -507,17 +512,16 @@ export class InboxComponent extends BaseComponent implements OnInit {
     this.isDescription = false;
 	this.interCommForm.reset();
   }
-  public viewDetails(item:any,viewItem:any){
+  public viewDetails(item:any,statusview:any,commId:any){
 	//this.detailsId=item;
 		//this.initializeViewForm(item);
-	const viewStatus = viewItem[0]['viewStatus'];
-	const deptCommId = viewItem[0]['deptCommId'];
-	  
-	  //if(viewStatus == 0){
+	const viewStatus = statusview;
+	const deptCommId = commId;
+	  if(viewStatus == 0){
 			this.InboxService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
 			this.getcommunicationList();
 			});
-	 //}		
+	 }		
 	this.openDescriptionForm(item);
   }
   public openDescriptionForm(item:any) {    

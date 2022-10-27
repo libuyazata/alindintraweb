@@ -84,8 +84,9 @@
 					</tbody>
 					<ng-container *ngFor="let msg of mf.data;index as i">
 						<tbody *ngFor="let msg of mf.data[i].generalMessageRefNoDetailsModel">
-							<tr class="hover-action-row" *ngIf="msg.generalMessageModelList[0].departmentGeneralMessageModels.length > 0"
-								[ngClass]="{'rowbg': msg.generalMessageModelList[0].departmentGeneralMessageModels[0]['viewStatus'] == 0}">
+							<ng-container *ngFor="let depts of msg.generalMessageModelList[0].departmentGeneralMessageModels">
+							<tr class="hover-action-row" *ngIf="msg.generalMessageModelList[0].departmentGeneralMessageModels.length > 0 && depts.departmentId==sessionstorage.getItem('sessiondeptId')"
+								[ngClass]="{'rowbg': depts.viewStatus == 0}">
 								<!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].departmentGeneralMessageModels[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].departmentGeneralMessageModels);" >
 -->
 								<!--                         <tr>
@@ -109,19 +110,21 @@
 								<td class="column1">
 									<div class="link-holder">
 										<a class="link" title="View Details"
-											(click)="viewDetails(msg.generalMessageModelList[0].genMessageId,msg.generalMessageModelList[0].departmentGeneralMessageModels);"><i
+											(click)="viewDetails(msg.generalMessageModelList[0].genMessageId,depts.viewStatus,depts.deptGeneralMsgId);"><i
 												class="fas fa-eye"></i></a>
 										<button (click)="replyMessage(msg.generalMessageModelList[0]);" class="btn btn-success"
 											style="margin-left:5px;">Reply</button>
 									</div>
 								</td>
 							</tr>
-
+							</ng-container>
 
 							<ng-container *ngIf="msg.isDetailsSetVisible">
 								<ng-container *ngFor="let content of msg.generalMessageModelList;index as i">
-									<tr *ngIf="i>0">
-										<td class="column1"><i class="fa fa-angle-double-right" aria-hidden="true"></i>
+							<ng-container *ngFor="let depts1 of content.departmentGeneralMessageModels">
+							<tr class="hover-action-row" *ngIf="i>0 && content.departmentGeneralMessageModels.length>0 && depts1.departmentId==sessionstorage.getItem('sessiondeptId')"
+								[ngClass]="{'rowbg': depts1.viewStatus == 0}">
+								<td class="column1"><i class="fa fa-angle-double-right" aria-hidden="true"></i>
 										</td>
 										<td class="column1">{{content.departmentName}}</td>
 										<td class="column1">{{content.employeeName}}</td>
@@ -132,11 +135,12 @@
 										<td class="column1">
 											<div class="link-holder">
 												<a class="link" title="View Details"
-													(click)="viewDetails(content.genMessageId,content.departmentGeneralMessageModels);"><i
+													(click)="viewDetails(content.genMessageId,depts1.viewStatus,depts1.deptGeneralMsgId);"><i
 														class="fas fa-eye"></i></a>
 											</div>
 										</td>
 									</tr>
+								</ng-container>
 								</ng-container>
 							</ng-container>
 						</tbody>

@@ -55,7 +55,7 @@ export class SentComponent extends BaseComponent implements OnInit {
   protected fileToUpload : any; // MoM files
   public downloadFiles : Array<any>;
   public myFiles:string [] = [];
-
+  public sessionstorage: any = sessionStorage;
   
   constructor(private alertService : AlertNotificationService,private SentService : SentService,private authenticationService: AuthenticationService) { 
 	super(SentService);
@@ -65,6 +65,9 @@ export class SentComponent extends BaseComponent implements OnInit {
         { name: 'paragraph', groups: ['list','align','paragraph'] },
         { name: 'colors', groups: ['colors'] },
       ],height: 150,};
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	this.sessionstorage.setItem("sessiondeptId", departmentId);
   }
 
   ngOnInit() { 
@@ -509,11 +512,11 @@ export class SentComponent extends BaseComponent implements OnInit {
     this.isDescription = false;
 	this.interCommForm.reset();
   }
-  public viewDetails(item:any,viewItem:any){
+  public viewDetails(item:any,statusview:any,commId:any){
 	//this.detailsId=item;
 		//this.initializeViewForm(item);
-	const viewStatus = viewItem[0]['viewStatus'];
-	const deptCommId = viewItem[0]['deptCommId'];
+	const viewStatus = statusview;
+	const deptCommId = commId;
 	  
 	  if(viewStatus == 0){
 			this.SentService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      

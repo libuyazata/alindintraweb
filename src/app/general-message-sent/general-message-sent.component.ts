@@ -154,7 +154,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   public onCommunicationDetailsSearched(){
 	  let params = this.getSearchParams();
 	  this.GeneralmessagesentService.searchInterDeptCommList(params).subscribe((resp:any)=>{
-	  this.communicationList = resp["communicationModelList"];
+	  this.communicationList = resp["genMsgModelList"];
     });
   }
   public onItemSelect(event:any){    

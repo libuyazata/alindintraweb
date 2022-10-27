@@ -84,8 +84,9 @@
 					</tbody>
 					<ng-container *ngFor="let msg of mf.data;index as i">
 						<tbody *ngFor="let msg of mf.data[i].comMsgRefList">
-							<tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0"
-								[ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}">
+							<ng-container *ngFor="let depts of msg.offCommList[0].deptCommList">
+							<tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0 && depts.departmentId==sessionstorage.getItem('sessiondeptId')"
+								[ngClass]="{'rowbg': depts.viewStatus == 0}">
 								<!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
 -->
 								<!--                         <tr>
@@ -109,18 +110,21 @@
 								<td class="column1">
 									<div class="link-holder">
 										<a class="link" title="View Details"
-											(click)="viewDetails(msg.offCommList[0].officeCommunicationId,msg.offCommList[0].deptCommList);"><i
+											(click)="viewDetails(msg.offCommList[0].officeCommunicationId,depts.viewStatus,depts.deptCommId);"><i
 												class="fas fa-eye"></i></a>
 										<button (click)="replyMessage(msg.offCommList[0]);" class="btn btn-success"
 											style="margin-left:5px;">Reply</button>
 									</div>
 								</td>
 							</tr>
+							</ng-container>
 
 
 							<ng-container *ngIf="msg.isDetailsSetVisible">
 								<ng-container *ngFor="let content of msg.offCommList;index as i">
-									<tr *ngIf="i>0">
+							<ng-container *ngFor="let depts1 of content.deptCommList">
+									<tr class="hover-action-row" *ngIf="i>0 && content.deptCommList.length>0 && depts1.departmentId==sessionstorage.getItem('sessiondeptId')"
+								[ngClass]="{'rowbg': depts1.viewStatus == 0}">
 										<td class="column1"><i class="fa fa-angle-double-right" aria-hidden="true"></i>
 										</td>
 										<td class="column1">{{content.departmentName}}</td>
@@ -132,11 +136,12 @@
 										<td class="column1">
 											<div class="link-holder">
 												<a class="link" title="View Details"
-													(click)="viewDetails(content.officeCommunicationId,content.deptCommList);"><i
+													(click)="viewDetails(content.officeCommunicationId,depts1.viewStatus,depts1.deptCommId);"><i
 														class="fas fa-eye"></i></a>
 											</div>
 										</td>
 									</tr>
+								</ng-container>
 								</ng-container>
 							</ng-container>
 						</tbody>
@@ -245,11 +250,14 @@
 							<button class="btn btn-primary" type="submit">Send</button>
 							<button class="btn btn-danger" type="button" data-dismiss="modal" appModal
 								(click)="closeReplyModal();">Close</button>
+<!-- 							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf"/>
+ -->
 							&nbsp;&nbsp;<label><strong>Add File(s)</strong> : </label><input #fileInput type="file" id="file-input" formControlName="file" name="file" hidden (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple />
 							<i class="fa fa-plus fa-1x" aria-hidden="true" style="color:#8C001C;" (click)="fileInput.click()"></i>
 							<div *ngFor="let file of myFiles">
 								<div>{{file.name}}</div> 
-							</div>						</div>
+							</div>
+							</div>
 					</div>
 				</form>
 			</div>
@@ -357,11 +365,14 @@
 								<input id="file-input" type="file"/>
 								<input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
  -->							
+<!-- 							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
+ -->
 							&nbsp;&nbsp;<label><strong>Add File(s)</strong> : </label><input #fileInput type="file" id="file-input" formControlName="file" name="file" hidden (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple />
 							<i class="fa fa-plus fa-1x" aria-hidden="true" style="color:#8C001C;" (click)="fileInput.click()"></i>
 							<div *ngFor="let file of myFiles">
 								<div>{{file.name}}</div> 
-							</div>							</div>
+							</div>
+							</div>
 							</div>
 					</div>
 				</form>
@@ -443,19 +454,20 @@
 							<div id="downloadUrl"></div>
 							</div>
 					</div> -->
-					<div *ngIf="com2.attachementStatus == 1">
-							<div class="row form-group" *ngFor="let attachment of com2.attachmentModels">	
+						<div *ngIf="com2.attachementStatus == 1">
+							<div  class="row form-group" *ngFor="let attachment of com2.attachmentModels">	
 								<div class="col-lg-12" *ngIf="attachment.orginalFileName == null">
 								<b>Click here to Download</b> :<a href="{{'http://97.74.85.211:8080/'+attachment.fileLocation}}" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" target="_blank">Download Attachment</a>
 								</div>
 								<div class="col-lg-12" *ngIf="attachment.orginalFileName != null">
 								<b>Click here to Download</b> :<a href="{{'http://97.74.85.211:8080/'+attachment.fileLocation}}" download style="color:#005B8C;font-weight:bold;text-decoration:underline;cursor:pointer;" target="_blank">{{attachment.orginalFileName}}</a>
 								</div>
+								
 							</div>	
 						</div>
-					
-					</div>
+						</div>
 					Message : <div id="htmlDescription1"></div>
+				
 				</div>
 			</form>
 			<div class="modal-footer">
@@ -465,7 +477,3 @@
 		</div>
 	</div>
 </div>
-<!-- <ckeditor name="ckeditor_text" formControlName="description" maxlength="400"
-								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && interCommForms.description.errors }"
-								 editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js" ></ckeditor>
- -->
