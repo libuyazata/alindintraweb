@@ -230,7 +230,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   }
   
   public getDepartmentList(event:any){
-    let workDetailsId = event.target.value;
+	this.interCommForm.get("deptCommList").setValue("");
+	let workDetailsId = event.target.value;
     if(workDetailsId != "") {
 	  this.isDescription = true;
       this.getdepartmentListByWorkId(workDetailsId);
