@@ -44,6 +44,7 @@
     "lodash": "^4.17.15",
     "mydatepicker": "^2.6.6",
     "ng-multiselect-dropdown": "0.2.4",
+    "ngx-pagination": "^3.3.1",
     "ngx-select-dropdown": "^1.4.3",
     "ngx-spinner": "^6.1.2",
     "node-sass": "^4.14.1",

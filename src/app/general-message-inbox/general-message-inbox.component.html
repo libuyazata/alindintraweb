@@ -82,7 +82,7 @@
 							</td>
 						</tr>
 					</tbody>
-					<ng-container *ngFor="let msg of mf.data;index as i">
+					<ng-container *ngFor="let msg of mf.data | paginate: {itemsPerPage: 15,currentPage: page,totalItems: totalItems};index as i">
 						<tbody *ngFor="let msg of mf.data[i].generalMessageRefNoDetailsModel">
 							<ng-container *ngFor="let depts of msg.generalMessageModelList[0].departmentGeneralMessageModels">
 							<tr class="hover-action-row" *ngIf="msg.generalMessageModelList[0].departmentGeneralMessageModels.length > 0 && depts.departmentId==sessionstorage.getItem('sessiondeptId')"
@@ -148,15 +148,17 @@
 					<tfoot>
 						<tr>
 							<td colspan="6">
-								<mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
+<!-- 								<mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
+ -->								<pagination-controls (pageChange)="getcommunicationListPage((page = $event))"></pagination-controls>
 							</td>
 						</tr>
 					</tfoot>
 				</table>
-			</div>
 		</div>
 	</div>
 </div>
+</div>
+
 
 <!-- Reply Modal Form -->
 <div class="modal salary-info-model" id="replyModal">

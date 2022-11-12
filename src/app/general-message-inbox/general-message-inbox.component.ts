@@ -33,6 +33,11 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   public imageSrc : string;
 
   public config : any;
+  public list: any;
+  public page: number = 0;
+  public itemsPerPage: number;
+  public totalItems: number;
+  
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
   public workDescList : Array<any>;
@@ -49,6 +54,8 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   public prv_departmentDelete : string;
   public detailsId : string;
   private previousItem : any;
+  //public totalItems: any={};
+
 
   public dropdownSettings: any = {};
   public dropdownSettingsReply: any = {};
@@ -218,41 +225,28 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
 	
-	this.GeneralmessageinboxService.getGeneralInboxByDeptId(departmentId).subscribe((resp:any)=>{      
+	this.GeneralmessageinboxService.getGeneralInboxMessageCountByDeptId(departmentId).subscribe((resp:any)=>{      
+	  const messageCount=resp.messageCount;
+	  //const messageCount=100;
+	  //alert(messageCount);
+	  this.totalItems = messageCount;
+    });
+   
+   this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(departmentId,0,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["models"];
     });
-	/* let params = {
-         "departmentId" : 3,
-    }
-	this.GeneralmessageinboxService.getInboxMessageByDeptId(params).subscribe((resp:any)=>{      
-	  this.communicationList = resp["modelMap"];
-    }); */
+ }
+  public getcommunicationListPage(page: any) {
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+	  this.communicationList = resp["models"];
+      this.page = page;
+    });
 	
   }
   
-  /* public getDepartmentList(event:any){
-    let workDetailsId = event.target.value;
-    if(workDetailsId != "") {
-	  this.isDescription = true;
-      this.getdepartmentListByWorkId(workDetailsId);
-      this.getsubtaskListByWorkId(workDetailsId);
-      this.getworkDescription(workDetailsId);
-    } else {
-      this.departmentList = []; // Reset it.
-    }
-  } */
   
-  /* protected getDepartmentList(workDetailsId:number){
-	const workId = workDetailsId;
-	this.GeneralmessageinboxService.getDepartmentList(workId).subscribe((resp:any) => {
-      if(resp["deptList"] != null){
-		  this.departmentList = resp["departments"];
-	  }
-	  else{
-		  this.departmentList = [];
-	  }
-   });
-  } */
   protected getDepartmentList() {
     let params = {
       status : 1

@@ -18,9 +18,20 @@ export class GeneralmessageinboxService extends BaseService {
   public getWorkDetailsList(data:any): Observable<any>{
     return this.httpClient.get("project/getWorkDetailsByDeptId",{ params: data });
   }
-  public getGeneralInboxByDeptId(data:any): Observable<any>{
+  /* public getGeneralInboxByDeptId(data:any): Observable<any>{
     return this.httpClient.get("project/getGeneralInboxByDeptId/"+data);
-    //return this.httpClient.get("project/test/",{ params: data });
+    //return this.httpClient.get("project/getGeneralInboxByDeptId/4/1/10"+data);
+  } */
+  public getGeneralInboxByDeptId(data:any): Observable<any>{
+    //return this.httpClient.get("project/getGeneralInboxByDeptId/"+data);
+    return this.httpClient.get("project/getGeneralInboxByDeptId/"+data);
+  }
+  public getGeneralInboxMessageCountByDeptId(data:any): Observable<any>{
+    return this.httpClient.get("project/getGeneralInboxMessageCountByDeptId/"+data);
+  }
+  public getGeneralInboxByDeptIdPageData(id:any,page:any,number:any): Observable<any>{
+    //return this.httpClient.get("project/getGeneralInboxByDeptId/"+data);
+    return this.httpClient.get("project/getGeneralInboxByDeptId/"+id+"/"+page+"/10");
   }
   public getdepartmentListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/departmentListByWorkId/"+data);
