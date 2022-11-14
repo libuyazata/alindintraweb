@@ -82,7 +82,7 @@
 							</td>
 						</tr>
 					</tbody>
-					<ng-container *ngFor="let msg of mf.data;index as i">
+					<ng-container *ngFor="let msg of mf.data | paginate: {itemsPerPage: 10,currentPage: page,totalItems: totalItems};index as i">
 						<tbody *ngFor="let msg of mf.data[i].generalMessageRefNoDetailsModel">
 							<tr class="hover-action-row" *ngIf="msg.generalMessageModelList[0].departmentGeneralMessageModels.length > 0"
 								[ngClass]="{'rowbg': msg.generalMessageModelList[0].departmentGeneralMessageModels[0]['viewStatus'] == 0}">
@@ -144,8 +144,10 @@
 					<tfoot>
 						<tr>
 							<td colspan="6">
-								<mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
-							</td>
+<!-- 								<mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
+ -->							
+									<pagination-controls (pageChange)="getcommunicationListPage((page = $event))"></pagination-controls>
+								</td>
 						</tr>
 					</tfoot>
 				</table>

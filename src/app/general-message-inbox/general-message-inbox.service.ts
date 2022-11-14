@@ -31,7 +31,7 @@ export class GeneralmessageinboxService extends BaseService {
   }
   public getGeneralInboxByDeptIdPageData(id:any,page:any,number:any): Observable<any>{
     //return this.httpClient.get("project/getGeneralInboxByDeptId/"+data);
-    return this.httpClient.get("project/getGeneralInboxByDeptId/"+id+"/"+page+"/10");
+    return this.httpClient.get("project/getGeneralInboxByDeptId/"+id+"/"+page+"/"+number);
   }
   public getdepartmentListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/departmentListByWorkId/"+data);

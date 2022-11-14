@@ -33,6 +33,11 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   public imageSrc : string;
 
   public config : any;
+  public list: any;
+  public page: number = 0;
+  public itemsPerPage: number;
+  public totalItems: number;
+
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
   public workDescList : Array<any>;
@@ -213,29 +218,32 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
 	
-	this.GeneralmessagesentService.sentGeneralMessageListByDeptId(departmentId).subscribe((resp:any)=>{      
+	/* this.GeneralmessagesentService.sentGeneralMessageListByDeptId(departmentId).subscribe((resp:any)=>{      
+	  this.communicationList = resp["models"];
+    }); */
+	
+	this.GeneralmessagesentService.getGeneralMessageCountByDeptId(departmentId).subscribe((resp:any)=>{      
+	  const messageCount=resp.messageCount;
+	  this.totalItems = messageCount;
+    });
+	
+	this.GeneralmessagesentService.sentGeneralMessageListByDeptIdPageData(departmentId,0,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["models"];
     });
-	/* let params = {
-         "departmentId" : 3,
-    }
-	this.GeneralmessagesentService.getInboxMessageByDeptId(params).subscribe((resp:any)=>{      
-	  this.communicationList = resp["modelMap"];
-    }); */
+	
+	
 	
   }
   
-  /* public getDepartmentList(event:any){
-    let workDetailsId = event.target.value;
-    if(workDetailsId != "") {
-	  this.isDescription = true;
-      this.getdepartmentListByWorkId(workDetailsId);
-      this.getsubtaskListByWorkId(workDetailsId);
-      this.getworkDescription(workDetailsId);
-    } else {
-      this.departmentList = []; // Reset it.
-    }
-  } */
+  public getcommunicationListPage(page: any) {
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	this.GeneralmessagesentService.sentGeneralMessageListByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+	  this.communicationList = resp["models"];
+      this.page = page;
+    });
+	
+  }
   protected getDepartmentList() {
     let params = {
       status : 1

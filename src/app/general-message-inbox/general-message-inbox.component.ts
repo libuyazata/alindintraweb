@@ -227,8 +227,6 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	
 	this.GeneralmessageinboxService.getGeneralInboxMessageCountByDeptId(departmentId).subscribe((resp:any)=>{      
 	  const messageCount=resp.messageCount;
-	  //const messageCount=100;
-	  //alert(messageCount);
 	  this.totalItems = messageCount;
     });
    

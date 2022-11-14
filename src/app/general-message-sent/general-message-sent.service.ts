@@ -22,6 +22,12 @@ export class GeneralmessagesentService extends BaseService {
     return this.httpClient.get("project/sentGeneralMessageListByDeptId/"+data);
     //return this.httpClient.get("project/test/",{ params: data });
   }
+  public getGeneralMessageCountByDeptId(data:any): Observable<any>{
+    return this.httpClient.get("project/getGeneralMessageCountByDeptId/"+data);
+  }
+  public sentGeneralMessageListByDeptIdPageData(id:any,page:any,number:any): Observable<any>{
+    return this.httpClient.get("project/sentGeneralMessageListByDeptId/"+id+"/"+page+"/"+number);
+  }
   public getdepartmentListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/departmentListByWorkId/"+data);
   }
