@@ -27,6 +27,12 @@ export class SentService extends BaseService {
   public getCommunicationById(data:any): Observable<any>{
     return this.httpClient.get("project/getCommunicationById/"+data);
   }
+  public getSentWorkMessageCountByDeptId(data:any): Observable<any>{
+    return this.httpClient.get("project/getSentWorkMessageCountByDeptId/"+data);
+  }
+  public communicationListByDeptIdPageData(id:any,page:any,number:any): Observable<any>{
+    return this.httpClient.get("project/communicationListByDeptId/"+id+"/"+page+"/"+number);
+  }
   public getsubtaskListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/getSubTaskByWorkId",{ params: data });
   }

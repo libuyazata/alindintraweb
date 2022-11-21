@@ -33,6 +33,11 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public imageSrc : string;
 
   public config : any;
+  public list: any;
+  public page: number = 0;
+  public itemsPerPage: number;
+  public totalItems: number;
+  
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
   public workDescList : Array<any>;
@@ -217,18 +222,25 @@ export class InboxComponent extends BaseComponent implements OnInit {
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
 	
-	this.InboxService.getInboxMessageByDeptId(departmentId).subscribe((resp:any)=>{      
+	this.InboxService.getInboxWorkMessagesCount(departmentId).subscribe((resp:any)=>{      
+	  const messageCount=resp.messageCount;
+	  this.totalItems = messageCount;
+    });
+	
+	this.InboxService.getInboxMessageByDeptIdPageData(departmentId,0,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["inboxMessages"];
     });
-	/* let params = {
-         "departmentId" : 3,
-    }
-	this.InboxService.getInboxMessageByDeptId(params).subscribe((resp:any)=>{      
-	  this.communicationList = resp["modelMap"];
-    }); */
 	
   }
-  
+  public getcommunicationListPage(page: any) {
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	this.InboxService.getInboxMessageByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+	  this.communicationList = resp["inboxMessages"];
+      this.page = page;
+    });
+	
+  }
   public getDepartmentList(event:any){
 	this.interCommForm.get("deptCommList").setValue("");
 	let workDetailsId = event.target.value;

@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DataTableModule } from 'angular-6-datatable';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,6 +20,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     InboxRoutingModule,
 	SharedModule,
 	CKEditorModule,
+	NgxPaginationModule,
     NgMultiSelectDropDownModule.forRoot(),
  ],
   declarations: [

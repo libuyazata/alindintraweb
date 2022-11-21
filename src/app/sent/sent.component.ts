@@ -34,6 +34,11 @@ export class SentComponent extends BaseComponent implements OnInit {
   public imageSrc : string;
 
   public config : any;
+  public list: any;
+  public page: number = 0;
+  public itemsPerPage: number;
+  public totalItems: number;
+
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
   public workDescList : Array<any>;
@@ -217,18 +222,25 @@ export class SentComponent extends BaseComponent implements OnInit {
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
 	
-	this.SentService.getSentMessageListByDeptId(departmentId).subscribe((resp:any)=>{      
+	this.SentService.getSentWorkMessageCountByDeptId(departmentId).subscribe((resp:any)=>{      
+	  const messageCount=resp.messageCount;
+	  this.totalItems = messageCount;
+    });
+	
+	this.SentService.communicationListByDeptIdPageData(departmentId,0,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["communicationList"];
     });
-	/* let params = {
-         "departmentId" : 3,
-    }
-	this.SentService.getInboxMessageByDeptId(params).subscribe((resp:any)=>{      
-	  this.communicationList = resp["modelMap"];
-    }); */
 	
   }
-  
+  public getcommunicationListPage(page: any) {
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	this.SentService.communicationListByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+	  this.communicationList = resp["communicationList"];
+      this.page = page;
+    });
+	
+  }
   public getDepartmentList(event:any){
 	this.interCommForm.get("deptCommList").setValue("");
 	let workDetailsId = event.target.value;

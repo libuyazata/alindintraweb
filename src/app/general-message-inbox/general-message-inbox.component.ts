@@ -160,12 +160,15 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
       "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
       "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
       "departmentId" : departmentId,
+      "pageNo" : 0,
+      "pageCount" : 15,
     }
     return params;
   }
   public onCommunicationDetailsSearched(){
 	  let params = this.getSearchParams();
 	  this.GeneralmessageinboxService.searchInterDeptCommList(params).subscribe((resp:any)=>{
+	  this.totalItems = resp.totalCount;
 	  this.communicationList = resp["genMsgModelList"];
     });
   }

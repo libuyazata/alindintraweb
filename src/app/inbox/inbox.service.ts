@@ -22,6 +22,12 @@ export class InboxService extends BaseService {
     return this.httpClient.get("project/getInboxMessageByDeptId/"+data);
     //return this.httpClient.get("project/test/",{ params: data });
   }
+  public getInboxWorkMessagesCount(data:any): Observable<any>{
+    return this.httpClient.get("project/getInboxWorkMessagesCount/"+data);
+  }
+  public getInboxMessageByDeptIdPageData(id:any,page:any,number:any): Observable<any>{
+    return this.httpClient.get("project/getInboxMessageByDeptId/"+id+"/"+page+"/"+number);
+  }
   public getdepartmentListByWorkId(data:any): Observable<any>{
     return this.httpClient.get("project/departmentListByWorkId/"+data);
   }

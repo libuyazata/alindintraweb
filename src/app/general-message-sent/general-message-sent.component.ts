@@ -153,6 +153,8 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
       "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
       "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
       "departmentId" : departmentId,
+	  "pageNo" : 0,
+      "pageCount" : 15,
     }
     return params;
   }
