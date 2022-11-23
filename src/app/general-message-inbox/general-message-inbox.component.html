@@ -35,7 +35,7 @@
 							<!-- 													</span>
  -->
 							<a class="link" [routerLink]="['/general-message-sent/']">
-								<button class="btn btn-success ml-1" type="button">View Sent Message</button>
+								<button class="btn btn-success ml-0" type="button">View Sent Message</button>
 							</a>
 						</span>
 					</div>
@@ -62,9 +62,9 @@
 							<th class="column3">
 								<mfDefaultSorter by="departmentName">Ref.No.</mfDefaultSorter>
 							</th>
-							<!-- <th class="column4">
+							<th class="column4">
 								<mfDefaultSorter by="workName">Work Name</mfDefaultSorter>
-							</th> -->
+							</th>
 							<th class="column6">
 								<mfDefaultSorter by="subject">Subject</mfDefaultSorter>
 							</th>
@@ -84,10 +84,9 @@
 					</tbody>
 					<ng-container *ngFor="let msg of mf.data | paginate: {itemsPerPage: 15,currentPage: page,totalItems: totalItems};index as i">
 						<tbody *ngFor="let msg of mf.data[i].generalMessageRefNoDetailsModel">
-							<ng-container *ngFor="let depts of msg.generalMessageModelList[0].departmentGeneralMessageModels">
-							<tr class="hover-action-row" *ngIf="msg.generalMessageModelList[0].departmentGeneralMessageModels.length > 0 && depts.departmentId==sessionstorage.getItem('sessiondeptId')"
-								[ngClass]="{'rowbg': depts.viewStatus == 0}">
-								<!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].departmentGeneralMessageModels[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].departmentGeneralMessageModels);" >
+							<tr class="hover-action-row" *ngIf="msg.generalMessageModelList[0].departmentGeneralMessageModels.length > 0"
+								[ngClass]="{'rowbg': msg.generalMessageModelList[0].departmentGeneralMessageModels[0]['viewStatus'] == 0}">
+								<!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.generalMessageModelList[0].departmentGeneralMessageModels[0]['viewStatus'] == 0}" (click)="updateMessage(msg.generalMessageModelList[0].departmentGeneralMessageModels);" >
 -->
 								<!--                         <tr>
  -->
@@ -100,47 +99,44 @@
 								</td>
 								<td>{{msg.generalMessageModelList[0].departmentName}}</td>
 								<td>{{msg.generalMessageModelList[0].employeeName}}</td>
-								<!-- 								<td class="column1"><a class="tip"><span *ngFor="let dept of msg.offCommList[0].departmentGeneralMessageModels">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of msg.offCommList[0].departmentGeneralMessageModels">{{dept.departmentName +','}}</span></p></a></td>
+								<!-- 								<td class="column1"><a class="tip"><span *ngFor="let dept of msg.generalMessageModelList[0].departmentGeneralMessageModels">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of msg.generalMessageModelList[0].departmentGeneralMessageModels">{{dept.departmentName +','}}</span></p></a></td>
  -->
 								<td>{{msg.generalMessageModelList[0].referenceNo}}({{msg.generalMessageModelList.length}})</td>
-<!-- 								<td>{{msg.generalMessageModelList[0].workName}}</td>
- -->								<td>{{msg.generalMessageModelList[0].subject}}</td>
-								<!-- <td>{{msg.offCommList[0].createdOn | date : "medium"}}</td> -->
+								<td>{{msg.generalMessageModelList[0].workName}}</td>
+								<td>{{msg.generalMessageModelList[0].subject}}</td>
+								<!-- <td>{{msg.generalMessageModelList[0].createdOn | date : "medium"}}</td> -->
 								<td>{{mf.data[i].titleDate | date : "medium"}}</td>
 								<td class="column1">
 									<div class="link-holder">
 										<a class="link" title="View Details"
-											(click)="viewDetails(msg.generalMessageModelList[0].genMessageId,depts.viewStatus,depts.deptGeneralMsgId);"><i
+											(click)="viewDetails(msg.generalMessageModelList[0].genMessageId,msg.generalMessageModelList[0].departmentGeneralMessageModels);"><i
 												class="fas fa-eye"></i></a>
 										<button (click)="replyMessage(msg.generalMessageModelList[0]);" class="btn btn-success"
 											style="margin-left:5px;">Reply</button>
 									</div>
 								</td>
 							</tr>
-							</ng-container>
+
 
 							<ng-container *ngIf="msg.isDetailsSetVisible">
 								<ng-container *ngFor="let content of msg.generalMessageModelList;index as i">
-							<ng-container *ngFor="let depts1 of content.departmentGeneralMessageModels">
-							<tr class="hover-action-row" *ngIf="i>0 && content.departmentGeneralMessageModels.length>0 && depts1.departmentId==sessionstorage.getItem('sessiondeptId')"
-								[ngClass]="{'rowbg': depts1.viewStatus == 0}">
-								<td class="column1"><i class="fa fa-angle-double-right" aria-hidden="true"></i>
+									<tr *ngIf="i>0">
+										<td class="column1"><i class="fa fa-angle-double-right" aria-hidden="true"></i>
 										</td>
 										<td class="column1">{{content.departmentName}}</td>
 										<td class="column1">{{content.employeeName}}</td>
 										<td class="column1">{{content.referenceNo}}</td>
-<!-- 										<td class="column1">{{content.workName}}</td>
- -->										<td class="column1">{{content.subject}}</td>
+										<td class="column1">{{content.workName}}</td>
+										<td class="column1">{{content.subject}}</td>
 										<td class="column1">{{content.createdOn | date : "medium" }}</td>
 										<td class="column1">
 											<div class="link-holder">
 												<a class="link" title="View Details"
-													(click)="viewDetails(content.genMessageId,depts1.viewStatus,depts1.deptGeneralMsgId);"><i
+													(click)="viewDetails(content.genMessageId,content.departmentGeneralMessageModels);"><i
 														class="fas fa-eye"></i></a>
 											</div>
 										</td>
 									</tr>
-								</ng-container>
 								</ng-container>
 							</ng-container>
 						</tbody>
@@ -149,16 +145,16 @@
 						<tr>
 							<td colspan="6">
 <!-- 								<mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
- -->								<pagination-controls (pageChange)="getcommunicationListPage((page = $event))"></pagination-controls>
-							</td>
+ -->							
+									<pagination-controls (pageChange)="getcommunicationListPage((page = $event))"></pagination-controls>
+								</td>
 						</tr>
 					</tfoot>
 				</table>
+			</div>
 		</div>
 	</div>
 </div>
-</div>
-
 
 <!-- Reply Modal Form -->
 <div class="modal salary-info-model" id="replyModal">
@@ -257,8 +253,7 @@
 							<i class="fa fa-plus fa-1x" aria-hidden="true" style="color:#8C001C;" (click)="fileInput.click()"></i>
 							<div *ngFor="let file of myFiles">
 								<div>{{file.name}}</div> 
-							</div>
-							</div>
+							</div>					</div>
 					</div>
 				</form>
 			</div>
@@ -367,12 +362,12 @@
 								<input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
  -->							
 <!-- 							&nbsp;&nbsp;<label><strong>File Attachment</strong> : </label><input type="file" id="file-input" formControlName="file" (change)="onMoMFileSelected($event.target.files);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" />
- -->							&nbsp;&nbsp;<label><strong>Add File(s)</strong> : </label><input #fileInput type="file" id="file-input" formControlName="file" name="file" hidden (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple />
+ -->
+							&nbsp;&nbsp;<label><strong>Add File(s)</strong> : </label><input #fileInput type="file" id="file-input" formControlName="file" name="file" hidden (change)="getFileDetails($event);" accept=".xlsx,.xls,image/*,.doc, .docx,.pdf" multiple />
 							<i class="fa fa-plus fa-1x" aria-hidden="true" style="color:#8C001C;" (click)="fileInput.click()"></i>
 							<div *ngFor="let file of myFiles">
 								<div>{{file.name}}</div> 
-							</div>
-							</div>
+							</div>							</div>
 							</div>
 					</div>
 				</form>
@@ -395,9 +390,9 @@
 				<div class="modal-body">
 					<div *ngFor="let com2 of communicationList2">
 						<div class="row form-group">
-							<!-- <div class="col-lg-12">
+							<div class="col-lg-12">
 								Date : <b>{{com2.updatedOn | date : "medium"}}</b>
-							</div> -->
+							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-lg-12">
@@ -417,16 +412,6 @@
 										}}</b></span>
 							</div>
 						</div>
-						<!-- <div class="row form-group">
-							<div class="col-lg-12">
-								Work Name : <b>{{com2.workName}} </b>
-							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-lg-12">
-								Sub Task Name : <b>{{com2.subTaskName}} </b>
-							</div>
-						</div> -->
 						<div class="row form-group">
 							<div class="col-lg-12">
 								Subject : <b>{{com2.subject}} </b>

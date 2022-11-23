@@ -168,9 +168,10 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   public onCommunicationDetailsSearched(){
 	  let params = this.getSearchParams();
 	  this.GeneralmessageinboxService.searchInterDeptCommList(params).subscribe((resp:any)=>{
-	  this.totalItems = resp.totalCount;
+	  const messageCount=resp.totalCount;
+	  this.totalItems = messageCount;
 	  this.communicationList = resp["genMsgModelList"];
-    });
+	  });
   }
   public onItemSelect(event:any){    
     this.isNotDepartmentSelected = !(this.interCommForm.value.deptCommList && 

@@ -158,11 +158,19 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
     }
     return params;
   }
-  public onCommunicationDetailsSearched(){
+  /* public onCommunicationDetailsSearched(){
 	  let params = this.getSearchParams();
 	  this.GeneralmessagesentService.searchInterDeptCommList(params).subscribe((resp:any)=>{
 	  this.communicationList = resp["genMsgModelList"];
     });
+  } */
+  public onCommunicationDetailsSearched(){
+	  let params = this.getSearchParams();
+	  this.GeneralmessagesentService.searchInterDeptCommList(params).subscribe((resp:any)=>{
+	  const messageCount=resp.totalCount;
+	  this.totalItems = messageCount;
+	  this.communicationList = resp["genMsgModelList"];
+	  });
   }
   public onItemSelect(event:any){    
     this.isNotDepartmentSelected = !(this.interCommForm.value.deptCommList && 
