@@ -48,8 +48,8 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   public communicationList4 : Array<any>;
   public searchcommunicationList : Array<any>;
   public subtaskList : Array<any>;
-  public itemName: string = "Inter Office Communication";
-  public itemNameReply: string = "Inter Office Communication Reply";
+  public itemName: string = "General Message";
+  public itemNameReply: string = "General Message Reply";
   public prv_departmentEdit : string;
   public prv_departmentDelete : string;
   public detailsId : string;
@@ -324,13 +324,13 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	  this.GeneralmessageinboxService.sendToGeneralMessage(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
 		//if(resp.status == 200) {
-          this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
+          this.alertService.showSendStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
 			//this.resetForm();
 			this.clearNewForm();
 			this.getcommunicationList();
 		  } else {
-          this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
+          this.alertService.showSendStatus(this.itemName.toLowerCase(), false);
         }
 		
       });
@@ -361,11 +361,11 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	  //console.log(params);
 	  this.GeneralmessageinboxService.replyInterOfficeCommunication(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
-          this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), true);
+          this.alertService.showSendStatus(this.itemNameReply.toLowerCase(), true);
           this.clearForm();
 		  this.getcommunicationList();
 		} else {
-          this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), false);
+          this.alertService.showSendStatus(this.itemNameReply.toLowerCase(), false);
         }
       });
 	  this.isreplyFormSubmitInitiated = false;	
@@ -407,13 +407,13 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	  this.GeneralmessageinboxService.replyGeneralMessage(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
 		//if(resp.status == 200) {
-          this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
+          this.alertService.showSendStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
 			//this.resetForm();
 			this.clearForm();
 			this.getcommunicationList();
 		  } else {
-          this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
+          this.alertService.showSendStatus(this.itemName.toLowerCase(), false);
         }
 		
       });

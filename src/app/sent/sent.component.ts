@@ -48,8 +48,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   public communicationList4 : Array<any>;
   public searchcommunicationList : Array<any>;
   public subtaskList : Array<any>;
-  public itemName: string = "Inter Office Communication";
-  public itemNameReply: string = "Inter Office Communication Reply";
+  public itemName: string = "Inter Office Communication Message";
+  public itemNameReply: string = "Inter Office Communication Message Reply";
   public prv_departmentEdit : string;
   public prv_departmentDelete : string;
   public detailsId : string;
@@ -332,13 +332,13 @@ export class SentComponent extends BaseComponent implements OnInit {
 	  this.SentService.saveInterOfficeCommunication(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
 		//if(resp.status == 200) {
-          this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
+          this.alertService.showSendStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
 			//this.resetForm();
 			this.clearNewForm();
 			this.getcommunicationList();
 		  } else {
-          this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
+          this.alertService.showSendStatus(this.itemName.toLowerCase(), false);
         }
 		
       });
@@ -369,11 +369,11 @@ export class SentComponent extends BaseComponent implements OnInit {
 	  //console.log(params);
 	  this.SentService.replyInterOfficeCommunication(params).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
-          this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), true);
+          this.alertService.showSendStatus(this.itemNameReply.toLowerCase(), true);
           this.clearForm();
 		  this.getcommunicationList();
 		} else {
-          this.alertService.showSaveStatus(this.itemNameReply.toLowerCase(), false);
+          this.alertService.showSendStatus(this.itemNameReply.toLowerCase(), false);
         }
       });
 	  this.isreplyFormSubmitInitiated = false;	
@@ -415,13 +415,13 @@ export class SentComponent extends BaseComponent implements OnInit {
 	  this.SentService.replyInterOfficeCommunication(formData).subscribe((resp:any)=>{      
 		if(resp.status == "success") {
 		//if(resp.status == 200) {
-          this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
+          this.alertService.showSendStatus(this.itemName.toLowerCase(), true);
 			this.clearinterCommForm();
 			//this.resetForm();
 			this.clearForm();
 			this.getcommunicationList();
 		  } else {
-          this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
+          this.alertService.showSendStatus(this.itemName.toLowerCase(), false);
         }
 		
       });

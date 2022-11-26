@@ -90,6 +90,18 @@ export class AlertNotificationService {
             this.showError(message, title);
         }
     }
+	public showSendStatus(item: string, isSend : boolean) {
+        let message = "Error while sending the " + item;
+        let title = "Send Error!";
+
+        if(isSend) {
+            message = "The " + item  +" has been sent";
+            title = "Sent!"
+            this.showSuccess(message, title);
+        } else {
+            this.showError(message, title);
+        }
+    }
 
     public showConfirmation(_self: any, message: string, title: string, successBtnText: string, successCallbackFn: any, callbackParams : any) {
         Swal.fire({
