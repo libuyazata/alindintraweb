@@ -181,7 +181,14 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
     this.isNotDepartmentSelected = (!this.interCommForm.value.deptCommList || 
                                     this.interCommForm.value.deptCommList.length == 0);
   }
-  
+  public onItemChangeReply(event:any){    
+	let params = {
+      status : 1
+    }
+    this.GeneralmessagesentService.getDepartmentList(params).subscribe((resp:any)=>{      
+      this.departmentList = resp["departments"];
+    });
+	}
   public onItemSelectReply(event:any){    
     this.isNotDepartmentSelectedReply = !(this.replyForm.value.deptCommList && 
                                     this.replyForm.value.deptCommList.length > 0);    

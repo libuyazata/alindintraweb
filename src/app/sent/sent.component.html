@@ -12,7 +12,7 @@
 		<div class="col-lg-12 search-container">
 			<form novalidate [formGroup]="materialRequestSearchForm" (ngSubmit)="onCommunicationDetailsSearched();">
 				<div class="row">
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<div class="search-label-container"><label>Search</label></div>
 						<input formControlName="searchKeyWord" class="form-control" placeholder="Search.." />
 					</div>
@@ -25,7 +25,7 @@
 						<input formControlName="dateTo" class="form-control" type="date" />
 					</div>
 
-					<div class="col-lg-6 pt-4">
+					<div class="col-lg-5 pt-4">
 						<span class="float-left">
 							<button class="btn btn-info" type="submit">Search</button>
 							<button class="btn btn-danger" type="reset" (click)="clearSearchForm()">Clear</button>
@@ -35,7 +35,7 @@
 							<!-- 													</span>
  -->
 							<a class="link" [routerLink]="['/inbox/']">
-								<button class="btn btn-success ml-5" type="button">View Inbox Message</button>
+								<button class="btn btn-success ml-0" type="button">View Inbox Message</button>
 							</a>
 						</span>
 					</div>

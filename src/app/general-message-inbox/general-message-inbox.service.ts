@@ -67,7 +67,8 @@ export class GeneralmessageinboxService extends BaseService {
     return this.httpClient.get("project/viewUpdateDepartmentGenMessage/"+data);
   }
   public searchInterDeptCommList(data:any): Observable<any>{
-    return this.httpClient.get("project/searchGeneralMessageListTest", { params : data});
+    //return this.httpClient.get("project/searchGeneralMessageListTest", { params : data});
+    return this.httpClient.get("project/searchGeneralMessageList", { params : data});
   }
   public downloadWorkMessageAttachmentByOffComId(data:any): Observable<any>{
 	return this.httpClient.get("project/downloadWorkMessageAttachmentByOffComId/"+data);

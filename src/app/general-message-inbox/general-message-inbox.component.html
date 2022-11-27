@@ -188,7 +188,7 @@
 								[ngClass]="{ 'is-invalid': isreplyFormSubmitInitiated && replyForms.departmentGeneralMessageModels.errors }" formControlName="deptCommList"
 								name="departmentGeneralMessageModels" [placeholder]="'Select Department'" [data]="departmentList"
 								[settings]="dropdownSettingsReply" (onDeSelect)="onItemDeSelectReply($event)"
-								(onSelect)="onItemSelectReply($event)">
+								(onSelect)="onItemSelectReply($event)" (click)="onItemChangeReply($event)" >
 							</ng-multiselect-dropdown>
 							<div *ngIf="isreplyFormSubmitInitiated && replyForms.departmentGeneralMessageModels.errors"
 								style="color:red;">Please Choose Department</div>
