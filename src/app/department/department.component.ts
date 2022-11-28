@@ -38,7 +38,8 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
       departmentId : new FormControl(''),
       departmentName : new FormControl('',  Validators.required),
       description : new FormControl('')
-      //emailId : new FormControl('', Validators.required),
+	 // description : new FormControl('', [Validators.required, Validators.maxLength(10)])
+	  //emailId : new FormControl('', Validators.required),
       //isActive : new FormControl('',  Validators.required),
       //mobileNo : new FormControl('',  Validators.required)
     });

@@ -24,7 +24,7 @@
                         <div class="search-label-container"><label>Search</label></div>
                         <input formControlName="searchKeyWord" class="form-control" placeholder="Search Work"/>  
                     </div> 
-					<div class="col-lg-2">
+					<div class="col-lg-1">
                     <div class="search-label-container"><label>Type</label></div>
                     <select class="form-control" formControlName="workTypeId">
                         <option value="0" [selected] ="true">All</option>  
@@ -40,13 +40,15 @@
                         <input formControlName="dateTo" class="form-control" type="date" />  
                     </div>
                      
-                    <div class="col-lg-4 pt-4">                    
+                    <div class="col-lg-5 pt-4">                    
                         <span class="float-left">
                             <button class="btn btn-info" type="submit">Search</button>  
                             <button class="btn btn-danger" type="reset">Clear</button>
                         	<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;">Create {{itemName}}</button>  
-
-						</span>
+							<a class="link" [routerLink]="['/work-present/']">
+								<button class="btn btn-success ml-0" type="button">View Work</button>
+							</a>
+							</span>
                     </div> 
                 </div>
             </form> 
