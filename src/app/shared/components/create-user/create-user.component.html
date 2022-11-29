@@ -76,7 +76,10 @@
         <textarea formControlName="nativeAddress" class="form-control"
         [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.nativeAddress.errors }" maxlength="200">
         </textarea>
-        <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.nativeAddress.errors" class="invalid-feedback text-area-section">
+					<div style="color:green;">
+                                <i>Maximum character limit 200 allowed.</i>
+					</div>
+			<div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.nativeAddress.errors" class="invalid-feedback text-area-section">
             <div *ngIf="employeeForm.nativeAddress.errors.required">Please provide the native address.</div>
         </div>
     </div>
@@ -84,7 +87,10 @@
         <div><label>Accommodation Address</label></div>
         <textarea formControlName="accommodationLocation" class="form-control" maxlength="200">
         </textarea>
-    </div>
+		<div style="color:green;">
+                                <i>Maximum character limit 200 allowed.</i>
+			</div>
+		</div>
     </div>
 
     <div class="row form-group">

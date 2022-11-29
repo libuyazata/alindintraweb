@@ -148,6 +148,9 @@ updatedAt: 1527800257000
                       <textarea class="form-control mandatory-field" formControlName="description"  maxlength="200"
                         [ngClass]="{ 'is-invalid': isDepartmentFormAttemptSubmit && departmentForm.description?.errors }" ></textarea>
 
+					<div style="color:green;">
+                                <i>Maximum character limit 200 allowed.</i>
+					</div>
 					<div *ngIf="isDepartmentFormAttemptSubmit && departmentForm.description?.errors" class="invalid-feedback">
                         <div *ngIf="departmentForm.description?.errors.required">Please provide objectives.</div>
                     </div>
