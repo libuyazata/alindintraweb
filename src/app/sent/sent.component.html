@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h4>
-					<span>INTER OFFICE COMMUNICATION MESSAGE - Sent</span>
+					<span>INTER OFFICE COMMUNICATION MESSAGE- Sent</span>
 				</h4>
 			</div>
 		</div>
@@ -84,10 +84,9 @@
 					</tbody>
 					<ng-container *ngFor="let msg of mf.data | paginate: {itemsPerPage: 15,currentPage: page,totalItems: totalItems};index as i">
 						<tbody *ngFor="let msg of mf.data[i].comMsgRefList">
-							<ng-container *ngFor="let depts of msg.offCommList[0].deptCommList">
-							<tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0 && depts.departmentId==sessionstorage.getItem('sessiondeptId')"
-								[ngClass]="{'rowbg': depts.viewStatus == 0}">
-								<!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}" (click)="updateMessage(msg.offCommList[0].deptCommList);" >
+							<tr class="hover-action-row" *ngIf="msg.offCommList[0].deptCommList.length > 0"
+								[ngClass]="{'rowbg': msg.offCommList[0].deptCommList[0]['viewStatus'] == 0}">
+								<!--                 <tr class="hover-action-row" [ngClass]="{'rowbg': msg.generalMessageModelList[0].departmentGeneralMessageModels[0]['viewStatus'] == 0}" (click)="updateMessage(msg.generalMessageModelList[0].departmentGeneralMessageModels);" >
 -->
 								<!--                         <tr>
  -->
@@ -100,31 +99,28 @@
 								</td>
 								<td>{{msg.offCommList[0].departmentName}}</td>
 								<td>{{msg.offCommList[0].employeeName}}</td>
-								<!-- 								<td class="column1"><a class="tip"><span *ngFor="let dept of msg.offCommList[0].deptCommList">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of msg.offCommList[0].deptCommList">{{dept.departmentName +','}}</span></p></a></td>
+								<!-- 								<td class="column1"><a class="tip"><span *ngFor="let dept of msg.generalMessageModelList[0].departmentGeneralMessageModels">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of msg.generalMessageModelList[0].departmentGeneralMessageModels">{{dept.departmentName +','}}</span></p></a></td>
  -->
 								<td>{{msg.offCommList[0].referenceNo}}({{msg.offCommList.length}})</td>
 								<td>{{msg.offCommList[0].workName}}</td>
 								<td>{{msg.offCommList[0].subject}}</td>
-								<!-- <td>{{msg.offCommList[0].createdOn | date : "medium"}}</td> -->
+								<!-- <td>{{msg.generalMessageModelList[0].createdOn | date : "medium"}}</td> -->
 								<td>{{mf.data[i].titleDate | date : "medium"}}</td>
 								<td class="column1">
 									<div class="link-holder">
 										<a class="link" title="View Details"
-											(click)="viewDetails(msg.offCommList[0].officeCommunicationId,depts.viewStatus,depts.deptCommId);"><i
+											(click)="viewDetails(msg.offCommList[0].officeCommunicationId,msg.offCommList[0].deptCommList,page);"><i
 												class="fas fa-eye"></i></a>
 										<button (click)="replyMessage(msg.offCommList[0]);" class="btn btn-success"
 											style="margin-left:5px;">Reply</button>
 									</div>
 								</td>
 							</tr>
-							</ng-container>
 
 
 							<ng-container *ngIf="msg.isDetailsSetVisible">
 								<ng-container *ngFor="let content of msg.offCommList;index as i">
-							<ng-container *ngFor="let depts1 of content.deptCommList">
-									<tr class="hover-action-row" *ngIf="i>0 && content.deptCommList.length>0 && depts1.departmentId==sessionstorage.getItem('sessiondeptId')"
-								[ngClass]="{'rowbg': depts1.viewStatus == 0}">
+									<tr *ngIf="i>0">
 										<td class="column1"><i class="fa fa-angle-double-right" aria-hidden="true"></i>
 										</td>
 										<td class="column1">{{content.departmentName}}</td>
@@ -136,12 +132,11 @@
 										<td class="column1">
 											<div class="link-holder">
 												<a class="link" title="View Details"
-													(click)="viewDetails(content.officeCommunicationId,depts1.viewStatus,depts1.deptCommId);"><i
+													(click)="viewDetails(content.officeCommunicationId,content.deptCommList,page);"><i
 														class="fas fa-eye"></i></a>
 											</div>
 										</td>
 									</tr>
-								</ng-container>
 								</ng-container>
 							</ng-container>
 						</tbody>
@@ -150,9 +145,9 @@
 						<tr>
 							<td colspan="6">
 <!-- 								<mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
- -->
-<pagination-controls (pageChange)="getcommunicationListPage((page = $event))"></pagination-controls>
-							</td>
+ -->							
+									<pagination-controls (pageChange)="getcommunicationListPage(page = $event)"></pagination-controls>
+								</td>
 						</tr>
 					</tfoot>
 				</table>

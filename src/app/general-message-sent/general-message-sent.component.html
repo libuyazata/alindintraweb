@@ -109,7 +109,7 @@
 								<td class="column1">
 									<div class="link-holder">
 										<a class="link" title="View Details"
-											(click)="viewDetails(msg.generalMessageModelList[0].genMessageId,msg.generalMessageModelList[0].departmentGeneralMessageModels);"><i
+											(click)="viewDetails(msg.generalMessageModelList[0].genMessageId,msg.generalMessageModelList[0].departmentGeneralMessageModels,page);"><i
 												class="fas fa-eye"></i></a>
 										<button (click)="replyMessage(msg.generalMessageModelList[0]);" class="btn btn-success"
 											style="margin-left:5px;">Reply</button>
@@ -132,7 +132,7 @@
 										<td class="column1">
 											<div class="link-holder">
 												<a class="link" title="View Details"
-													(click)="viewDetails(content.genMessageId,content.departmentGeneralMessageModels);"><i
+													(click)="viewDetails(content.genMessageId,content.departmentGeneralMessageModels,page);"><i
 														class="fas fa-eye"></i></a>
 											</div>
 										</td>

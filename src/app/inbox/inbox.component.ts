@@ -165,6 +165,8 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public onCommunicationDetailsSearched(){
 	  let params = this.getSearchParams();
 	  this.InboxService.searchInterDeptCommList(params).subscribe((resp:any)=>{
+	  const messageCount=resp.totalCount;
+	  this.totalItems = messageCount;
 	  this.communicationList = resp["communicationModelList"];
     });
   }
@@ -229,7 +231,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	  this.totalItems = messageCount;
     });
 	
-	this.InboxService.getInboxMessageByDeptIdPageData(departmentId,0,15).subscribe((resp:any)=>{      
+	this.InboxService.getInboxMessageByDeptIdPageData(departmentId,1,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["inboxMessages"];
     });
 	
@@ -527,14 +529,20 @@ export class InboxComponent extends BaseComponent implements OnInit {
     this.isDescription = false;
 	this.interCommForm.reset();
   }
-  public viewDetails(item:any,statusview:any,commId:any){
-	//this.detailsId=item;
-		//this.initializeViewForm(item);
-	const viewStatus = statusview;
-	const deptCommId = commId;
+  public viewDetails(item:any,viewItem:any,page: any){
+	const viewStatus = viewItem[0]['viewStatus'];
+	const deptCommId = viewItem[0]['deptCommId'];
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	
 	  if(viewStatus == 0){
 			this.InboxService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
-			this.getcommunicationList();
+			//this.getcommunicationList();
+			
+			this.InboxService.getInboxMessageByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+			  this.communicationList = resp["inboxMessages"];
+			  this.page = page;
+			});
 			});
 	 }		
 	this.openDescriptionForm(item);

@@ -526,15 +526,21 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	this.isDescription = false;
 	this.interCommForm.reset();
   }
- public viewDetails(item:any,statusview:any,commId:any){
+  public viewDetails(item:any,viewItem:any,page: any){
 	//this.detailsId=item;
 		//this.initializeViewForm(item);
-	const viewStatus = statusview;
-	const deptCommId = commId;
+	const viewStatus = viewItem[0]['viewStatus'];
+	const deptCommId = viewItem[0]['deptGeneralMsgId'];
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
 	  
 	  if(viewStatus == 0){
 			this.GeneralmessageinboxService.viewUpdateDepartmentGenMessage(deptCommId).subscribe((resp:any)=>{      
-			this.getcommunicationList();
+			//this.getcommunicationList();
+			this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+			  this.communicationList = resp["models"];
+			  this.page = page;
+			});
 			});
 	 }		
 	this.openDescriptionForm(item);
