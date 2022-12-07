@@ -59,6 +59,12 @@
                     <th class="column1">
                         <mfDefaultSorter by="description">Objectives</mfDefaultSorter>
                     </th>
+					<th class="column1">
+                        <mfDefaultSorter by="description">Status</mfDefaultSorter>
+                    </th>
+					<th class="column1">
+                        <mfDefaultSorter by="description"></mfDefaultSorter>
+                    </th>
                     <!-- <th>
                         <mfDefaultSorter by="createdAt">Created On</mfDefaultSorter>
                     </th> -->
@@ -74,13 +80,15 @@
                     <tr class="hover-action-row" [ngClass]="{'rowbg': item.isActive == 1}">
                     <td class="column1">{{item.departmentName | uppercase }}</td>
                     <td class="column2">{{item.description | uppercase}}</td>
+                    <td class="column3">{{item.isActive == 1 ? "Active" : "Inactive"}}</td>
                     <!-- <td>{{item.mobileNo}}</td> -->
                     <!-- <td>{{item.createdOn | date :  "dd MMM yyyy"}}</td> -->
                     <!-- <td>{{item.updatedAt | date :  "dd MMM yyyy" }}</td> -->
-                    <td class="actions">
+					<td class="column4 col-md-2"></td>
+					<td class="actions">
                         <div class="link-holder">
-						<span *ngIf="prv_departmentDelete == 'true'">
-						 <a class="link" title="Delete" (click)="deleteDepartmentDetails(item);" ><i class="fas fa-trash"></i></a>
+						<span *ngIf="prv_departmentDelete == 'true' && item.isActive == 1">
+						 <a class="link" title="Make Inactive" (click)="deleteDepartmentDetails(item);" ><i class="fas fa-ban"></i></a>
 						</span>
 						<span *ngIf="prv_departmentEdit == 'true'">
 						 <a class="link" title="Edit" (click)="editDepartmentDetails(item);"><i class="fas fa-edit"></i></a>
@@ -180,11 +188,11 @@ updatedAt: 1527800257000
               </div> -->
               <div class="row form-group">
                 <div class="col-lg-12">
-                    <label>Is Active</label>
+                    <label>Status</label>
                     <select class="form-control" formControlName="isActive"
                     [ngClass]="{ 'is-invalid': isDepartmentFormAttemptSubmit && departmentForm.isActive.errors }">
-                      <option value="1" selected>Yes</option>
-                      <option value="-1">No</option>
+                      <option value="1" selected>Active</option>
+                      <option value="-1">Inactive</option>
                     </select>
                     <div *ngIf="isDepartmentFormAttemptSubmit && departmentForm.isActive?.errors" class="invalid-feedback">
                         <div *ngIf="departmentForm.isActive?.errors.required">Please provide the department active status.</div>

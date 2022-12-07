@@ -121,12 +121,12 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
     let params = {
       departmentId : item.departmentId
     };
-    this.alertService.showPermenantDeleteConfirmation(this, this.itemName.toLowerCase(), this.onConfirmDelete, params);
+    this.alertService.showInactiveConfirmation(this, this.itemName.toLowerCase(), this.onConfirmDelete, params);
   }
     public onConfirmDelete(_self: any, params: any) {
     _self.departmentService.deleteDepartment(params).subscribe((resp: any) => {
       let deleteStatus = resp.status == "success";
-      _self.alertService.showDeleteStatus(_self.itemName.toLowerCase(), deleteStatus);
+      _self.alertService.showInactiveStatus(_self.itemName.toLowerCase(), deleteStatus);
       _self.getDepartmentList();
     });
 	}

@@ -64,6 +64,18 @@ export class AlertNotificationService {
             this.showError(message, title);
         }
     }
+    public showInactiveStatus(item : string, isDeleted : boolean) {
+        let message = "Error while Inactivating the " + item;
+        let title = "Inactive Error!"
+
+        if(isDeleted) {
+            message = "The " + item  +" has been Inactivated";
+            title = "Inactivated!"
+            this.showSuccess(message, title);
+        } else {
+            this.showError(message, title);
+        }
+    }
 
     public showSuspendStatus(item : string, isDeleted : boolean) {
         let message = "Error while suspending the " + item;
@@ -125,6 +137,13 @@ export class AlertNotificationService {
         let title = "Are you sure?";
         let message = "You won't be able to revert this!";
         let successBtnText = "Yes, delete it!";
+
+        this.showConfirmation(_self, message, title, successBtnText, successCallbackFn, callbackParams);
+    }
+	public showInactiveConfirmation(_self: any, item: string, successCallbackFn : any, callbackParams : any) {
+        let title = "Are you sure to Inactivate this?";
+        let message = "You won't be able to revert this!";
+        let successBtnText = "Yes";
 
         this.showConfirmation(_self, message, title, successBtnText, successCallbackFn, callbackParams);
     }
