@@ -23,6 +23,13 @@ export class DepartmentService extends BaseService {
   public saveOrUpdateDepartment(departmentInfo:any): Observable<any>{
     return this.httpClient.post("user/saveOrUpdateDepartment/", departmentInfo);
   }
+  public saveDepartment(departmentInfo:any): Observable<any>{
+    return this.httpClient.post("user/saveDepartment/", departmentInfo);
+  }
+  
+  public updateDepartment(departmentInfo:any): Observable<any>{
+    return this.httpClient.post("user/updateDepartment/", departmentInfo);
+  }
   
   public deleteDepartment(data:any): Observable<any>{
     return this.httpClient.get("/user/deleteDepartment/", { params : data});

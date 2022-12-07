@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-lg-12 search-container">
             <div class="row">
-                <div class="col-lg-3">
+<!--                 <div class="col-lg-3">
                     <form novalidate [formGroup]="departmentSearchForm">
                         <div class="search-label-container"><label>Status</label></div>
                         <select class="form-control" formControlName="departmentStatus"
@@ -22,7 +22,7 @@
                         </select>
                     </form>
                 </div>
-                <div class="col-lg-9 pt-4">
+ -->                <div class="col-lg-12 pt-4">
                     <span class="float-right">
                         <button class="btn btn-info float-right" (click)="openDepartmentEntryForm();">
                             <i class="fa fa-plus"></i> Create
@@ -71,7 +71,7 @@
                 </tr>
                 </thead>
                 <tbody *ngFor="let item of mf.data">
-                    <tr class="hover-action-row">
+                    <tr class="hover-action-row" [ngClass]="{'rowbg': item.isActive == 1}">
                     <td class="column1">{{item.departmentName | uppercase }}</td>
                     <td class="column2">{{item.description | uppercase}}</td>
                     <!-- <td>{{item.mobileNo}}</td> -->
@@ -177,21 +177,20 @@ updatedAt: 1527800257000
                         <div *ngIf="departmentForm.mobileNo.errors.required">Please provide the mobile number(s).</div>
                     </div>
                 </div>
-              </div>
+              </div> -->
               <div class="row form-group">
                 <div class="col-lg-12">
                     <label>Is Active</label>
                     <select class="form-control" formControlName="isActive"
                     [ngClass]="{ 'is-invalid': isDepartmentFormAttemptSubmit && departmentForm.isActive.errors }">
-                      <option value="">Select</option>
-                      <option value="1">Yes</option>
-                      <option value="0">No</option>
+                      <option value="1" selected>Yes</option>
+                      <option value="-1">No</option>
                     </select>
                     <div *ngIf="isDepartmentFormAttemptSubmit && departmentForm.isActive?.errors" class="invalid-feedback">
                         <div *ngIf="departmentForm.isActive?.errors.required">Please provide the department active status.</div>
                     </div>
                 </div>
-              </div>   -->
+              </div>  
             </div>
             <div class="modal-footer">
               <button class="btn btn-info" type="submit">Submit</button>

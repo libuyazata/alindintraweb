@@ -37,13 +37,13 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
     this.departmentSaveForm = new FormGroup({
       departmentId : new FormControl(''),
       departmentName : new FormControl('',  Validators.required),
-      description : new FormControl('')
+      description : new FormControl(''),
 	 // description : new FormControl('', [Validators.required, Validators.maxLength(10)])
 	  //emailId : new FormControl('', Validators.required),
-      //isActive : new FormControl('',  Validators.required),
+      isActive : new FormControl('',  Validators.required)
       //mobileNo : new FormControl('',  Validators.required)
     });
-    this.departmentSearchForm = new FormGroup({
+	this.departmentSearchForm = new FormGroup({
       departmentStatus : new FormControl(''),
     });
     this.getDepartmentList();
@@ -57,11 +57,23 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
     if(this.departmentSaveForm.valid) {
       let department = this.departmentSaveForm.value;
       department.departmentId = department.departmentId == "" ? 0 : department.departmentId;
-      this.departmentService.saveOrUpdateDepartment(department).subscribe((resp:any)=>{
-        this.showAlert("Department details has been submitted successfully");
+      //this.departmentService.saveOrUpdateDepartment(department).subscribe((resp:any)=>{
+      if(department.departmentId == "" || department.departmentId == null){
+		this.departmentService.saveDepartment(department).subscribe((resp:any)=>{
+        this.showAlert("Department details has been Saved successfully");
+        this.getDepartmentList();
+        this.closeDepartmentEntryView();
+      }); 
+	  }
+	  else{
+	  this.departmentService.updateDepartment(department).subscribe((resp:any)=>{
+        this.showAlert("Department details has been Updated successfully");
         this.getDepartmentList();
         this.closeDepartmentEntryView();
       });
+	  }
+	  
+	  
     } else {
       this.showAlert("Please fill all the mandatory fields before submit.");
     }
@@ -74,7 +86,8 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
 
   /* Add / Save Project View  Model Open Close Method */
   public openDepartmentEntryForm() {    
-    this.isDepartmentFormAttemptSubmit = false;
+	this.departmentSaveForm.patchValue({"isActive" : 1});
+	this.isDepartmentFormAttemptSubmit = false;
     document.getElementById('departmentModal').classList.toggle('d-block');
   }
 
