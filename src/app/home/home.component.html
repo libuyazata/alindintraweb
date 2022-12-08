@@ -8,7 +8,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row m-t-25">
+						<div class="row m-t-25">
+						<div class="col-lg-6">
+                        <form novalidate [formGroup]="departmentDashboard">
+						<div><label><b>Choose Department</b> : </label></div>
+                        <select class="form-control" formControlName="departmentId" (change)="getDepartmentDashboardData($event);">
+                        <option value="0" selected>Choose Department</option>
+						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
+                         </select> 
+                        </form>
+						</div>
+						</div>
+						
+						<div class="row m-t-25" *ngIf="showDashboard">
                             <div class="col-sm-6 col-lg-3">
                                 <a class="link" [routerLink]="['/department/']">
 								<div class="overview-item overview-item--c1" style="background-image: -webkit-linear-gradient(90deg, #3f5efb 0%, #fc466b 100%);">

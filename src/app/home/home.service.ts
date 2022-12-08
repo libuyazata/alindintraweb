@@ -41,8 +41,9 @@ export class HomeService extends BaseService {
   /call/getNonAllottedCalls
   */
 
-  public getAdminDashboardData(): Observable<any>{
-    return this.httpClient.get("dashBoard/getAdminDashBoard");
+  public getAdminDashboardData(data:any): Observable<any>{
+    //return this.httpClient.get("dashBoard/getAdminDashBoard");
+    return this.httpClient.get("dashBoard/getDashBoardByDepartId/"+data);
   }
 
   public getCompletedCalls(): Observable<any>{
@@ -55,5 +56,9 @@ export class HomeService extends BaseService {
 
   public getNonAllottedCalls(): Observable<any>{
     return this.httpClient.get("alindsalesapp/call/getNonAllottedCalls");
+  }
+  
+  public getDepartmentList(data:any): Observable<any>{
+    return this.httpClient.get("user/getAllDepartment/");
   }
 }

@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { HomeService } from './home.service';
 import { Chart } from 'angular-highcharts';
 import { DatePipe } from '@angular/common';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,11 @@ export class HomeComponent implements OnInit {
   onGoingCalls: Array<any>;
   completedCalls: Array<any>;
   nonAllottedCalls: Array<any>;
-  
+  public departmentList : Array<any>;
+  public departmentDashboard : FormGroup;
+  public showDashboard : boolean = false;
+
+
   constructor(private homeService: HomeService, private datePipe: DatePipe) {
     // this.homeService.getDashboardData({}).subscribe((resp:any) => {
     //   this.dashboardData = resp.dashBoard;
@@ -29,7 +34,15 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {  
-    this.getAdminDashBoard();
+	this.getDepartmentList();
+	this.departmentDashboard = new FormGroup({
+      departmentId : new FormControl('')
+	});
+	this.departmentDashboard.patchValue({"departmentId" : 0});
+
+	//this.getAdminDashBoard();
+	
+	  
     //this.getCompletedCalls();
     //this.getNonAllottedCalls();
     //this.getOnGoingCalls();
@@ -101,9 +114,9 @@ export class HomeComponent implements OnInit {
   //   });
   // }
 
-  protected getAdminDashBoard() {
+  /* protected getAdminDashBoard() {
     this.homeService.getAdminDashboardData().subscribe((resp:any) => {      
-      /*
+   */    /*
       noOfDepartments: 8
       noOfEmpoyees: 10
       empCountBasedOnDept: null
@@ -113,11 +126,14 @@ export class HomeComponent implements OnInit {
         pjtStarted: 9
         totalPjtDoc: 18
       */
-      if(resp.adminDashBoard != null){
+      /* if(resp.adminDashBoard != null){
         this.dashboardData = resp.adminDashBoard;
+      } */
+	  /* if(resp.deptDashBoard != null){
+        this.dashboardData = resp.deptDashBoard;
       }
     })
-  }
+  } */
 
   protected getCompletedCalls() {
     this.homeService.getCompletedCalls().subscribe((resp:any) => {
@@ -136,4 +152,31 @@ export class HomeComponent implements OnInit {
       
     })
   }
+  
+  protected getDepartmentList() {
+	let params = {
+      status : 1
+    }
+	this.homeService.getDepartmentList(params).subscribe((resp:any)=>{      
+	  this.departmentList = resp["departments"];
+    });
+  }
+  public getDepartmentDashboardData(event:any){
+	let departmentId = event.target.value;
+	 if(departmentId != 0){
+		 this.showDashboard=true;
+	 }else{
+		 this.showDashboard=false;
+	  }
+	 // alert(departmentId); 
+	  this.homeService.getAdminDashboardData(departmentId).subscribe((resp:any) => {      
+      
+	  if(resp.deptDashBoard != null){
+        this.dashboardData = resp.deptDashBoard;
+      }
+    })	 
+
+  }
+  get departmentForm() { return this.departmentDashboard.controls; }
+
 }

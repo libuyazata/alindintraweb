@@ -9,6 +9,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { HomeService } from './home.service';
 import { DictToKeyValModule } from '@app/shared/pipes/iter-dict/iter-dict-key-val-pipe.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { DictToKeyValModule } from '@app/shared/pipes/iter-dict/iter-dict-key-va
     HomeRoutingModule,
     ChartModule,
     DictToKeyValModule,
+	ReactiveFormsModule,
   ],
   declarations: [
     HomeComponent
