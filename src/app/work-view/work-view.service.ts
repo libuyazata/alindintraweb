@@ -84,7 +84,7 @@ export class WorkViewService extends BaseService {
     return this.httpClient.get("project/deleteSubTask", { params : data});
   }
   public getDepartmentList(data:any): Observable<any>{
-    return this.httpClient.get("user/getAllDepartment/");
+    return this.httpClient.get("user/getActiveDepartments/");
   }
   public getAllEmployeeList(data:any): Observable<any>{
     return this.httpClient.get("user/getAllEmployees/");

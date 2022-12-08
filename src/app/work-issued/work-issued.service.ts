@@ -22,7 +22,7 @@ export class WorkissuedService extends BaseService {
     return this.httpClient.get("user/getAllEmployees/");
   }
   public getDepartmentList(data:any): Observable<any>{
-    return this.httpClient.get("user/getAllDepartment/");
+    return this.httpClient.get("user/getActiveDepartments/");
   }
   public getWorkIssuedDetailsByDeptId(data:any): Observable<any>{
     return this.httpClient.get("project/getWorkIssuedDetailsByDeptId/"+data);

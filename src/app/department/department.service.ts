@@ -19,7 +19,9 @@ export class DepartmentService extends BaseService {
   public getDepartmentList(data:any): Observable<any>{
     return this.httpClient.get("user/getAllDepartment/");
   }
-
+  public getActiveDepartmentList(data:any): Observable<any>{
+    return this.httpClient.get("user/getActiveDepartments/");
+  }
   public saveOrUpdateDepartment(departmentInfo:any): Observable<any>{
     return this.httpClient.post("user/saveOrUpdateDepartment/", departmentInfo);
   }

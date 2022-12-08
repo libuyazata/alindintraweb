@@ -20,7 +20,7 @@ export class DeputationService extends BaseService {
     return this.httpClient.get("user/getAllEmployees/");
   }
   public getDepartmentList(data:any): Observable<any>{
-    return this.httpClient.get("user/getAllDepartment/");
+    return this.httpClient.get("user/getActiveDepartments/");
   }
   public getdeputationList(data:any): Observable<any>{
     return this.httpClient.get("user/getDeputationListByDeptId/"+data);

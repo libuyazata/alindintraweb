@@ -46,7 +46,7 @@ export class GeneralmessageinboxService extends BaseService {
     return this.httpClient.get("project/getWorkDetailsById/",{ params: data });
   }
   public getDepartmentList(data:any): Observable<any>{
-    return this.httpClient.get("user/getAllDepartment/");
+    return this.httpClient.get("user/getActiveDepartments/");
   }
   /* public saveInterOfficeCommunication(data:any): Observable<any>{
 	return this.httpClient.post("project/saveInterOfficeCommunication", data);

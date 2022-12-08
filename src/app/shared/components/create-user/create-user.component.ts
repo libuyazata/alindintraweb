@@ -321,7 +321,7 @@ protected setDates(employeeInfo:any): void {
     });
   }
   protected getDepartmentList(){
-    this.departmentService.getDepartmentList({})
+    this.departmentService.getActiveDepartmentList({})
       .subscribe((departmentListData: any) => {
         this.departmentList = departmentListData.departments;
     });

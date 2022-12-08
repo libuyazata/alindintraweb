@@ -59,6 +59,6 @@ export class HomeService extends BaseService {
   }
   
   public getDepartmentList(data:any): Observable<any>{
-    return this.httpClient.get("user/getAllDepartment/");
+    return this.httpClient.get("user/getActiveDepartments/");
   }
 }
