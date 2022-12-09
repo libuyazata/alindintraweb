@@ -41,6 +41,7 @@ export class SentComponent extends BaseComponent implements OnInit {
 
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
+  public departmentList2 : Array<any>;
   public workDescList : Array<any>;
   public communicationList : Array<any>;
   public communicationList2 : Array<any>;
@@ -79,7 +80,8 @@ export class SentComponent extends BaseComponent implements OnInit {
 	const storage = sessionStorage;
 	this.prv_departmentEdit = storage.getItem('prv_departmentEdit');
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
-		 
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;	 
     this.interCommForm = new FormGroup({
        workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
@@ -116,7 +118,8 @@ export class SentComponent extends BaseComponent implements OnInit {
 	this.initializeForm(null);
 	this.initializeReplyForm(null);
 	this.initializeviewForm(null);
-	
+	this.getDepartmentList2();
+
 	 this.dropdownSettings = {
       singleSelection: false,
       idField: 'departmentId',
@@ -141,13 +144,23 @@ export class SentComponent extends BaseComponent implements OnInit {
       searchKeyWord : new FormControl(''),
       dateFrom : new FormControl(''),
       dateTo : new FormControl(''),
+	  departmentId : new FormControl(''),
+
     })
+	this.materialRequestSearchForm.patchValue({"departmentId" : departmentId});
 	this.isAdminUser = this.authenticationService.isAdminUser();
 }
 	clearSearchForm(){
 	this.getcommunicationList();
 	}
-	
+	protected getDepartmentList2() {
+    let params = {
+      status : 1
+    }
+    this.SentService.getDepartmentList(params).subscribe((resp:any)=>{      
+      this.departmentList2 = resp["departments"];
+    });
+   }
 	protected getSearchParams(){
     const credentials = this.authenticationService.credentials;
     const departmentId = credentials.departmentId;
@@ -156,7 +169,7 @@ export class SentComponent extends BaseComponent implements OnInit {
       "startDate" : searchFilter.dateFrom == null ? "" : searchFilter.dateFrom,
       "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
       "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
-      "departmentId" : departmentId,
+      "departmentId" : searchFilter.departmentId == null ? "" : searchFilter.departmentId,
 	  "pageNo" : 0,
       "pageCount" : 15,
     }

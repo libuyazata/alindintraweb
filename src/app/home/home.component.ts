@@ -5,6 +5,7 @@ import { HomeService } from './home.service';
 import { Chart } from 'angular-highcharts';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -21,10 +22,10 @@ export class HomeComponent implements OnInit {
   nonAllottedCalls: Array<any>;
   public departmentList : Array<any>;
   public departmentDashboard : FormGroup;
-  public showDashboard : boolean = false;
+  //public showDashboard : boolean = false;
 
 
-  constructor(private homeService: HomeService, private datePipe: DatePipe) {
+  constructor(private homeService: HomeService, private datePipe: DatePipe,private authenticationService: AuthenticationService) {
     // this.homeService.getDashboardData({}).subscribe((resp:any) => {
     //   this.dashboardData = resp.dashBoard;
     //   let emp30DaysTrend = this.convertToChartData(this.dashboardData.dashBoardEmployeeStatus);
@@ -38,8 +39,10 @@ export class HomeComponent implements OnInit {
 	this.departmentDashboard = new FormGroup({
       departmentId : new FormControl('')
 	});
-	this.departmentDashboard.patchValue({"departmentId" : 0});
-
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	this.departmentDashboard.patchValue({"departmentId" : departmentId});
+    this.getDefaultDepartmentDashboardData();
 	//this.getAdminDashBoard();
 	
 	  
@@ -163,14 +166,24 @@ export class HomeComponent implements OnInit {
   }
   public getDepartmentDashboardData(event:any){
 	let departmentId = event.target.value;
-	 if(departmentId != 0){
+	 /* if(departmentId != 0){
 		 this.showDashboard=true;
 	 }else{
 		 this.showDashboard=false;
-	  }
+	  } */
 	 // alert(departmentId); 
 	  this.homeService.getAdminDashboardData(departmentId).subscribe((resp:any) => {      
       
+	  if(resp.deptDashBoard != null){
+        this.dashboardData = resp.deptDashBoard;
+      }
+    })	 
+
+  }
+  public getDefaultDepartmentDashboardData(){
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	  this.homeService.getAdminDashboardData(departmentId).subscribe((resp:any) => {      
 	  if(resp.deptDashBoard != null){
         this.dashboardData = resp.deptDashBoard;
       }

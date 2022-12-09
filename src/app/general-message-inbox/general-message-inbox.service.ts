@@ -73,4 +73,5 @@ export class GeneralmessageinboxService extends BaseService {
   public downloadWorkMessageAttachmentByOffComId(data:any): Observable<any>{
 	return this.httpClient.get("project/downloadWorkMessageAttachmentByOffComId/"+data);
   }
+ 
 }

@@ -40,6 +40,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   
   public workDetailsList : Array<any>;
   public departmentList : Array<any>;
+  public departmentList2 : Array<any>;
   public workDescList : Array<any>;
   public communicationList : Array<any>;
   public communicationList2 : Array<any>;
@@ -80,8 +81,10 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	const storage = sessionStorage;
 	this.prv_departmentEdit = storage.getItem('prv_departmentEdit');
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
-		 
-    this.interCommForm = new FormGroup({
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+    
+	this.interCommForm = new FormGroup({
       /*  workDetailsId : new FormControl('',Validators.required),
        subTaskId : new FormControl('',Validators.required),
        */ deptCommList : new FormControl('',  Validators.required),
@@ -143,23 +146,25 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
       searchKeyWord : new FormControl(''),
       dateFrom : new FormControl(''),
       dateTo : new FormControl(''),
+      departmentId : new FormControl(''),
     })
 	this.isAdminUser = this.authenticationService.isAdminUser();
 	//this.download();
+	this.materialRequestSearchForm.patchValue({"departmentId" : departmentId});
 	}
 	clearSearchForm(){
 	this.getcommunicationList();
 	}
 	
+	
 	protected getSearchParams(){
-    const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
-	let searchFilter = this.materialRequestSearchForm.value;    
-    let params = {
+    
+	let searchFilter = this.materialRequestSearchForm.value;  
+	let params = {
       "startDate" : searchFilter.dateFrom == null ? "" : searchFilter.dateFrom,
       "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
       "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
-      "departmentId" : departmentId,
+      "departmentId" : searchFilter.departmentId == null ? "" : searchFilter.departmentId,
       "pageNo" : 0,
       "pageCount" : 15,
     }

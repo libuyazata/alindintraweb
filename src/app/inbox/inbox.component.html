@@ -16,15 +16,22 @@
 						<div class="search-label-container"><label>Search</label></div>
 						<input formControlName="searchKeyWord" class="form-control" placeholder="Search.." />
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<div class="search-label-container"><label>Start Date</label></div>
 						<input formControlName="dateFrom" class="form-control" type="date" />
 					</div>
-					<div class="col-lg-2">
+					<div class="col-lg-3">
 						<div class="search-label-container"><label>End Date</label></div>
 						<input formControlName="dateTo" class="form-control" type="date" />
 					</div>
-
+					<div class="col-lg-3">
+						<div class="search-label-container"><label>Choose Department</label></div>
+						<select class="form-control" formControlName="departmentId">
+						<option *ngFor="let department of departmentList2" [ngValue]="department.departmentId">{{department.departmentName}}</option>
+                         </select> 
+					</div>
+					</div>
+				<div class="row">
 					<div class="col-lg-5 pt-4">
 						<span class="float-left">
 							<button class="btn btn-info" type="submit">Search</button>

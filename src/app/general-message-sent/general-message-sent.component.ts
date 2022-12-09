@@ -73,7 +73,8 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	const storage = sessionStorage;
 	this.prv_departmentEdit = storage.getItem('prv_departmentEdit');
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
-		 
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;	 
     this.interCommForm = new FormGroup({
        //workDetailsId : new FormControl('',Validators.required),
        //subTaskId : new FormControl('',Validators.required),
@@ -136,9 +137,12 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
       searchKeyWord : new FormControl(''),
       dateFrom : new FormControl(''),
       dateTo : new FormControl(''),
+      departmentId : new FormControl(''),
     })
 	this.isAdminUser = this.authenticationService.isAdminUser();
 	//this.download();
+	this.materialRequestSearchForm.patchValue({"departmentId" : departmentId});
+
 	}
 	clearSearchForm(){
 	this.getcommunicationList();
@@ -152,7 +156,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
       "startDate" : searchFilter.dateFrom == null ? "" : searchFilter.dateFrom,
       "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
       "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
-      "departmentId" : departmentId,
+      "departmentId" : searchFilter.departmentId == null ? "" : searchFilter.departmentId,
 	  "pageNo" : 0,
       "pageCount" : 15,
     }
