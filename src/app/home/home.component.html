@@ -13,6 +13,7 @@
                         <form novalidate [formGroup]="departmentDashboard">
 						<div><label><b>Choose Department</b> : </label></div>
                         <select class="form-control" formControlName="departmentId" (change)="getDepartmentDashboardData($event);">
+						<option [value]="0" [selected] *ngIf="showDefault">Default</option>
 						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
                          </select> 
                         </form>

@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   nonAllottedCalls: Array<any>;
   public departmentList : Array<any>;
   public departmentDashboard : FormGroup;
-  //public showDashboard : boolean = false;
+  public showDefault : boolean = false;
 
 
   constructor(private homeService: HomeService, private datePipe: DatePipe,private authenticationService: AuthenticationService) {
@@ -41,14 +41,25 @@ export class HomeComponent implements OnInit {
 	});
 	const credentials = this.authenticationService.credentials;
     const departmentId = credentials.departmentId;
+    const userRole = credentials.userRole;
+	//this.departmentDashboard.patchValue({"departmentId" : departmentId});
+	if(userRole == 1){
+	this.departmentDashboard.patchValue({"departmentId" : 0});
+    }else{
 	this.departmentDashboard.patchValue({"departmentId" : departmentId});
-    this.getDefaultDepartmentDashboardData();
+	}
+	this.getDefaultDepartmentDashboardData();
 	//this.getAdminDashBoard();
 	
 	  
     //this.getCompletedCalls();
     //this.getNonAllottedCalls();
     //this.getOnGoingCalls();
+	if(userRole == 1){
+		 this.showDefault=true;
+	 }else{
+		 this.showDefault=false;
+	  }
   }
 
   protected renderLast30DaysAttendanceTrend(emp30DaysTrend:any) {
@@ -166,26 +177,25 @@ export class HomeComponent implements OnInit {
   }
   public getDepartmentDashboardData(event:any){
 	let departmentId = event.target.value;
-	 /* if(departmentId != 0){
-		 this.showDashboard=true;
-	 }else{
-		 this.showDashboard=false;
-	  } */
-	 // alert(departmentId); 
+	  if(departmentId == 0){
+		 this.getDefaultDepartmentDashboardData(); 
+	  }
+	  else{	
 	  this.homeService.getAdminDashboardData(departmentId).subscribe((resp:any) => {      
       
 	  if(resp.deptDashBoard != null){
         this.dashboardData = resp.deptDashBoard;
       }
-    })	 
+      })	
+	  }
 
   }
   public getDefaultDepartmentDashboardData(){
 	const credentials = this.authenticationService.credentials;
     const departmentId = credentials.departmentId;
-	  this.homeService.getAdminDashboardData(departmentId).subscribe((resp:any) => {      
-	  if(resp.deptDashBoard != null){
-        this.dashboardData = resp.deptDashBoard;
+	  this.homeService.getAdminDefaultDashboardData().subscribe((resp:any) => {      
+	  if(resp.adminDashBoard != null){
+        this.dashboardData = resp.adminDashBoard;
       }
     })	 
 

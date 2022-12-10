@@ -40,7 +40,9 @@ export class HomeService extends BaseService {
   /call/getOnGoingCalls
   /call/getNonAllottedCalls
   */
-
+  public getAdminDefaultDashboardData(): Observable<any>{
+    return this.httpClient.get("dashBoard/getAdminDashBoard");
+  }
   public getAdminDashboardData(data:any): Observable<any>{
     //return this.httpClient.get("dashBoard/getAdminDashBoard");
     return this.httpClient.get("dashBoard/getDashBoardByDepartId/"+data);
