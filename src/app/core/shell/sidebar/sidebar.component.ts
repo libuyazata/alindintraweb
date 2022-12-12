@@ -37,6 +37,7 @@ export class SideBarComponent implements OnInit {
   public prv_deputationView : string;
   public prv_deputationEdit : string;
   public prv_deputationDelete : string;  
+  public prv_userRoleId : string;  
   public isShowHr = false;
   public isShowAdmin = false;
   public isShowInbox = false;
@@ -71,6 +72,7 @@ export class SideBarComponent implements OnInit {
 		  storage.setItem('prv_deputationView', JSON.stringify(this.privilegesList['deputationView']));
 		  storage.setItem('prv_deputationEdit', JSON.stringify(this.privilegesList['deputationEdit']));
 		  storage.setItem('prv_deputationDelete', JSON.stringify(this.privilegesList['deputationDelete']));
+		  storage.setItem('prv_userRoleId', JSON.stringify(userRoleId));
 		 
 		 this.prv_employeeView = storage.getItem('prv_employeeView');
 		 this.prv_employeeEdit = storage.getItem('prv_employeeEdit');
@@ -90,6 +92,7 @@ export class SideBarComponent implements OnInit {
 		 this.prv_deputationView = storage.getItem('prv_deputationView');
 		 this.prv_deputationEdit = storage.getItem('prv_deputationEdit');
 		 this.prv_deputationDelete = storage.getItem('prv_deputationDelete');
+		 this.prv_userRoleId = storage.getItem('prv_userRoleId');
 
 		
 		});
