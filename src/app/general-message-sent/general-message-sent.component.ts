@@ -59,6 +59,8 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   public dropdownSettingsReply: any = {};
   protected fileToUpload : any; // MoM files
   public myFiles:string [] = [];
+  public showDefault : boolean = false;
+
   constructor(private alertService : AlertNotificationService,private GeneralmessagesentService : GeneralmessagesentService,private authenticationService: AuthenticationService) { 
 	super(GeneralmessagesentService);
 	this.config = {toolbarLocation:'bottom',toolbarGroups: [
@@ -75,6 +77,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
 	const credentials = this.authenticationService.credentials;
     const departmentId = credentials.departmentId;	 
+    const userRole = credentials.userRole;	 
     this.interCommForm = new FormGroup({
        //workDetailsId : new FormControl('',Validators.required),
        //subTaskId : new FormControl('',Validators.required),
@@ -142,7 +145,11 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	this.isAdminUser = this.authenticationService.isAdminUser();
 	//this.download();
 	this.materialRequestSearchForm.patchValue({"departmentId" : departmentId});
-
+    if(userRole == 1){
+		 this.showDefault=false;
+	 }else{
+		 this.showDefault=true;
+	}
 	}
 	clearSearchForm(){
 	this.getcommunicationList();

@@ -25,8 +25,9 @@
 						<input formControlName="dateTo" class="form-control" type="date" />
 					</div>
 					<div class="col-lg-3">
-						<div class="search-label-container"><label>Choose Department</label></div>
-						<select class="form-control" formControlName="departmentId">
+						<div class="search-label-container"><label>Choose Department</label></div>				
+
+						<select class="form-control" formControlName="departmentId" [attr.disabled]="showDefault? true: null">
 						<option *ngFor="let department of departmentList" [ngValue]="department.departmentId">{{department.departmentName}}</option>
                          </select> 
 					</div>

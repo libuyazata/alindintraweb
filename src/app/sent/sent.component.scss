@@ -54,3 +54,7 @@ a.tip:hover p {
 	overflow : hidden !important; 
     max-height: 900vh !important;
 }
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fff !important;
+    opacity: 1;
+}

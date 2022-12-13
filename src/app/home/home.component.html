@@ -8,12 +8,12 @@
                                 </div>
                             </div>
                         </div>
-						<div class="row m-t-25">
+						<div class="row m-t-25" *ngIf="showDefault">
 						<div class="col-lg-6">
                         <form novalidate [formGroup]="departmentDashboard">
 						<div><label><b>Choose Department</b> : </label></div>
                         <select class="form-control" formControlName="departmentId" (change)="getDepartmentDashboardData($event);">
-						<option [value]="0" [selected] *ngIf="showDefault">Default</option>
+						<option [value]="0" [selected] >Default</option>
 						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
                          </select> 
                         </form>

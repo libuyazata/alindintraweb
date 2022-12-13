@@ -62,7 +62,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   public downloadFiles : Array<any>;
   public myFiles:string [] = [];
   public sessionstorage: any = sessionStorage;
-  
+  public showDefault : boolean = false;
+
   constructor(private alertService : AlertNotificationService,private SentService : SentService,private authenticationService: AuthenticationService) { 
 	super(SentService);
 	this.config = {toolbarLocation:'bottom',toolbarGroups: [
@@ -149,7 +150,13 @@ export class SentComponent extends BaseComponent implements OnInit {
     })
 	this.materialRequestSearchForm.patchValue({"departmentId" : departmentId});
 	this.isAdminUser = this.authenticationService.isAdminUser();
-}
+	const userRole = credentials.userRole;	 
+	if(userRole == 1){
+		 this.showDefault=false;
+	 }else{
+		 this.showDefault=true;
+	}
+	}
 	clearSearchForm(){
 	this.getcommunicationList();
 	}
