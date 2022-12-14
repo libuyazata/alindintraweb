@@ -32,6 +32,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   public isShownPreview : boolean = false;
   public imageSrc : string;
 
+  public depId : any;
   public config : any;
   public list: any;
   public page: number = 0;
@@ -73,9 +74,9 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
         { name: 'paragraph', groups: ['list','align','paragraph'] },
         { name: 'colors', groups: ['colors'] },
       ],height: 150,};
-	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
-	this.sessionstorage.setItem("sessiondeptId", departmentId);
+	//const credentials = this.authenticationService.credentials;
+    //const departmentId = credentials.departmentId;
+	//this.sessionstorage.setItem("sessiondeptId", departmentId);
   }
 
   ngOnInit() { 
@@ -83,7 +84,6 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	this.prv_departmentEdit = storage.getItem('prv_departmentEdit');
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
 	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
     const userRole = credentials.userRole;
 
 	this.interCommForm = new FormGroup({
@@ -152,7 +152,13 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
     })
 	this.isAdminUser = this.authenticationService.isAdminUser();
 	//this.download();
-	this.materialRequestSearchForm.patchValue({"departmentId" : departmentId});
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	    this.depId = credentials.departmentId;
+	}else{
+		this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	
+	this.materialRequestSearchForm.patchValue({"departmentId" : Number(this.depId)});
 	if(userRole == 1){
 		 this.showDefault=false;
 	 }else{
@@ -245,16 +251,22 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
     });
   }
   protected getcommunicationList() {
-	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
+	//const departmentId =0;
+	//const credentials = this.authenticationService.credentials;
+    //const departmentId = credentials.departmentId;
 	//const departmentId = 1;
-	
-	this.GeneralmessageinboxService.getGeneralInboxMessageCountByDeptId(departmentId).subscribe((resp:any)=>{      
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	const credentials = this.authenticationService.credentials;
+      this.depId = credentials.departmentId;
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	this.GeneralmessageinboxService.getGeneralInboxMessageCountByDeptId(this.depId).subscribe((resp:any)=>{      
 	  const messageCount=resp.messageCount;
 	  this.totalItems = messageCount;
     });
    
-   this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(departmentId,0,15).subscribe((resp:any)=>{      
+   this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(this.depId,0,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["models"];
     });
  }

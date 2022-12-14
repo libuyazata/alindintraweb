@@ -31,6 +31,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   public isShown : boolean = false;
   public isShownPreview : boolean = false;
   public imageSrc : string;
+  public depId : any;
 
   public config : any;
   public list: any;
@@ -60,6 +61,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   protected fileToUpload : any; // MoM files
   public myFiles:string [] = [];
   public showDefault : boolean = false;
+  public sessionstorage: any = sessionStorage;
 
   constructor(private alertService : AlertNotificationService,private GeneralmessagesentService : GeneralmessagesentService,private authenticationService: AuthenticationService) { 
 	super(GeneralmessagesentService);
@@ -144,7 +146,12 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
     })
 	this.isAdminUser = this.authenticationService.isAdminUser();
 	//this.download();
-	this.materialRequestSearchForm.patchValue({"departmentId" : departmentId});
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	    this.depId = credentials.departmentId;
+	}else{
+		this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	this.materialRequestSearchForm.patchValue({"departmentId" : Number(this.depId)});
     if(userRole == 1){
 		 this.showDefault=false;
 	 }else{
@@ -249,13 +256,19 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	/* this.GeneralmessagesentService.sentGeneralMessageListByDeptId(departmentId).subscribe((resp:any)=>{      
 	  this.communicationList = resp["models"];
     }); */
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	const credentials = this.authenticationService.credentials;
+      this.depId = credentials.departmentId;
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
 	
-	this.GeneralmessagesentService.getGeneralMessageCountByDeptId(departmentId).subscribe((resp:any)=>{      
+	this.GeneralmessagesentService.getGeneralMessageCountByDeptId(this.depId).subscribe((resp:any)=>{      
 	  const messageCount=resp.messageCount;
 	  this.totalItems = messageCount;
     });
 	
-	this.GeneralmessagesentService.sentGeneralMessageListByDeptIdPageData(departmentId,0,15).subscribe((resp:any)=>{      
+	this.GeneralmessagesentService.sentGeneralMessageListByDeptIdPageData(this.depId,0,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["models"];
     });
 	

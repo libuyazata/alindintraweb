@@ -31,6 +31,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public isShown : boolean = false;
   public isShownPreview : boolean = false;
   public imageSrc : string;
+  public depId : any;
 
   public config : any;
   public list: any;
@@ -150,7 +151,12 @@ export class InboxComponent extends BaseComponent implements OnInit {
     })
 	this.isAdminUser = this.authenticationService.isAdminUser();
 	//this.download();
-	this.materialRequestSearchForm.patchValue({"departmentId" : departmentId});
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	    this.depId = credentials.departmentId;
+	}else{
+		this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	this.materialRequestSearchForm.patchValue({"departmentId" : Number(this.depId)});
 	const userRole = credentials.userRole;	 
 	if(userRole == 1){
 		 this.showDefault=false;
@@ -246,13 +252,18 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	const credentials = this.authenticationService.credentials;
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
-	
-	this.InboxService.getInboxWorkMessagesCount(departmentId).subscribe((resp:any)=>{      
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	const credentials = this.authenticationService.credentials;
+      this.depId = credentials.departmentId;
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	this.InboxService.getInboxWorkMessagesCount(this.depId).subscribe((resp:any)=>{      
 	  const messageCount=resp.messageCount;
 	  this.totalItems = messageCount;
     });
 	
-	this.InboxService.getInboxMessageByDeptIdPageData(departmentId,1,15).subscribe((resp:any)=>{      
+	this.InboxService.getInboxMessageByDeptIdPageData(this.depId,1,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["inboxMessages"];
     });
 	

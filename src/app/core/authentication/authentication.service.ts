@@ -146,7 +146,8 @@ export class AuthenticationService {
    * Logs out the user and clear credentials.
    * @return {Observable<boolean>} True if the user was logged out successfully.
    */
-  logout(): Observable<boolean> {
+  logout(): Observable<boolean> { 
+    sessionStorage.clear()
     // Customize credentials invalidation here
     this._roles = null;
     this._permissions = null;

@@ -23,6 +23,8 @@ export class HomeComponent implements OnInit {
   public departmentList : Array<any>;
   public departmentDashboard : FormGroup;
   public showDefault : boolean = false;
+  public sessionstorage: any = sessionStorage;
+  public depId : any;
 
 
   constructor(private homeService: HomeService, private datePipe: DatePipe,private authenticationService: AuthenticationService) {
@@ -35,6 +37,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {  
+	//this.sessionstorage.setItem("dashboardsessiondeptId", 0);
+	
 	this.getDepartmentList();
 	this.departmentDashboard = new FormGroup({
       departmentId : new FormControl('')
@@ -44,22 +48,29 @@ export class HomeComponent implements OnInit {
     const userRole = credentials.userRole;
 	//this.departmentDashboard.patchValue({"departmentId" : departmentId});
 	if(userRole == 1){
-	this.departmentDashboard.patchValue({"departmentId" : 0});
-    }else{
-	this.departmentDashboard.patchValue({"departmentId" : departmentId});
+	this.showDefault=true;
+	if(!this.sessionstorage.getItem("dashboardsessiondeptId")){
+		this.depId = credentials.departmentId;
+		this.departmentDashboard.patchValue({"departmentId" : 0});
+		this.getDefaultDepartmentDashboardData(); 
+	}else{
+		this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+		this.departmentDashboard.patchValue({"departmentId" : Number(this.depId)});
+		this.getDepartmentDashboardDataSession(Number(this.depId)); 
+
 	}
-	this.getDefaultDepartmentDashboardData();
+	}else{
+	this.showDefault=false;
+	//this.departmentDashboard.patchValue({"departmentId" : departmentId});
+	this.getDepartmentDashboardDataSession(departmentId); 
+	}
+	//this.getDefaultDepartmentDashboardData();
 	//this.getAdminDashBoard();
 	
 	  
     //this.getCompletedCalls();
     //this.getNonAllottedCalls();
     //this.getOnGoingCalls();
-	if(userRole == 1){
-		 this.showDefault=true;
-	 }else{
-		 this.showDefault=false;
-	  }
   }
 
   protected renderLast30DaysAttendanceTrend(emp30DaysTrend:any) {
@@ -181,6 +192,23 @@ export class HomeComponent implements OnInit {
 		 this.getDefaultDepartmentDashboardData(); 
 	  }
 	  else{	
+	  this.sessionstorage.setItem("dashboardsessiondeptId", departmentId);
+	  this.homeService.getAdminDashboardData(departmentId).subscribe((resp:any) => {      
+      
+	  if(resp.deptDashBoard != null){
+        this.dashboardData = resp.deptDashBoard;
+      }
+      })	
+	  }
+
+  }
+  public getDepartmentDashboardDataSession(data:any){
+	let departmentId = data;
+	  if(departmentId == 0){
+		 this.getDefaultDepartmentDashboardData(); 
+	  }
+	  else{	
+	  this.sessionstorage.setItem("dashboardsessiondeptId", departmentId);
 	  this.homeService.getAdminDashboardData(departmentId).subscribe((resp:any) => {      
       
 	  if(resp.deptDashBoard != null){

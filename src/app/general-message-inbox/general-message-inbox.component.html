@@ -70,9 +70,9 @@
 							<th class="column3">
 								<mfDefaultSorter by="departmentName">Ref.No.</mfDefaultSorter>
 							</th>
-							<th class="column4">
+							<!-- <th class="column4">
 								<mfDefaultSorter by="workName">Work Name</mfDefaultSorter>
-							</th>
+							</th> -->
 							<th class="column6">
 								<mfDefaultSorter by="subject">Subject</mfDefaultSorter>
 							</th>
@@ -110,8 +110,8 @@
 								<!-- 								<td class="column1"><a class="tip"><span *ngFor="let dept of msg.generalMessageModelList[0].departmentGeneralMessageModels">{{(dept.departmentName.length>6)? (dept.departmentName +',' | slice:0:6)+'..':(dept.departmentName +',') }}</span><p><span *ngFor="let dept of msg.generalMessageModelList[0].departmentGeneralMessageModels">{{dept.departmentName +','}}</span></p></a></td>
  -->
 								<td>{{msg.generalMessageModelList[0].referenceNo}}({{msg.generalMessageModelList.length}})</td>
-								<td>{{msg.generalMessageModelList[0].workName}}</td>
-								<td>{{msg.generalMessageModelList[0].subject}}</td>
+<!-- 								<td>{{msg.generalMessageModelList[0].workName}}</td>
+ -->								<td>{{msg.generalMessageModelList[0].subject}}</td>
 								<!-- <td>{{msg.generalMessageModelList[0].createdOn | date : "medium"}}</td> -->
 								<td>{{mf.data[i].titleDate | date : "medium"}}</td>
 								<td class="column1">
@@ -134,8 +134,8 @@
 										<td class="column1">{{content.departmentName}}</td>
 										<td class="column1">{{content.employeeName}}</td>
 										<td class="column1">{{content.referenceNo}}</td>
-										<td class="column1">{{content.workName}}</td>
-										<td class="column1">{{content.subject}}</td>
+<!-- 										<td class="column1">{{content.workName}}</td>
+ -->										<td class="column1">{{content.subject}}</td>
 										<td class="column1">{{content.createdOn | date : "medium" }}</td>
 										<td class="column1">
 											<div class="link-holder">

@@ -32,7 +32,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   public isShown : boolean = false;
   public isShownPreview : boolean = false;
   public imageSrc : string;
-
+  public depId : any;
+  
   public config : any;
   public list: any;
   public page: number = 0;
@@ -148,7 +149,12 @@ export class SentComponent extends BaseComponent implements OnInit {
 	  departmentId : new FormControl(''),
 
     })
-	this.materialRequestSearchForm.patchValue({"departmentId" : departmentId});
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	    this.depId = credentials.departmentId;
+	}else{
+		this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	this.materialRequestSearchForm.patchValue({"departmentId" : Number(this.depId)});
 	this.isAdminUser = this.authenticationService.isAdminUser();
 	const userRole = credentials.userRole;	 
 	if(userRole == 1){
@@ -245,13 +251,18 @@ export class SentComponent extends BaseComponent implements OnInit {
 	const credentials = this.authenticationService.credentials;
     const departmentId = credentials.departmentId;
 	//const departmentId = 1;
-	
-	this.SentService.getSentWorkMessageCountByDeptId(departmentId).subscribe((resp:any)=>{      
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	const credentials = this.authenticationService.credentials;
+      this.depId = credentials.departmentId;
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	this.SentService.getSentWorkMessageCountByDeptId(this.depId).subscribe((resp:any)=>{      
 	  const messageCount=resp.messageCount;
 	  this.totalItems = messageCount;
     });
 	
-	this.SentService.communicationListByDeptIdPageData(departmentId,1,15).subscribe((resp:any)=>{      
+	this.SentService.communicationListByDeptIdPageData(this.depId,1,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["communicationList"];
     });
 	
