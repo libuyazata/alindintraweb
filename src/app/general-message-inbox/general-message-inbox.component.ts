@@ -271,9 +271,13 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
     });
  }
   public getcommunicationListPage(page: any) {
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
 	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
-	this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+      this.depId = credentials.departmentId;
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["models"];
       this.page = page;
     });

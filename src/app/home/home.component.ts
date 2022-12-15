@@ -37,20 +37,29 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {  
-	this.sessionstorage.setItem("dashboardsessiondeptId", 0);
+	
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+    const userRole = credentials.userRole;
+	/* if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	const credentials = this.authenticationService.credentials;
+      this.depId = credentials.departmentId;
+	  this.sessionstorage.setItem("dashboardsessiondeptId", 0);
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	} */
 	
 	this.getDepartmentList();
 	this.departmentDashboard = new FormGroup({
       departmentId : new FormControl('')
 	});
-	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
-    const userRole = credentials.userRole;
+	
 	//this.departmentDashboard.patchValue({"departmentId" : departmentId});
 	if(userRole == 1){
 	this.showDefault=true;
 	if(!this.sessionstorage.getItem("dashboardsessiondeptId")){
-		this.depId = credentials.departmentId;
+		this.depId = 0;
+	    this.sessionstorage.setItem("dashboardsessiondeptId", 0);
 		this.departmentDashboard.patchValue({"departmentId" : 0});
 		this.getDefaultDepartmentDashboardData(); 
 	}else{
@@ -192,7 +201,6 @@ export class HomeComponent implements OnInit {
 		 this.getDefaultDepartmentDashboardData(); 
 	  }
 	  else{	
-	  this.sessionstorage.setItem("dashboardsessiondeptId", departmentId);
 	  this.homeService.getAdminDashboardData(departmentId).subscribe((resp:any) => {      
       
 	  if(resp.deptDashBoard != null){
@@ -200,7 +208,7 @@ export class HomeComponent implements OnInit {
       }
       })	
 	  }
-
+	  this.sessionstorage.setItem("dashboardsessiondeptId", departmentId);
   }
   public getDepartmentDashboardDataSession(data:any){
 	let departmentId = data;
@@ -208,9 +216,8 @@ export class HomeComponent implements OnInit {
 		 this.getDefaultDepartmentDashboardData(); 
 	  }
 	  else{	
-	  this.sessionstorage.setItem("dashboardsessiondeptId", departmentId);
 	  this.homeService.getAdminDashboardData(departmentId).subscribe((resp:any) => {      
-      
+	  this.sessionstorage.setItem("dashboardsessiondeptId", departmentId);
 	  if(resp.deptDashBoard != null){
         this.dashboardData = resp.deptDashBoard;
       }

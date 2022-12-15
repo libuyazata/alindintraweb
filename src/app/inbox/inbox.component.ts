@@ -269,9 +269,14 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	
   }
   public getcommunicationListPage(page: any) {
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
 	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
-	this.InboxService.getInboxMessageByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+      this.depId = credentials.departmentId;
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	
+	this.InboxService.getInboxMessageByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["inboxMessages"];
       this.page = page;
     });

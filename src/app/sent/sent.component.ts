@@ -268,9 +268,13 @@ export class SentComponent extends BaseComponent implements OnInit {
 	
   }
   public getcommunicationListPage(page: any) {
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
 	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
-	this.SentService.communicationListByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+      this.depId = credentials.departmentId;
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	this.SentService.communicationListByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
 	  this.communicationList = resp["communicationList"];
       this.page = page;
     });
