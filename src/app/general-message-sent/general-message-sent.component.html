@@ -27,8 +27,9 @@
 					<div class="col-lg-3">
 						<div class="search-label-container"><label>Choose Department</label></div>
 						<select class="form-control" formControlName="departmentId" [attr.disabled]="showDefault? true: null">
+						<option [value]="0" [selected] >Default</option>
 						<option *ngFor="let department of departmentList" [ngValue]="department.departmentId">{{department.departmentName}}</option>
-                         </select> 
+                        </select> 
 					</div>
 					</div>
 				<div class="row">

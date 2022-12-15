@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {  
-	//this.sessionstorage.setItem("dashboardsessiondeptId", 0);
+	this.sessionstorage.setItem("dashboardsessiondeptId", 0);
 	
 	this.getDepartmentList();
 	this.departmentDashboard = new FormGroup({
