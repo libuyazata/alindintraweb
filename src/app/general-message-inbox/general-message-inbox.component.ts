@@ -560,12 +560,17 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	const viewStatus = viewItem[0]['viewStatus'];
 	const deptCommId = viewItem[0]['deptGeneralMsgId'];
 	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
-	  
+    //const departmentId = credentials.departmentId;
+	
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	    this.depId = credentials.departmentId;
+	}else{
+		this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}  
 	  if(viewStatus == 0){
 			this.GeneralmessageinboxService.viewUpdateDepartmentGenMessage(deptCommId).subscribe((resp:any)=>{      
 			//this.getcommunicationList();
-			this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+			this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
 			  this.communicationList = resp["models"];
 			  this.page = page;
 			});

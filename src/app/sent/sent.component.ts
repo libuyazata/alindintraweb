@@ -568,13 +568,18 @@ export class SentComponent extends BaseComponent implements OnInit {
 	const viewStatus = viewItem[0]['viewStatus'];
 	const deptCommId = viewItem[0]['deptCommId'];
 	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
-	
+    //const departmentId = credentials.departmentId;
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	    this.depId = credentials.departmentId;
+	}else{
+		this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	  
 	  if(viewStatus == 0){
 			this.SentService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
 			//this.getcommunicationList();
 			
-			this.SentService.communicationListByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+			this.SentService.communicationListByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
 			  this.communicationList = resp["communicationList"];
 			  this.page = page;
 			});

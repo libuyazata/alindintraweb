@@ -574,12 +574,16 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	const viewStatus = viewItem[0]['viewStatus'];
 	const deptCommId = viewItem[0]['deptGeneralMsgId'];
 	const credentials = this.authenticationService.credentials;
-    const departmentId = credentials.departmentId;
-	  
+    //const departmentId = credentials.departmentId;
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	    this.depId = credentials.departmentId;
+	}else{
+		this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}   
 	  if(viewStatus == 0){
 			this.GeneralmessagesentService.viewUpdateDepartmentGenMessage(deptCommId).subscribe((resp:any)=>{      
 			//this.getcommunicationList();
-			this.GeneralmessagesentService.sentGeneralMessageListByDeptIdPageData(departmentId,page,15).subscribe((resp:any)=>{      
+			this.GeneralmessagesentService.sentGeneralMessageListByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
 			  this.communicationList = resp["models"];
 			  this.page = page;
 			});
