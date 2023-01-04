@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
           }
           this.authenticationService.setRolesAndPermissions(credentials);
           this.authenticationService.saveCredentials(credentials,this.loginForm.get("remember").value);
-          if(credentials.userRole == 1 || credentials.userRole == 2){
+          if(credentials.userRole == 1 || credentials.userRole == 2 || credentials.userRole == 4){
             // Super Admin & Admin View
             this.router.navigate(['/home'], { replaceUrl: true });
           } else if(credentials.userRole == 3) {
@@ -92,6 +92,8 @@ export class LoginComponent implements OnInit {
       userRole = 1;
     } else if (roleName.toUpperCase() == "HOD") {
       userRole = 2;
+    }else if (roleName.toUpperCase() == "DEPARTMENT COORDINATOR") {
+      userRole = 4;
     } else {
       userRole = 3; // Employee
     }
