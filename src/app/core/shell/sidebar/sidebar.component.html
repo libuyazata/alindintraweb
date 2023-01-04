@@ -1,7 +1,7 @@
 <nav class="navbar-primary" [ngClass]="{'minimized': !nav.visible}">
 <ul class="navbar-primary-menu">
     <li>
-			<span *ngIf="prv_userRoleId == '1' || prv_userRoleId == '2'">
+			<span *ngIf="prv_userRoleId == '1' || prv_userRoleId == '2' || prv_userRoleId == '4'">
 			<a class="menu-link" (click)=menuButtonClicked() routerLink="/home" routerLinkActive="active">
                 <span class="fas fa-tachometer-alt"></span><span class="nav-label">Dashboard</span>
             </a> 

@@ -93,8 +93,6 @@ export class SideBarComponent implements OnInit {
 		 this.prv_deputationEdit = storage.getItem('prv_deputationEdit');
 		 this.prv_deputationDelete = storage.getItem('prv_deputationDelete');
 		 this.prv_userRoleId = storage.getItem('prv_userRoleId');
-
-		
 		});
 
 	this.isAdminUser = this.authenticationService.isAdminUser();
