@@ -17,7 +17,8 @@ export class WorkViewService extends BaseService {
   }  
 
   public getWorkDetailsList(data:any): Observable<any>{
-    return this.httpClient.get("project/getWorkDetailsByDeptId",{ params: data });
+    //return this.httpClient.get("project/getWorkDetailsByDeptId",{ params: data });
+    return this.httpClient.get("project/getWorkDetailsListById",{ params: data });
   }
   public getAllocatedEmployeeList(data:any): Observable<any>{
     return this.httpClient.get("project/getEmployeeListForTaskAllocationByDeptId/"+data);
