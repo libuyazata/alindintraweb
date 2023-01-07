@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
 import { environment } from '@env/environment';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DepartmentService } from '@app/department/department.service';
@@ -25,16 +25,19 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
   public itemName: string = "Department";
   public prv_departmentEdit : string;
   public prv_departmentDelete : string;
-  constructor(private alertService : AlertNotificationService,private departmentService : DepartmentService) { 
+  public deptuserRoleid : number;  
+  constructor(private alertService : AlertNotificationService,private departmentService : DepartmentService,private authenticationService: AuthenticationService) { 
 	super(departmentService);
   }
 
   ngOnInit() {
+	const userRoleId = this.authenticationService.getuserRole();
 	const storage = sessionStorage;
 	this.prv_departmentEdit = storage.getItem('prv_departmentEdit');
 	this.prv_departmentDelete = storage.getItem('prv_departmentDelete');
-		 
-    this.departmentSaveForm = new FormGroup({
+	//storage.setItem('deptuserRoleid', JSON.stringify(userRoleId));
+	this.deptuserRoleid =userRoleId;
+	this.departmentSaveForm = new FormGroup({
       departmentId : new FormControl(''),
       departmentName : new FormControl('',  Validators.required),
       description : new FormControl(''),

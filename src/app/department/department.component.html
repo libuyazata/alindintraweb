@@ -2,7 +2,7 @@
     <div class="page-header">
         <div class="row">
             <div class="col-lg-12">
-                <h4>
+			   <h4>
                     <span>DEPARTMENT VIEW</span>
                 </h4>
             </div>
@@ -77,7 +77,7 @@
                 </tr>
                 </thead>
                 <tbody *ngFor="let item of mf.data">
-                    <tr class="hover-action-row" [ngClass]="{'rowbg': item.isActive == 1}">
+                    <tr class="hover-action-row" [ngClass]="{'rowbg': item.isActive == 1}" *ngIf="deptuserRoleid != 1 && item.isActive == 1 || deptuserRoleid == 1">
                     <td class="column1">{{item.departmentName | uppercase }}</td>
                     <td class="column2">{{item.description | uppercase}}</td>
                     <td class="column3">{{item.isActive == 1 ? "Active" : "Inactive"}}</td>

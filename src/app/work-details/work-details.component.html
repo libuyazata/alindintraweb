@@ -336,7 +336,7 @@
 					<div class="col-lg-12">
                         <div><label>Employee : </label></div>
                         <select class="form-control" formControlName="projectCoOrdinatorEmpId">
-                        <option *ngFor="let employee of employeeList" [ngValue]="employee.employeeId">{{employee.firstName}}</option>
+                        <option *ngFor="let employee of employeeList" [ngValue]="employee.employeeId">{{employee.firstName}} - {{employee.empCode}}</option>
                          </select> 
                         <div *ngIf="isFormSubmitInitiated && itemForm.projectCoOrdinatorEmpId.errors" style="color:red;">Please select Employee</div>
                     </div>

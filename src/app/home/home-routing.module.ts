@@ -17,8 +17,8 @@ const routes: Routes = [
       path: 'home', component: HomeComponent, 
       canActivate : [AuthenticationGuard],
       loadChildren: './home.module#HomeModule',
-      data: { title: extract('Home'), role: 'HOD' } // 
-      //data: { title: extract('Home') } // 
+      //data: { title: extract('Home'), role: 'HOD' } // 
+      data: { title: extract('Home') } // 
     }
   ])
 ];

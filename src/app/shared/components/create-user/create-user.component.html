@@ -38,11 +38,7 @@
     <div class="row form-group">
         <div class="col-lg-3">
             <div><label>Email</label></div>
-            <input formControlName="emailId" class="form-control"
-            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.emailId.errors }"/>
-            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.emailId.errors" class="invalid-feedback">
-                <div *ngIf="employeeForm.emailId.errors.required">Please provide an email.</div>
-            </div>
+            <input formControlName="emailId" class="form-control"/>
         </div>
         <div class="col-lg-2">
             <div><label>Contact No 1</label></div>
@@ -63,11 +59,11 @@
         </div> -->
         <div class="col-lg-3">
             <div><label>Nationality</label></div>
-            <input formControlName="nationality" class="form-control"
-            [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.nationality.errors }"/>
-            <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.nationality.errors" class="invalid-feedback">
+            <input formControlName="nationality" class="form-control"/>
+           
+            <!-- <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.nationality.errors" class="invalid-feedback">
                 <div *ngIf="employeeForm.nationality.errors.required">Please provide the nationality.</div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="row form-group">

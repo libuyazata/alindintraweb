@@ -72,13 +72,16 @@ export class LoginComponent implements OnInit {
           }
           this.authenticationService.setRolesAndPermissions(credentials);
           this.authenticationService.saveCredentials(credentials,this.loginForm.get("remember").value);
-          if(credentials.userRole == 1 || credentials.userRole == 2 || credentials.userRole == 4){
+          
+		  /* if(credentials.userRole == 1 || credentials.userRole == 2 || credentials.userRole == 4){
             // Super Admin & Admin View
             this.router.navigate(['/home'], { replaceUrl: true });
           } else if(credentials.userRole == 3) {
             // Employee View
 			this.router.navigate(['/project'], { replaceUrl: true });
-          }
+          } */
+		  this.router.navigate(['/home'], { replaceUrl: true });
+		  
         } else {
           alert("Invalid Username and Password. Please provide the correct credentials.");
         }

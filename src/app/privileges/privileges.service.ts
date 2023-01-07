@@ -38,6 +38,8 @@ export class PrivilegesService extends BaseService {
       userRoleId : 2, userRoleName : "HOD"
     },{
       userRoleId : 3, userRoleName : "Employee"
+    },{
+      userRoleId : 4, userRoleName : "Department coordinator"
     }];
     return of(userRole);
   }

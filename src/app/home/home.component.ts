@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   public showDefault : boolean = false;
   public sessionstorage: any = sessionStorage;
   public depId : any;
-
+  public homeuserRoleid : number;  
 
   constructor(private homeService: HomeService, private datePipe: DatePipe,private authenticationService: AuthenticationService) {
     // this.homeService.getDashboardData({}).subscribe((resp:any) => {
@@ -41,6 +41,8 @@ export class HomeComponent implements OnInit {
 	const credentials = this.authenticationService.credentials;
     const departmentId = credentials.departmentId;
     const userRole = credentials.userRole;
+	this.homeuserRoleid =userRole;
+
 	/* if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
 	const credentials = this.authenticationService.credentials;
       this.depId = credentials.departmentId;
