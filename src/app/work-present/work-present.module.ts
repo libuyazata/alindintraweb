@@ -8,6 +8,7 @@ import { WorkpresentService } from '@app/work-present/work-present.service';
 import { DataTableModule } from 'angular-6-datatable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { AlertNotificationService } from '@app/shared/services/alertnotification
     DataTableModule,
 	FormsModule, 
     ReactiveFormsModule,
+	NgxPaginationModule,
     WorkpresentRoutingModule
   ],
   declarations: [

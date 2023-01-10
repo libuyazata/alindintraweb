@@ -24,11 +24,18 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
   public workStatusList : Array<any>;
  
   public isFormVisible : boolean = false;
+  public isPaginationVisible : boolean = false;
   public isEdit : boolean = false;
   public isFormSubmitInitiated : boolean = false;
   public addItemForm: FormGroup;
   public itemName: string = "Work";
+  public depId : any;
 
+  public page: number = 0;
+  public itemsPerPage: number;
+  public totalItems: number;
+  public sessionstorage: any = sessionStorage;
+  
   constructor(private WorkpresentService : WorkpresentService,
 			  private alertService : AlertNotificationService,  
               private authenticationService: AuthenticationService,
@@ -37,6 +44,10 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {    
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	this.sessionstorage.setItem("sessiondeptId", departmentId);
+
 	this.getpresentWorkList();
 	this.getWorkTypeList();
 	this.materialRequestSearchForm = new FormGroup({
@@ -89,15 +100,57 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
       endDate : '2021-08-23',
       departmentId : 0
     }; */
-	    const startDate = '2021-08-23';
+	    /* const startDate = '2021-08-23';
 	    const endDate = '2021-08-23';
 	    const departmentId = 0;
 	const params = startDate+'/'+endDate+'/'+departmentId;
 	this.WorkpresentService.getWorkDetailsByDate(params).subscribe((resp:any)=>{      
-	  this.presentWorkList = resp["models"];
-    });
+	  this.presentWorkList = resp["models"]; */
+    
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	//const departmentId = 1;
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	const credentials = this.authenticationService.credentials;
+      this.depId = credentials.departmentId;
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	//const messageCount= 0;
+	/* this.WorkpresentService.getInboxWorkMessagesCount(this.depId).subscribe((resp:any)=>{      
+	  const messageCount=resp.messageCount;
+	  this.totalItems = messageCount;
+    }); */
+	/* if(messageCount > 0){
+		this.isPaginationVisible = true;
+	} */
+	//this.totalItems = 20;
+
+	
+	this.WorkpresentService.getWorkDetailsByDeptIdPageData(this.depId,1,0,12).subscribe((resp:any)=>{      
+	  this.presentWorkList = resp["models"]["workModelList"];
+      this.totalItems = resp["models"].totalCount;
+	  if(this.totalItems > 0){
+		this.isPaginationVisible = true;
+	  }
+	});
+	
   }
-   closePopup() {
+  public getpresentWorkListPage(page: any) {
+	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
+	const credentials = this.authenticationService.credentials;
+      this.depId = credentials.departmentId;
+	}else{
+	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
+	}
+	
+	this.WorkpresentService.getWorkDetailsByDeptIdPageData(this.depId,1,page,12).subscribe((resp:any)=>{      
+	  this.presentWorkList = resp["models"]["workModelList"];
+      this.page = page;
+	});
+	
+  }
+  closePopup() {
     this.clearForm();
     this.resetForm();
   }

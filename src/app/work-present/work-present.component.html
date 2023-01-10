@@ -50,7 +50,7 @@
 							</div>
 							</div>
 							<div class="row m-t-25">
-							<div class="col-sm-6 col-lg-3 tip" *ngFor="let item of presentWorkList;index as i;">
+							<div class="col-sm-6 col-lg-3 tip" *ngFor="let item of presentWorkList | paginate: {itemsPerPage: 12,currentPage: page,totalItems: totalItems};index as i;">
 
                                 <a class="link" [routerLink]="['/work-view/']" [queryParams]="{id:item.workDetailsId}" class="tip">
 
@@ -80,9 +80,13 @@ Co Ordinator:  {{item.projectCoOrdinatorName}}</p>
 								</a>
                             </div>
                     </div>
-                </div>
+					<div class="row m-t-10" *ngIf="isPaginationVisible">
+							<pagination-controls (pageChange)="getpresentWorkListPage(page = $event)"></pagination-controls>
+					</div>
+				</div>
             </div> 
-</div>
+				
+	</div>
 
 <!-- Create/Update Form [BEGIN]-->
 <div class="modal" [ngClass]="{ 'd-block' : isFormVisible}" id="createUpdateModal" *ngIf="isFormVisible">

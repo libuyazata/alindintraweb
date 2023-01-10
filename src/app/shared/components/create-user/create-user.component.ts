@@ -245,7 +245,7 @@ protected setDates(employeeInfo:any): void {
     this.addEmployeeForm = new FormGroup({
       employeeId : new FormControl(),
       firstName : new FormControl('', Validators.required),
-      lastName : new FormControl(''),
+      lastName : new FormControl('', Validators.required),
       // thirdName : new FormControl(''),
       // fourthName : new FormControl(''),
       emailId : new FormControl(''),

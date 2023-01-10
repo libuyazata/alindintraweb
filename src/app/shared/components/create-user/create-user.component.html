@@ -13,14 +13,14 @@
     <div class="row form-group">
         <div class="col-lg-3">
             <div><label>First Name</label></div>
-            <input formControlName="firstName" class="form-control"  [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.firstName.errors }" [attr.disabled]="isEmployeeEdit ? true:null"/>
+            <input formControlName="firstName" class="form-control"  [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.firstName.errors }" [attr.disabled]="isEmployeeEdit ? null:null"/>
             <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.firstName.errors" class="invalid-feedback">
                 <div *ngIf="employeeForm.firstName.errors.required">Please provide the first name.</div>
             </div>
         </div>
         <div class="col-lg-3">
             <div><label>Second Name</label></div>
-            <input formControlName="lastName" class="form-control" [attr.disabled]="isEmployeeEdit ? true:null"
+            <input formControlName="lastName" class="form-control" [attr.disabled]="isEmployeeEdit ? null:null"
             [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.lastName.errors }"/>
             <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.lastName.errors" class="invalid-feedback">
                 <div *ngIf="employeeForm.lastName.errors.required">Please provide the second name.</div>
