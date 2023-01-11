@@ -33,7 +33,8 @@ export class SentComponent extends BaseComponent implements OnInit {
   public isShownPreview : boolean = false;
   public imageSrc : string;
   public depId : any;
-  
+  public isPaginationVisible : boolean = false;
+
   public config : any;
   public list: any;
   public page: number = 0;
@@ -257,13 +258,17 @@ export class SentComponent extends BaseComponent implements OnInit {
 	}else{
 	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
 	}
-	this.SentService.getSentWorkMessageCountByDeptId(this.depId).subscribe((resp:any)=>{      
+	/* this.SentService.getSentWorkMessageCountByDeptId(this.depId).subscribe((resp:any)=>{      
 	  const messageCount=resp.messageCount;
 	  this.totalItems = messageCount;
-    });
+    }); */
 	
 	this.SentService.communicationListByDeptIdPageData(this.depId,1,15).subscribe((resp:any)=>{      
-	  this.communicationList = resp["communicationList"];
+	  this.communicationList = resp["communicationList"]["intOffComFromatModList"];
+      this.totalItems = resp["communicationList"].totalCount;
+	  if(this.totalItems > 0){
+		this.isPaginationVisible = true;
+	  }
     });
 	
   }
@@ -275,7 +280,7 @@ export class SentComponent extends BaseComponent implements OnInit {
 	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
 	}
 	this.SentService.communicationListByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
-	  this.communicationList = resp["communicationList"];
+	  this.communicationList = resp["communicationList"]["intOffComFromatModList"];
       this.page = page;
     });
 	

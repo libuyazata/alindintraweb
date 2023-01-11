@@ -31,7 +31,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
   public isShown : boolean = false;
   public isShownPreview : boolean = false;
   public imageSrc : string;
-
+  public isPaginationVisible : boolean = false;
   public depId : any;
   public config : any;
   public list: any;
@@ -261,13 +261,17 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	}else{
 	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
 	}
-	this.GeneralmessageinboxService.getGeneralInboxMessageCountByDeptId(this.depId).subscribe((resp:any)=>{      
+	/* this.GeneralmessageinboxService.getGeneralInboxMessageCountByDeptId(this.depId).subscribe((resp:any)=>{      
 	  const messageCount=resp.messageCount;
 	  this.totalItems = messageCount;
-    });
+    }); */
    
    this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(this.depId,0,15).subscribe((resp:any)=>{      
-	  this.communicationList = resp["models"];
+	  this.communicationList = resp["models"]["formatModels"];
+      this.totalItems = resp["models"].totalCount;
+	  if(this.totalItems > 0){
+		this.isPaginationVisible = true;
+	  }
     });
  }
   public getcommunicationListPage(page: any) {
@@ -278,7 +282,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
 	}
 	this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
-	  this.communicationList = resp["models"];
+	  this.communicationList = resp["models"]["formatModels"];
       this.page = page;
     });
 	

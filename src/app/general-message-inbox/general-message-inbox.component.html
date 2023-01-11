@@ -152,7 +152,7 @@
 					</ng-container>
 					<tfoot>
 						<tr>
-							<td colspan="6">
+							<td colspan="6" *ngIf="isPaginationVisible">
 <!-- 								<mfBootstrapPaginator [rowsOnPageSet]="[12]"></mfBootstrapPaginator>
  -->							
 									<pagination-controls (pageChange)="getcommunicationListPage(page = $event)"></pagination-controls>

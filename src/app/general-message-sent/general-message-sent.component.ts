@@ -32,7 +32,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
   public isShownPreview : boolean = false;
   public imageSrc : string;
   public depId : any;
-
+  public isPaginationVisible : boolean = false;
   public config : any;
   public list: any;
   public page: number = 0;
@@ -263,17 +263,18 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
 	}
 	
-	this.GeneralmessagesentService.getGeneralMessageCountByDeptId(this.depId).subscribe((resp:any)=>{      
+	/* this.GeneralmessagesentService.getGeneralMessageCountByDeptId(this.depId).subscribe((resp:any)=>{      
 	  const messageCount=resp.messageCount;
 	  this.totalItems = messageCount;
-    });
+    }); */
 	
 	this.GeneralmessagesentService.sentGeneralMessageListByDeptIdPageData(this.depId,0,15).subscribe((resp:any)=>{      
-	  this.communicationList = resp["models"];
+	  this.communicationList = resp["models"]["formatModels"];
+      this.totalItems = resp["models"].totalCount;
+	  if(this.totalItems > 0){
+		this.isPaginationVisible = true;
+	  }
     });
-	
-	
-	
   }
   
   public getcommunicationListPage(page: any) {
@@ -285,7 +286,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	}
 	
 	this.GeneralmessagesentService.sentGeneralMessageListByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
-	  this.communicationList = resp["models"];
+	  this.communicationList = resp["models"]["formatModels"];
       this.page = page;
     });
 	

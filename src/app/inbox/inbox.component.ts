@@ -32,6 +32,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
   public isShownPreview : boolean = false;
   public imageSrc : string;
   public depId : any;
+  public isPaginationVisible : boolean = false;
 
   public config : any;
   public list: any;
@@ -258,13 +259,17 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	}else{
 	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
 	}
-	this.InboxService.getInboxWorkMessagesCount(this.depId).subscribe((resp:any)=>{      
+	/* this.InboxService.getInboxWorkMessagesCount(this.depId).subscribe((resp:any)=>{      
 	  const messageCount=resp.messageCount;
 	  this.totalItems = messageCount;
-    });
+    }); */
 	
 	this.InboxService.getInboxMessageByDeptIdPageData(this.depId,1,15).subscribe((resp:any)=>{      
-	  this.communicationList = resp["inboxMessages"];
+	  this.communicationList = resp["inboxMessages"]["intOffComFromatModList"];
+      this.totalItems = resp["inboxMessages"].totalCount;
+	  if(this.totalItems > 0){
+		this.isPaginationVisible = true;
+	  }
     });
 	
   }
@@ -277,7 +282,7 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	}
 	
 	this.InboxService.getInboxMessageByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
-	  this.communicationList = resp["inboxMessages"];
+	  this.communicationList = resp["inboxMessages"]["intOffComFromatModList"];
       this.page = page;
     });
 	
