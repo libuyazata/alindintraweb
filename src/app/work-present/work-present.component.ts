@@ -57,10 +57,10 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
       dateTo : new FormControl(''),
     })
 	this.materialRequestSearchForm.patchValue({"workTypeId" : 0});
-    this.getWorkDetailsList();
-	this.getDepartmentList();
-	this.getworkStatusList();
-	this.getemployeeList();
+   // this.getWorkDetailsList();
+	//this.getDepartmentList();
+	//this.getworkStatusList();
+	//this.getemployeeList();
   }
   
   openCreateForm() {
@@ -95,38 +95,14 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
 		return invalid ? { invalidRange: { from, to } } : null;
   };
   protected getpresentWorkList() {
-/* 	let params = {
-      startDate : '2021-08-23',
-      endDate : '2021-08-23',
-      departmentId : 0
-    }; */
-	    /* const startDate = '2021-08-23';
-	    const endDate = '2021-08-23';
-	    const departmentId = 0;
-	const params = startDate+'/'+endDate+'/'+departmentId;
-	this.WorkpresentService.getWorkDetailsByDate(params).subscribe((resp:any)=>{      
-	  this.presentWorkList = resp["models"]; */
-    
 	const credentials = this.authenticationService.credentials;
     const departmentId = credentials.departmentId;
-	//const departmentId = 1;
 	if(this.sessionstorage.getItem("dashboardsessiondeptId")==null){
 	const credentials = this.authenticationService.credentials;
       this.depId = credentials.departmentId;
 	}else{
 	  this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
 	}
-	//const messageCount= 0;
-	/* this.WorkpresentService.getInboxWorkMessagesCount(this.depId).subscribe((resp:any)=>{      
-	  const messageCount=resp.messageCount;
-	  this.totalItems = messageCount;
-    }); */
-	/* if(messageCount > 0){
-		this.isPaginationVisible = true;
-	} */
-	//this.totalItems = 20;
-
-	
 	this.WorkpresentService.getWorkDetailsByDeptIdPageData(this.depId,1,0,12).subscribe((resp:any)=>{      
 	  this.presentWorkList = resp["models"]["workModelList"];
       this.totalItems = resp["models"].totalCount;
@@ -250,19 +226,26 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
       "endDate" : searchFilter.dateTo == null ? "" : searchFilter.dateTo,
       "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
       "workTypeId" : searchFilter.workTypeId == null ? "0" : searchFilter.workTypeId,
-    }
+      "pageNo" : 0,
+      "pageCount" : 12,
+	}
     return params;
   }
   public onWorkDetailsSearched(){
-    let params = this.getSearchParams();
+	let params = this.getSearchParams();
     this.WorkpresentService.getWorkDetailsBySearch(params).subscribe((resp:any)=>{
-	  this.presentWorkList = resp["models"];
+	  this.presentWorkList = resp["models"]["workModelList"];
+	  this.totalItems = resp["models"].totalCount;
+	  if(this.totalItems > 0){
+		this.isPaginationVisible = true;
+	  }
     });
   }
-  private clearForm() {
-    this.isEdit = false;
+  clearForm() {
+	this.isEdit = false;
     this.isFormVisible = false;
     this.isFormSubmitInitiated = false;
+	this.getpresentWorkList();
   }
   resetForm() {
     this.addItemForm.reset();

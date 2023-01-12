@@ -111,7 +111,7 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	   createdOn : new FormControl(),
 	   });
 	
-	this.getWorkDetailsList();
+	//this.getWorkDetailsList();
 	this.getcommunicationList();
 	this.initializeForm(null);
 	this.initializeReplyForm(null);

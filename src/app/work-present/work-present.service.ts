@@ -27,7 +27,7 @@ export class WorkpresentService extends BaseService {
     return this.httpClient.get("masterTable/getAllWorkType",{ params: data });
   }
   public getWorkDetailsBySearch(data:any): Observable<any>{
-    return this.httpClient.get("project/getWorkDetailsBySearch", { params : data});
+    return this.httpClient.get("project/searchWorkDetails", { params : data});
   }
   public getDepartmentList(data:any): Observable<any>{
     return this.httpClient.get("user/getActiveDepartments/");

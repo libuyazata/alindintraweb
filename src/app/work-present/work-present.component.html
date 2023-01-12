@@ -37,7 +37,7 @@
 											<div class="col-lg-4 pt-4">                    
 												<span class="float-left">
 													<button class="btn btn-info" type="submit">Search</button>  
-													<button class="btn btn-danger" type="reset">Clear</button>
+													<button class="btn btn-danger" type="reset" (click)="clearForm()">Clear</button>
 <!-- 													<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;">Create {{itemName}}</button>  
  -->
 											<!-- <a class="link" [routerLink]="['/work-details/']">
@@ -80,7 +80,7 @@ Co Ordinator:  {{item.projectCoOrdinatorName}}</p>
 								</a>
                             </div>
                     </div>
-					<div class="row m-t-10" *ngIf="isPaginationVisible">
+					<div class="row m-t-10" *ngIf="isPaginationVisible==true">
 							<pagination-controls (pageChange)="getpresentWorkListPage(page = $event)"></pagination-controls>
 					</div>
 				</div>

@@ -38,10 +38,14 @@ export class SideBarComponent implements OnInit {
   public prv_deputationEdit : string;
   public prv_deputationDelete : string;  
   public prv_userRoleId : string;  
-  public isShowHr = false;
-  public isShowAdmin = false;
+  //public isShowHr = false;
+  //public isShowAdmin = false;
   public isShowInbox = false;
   public isShowSent = false;
+  
+  public isShowHr : boolean = false;
+  public isShowAdmin : boolean = false;
+
   
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
@@ -151,15 +155,17 @@ export class SideBarComponent implements OnInit {
       this.nav.visible = false;
     }
   }
-  openHr() { 
-    this.isShowHr = ! this.isShowHr;
+  openHr(){ 
+	this.isShowHr = ! this.isShowHr;
   }
-  openAdmin() { 
+  openAdmin(){ 
     this.isShowAdmin = ! this.isShowAdmin;
   }
-  openInbox() { 
+  
+  
+  /* openInbox() { 
     this.isShowInbox = ! this.isShowInbox;
     this.isShowSent = ! this.isShowSent;
-  }
+  } */
   
 }

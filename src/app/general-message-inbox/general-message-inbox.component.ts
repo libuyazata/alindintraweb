@@ -117,7 +117,7 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	   createdOn : new FormControl(),
 	   });
 	
-	this.getWorkDetailsList();
+	//this.getWorkDetailsList();
 	this.getcommunicationList();
 	this.getDepartmentList();
 	this.initializeForm(null);
