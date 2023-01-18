@@ -38,8 +38,8 @@
 												<span class="float-left">
 													<button class="btn btn-info" type="submit">Search</button>  
 													<button class="btn btn-danger" type="reset" (click)="clearForm()">Clear</button>
-<!-- 													<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;">Create {{itemName}}</button>  
- -->
+													<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;">Create {{itemName}}</button>  
+
 											<!-- <a class="link" [routerLink]="['/work-details/']">
 												<button class="btn btn-success ml-0" type="button">Manage Work</button>
 											</a> -->
@@ -121,8 +121,8 @@ Co Ordinator:  {{item.projectCoOrdinatorName}}</p>
                     </div>
 					<div class="col-lg-12">
                         <div><label>Department : </label></div>
-                        <select class="form-control" formControlName="departmentId">
-                        <option *ngFor="let department of departmentList" [ngValue]="department.departmentId">{{department.departmentName}}</option>
+                        <select class="form-control" formControlName="departmentId" (change)="getEmployeeListbyDept($event);">
+                        <option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
                          </select> 
                         <div *ngIf="isFormSubmitInitiated && itemForm.departmentId.errors" style="color:red;">Please select Department</div>
                     </div>

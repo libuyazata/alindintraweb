@@ -22,7 +22,8 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
   public departmentList : Array<any>;
   public employeeList : Array<any>;
   public workStatusList : Array<any>;
- 
+  public employeeAllocatelist : Array<any>;
+
   public isFormVisible : boolean = false;
   public isPaginationVisible : boolean = false;
   public isEdit : boolean = false;
@@ -82,7 +83,25 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
 	  createdOn : new FormControl((null != data ? data.createdOn : '')),
 	  updatedOn : new FormControl((null != data ? data.updatedOn : ''))
 	 });
+	//this.getWorkTypeList();
+	this.getDepartmentList();
+	this.getworkStatusList();
   } 
+  protected getEmployeeListbyDeptId(item:any) {
+    const departmentId = item;
+	this.WorkpresentService.getEmployeeListForTaskAllocationByDeptId(departmentId).subscribe((resp:any)=>{      
+	  this.employeeList = resp["models"];
+    });
+  }
+  public getEmployeeListbyDept(event:any){
+	//this.addItemForm.get("projectCoOrdinatorEmpId").setValue("");
+	let departmentId = event.target.value;;
+    if(departmentId != "") {
+      this.getEmployeeListbyDeptId(departmentId);
+    } else {
+      this.employeeAllocatelist = []; // Reset it.
+    }
+  }
   private dateRangeValidator: ValidatorFn = (): {
     [key: string]: any;
   } | null => {
