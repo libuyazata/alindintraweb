@@ -32,6 +32,10 @@ export class PrivilegesService extends BaseService {
     return this.httpClient.get("user/deleteDeputation/"+data);
   }
   public getUserRole(): Observable<any>{
+    return this.httpClient.get("user/getAllUserRoles/");
+  }
+  
+  /* public getUserRole(): Observable<any>{
     const userRole = [{
       userRoleId : 1, userRoleName : "Admin"
     },{
@@ -42,5 +46,5 @@ export class PrivilegesService extends BaseService {
       userRoleId : 4, userRoleName : "Department coordinator"
     }];
     return of(userRole);
-  }
+  } */
 }

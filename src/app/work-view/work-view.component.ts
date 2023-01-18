@@ -142,7 +142,7 @@ this.route.queryParams.subscribe(
 	this.getWorkTypeList();
 	this.getDepartmentList();
 	this.getworkStatusList();
-	this.getemployeeList();
+	//this.getemployeeList();
 	this.materialRequestSearchForm = new FormGroup({
       searchKeyWord : new FormControl(''),
       workTypeId : new FormControl(''),
@@ -212,6 +212,21 @@ this.route.queryParams.subscribe(
 	this.WorkViewService.getAllEmployeeTaskAllocationByWorkDetailsId(workDetailsId).subscribe((resp:any)=>{      
 	  this.employeeAllocatelist = resp["models"];
     });
+  }
+  protected getEmployeeListbyDeptId(item:any) {
+    const departmentId = item;
+	this.WorkViewService.getEmployeeListForTaskAllocationByDeptId(departmentId).subscribe((resp:any)=>{      
+	  this.employeeList = resp["models"];
+    });
+  }
+  public getEmployeeListbyDept(event:any){
+	//this.addItemForm.get("projectCoOrdinatorEmpId").setValue("");
+	let departmentId = event.target.value;;
+    if(departmentId != "") {
+      this.getEmployeeListbyDeptId(departmentId);
+    } else {
+      this.employeeAllocatelist = []; // Reset it.
+    }
   }
   protected getAllocatesublist(item:any) {
     const subTaskId = item;
@@ -450,11 +465,11 @@ this.route.queryParams.subscribe(
 	  createdOn : new FormControl((null != data ? data.createdOn : '')),
 	  updatedOn : new FormControl((null != data ? data.updatedOn : ''))
 	 });
-	this.getWorkDetailsList();
+	//this.getWorkDetailsList();
 	this.getWorkTypeList();
 	this.getDepartmentList();
 	this.getworkStatusList();
-	this.getemployeeList();
+	//this.getemployeeList();
 
   }
   private dateRangeValidator: ValidatorFn = (): {
@@ -692,9 +707,11 @@ this.route.queryParams.subscribe(
     });
   }
   editItem(item: any) {
-    this.isEdit = true;
+	this.isEdit = true;
     this.isFormVisible = true;
     this.initializeForm(item);
+	//this.getemployeeList();
+    this.getEmployeeListbyDeptId(item.departmentId);
   }
   editsubItem(item: any) {
     this.issubEdit = true;

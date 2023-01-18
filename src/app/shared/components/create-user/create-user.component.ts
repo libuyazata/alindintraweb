@@ -49,7 +49,7 @@ export class CreateUserComponent extends BaseComponent implements OnInit, OnChan
     super(userService);
   }
 
-  ngOnInit() {
+  ngOnInit() { 
     if(!this.employeeData) {
       this.employeeData = [];
     }
@@ -294,12 +294,17 @@ protected setDates(employeeInfo:any): void {
     });
   }
 
-  protected getUserRole(){
+  /* protected getUserRole(){
     this.userService.getUserRole().subscribe((userRole: any) => {
         this.userRoleList = userRole;
     });
+  } */
+  
+  protected getUserRole(){
+	this.userService.getUserRole().subscribe((resp:any)=>{      
+	  this.userRoleList = resp["userRolesList"];
+    });
   }
-
   protected getEmployeeStatus(){
     this.userService.getEmployeeStatus().subscribe((userStatus: any) => {
         this.userStatusList = userStatus;

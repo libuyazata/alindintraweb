@@ -17,7 +17,7 @@
 						<div><label>User Role</label></div>
 						<select class="form-control" formControlName="userRoleId" (change)="getprivilegesList($event.target.value);">
 							<option value="">Select</option>
-							<option *ngFor="let userRole of userRoleList" [value]="userRole.userRoleId">{{userRole.userRoleName}}</option>
+							<option *ngFor="let userRole of userRoleList" [value]="userRole.userRoleId">{{userRole.roleName}}</option>
 						</select>
 						<div *ngIf="isFormSubmitInitiated && privilegeForm.userRoleId.errors" style="color:red;">Please select Employee Role</div>
 					</div>

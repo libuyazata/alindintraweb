@@ -121,7 +121,7 @@
             <select class="form-control" formControlName="userRoleId"
             [ngClass]="{ 'is-invalid': isEmployeeFormAttemptSubmit && employeeForm.userRoleId.errors }" >
                 <option value="">Select</option>
-                <option *ngFor="let userRole of userRoleList" [ngValue]="userRole.userRoleId">{{userRole.userRoleName}}</option>
+                <option *ngFor="let userRole of userRoleList" [ngValue]="userRole.userRoleId">{{userRole.roleName}}</option>
             </select>
             <div *ngIf="isEmployeeFormAttemptSubmit && employeeForm.userRoleId.errors" class="invalid-feedback">
                 <div *ngIf="employeeForm.userRoleId.errors.required">Please select an employee role.</div>

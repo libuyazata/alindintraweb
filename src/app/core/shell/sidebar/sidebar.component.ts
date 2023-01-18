@@ -16,6 +16,7 @@ export class SideBarComponent implements OnInit {
   isAdminUser:Boolean;
   isMobileLayout: Boolean;
   isWebLayout: Boolean;
+  public userRolesId : number;
 
   
   public privilegesList : Array<any>;
@@ -55,6 +56,7 @@ export class SideBarComponent implements OnInit {
   ngOnInit() { 
   	
 	const userRoleId = this.authenticationService.getuserRole();
+	this.userRolesId=userRoleId;	  
 		  this.nav.getprivilegesList(userRoleId).subscribe((resp:any)=>{      
 		  this.privilegesList = resp["authorization"];
 		  const storage = sessionStorage;

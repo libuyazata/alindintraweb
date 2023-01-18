@@ -327,8 +327,8 @@
                     </div>
 					<div class="col-lg-12">
                         <div><label>Department : </label></div>
-                        <select class="form-control" formControlName="departmentId">
-                        <option *ngFor="let department of departmentList" [ngValue]="department.departmentId">{{department.departmentName}}</option>
+                        <select class="form-control" formControlName="departmentId" (change)="getEmployeeListbyDept($event);">
+                        <option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
                          </select> 
                         <div *ngIf="isFormSubmitInitiated && itemForm.departmentId.errors" style="color:red;">Please select Department</div>
                     </div>

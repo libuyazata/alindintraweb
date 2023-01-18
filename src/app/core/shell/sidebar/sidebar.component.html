@@ -36,7 +36,7 @@
             </span>
 	</li>
 	<li>
-			<span *ngIf="prv_workView == 'true'">
+			<span>
 			<a class="menu-link" (click)=menuButtonClicked() routerLink="/general-message-inbox" routerLinkActive="active">
                 <span class="fa fa-envelope"></span><span class="nav-label">General Message</span>
             </a>
@@ -56,7 +56,7 @@
 			</span>
 	</li>
 	<li>
-			<span *ngIf="isAdminUser">
+			<span *ngIf="userRolesId == 1">
 			<a [routerLink]=""><span class="fas fa-user-cog"></span><span class="nav-label pl-2"> ADMIN<i class="fas icon-margin" [ngClass]="{'fa-plus-circle': !isShowAdmin,'fa-minus-circle': isShowAdmin }" (click)="openAdmin();"></i></span></a>
 			<span *ngIf="isShowAdmin">
 			<a class="menu-link" routerLink="/privileges" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Privileges</span></a>

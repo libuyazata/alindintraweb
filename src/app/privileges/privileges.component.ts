@@ -162,8 +162,11 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
     return params;
   }
   protected getUserRole(){
-    this.PrivilegesService.getUserRole().subscribe((userRole: any) => {
+    /* this.PrivilegesService.getUserRole().subscribe((userRole: any) => {
         this.userRoleList = userRole;
+    }); */
+	this.PrivilegesService.getUserRole().subscribe((resp:any)=>{      
+	  this.userRoleList = resp["userRolesList"];
     });
   }
   get privilegeForm() { return this.addPrivilegeForm.controls; }

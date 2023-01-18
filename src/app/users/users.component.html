@@ -91,10 +91,10 @@
 <!-- 				<td class="actions" *allowUser="'admin'" [routerLink]="['/save-user/']" [queryParams]="{ 'uid': item.employeeId}">
  -->				<td class="actions">
                 <div class="link-holder">
-					<span *ngIf="prv_employeeDelete == 'true' && isAdminUser">
+					<span *ngIf="prv_employeeDelete == 'true'">
 					<a class="link" title="Delete" (click)="deleteEmployee(item);" ><i class="fas fa-trash"></i></a>
 					</span>
-					<span *ngIf="prv_employeeEdit == 'true' && isAdminUser" >
+					<span *ngIf="prv_employeeEdit == 'true'" >
 					<a class="link" [routerLink]="['/edit-user/']"  [queryParams]="{ 'uid': item.employeeId}"><i class="fas fa-edit"></i></a>
                     </span>
 					<span>

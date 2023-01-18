@@ -105,6 +105,9 @@ export class WorkViewService extends BaseService {
   public getAllEmployeeTaskAllocationByWorkDetailsId(data:any): Observable<any> {
     return this.httpClient.get("project/getAllEmployeeTaskAllocationByWorkDetailsId/"+data);
   }
+  public getEmployeeListForTaskAllocationByDeptId(data:any): Observable<any> {
+    return this.httpClient.get("project/getEmployeeListForTaskAllocationByDeptId/"+data);
+  }
   public getAllEmployeeTaskAllocationBySubTaskId(data:any): Observable<any> {
     return this.httpClient.get("project/getAllEmployeeTaskAllocationBySubTaskId/"+data);
   }

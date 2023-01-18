@@ -27,4 +27,7 @@ export class CreateUserService extends BaseService {
   public getAllEmployeeTypes(data:any): Observable<any> {
     return this.httpClient.get("user/getAllEmployeeTypes/");
   }
+  public getUserRole(): Observable<any>{
+    return this.httpClient.get("user/getAllUserRoles/");
+  }
 }

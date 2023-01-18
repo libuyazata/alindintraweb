@@ -13,15 +13,16 @@
                         <form novalidate [formGroup]="departmentDashboard">
 						<div><label><b>Choose Department</b> : </label></div>
                         <select class="form-control" formControlName="departmentId" (change)="getDepartmentDashboardData($event);">
-						<option [value]="0" [selected] >Default</option>
-						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
+<!-- 						<option [value]="0" [selected] >Default</option>
+ -->						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
                          </select> 
                         </form>
 						</div>
 						</div>
 						
 						<div class="row m-t-25">
-                            <div class="col-sm-6 col-lg-3" *ngIf="homeuserRoleid == 1 || homeuserRoleid == 2 || homeuserRoleid == 4">
+<!--                             <div class="col-sm-6 col-lg-3" *ngIf="homeuserRoleid == 1 || homeuserRoleid == 2 || homeuserRoleid == 4">
+ -->                            <div class="col-sm-6 col-lg-3" *ngIf="prv_departmentView == 'true'">
                                 <a class="link" [routerLink]="['/department/']">
 								<div class="overview-item overview-item--c1" style="background-image: -webkit-linear-gradient(90deg, #3f5efb 0%, #fc466b 100%);">
                                     <div class="overview__inner">
@@ -43,7 +44,7 @@
                                 </div>
 								</a>
                             </div>
-                            <div class="col-sm-6 col-lg-3" *ngIf="homeuserRoleid == 1 || homeuserRoleid == 2 || homeuserRoleid == 4">
+                            <div class="col-sm-6 col-lg-3"  *ngIf="prv_employeeView == 'true'">
                                 <a class="link" [routerLink]="['/employees/']">
 								<div class="overview-item overview-item--c2" style="background-image: -webkit-linear-gradient(90deg, #11998e 0%, #38ef7d 100%);">
                                     <div class="overview__inner">
@@ -65,7 +66,7 @@
                                 </div>
 								</a>
                             </div>
-							<div class="col-sm-6 col-lg-3">
+							<div class="col-sm-6 col-lg-3"  *ngIf="prv_workView == 'true'">
                                 <a class="link" [routerLink]="['/work-home/']">
 								<div class="overview-item overview-item--c2" style="background-image: -webkit-linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);">
                                     <div class="overview__inner">
@@ -87,7 +88,7 @@
                                 </div>
 								</a>
                             </div>
-							<div class="col-sm-6 col-lg-3">
+							<div class="col-sm-6 col-lg-3" *ngIf="prv_workView == 'true'">
                                 <a class="link" [routerLink]="['/project/']">
 								<div class="overview-item overview-item--c2" style="background-image: -webkit-linear-gradient(90deg, #45b649 0%, #dce35b 100%);">
                                     <div class="overview__inner">

@@ -49,7 +49,7 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   public userprofilepicUploadsForm : FormGroup;
   public isMomFormAttemptSubmit : boolean = false;
   public materialRequestSearchForm : FormGroup;
-
+  public empuserRoleid : number;  
   public myDatePickerOptions: IMyDpOptions = {
       // other options...
       dateFormat: 'dd mmm yyyy',
@@ -64,7 +64,9 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   }
 
   ngOnInit() { 
-    const storage = sessionStorage;
+	const userRoleId = this.authenticationService.getuserRole();
+	this.empuserRoleid =userRoleId;
+	const storage = sessionStorage;
     this.prv_employeeEdit = storage.getItem('prv_employeeEdit');
 	this.prv_employeeDelete = storage.getItem('prv_employeeDelete');
 	
