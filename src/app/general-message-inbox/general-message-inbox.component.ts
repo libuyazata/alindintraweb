@@ -575,8 +575,13 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 			this.GeneralmessageinboxService.viewUpdateDepartmentGenMessage(deptCommId).subscribe((resp:any)=>{      
 			//this.getcommunicationList();
 			this.GeneralmessageinboxService.getGeneralInboxByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
-			  this.communicationList = resp["models"];
+			  //this.communicationList = resp["models"];
 			  this.page = page;
+			  this.communicationList = resp["models"]["formatModels"];
+			  this.totalItems = resp["models"].totalCount;
+			  if(this.totalItems > 0){
+				this.isPaginationVisible = true;
+			  }
 			});
 			});
 	 }		
@@ -618,10 +623,19 @@ export class GeneralmessageinboxComponent extends BaseComponent implements OnIni
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
     }); */
 	//this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
-	
+	const storage = sessionStorage;
+	const currentDeptId=storage.getItem('sessiondeptId');
+   
+	const replytoDepartmentList = [];
+      for (let index=0; index < item.departmentGeneralMessageModels.length; index++) {
+	   if(currentDeptId != item.departmentGeneralMessageModels[index].departmentId ){
+	   replytoDepartmentList.push({"departmentId" : item.departmentGeneralMessageModels[index].departmentId,"departmentName" : item.departmentGeneralMessageModels[index].departmentName});
+	   }
+	  } 
+	this.departmentList=replytoDepartmentList;
   
 	
-	this.departmentList=item.departmentGeneralMessageModels;
+	//this.departmentList=item.departmentGeneralMessageModels;
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
 
 	/* this.replyForm.get("workDetailsId").setValue(item.workDetailsId);

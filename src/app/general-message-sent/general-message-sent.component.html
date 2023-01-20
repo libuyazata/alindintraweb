@@ -27,8 +27,8 @@
 					<div class="col-lg-3">
 						<div class="search-label-container"><label>Choose Department</label></div>
 						<select class="form-control" formControlName="departmentId" [attr.disabled]="showDefault? true: null">
-						<option [value]="0" [selected] >Default</option>
-						<option *ngFor="let department of departmentList" [ngValue]="department.departmentId">{{department.departmentName}}</option>
+<!-- 						<option [value]="0" [selected] >Default</option>
+ -->						<option *ngFor="let department of departmentList" [ngValue]="department.departmentId">{{department.departmentName}}</option>
                         </select> 
 					</div>
 					</div>
@@ -120,7 +120,7 @@
 											(click)="viewDetails(msg.generalMessageModelList[0].genMessageId,msg.generalMessageModelList[0].departmentGeneralMessageModels,page);"><i
 												class="fas fa-eye"></i></a>
 										<button (click)="replyMessage(msg.generalMessageModelList[0]);" class="btn btn-success"
-											style="margin-left:5px;">Reply</button>
+											style="margin-left:5px;display:none;">Reply</button>
 									</div>
 								</td>
 							</tr>

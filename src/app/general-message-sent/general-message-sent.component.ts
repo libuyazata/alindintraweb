@@ -585,8 +585,13 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 			this.GeneralmessagesentService.viewUpdateDepartmentGenMessage(deptCommId).subscribe((resp:any)=>{      
 			//this.getcommunicationList();
 			this.GeneralmessagesentService.sentGeneralMessageListByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
-			  this.communicationList = resp["models"];
+			  //this.communicationList = resp["models"];
 			  this.page = page;
+			  this.communicationList = resp["models"]["formatModels"];
+			  this.totalItems = resp["models"].totalCount;
+			  if(this.totalItems > 0){
+				this.isPaginationVisible = true;
+			  }
 			});
 			
 			});
@@ -631,7 +636,13 @@ export class GeneralmessagesentComponent extends BaseComponent implements OnInit
 	//this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
 	this.departmentList=item.departmentGeneralMessageModels;
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
-
+    /* const departmentListArray = [{
+      departmentId : item.departmentId,departmentName : item.departmentName
+    }];
+	
+	this.departmentList=departmentListArray;
+	this.replyForm.get("deptCommList").setValue(this.departmentList);
+     */
 	//this.replyForm.get("workDetailsId").setValue(item.workDetailsId);
     //this.replyForm.get("workName").setValue(item.workName);
     //this.replyForm.get("subTaskId").setValue(item.subTaskId);

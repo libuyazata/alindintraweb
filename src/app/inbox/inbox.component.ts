@@ -587,8 +587,14 @@ export class InboxComponent extends BaseComponent implements OnInit {
 			//this.getcommunicationList();
 			
 			this.InboxService.getInboxMessageByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
-			  this.communicationList = resp["inboxMessages"];
 			  this.page = page;
+			  this.communicationList = resp["inboxMessages"]["intOffComFromatModList"];
+			  this.totalItems = resp["inboxMessages"].totalCount;
+			  if(this.totalItems > 0){
+				this.isPaginationVisible = true;
+			  }
+			  //this.communicationList = resp["inboxMessages"];
+			  
 			});
 			});
 	 }		
@@ -630,7 +636,15 @@ export class InboxComponent extends BaseComponent implements OnInit {
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
     }); */
 	//this.departmentList = [{"departmentId":item.departmentId,"departmentName":item.departmentName}]
-	this.departmentList=item.deptCommList;
+	const storage = sessionStorage;
+	const currentDeptId=storage.getItem('sessiondeptId');
+    const replytoDepartmentList = [];
+      for (let index=0; index < item.deptCommList.length; index++) {
+	   if(currentDeptId != item.deptCommList[index].departmentId ){
+	   replytoDepartmentList.push({"departmentId" : item.deptCommList[index].departmentId,"departmentName" : item.deptCommList[index].departmentName});
+	   }
+	  } 
+	this.departmentList=replytoDepartmentList;
 	this.replyForm.get("deptCommList").setValue(this.departmentList);
 
 	this.replyForm.get("workDetailsId").setValue(item.workDetailsId);

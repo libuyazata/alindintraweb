@@ -580,13 +580,19 @@ export class SentComponent extends BaseComponent implements OnInit {
 		this.depId = this.sessionstorage.getItem("dashboardsessiondeptId");
 	}
 	  
-	  if(viewStatus == 0){
+	  if(viewStatus == 0){ 
 			this.SentService.viewUpdateDepartmentCommunicationMessage(deptCommId).subscribe((resp:any)=>{      
 			//this.getcommunicationList();
 			
 			this.SentService.communicationListByDeptIdPageData(this.depId,page,15).subscribe((resp:any)=>{      
-			  this.communicationList = resp["communicationList"];
+			  //this.communicationList = resp["communicationList"];
 			  this.page = page;
+			  
+			  this.communicationList = resp["communicationList"]["intOffComFromatModList"];
+			  this.totalItems = resp["communicationList"].totalCount;
+			  if(this.totalItems > 0){
+				this.isPaginationVisible = true;
+			  }
 			});
 			});
 	 }		
