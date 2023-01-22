@@ -31,6 +31,7 @@ import { DepartmentModule } from '@app/department/department.module';
 import { CallManagementModule } from '@app/call-management/call-management.module';
 import { ServiceReportModule } from '@app/service-report/service-report.module';
 import { WorkStatusModule } from '@app/general-info/work-status/work-status.module';
+import { DocumenttypesModule } from '@app/general-info/document-types/document-types.module';
 import { WorkTypeModule } from '@app/general-info/work-type/work-type.module';
 import { WorkDetailsModule } from './work-details/work-details.module';
 import { SettingModule } from './setting/setting.module';
@@ -79,6 +80,7 @@ import { GeneralmessagesentModule } from '@app/general-message-sent/general-mess
     AppRoutingModule,
     NgxSpinnerModule,
 	WorkStatusModule,
+	DocumenttypesModule,
 	WorkTypeModule,
 	GeneralInfoModule,
 	WorkDocumentModule,

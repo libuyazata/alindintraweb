@@ -42,7 +42,9 @@ export class WorkpresentService extends BaseService {
     return this.httpClient.get("project/getWorkDetailsByDeptId",{ params: data });
   }
   public getEmployeeListForTaskAllocationByDeptId(data:any): Observable<any> {
-    return this.httpClient.get("project/getEmployeeListForTaskAllocationByDeptId/"+data);
+    //return this.httpClient.get("project/getEmployeeListForTaskAllocationByDeptId/"+data);
+    return this.httpClient.get("user/getEmployeeListByDept",{ params: data });
+  
   }
   public saveOrUpdateWorkStatusList(data: any) : Observable<any> {
 	if(data.workDetailsId!=""){

@@ -191,7 +191,8 @@ this.route.queryParams.subscribe(
   }
   protected getWorkDetailsLists(id:any) {
 	let params = {
-      workDetailsId : id
+      workDetailsId : id,
+	  status: 1
     }
 	
 	this.WorkViewService.getWorkDetailsListById(params).subscribe((resp:any)=>{      
@@ -794,10 +795,11 @@ this.route.queryParams.subscribe(
     });
   }
   public onConfirmDelete(_self: any, params: any) {
-    _self.WorkViewService.deleteworkStatus(params).subscribe((resp: any) => {
-      let deleteStatus = resp.status == "success";
+	_self.WorkViewService.deleteworkStatus(params).subscribe((resp: any) => {
+	  const id1 = params['workDetailsId'];
+	  let deleteStatus = resp.status == "success";
       _self.alertService.showDeleteStatus(_self.itemName.toLowerCase(), deleteStatus);
-      _self.getWorkDetailsList();
+      _self.getWorkDetailsLists(id1);
     });
   }
   public onConfirmDeletesub(_self: any, params: any) {

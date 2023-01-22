@@ -89,7 +89,11 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
   } 
   protected getEmployeeListbyDeptId(item:any) {
     const departmentId = item;
-	this.WorkpresentService.getEmployeeListForTaskAllocationByDeptId(departmentId).subscribe((resp:any)=>{      
+	let params = {
+      departmentId : departmentId,
+	  isActive: 1
+    }
+	this.WorkpresentService.getEmployeeListForTaskAllocationByDeptId(params).subscribe((resp:any)=>{      
 	  this.employeeList = resp["models"];
     });
   }
@@ -229,7 +233,7 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), true);
           this.resetForm();
           this.clearForm();
-          this.getpresentWorkList();
+          //this.getpresentWorkList();
         } else {
           this.alertService.showSaveStatus(this.itemName.toLowerCase(), false);
         }
