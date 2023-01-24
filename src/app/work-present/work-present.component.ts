@@ -89,12 +89,9 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
   } 
   protected getEmployeeListbyDeptId(item:any) {
     const departmentId = item;
-	let params = {
-      departmentId : departmentId,
-	  isActive: 1
-    }
-	this.WorkpresentService.getEmployeeListForTaskAllocationByDeptId(params).subscribe((resp:any)=>{      
-	  this.employeeList = resp["models"];
+    const isActive = 1;
+	this.WorkpresentService.getEmployeeListForTaskAllocationByDeptId(departmentId,isActive).subscribe((resp:any)=>{      
+	  this.employeeList = resp["employees"];
     });
   }
   public getEmployeeListbyDept(event:any){

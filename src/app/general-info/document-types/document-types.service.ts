@@ -20,14 +20,14 @@ export class DocumenttypesService extends BaseService {
 	return this.httpClient.get("masterTable/getAllDocumentTypes/"+data);
   }
    public saveOrUpdateDocumenttypesList(data: any) : Observable<any> {
-    if(data.DocumenttypesId!=""){
-	return this.httpClient.post("masterTable/updateDocumenttypes", data);
+    if(data.documentTypeId!=""){
+	return this.httpClient.post("masterTable/updateDocumentType", data);
 	}else{
-	return this.httpClient.post("masterTable/saveDocumenttypes", data);
+	return this.httpClient.post("masterTable/saveDocumentType", data);
 	}
   
   }
   public deleteDocumenttypes(data:any): Observable<any>{
-    return this.httpClient.get("masterTable/deleteDocumenttypes", { params : data});
+    return this.httpClient.get("masterTable/deleteDocumentType/"+data);
   }
 }

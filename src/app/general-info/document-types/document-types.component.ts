@@ -103,9 +103,9 @@ export class DocumenttypesComponent extends BaseComponent implements OnInit {
   }
   private initializeForm(data: any) {
     this.addItemForm = new FormGroup({
-      DocumenttypesId : new FormControl((null != data ? data.DocumenttypesId : '')),
-      DocumenttypesName : new FormControl((null != data ? data.DocumenttypesName : ''), Validators.required),
-      description : new FormControl((null != data ? data.description : ''), Validators.required)
+      documentTypeId : new FormControl((null != data ? data.documentTypeId : '')),
+      type : new FormControl((null != data ? data.type : ''), Validators.required),
+      desc : new FormControl((null != data ? data.desc : ''), Validators.required)
     });
   }
   onAddItem() { 
@@ -132,16 +132,16 @@ export class DocumenttypesComponent extends BaseComponent implements OnInit {
   private getPreparedParams(submitData: any) {
 
     let params : {[k : string]: any}= {
-      DocumenttypesName : submitData.DocumenttypesName,
-      description : submitData.description,
-	  DocumenttypesId : submitData.DocumenttypesId,
+      type : submitData.type,
+      desc : submitData.desc,
+	  documentTypeId : submitData.documentTypeId,
 	  status : submitData.status
     }
 
-    if(this.isEdit) {
-      params.DocumenttypesId = submitData.DocumenttypesId,
-      params.status =1
-    }
+    /* if(this.isEdit) {
+      params.documentTypeId = submitData.documentTypeId
+     // params.status =0
+    } */
 
     return params;
   }
@@ -158,13 +158,14 @@ export class DocumenttypesComponent extends BaseComponent implements OnInit {
   }
   //#region public function
   deleteItem(item: any) {
-    let params = {
-      DocumenttypesId : item.DocumenttypesId
-    };
-    this.alertService.showPermenantDeleteConfirmation(this, this.itemName.toLowerCase(), this.onConfirmDelete, params);
+    /* let params = {
+      documentTypeId : item.documentTypeId
+    }; */
+	const documentTypeId = item.documentTypeId;
+    this.alertService.showPermenantDeleteConfirmation(this, this.itemName.toLowerCase(), this.onConfirmDelete, documentTypeId);
   }
-  public onConfirmDelete(_self: any, params: any) {
-    _self.DocumenttypesService.deleteDocumenttypes(params).subscribe((resp: any) => {
+  public onConfirmDelete(_self: any, documentTypeId: any) {
+    _self.DocumenttypesService.deleteDocumenttypes(documentTypeId).subscribe((resp: any) => {
       let deleteStatus = resp.status == "success";
       _self.alertService.showDeleteStatus(_self.itemName.toLowerCase(), deleteStatus);
       _self.getDocumenttypesList();
