@@ -25,7 +25,6 @@ export class DocumenttypesService extends BaseService {
 	}else{
 	return this.httpClient.post("masterTable/saveDocumentType", data);
 	}
-  
   }
   public deleteDocumenttypes(data:any): Observable<any>{
     return this.httpClient.get("masterTable/deleteDocumentType/"+data);

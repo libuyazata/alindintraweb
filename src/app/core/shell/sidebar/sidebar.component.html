@@ -42,10 +42,11 @@
             </a>
             </span>
 	</li>
-	<li>
+	<li>    <span *ngIf="userRolesId == 1">
 			<a class="menu-link" (click)=menuButtonClicked() routerLink="/general-info/work-status" routerLinkActive="active">
                 <span class="fas fa-info-circle"></span><span class="nav-label">General Info</span>
             </a>
+			</span>
 	</li>
 	<li>
 			<span *ngIf="prv_deputationView == 'true'">

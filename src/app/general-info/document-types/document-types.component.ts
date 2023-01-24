@@ -134,8 +134,10 @@ export class DocumenttypesComponent extends BaseComponent implements OnInit {
     let params : {[k : string]: any}= {
       type : submitData.type,
       desc : submitData.desc,
-	  documentTypeId : submitData.documentTypeId,
-	  status : submitData.status
+	  documentTypeId : submitData.documentTypeId
+	  //createdOn: "2023-01-24",
+      //updatedOn: "2023-01-24"
+	  //status : submitData.status
     }
 
     /* if(this.isEdit) {

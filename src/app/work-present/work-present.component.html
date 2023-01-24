@@ -115,21 +115,24 @@ Co Ordinator:  {{item.projectCoOrdinatorName}}</p>
 					<div class="col-lg-12">
                         <div><label>Type : </label></div>
                         <select class="form-control" formControlName="workTypeId">
+                        <option value="" selected>Choose Type</option>
                         <option *ngFor="let work of workTypeList" [ngValue]="work.workTypeId">{{work.workType}}</option>
                          </select> 
                         <div *ngIf="isFormSubmitInitiated && itemForm.workTypeId.errors" style="color:red;">Please select Work Type</div>
                     </div>
 					<div class="col-lg-12">
                         <div><label>Department : </label></div>
-                        <select class="form-control" formControlName="departmentId" (change)="getEmployeeListbyDept($event);">
-                        <option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
+                        <select class="form-control" formControlName="departmentId" (change)="getEmployeeListbyDept($event);" [attr.disabled]="showDefault? true: null">
+<!--                         <option value="" selected>Choose Department</option>
+ -->						<option *ngFor="let department of departmentList" [value]="department.departmentId">{{department.departmentName}}</option>
                          </select> 
                         <div *ngIf="isFormSubmitInitiated && itemForm.departmentId.errors" style="color:red;">Please select Department</div>
                     </div>
 					<div class="col-lg-12">
                         <div><label>Employee : </label></div>
                         <select class="form-control" formControlName="projectCoOrdinatorEmpId">
-                        <option *ngFor="let employee of employeeList" [ngValue]="employee.employeeId">{{employee.firstName}}</option>
+                        <option value="" selected>Choose Employee</option>
+						<option *ngFor="let employee of employeeList" [ngValue]="employee.employeeId">{{employee.firstName}}</option>
                          </select> 
                         <div *ngIf="isFormSubmitInitiated && itemForm.projectCoOrdinatorEmpId.errors" style="color:red;">Please select Employee</div>
                     </div>

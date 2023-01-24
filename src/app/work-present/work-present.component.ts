@@ -31,6 +31,7 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
   public addItemForm: FormGroup;
   public itemName: string = "Work";
   public depId : any;
+  public showDefault : boolean = false;
 
   public page: number = 0;
   public itemsPerPage: number;
@@ -57,19 +58,44 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
       dateFrom : new FormControl(''),
       dateTo : new FormControl(''),
     })
-	this.materialRequestSearchForm.patchValue({"workTypeId" : 0});
+	
+	this.materialRequestSearchForm.patchValue({"workTypeId" : 1});
    // this.getWorkDetailsList();
 	//this.getDepartmentList();
 	//this.getworkStatusList();
 	//this.getemployeeList();
+	/* this.addItemForm = new FormGroup({
+      workName : new FormControl(''),
+      description : new FormControl(''),
+      workTypeId : new FormControl(''),
+      departmentId : new FormControl(''),
+      projectCoOrdinatorEmpId : new FormControl(''),
+      workStatusId : new FormControl(''),
+      startDate : new FormControl(''),
+      endDate : new FormControl(''),
+      workDetailsId : new FormControl(''),
+      createdOn : new FormControl(''),
+      updatedOn : new FormControl(''),
+    }) */
   }
   
   openCreateForm() {
-    this.isFormVisible = true;
+    const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	const userRole = credentials.userRole;
+	
+	this.getEmployeeListbyDeptId(departmentId);
+	if(userRole == 1){
+		 this.showDefault=false;
+	 }else{
+		 this.showDefault=true;
+	}
+	this.isFormVisible = true;
     this.isEdit = false;
     this.initializeForm(null)
   }
   private initializeForm(data: any) {
+	
 	this.addItemForm = new FormGroup({
       workDetailsId : new FormControl((null != data ? data.workDetailsId : '')),
       workName : new FormControl((null != data ? data.workName : ''), Validators.required),
@@ -86,6 +112,11 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
 	//this.getWorkTypeList();
 	this.getDepartmentList();
 	this.getworkStatusList();
+	const credentials = this.authenticationService.credentials;
+    const departmentId = credentials.departmentId;
+	
+	this.addItemForm.patchValue({"departmentId" : departmentId});
+
   } 
   protected getEmployeeListbyDeptId(item:any) {
     const departmentId = item;

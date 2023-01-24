@@ -24,7 +24,7 @@ import { BaseComponent } from '@app/core/component/base.component';
 export class UserListComponent extends BaseComponent  implements OnInit {
 
   public employeeList: any;
-
+  public departmentList : Array<any>;
   public searchForm:FormGroup;
   public itemName: string = "Employee";
   // Our future instance of DataTable
@@ -71,6 +71,7 @@ export class UserListComponent extends BaseComponent  implements OnInit {
 	this.prv_employeeDelete = storage.getItem('prv_employeeDelete');
 	
 	this.getEmployeeList();
+	this.getDepartmentList();
     this.initializeprofilepicUploadForm(); 
 
     this.minsOfMeetingForm = new FormGroup({
@@ -79,7 +80,10 @@ export class UserListComponent extends BaseComponent  implements OnInit {
 	
 	this.materialRequestSearchForm = new FormGroup({
       searchKeyWord : new FormControl(''),
+      departmentId : new FormControl(''),
     })
+	this.materialRequestSearchForm.patchValue({"departmentId" : 0});
+
 	this.isAdminUser = this.authenticationService.isAdminUser();
 
   }
@@ -87,6 +91,14 @@ export class UserListComponent extends BaseComponent  implements OnInit {
     this.userprofilepicUploadsForm = new FormGroup({
       employeeId : new FormControl(''),
       document : new FormControl(''),
+    });
+  }
+  protected getDepartmentList() {
+	let params = {
+      status : 1
+    }
+	this.employeeService.getDepartmentList(params).subscribe((resp:any)=>{      
+	  this.departmentList = resp["departments"];
     });
   }
   public onEmployeeSearched(){

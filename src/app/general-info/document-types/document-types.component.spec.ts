@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorkStatusComponent } from './work-status.component';
+import { DocumenttypesComponent } from './document-types.component';
 
-describe('WorkStatusComponent', () => {
-  let component: WorkStatusComponent;
-  let fixture: ComponentFixture<WorkStatusComponent>;
+describe('DocumenttypesComponent', () => {
+  let component: DocumenttypesComponent;
+  let fixture: ComponentFixture<DocumenttypesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorkStatusComponent ]
+      declarations: [ DocumenttypesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorkStatusComponent);
+    fixture = TestBed.createComponent(DocumenttypesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
