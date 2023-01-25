@@ -110,12 +110,12 @@ export class UserListComponent extends BaseComponent  implements OnInit {
   protected getSearchParams(){
     //const credentials = this.authenticationService.credentials;
     //const departmentId = credentials.departmentId;
-    const departmentId = 0;
+    //const departmentId = 0;
 	
 	let searchFilter = this.materialRequestSearchForm.value;    
     let params = {
       "searchKeyWord" : searchFilter.searchKeyWord == null ? "" : searchFilter.searchKeyWord,
-      "departmentId" : departmentId,
+      "departmentId" : searchFilter.departmentId == null ? "" : searchFilter.departmentId,
     }
     return params;
   }
