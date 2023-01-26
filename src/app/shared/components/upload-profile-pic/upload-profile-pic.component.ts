@@ -25,6 +25,8 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
   public uploadPerCent : string;
   public imageSrc : string;
   public profilepic : string;
+  public fileType : string;
+  public profPicBase64 : string;
   public documentList: Array<any>;
   public documentTypeList : Array<any>;
   public userDocumentUploadsForm : FormGroup;
@@ -79,7 +81,10 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
     let empParams = { "employeeId" : employeeId};
     this.uploadProfileService.getEmployeeDetailsById(empParams).subscribe((emp: any) => {
       this.profilepic = emp.employeeList[0]['profilePicPath'];
+	  this.fileType = emp.employeeList[0]['fileType'];
+      this.profPicBase64 = emp.employeeList[0]['profPicBase64'];
 	  //alert(emp.employee.profilePicPath);
+	  
     });
   }
   public onMoMFileSelected(files: FileList) {
@@ -107,7 +112,8 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
           //this.closeMoMModalView();
           //this.getNewWorkDetails();
           //alert("The details has been submitted successfully.");
-          this.isMomFormAttemptSubmit = false;
+          
+		  this.isMomFormAttemptSubmit = false;
 		  this.isShown = false;
 		  this.isShownPreview = false;
 		  this.alertService.showSaveStatus("Profile picture", true);
@@ -115,8 +121,9 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
 
 		}
       })
-	  this.router.navigate(['/employees']);
-    }
+	this.router.navigate(['/employees']);
+
+ 	}
     console.log(this.minsOfMeetingForm.value);
   }
   
