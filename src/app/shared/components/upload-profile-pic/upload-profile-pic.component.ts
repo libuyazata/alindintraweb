@@ -112,16 +112,26 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
           //this.closeMoMModalView();
           //this.getNewWorkDetails();
           //alert("The details has been submitted successfully.");
-          
+      let empParams = { "employeeId" : this.momForm.employeeId.value};
+      this.uploadProfileService.getEmployeeDetailsById(empParams).subscribe((emp: any) => {
+      this.profilepic = emp.employeeList[0]['profilePicPath'];
+	  this.fileType = emp.employeeList[0]['fileType'];
+      this.profPicBase64 = emp.employeeList[0]['profPicBase64'];
+	  //alert(emp.employee.profilePicPath);
+	  
+    });
+		  
 		  this.isMomFormAttemptSubmit = false;
 		  this.isShown = false;
-		  this.isShownPreview = false;
+		  this.isShownPreview = true;
 		  this.alertService.showSaveStatus("Profile picture", true);
 		  this.resetMoMView();
 
 		}
       })
-	this.router.navigate(['/employees']);
+	//this.router.navigate(['/employees']);
+	  //this.router.navigate(['/edit-user', { uid: 74 }]);
+	  this.router.navigate( ['/edit-user'], { queryParams: { uid: this.momForm.employeeId.value}});
 
  	}
     console.log(this.minsOfMeetingForm.value);
