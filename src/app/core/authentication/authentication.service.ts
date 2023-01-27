@@ -13,6 +13,8 @@ export interface Credentials {
   userRole:number;
   departmentId:number;
   profilePicPath:string;
+  fileType:string;
+  profPicBase64:string;
   name:string;
 }
 
@@ -66,6 +68,8 @@ export class AuthenticationService {
         userRole : 1,
         departmentId : 1,
 		profilePicPath:'test.jpg',
+		fileType:'',
+		profPicBase64:'',
         name : "",
         userId: 1
       };      
@@ -80,6 +84,8 @@ export class AuthenticationService {
 		departmentId : 1,
         name : "",
 		profilePicPath:'test.jpg',
+		fileType:'',
+		profPicBase64:'',
         userId: 2
       };      
       this.setCredentials(data, context.remember);
@@ -205,6 +211,8 @@ export class AuthenticationService {
       storage.setItem('userRole', JSON.stringify(credentials.userRole));
       storage.setItem('departmentId', JSON.stringify(credentials.departmentId));
       storage.setItem('profilePicPath', JSON.stringify(credentials.profilePicPath));
+      storage.setItem('fileType', JSON.stringify(credentials.fileType));
+      storage.setItem('profPicBase64', JSON.stringify(credentials.profPicBase64));
       //let httpClient =  this.injector.get(HttpClient);
 	 //let previlegeList: Array<boolean> = new Array();
 	  //let previlegeList = httpClient.get("user/getAuthorization/"+credentials.userRole);

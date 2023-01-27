@@ -87,7 +87,7 @@
           <a [routerLink]="" id="user-dropdown" class="nav-link" ngbDropdownToggle>{{username}}
 <!--             <i class="fas fa-user-circle fa-2x pr-1 pl-2"></i> -->            
          
- <img src="http://97.74.85.211:8080/{{profilePicPath}}" style="border-radius: 0%;width:50px;" class="pr-1 pl-2">
+ <img src="data:{{fileType}};base64,{{profPicBase64}}" style="border-radius: 0%;width:50px;" class="pr-1 pl-2 rounded-circle">
           </a>
           <div ngbDropdownMenu aria-labelledby="user-dropdown">
             <h6 class="dropdown-header">

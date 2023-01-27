@@ -11,6 +11,8 @@ export class MockAuthenticationService {
     userRole : 1,
     departmentId : 1,
 	profilePicPath:'test.jpg',
+	fileType:'',
+	profPicBase64:'',
     name : "test user"
   };
 
@@ -22,6 +24,8 @@ export class MockAuthenticationService {
       userRole : 1,
       departmentId : 1,
 	  profilePicPath:'test.jpg',
+	  fileType:'',
+	  profPicBase64:'',
       name : "test user"
     });
   }

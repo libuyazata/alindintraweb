@@ -65,6 +65,8 @@ export class LoginComponent implements OnInit {
             profilePicPath : loginData.loginDetails.profilePicPath,
             departmentId : loginData.loginDetails.departmentId,
 			userName : loginData.loginDetails.userName,
+			fileType : loginData.loginDetails.fileType,
+			profPicBase64 : loginData.loginDetails.profPicBase64,
             token : loginData.token,
              userRole : this.getUserRole(loginData.loginDetails.roleName),
             // userRole : 1,

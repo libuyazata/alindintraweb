@@ -103,6 +103,14 @@ export class HeaderComponent implements OnInit {
     const credentials = this.authenticationService.credentials;
     return credentials ? credentials.profilePicPath : null;
   }
+  get fileType(): string | null {
+    const credentials = this.authenticationService.credentials;
+    return credentials ? credentials.fileType : null;
+  }
+  get profPicBase64(): string | null {
+    const credentials = this.authenticationService.credentials;
+    return credentials ? credentials.profPicBase64 : null;
+  }
   get resetForm() { return this.resetPasswordForm.controls; }
 
   menuButtonClicked() {
