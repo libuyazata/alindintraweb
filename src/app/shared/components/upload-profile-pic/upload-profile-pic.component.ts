@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, EventEmitter, Output, OnChanges, AfterViewInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators,ValidatorFn } from '@angular/forms';
 
 import { environment } from '@env/environment';
 import { BaseComponent } from '@app/core/component/base.component';
@@ -23,6 +23,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
 
   public employeeId:number = 0;
   public uploadPerCent : string;
+  //public fileMaxSize : number;
   public imageSrc : string;
   public profilepic : string;
   public fileType : string;
@@ -35,6 +36,7 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
   protected fileToUpload : any; // MoM files
   public isMomFormAttemptSubmit: Boolean;
   public isShown : boolean = false;
+  public isImagesizeError : boolean = false;
   public isShownPreview : boolean = true;
 
   constructor(private uploadProfileService:UploadProfilepicService,private alertService : AlertNotificationService,
@@ -88,14 +90,20 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
     });
   }
   public onMoMFileSelected(files: FileList) {
-    this.isShown = true;
     this.isShownPreview = false;
 	this.fileToUpload = files.item(0);
 	const file = files.item(0);
-
-    const reader = new FileReader();
-    reader.onload = e => this.imageSrc = reader.result;
-    reader.readAsDataURL(file);
+	if(file.size > 1024*1024){
+		this.isImagesizeError=true;
+		this.isShown = false;
+	}else{
+		this.isImagesizeError=false;
+        this.isShown = true;
+		const reader = new FileReader();
+		reader.onload = e => this.imageSrc = reader.result;
+		reader.readAsDataURL(file);
+	}
+    
   }
   
   public onMoMDetailsSubmitted(){
@@ -140,9 +148,11 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
   private initializeForm(data: any) {
     this.minsOfMeetingForm = new FormGroup({
       employeeId : new FormControl(''),
-      profilePic : new FormControl('',Validators.required),
+      profilePic : new FormControl('',[Validators.required]),
     });
   }
+  
+  
   public upload(files: File[]){
     if(this.userDocumentUploadsForm.get("documentTypeId").value > 0) {
       var formData = new FormData();
