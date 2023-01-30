@@ -23,7 +23,6 @@ export class UploadProfilepicComponent extends BaseComponent implements OnInit, 
 
   public employeeId:number = 0;
   public uploadPerCent : string;
-  //public fileMaxSize : number;
   public imageSrc : string;
   public profilepic : string;
   public fileType : string;
