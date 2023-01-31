@@ -182,8 +182,8 @@
 																					<th class="column4"><mfDefaultSorter by="Documentnumber">Document Number</mfDefaultSorter></th>
 																					<th class="column5"><mfDefaultSorter by="Documentnumber">Description</mfDefaultSorter></th>
 																					<th class="column6"><mfDefaultSorter by="Documentnumber">Uploaded By</mfDefaultSorter></th>
-<!-- 																					<th class="column7"><mfDefaultSorter by="Actions">Actions</mfDefaultSorter></th>
- -->																					</tr>
+																					<th class="column7"><mfDefaultSorter by="Actions">Actions</mfDefaultSorter></th>
+																					</tr>
 																			</thead>
 																			<tbody>
 																			<tr class="hover-action-row">
@@ -205,7 +205,7 @@
 																			<td class="column6">
 																				{{subDocument.createdEmpName}}
 																			</td>
-																			<td class="column7" style="display:block;">
+																			<!-- <td class="column7" style="display:block;">
 																			<span *ngIf="subDocument.verificationStatus == 0">
 																			<button class="btn {{btnClass1}}" type="button"  style1="float:right;margin-right:5px;">{{btnVal1}}</button>  
 																			</span>
@@ -219,11 +219,8 @@
 																			<button type="button" class="btn btn-primary" 
 																			style1="float:right;margin-right:5px;"> Download</button>
 
-																			</td>
-																			<!-- <td class="column7"></td>
-																			<td class="column8"></td>
-																			<td class="actions">
-																			<div class="link-holder">
+																			</td> -->
+																			<td class="column7" style="display:block;">
 																			<span *ngIf="subDocument.verificationStatus == 0">
 																			<button class="btn {{btnClass1}}" type="button" (click)="documentConfirm(subDocument);"  style1="float:right;margin-right:5px;">{{btnVal1}}</button>  
 																			</span>
@@ -236,8 +233,7 @@
 																			<download-ctrl id="report-download-control" style="visibility:hidden;" (click)="onDownloadPdfClicked(subDocument);"></download-ctrl>
 																			<button type="button" class="btn btn-primary" 
 																			(click)="print($event)" style1="float:right;margin-right:5px;"> Download</button>
-																			</div>
-																			</td> -->
+																			</td>
 																			</tr>
 																			</tbody>
 																</table>
