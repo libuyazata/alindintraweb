@@ -38,7 +38,7 @@
 												<span class="float-left">
 													<button class="btn btn-info" type="submit">Search</button>  
 													<button class="btn btn-danger" type="reset" (click)="clearForm()">Clear</button>
-													<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;" type="button">Create {{itemName}}</button>  
+													<button (click)="openCreateForm()" class="btn btn-info" style="background:#C70039;" type="button" *ngIf="prv_workCreate == 'true'">Create {{itemName}}</button>  
 
 											<!-- <a class="link" [routerLink]="['/work-details/']">
 												<button class="btn btn-success ml-0" type="button">Manage Work</button>

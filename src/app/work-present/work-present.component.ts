@@ -37,7 +37,9 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
   public itemsPerPage: number;
   public totalItems: number;
   public sessionstorage: any = sessionStorage;
-  
+  public prv_workCreate : string;
+  public prv_workDelete : string;
+
   constructor(private WorkpresentService : WorkpresentService,
 			  private alertService : AlertNotificationService,  
               private authenticationService: AuthenticationService,
@@ -77,6 +79,9 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
       createdOn : new FormControl(''),
       updatedOn : new FormControl(''),
     }) */
+	const storage = sessionStorage;
+	this.prv_workCreate = storage.getItem('prv_workEdit');
+	this.prv_workDelete = storage.getItem('prv_workDelete');
   }
   
   openCreateForm() {

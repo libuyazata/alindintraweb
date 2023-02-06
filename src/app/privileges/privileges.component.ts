@@ -78,6 +78,7 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
 	      this.addPrivilegeForm.patchValue({"departmentEdit" : this.privilegesList['departmentEdit']});
 	      this.addPrivilegeForm.patchValue({"departmentDelete" : this.privilegesList['departmentDelete']});
 	      this.addPrivilegeForm.patchValue({"workView" : this.privilegesList['workView']});
+	      //this.addPrivilegeForm.patchValue({"workCreate" : this.privilegesList['workEdit']});
 	      this.addPrivilegeForm.patchValue({"workEdit" : this.privilegesList['workEdit']});
 	      this.addPrivilegeForm.patchValue({"workDelete" : this.privilegesList['workDelete']});
 	      this.addPrivilegeForm.patchValue({"subTaskView" : this.privilegesList['subTaskView']});
@@ -105,6 +106,7 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
       departmentEdit : new FormControl((null != data ? data.departmentEdit : '')),
       departmentDelete : new FormControl((null != data ? data.departmentDelete : '')),
       workView : new FormControl((null != data ? data.workView : '')),
+      //workCreate : new FormControl((null != data ? data.workCreate : '')),
       workEdit : new FormControl((null != data ? data.workEdit : '')),
       workDelete : new FormControl((null != data ? data.workDelete : '')),
       subTaskView : new FormControl((null != data ? data.subTaskView : '')),
@@ -146,6 +148,7 @@ export class PrivilegesComponent extends BaseComponent implements OnInit {
       departmentView : submitData.departmentView,
       departmentEdit : submitData.departmentEdit,
       departmentDelete : submitData.departmentDelete,
+      //workCreate : submitData.workCreate,
       workView : submitData.workView,
       workEdit : submitData.workEdit,
       workDelete : submitData.workDelete,

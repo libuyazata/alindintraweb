@@ -15,7 +15,9 @@ export class HeaderComponent implements OnInit {
 
   menuHidden = true;
   isAdminUser:Boolean;
-
+  public fileType : string;
+  public profPicBase64 : string;
+  
   isResetPasswordFormVisible = false;
   isFormSubmitInitiated = false;
   public resetPasswordForm : FormGroup;
@@ -99,7 +101,7 @@ export class HeaderComponent implements OnInit {
     const credentials = this.authenticationService.credentials;
     return credentials ? credentials.userId : null;
   }
-  get profilePicPath(): string | null {
+  /* get profilePicPath(): string | null {
     const credentials = this.authenticationService.credentials;
     return credentials ? credentials.profilePicPath : null;
   }
@@ -110,10 +112,21 @@ export class HeaderComponent implements OnInit {
   get profPicBase64(): string | null {
     const credentials = this.authenticationService.credentials;
     return credentials ? credentials.profPicBase64 : null;
-  }
+  } */
   get resetForm() { return this.resetPasswordForm.controls; }
 
   menuButtonClicked() {
     
+  }
+  
+  showProfilePic(employeeId:number){
+	let empParams = { "employeeId" : employeeId};
+    this.nav.getEmployeeDetailsById(empParams).subscribe((emp: any) => {
+      //this.profilepic = emp.employeeList[0]['profilePicPath'];
+	  this.fileType = emp.employeeList[0]['fileType'];
+      this.profPicBase64 = emp.employeeList[0]['profPicBase64'];
+	  //alert(emp.employee.profilePicPath);
+	  
+    });
   }
 }

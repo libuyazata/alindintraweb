@@ -25,11 +25,10 @@ public privilegesList : Array<any>;
       }
       if(this.authenticationService.hasPermission(route.data['role'])){
         hasPrivilege = true;
-		/* const userRoleId = this.authenticationService.getuserRole();
-		this.authenticationService.getprivilegesList(userRoleId).subscribe((resp:any)=>{      
+		 const userRoleId = this.authenticationService.getuserRole();
+		 this.authenticationService.getprivilegesList(userRoleId).subscribe((resp:any)=>{      
 		  this.privilegesList = resp["authorization"];
 		  let storage = sessionStorage;
-		  alert('ppp');
 		  sessionStorage.clear();
 		  storage.setItem('prv_employeeView', JSON.stringify(this.privilegesList['employeeView']));
 		  storage.setItem('prv_employeeEdit', JSON.stringify(this.privilegesList['employeeEdit']));
@@ -38,6 +37,7 @@ public privilegesList : Array<any>;
 		  storage.setItem('prv_departmentEdit', JSON.stringify(this.privilegesList['departmentEdit']));
 		  storage.setItem('prv_departmentDelete', JSON.stringify(this.privilegesList['departmentDelete']));
 		  storage.setItem('prv_workView', JSON.stringify(this.privilegesList['workView']));
+		  storage.setItem('prv_workCreate', JSON.stringify(this.privilegesList['workEdit']));
 		  storage.setItem('prv_workEdit', JSON.stringify(this.privilegesList['workEdit']));
 		  storage.setItem('prv_workDelete', JSON.stringify(this.privilegesList['workDelete']));
 		  storage.setItem('prv_subTaskView', JSON.stringify(this.privilegesList['subTaskView']));
@@ -49,7 +49,7 @@ public privilegesList : Array<any>;
 		  storage.setItem('prv_deputationView', JSON.stringify(this.privilegesList['deputationView']));
 		  storage.setItem('prv_deputationEdit', JSON.stringify(this.privilegesList['deputationEdit']));
 		  storage.setItem('prv_deputationDelete', JSON.stringify(this.privilegesList['deputationDelete']));
-		}); */
+		}); 
 		
 	  }
     }

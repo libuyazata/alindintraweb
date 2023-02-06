@@ -29,5 +29,8 @@ public getprivilegesList(data:any): Observable<any>{
     let httpClient =  this.injector.get(HttpClient);
 	return httpClient.get("user/getAuthorization/"+data);
   }
+public getEmployeeDetailsById(employeeId:any): Observable<any> {
+    return this.httpClient.get("user/getEmployeeById", { params : employeeId });
+  }  
   
 }
