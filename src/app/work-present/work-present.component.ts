@@ -62,6 +62,7 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
     })
 	
 	this.materialRequestSearchForm.patchValue({"workTypeId" : 1});
+
    // this.getWorkDetailsList();
 	//this.getDepartmentList();
 	//this.getworkStatusList();
@@ -83,7 +84,6 @@ export class WorkpresentComponent extends BaseComponent implements OnInit {
 	this.prv_workCreate = storage.getItem('prv_workEdit');
 	this.prv_workDelete = storage.getItem('prv_workDelete');
   }
-  
   openCreateForm() {
     const credentials = this.authenticationService.credentials;
     const departmentId = credentials.departmentId;

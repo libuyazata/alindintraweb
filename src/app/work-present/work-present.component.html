@@ -21,7 +21,7 @@
 											<div class="col-lg-2">
 											<div class="search-label-container"><label>Type</label></div>
 											<select class="form-control" formControlName="workTypeId">
-												<option value="0" [selected] ="true">All</option>  
+												<option value="0" [selected]>All</option>  
 												<option *ngFor="let work of workTypeList" [ngValue]="work.workTypeId">{{work.workType}}</option>
 											</select> 
 											</div>
