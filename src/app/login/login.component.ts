@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService, AuthenticationService } from '@app/core';
 import { ShowHidePasswordDirective } from '@app/core/directives//showhide-password.directive'
+import { AlertNotificationService } from '@app/shared/services/alertnotification.service';
+import { ChangepasswordService } from '@app/change-password/change-password.service';
 // import { debug } from 'util';
 
 const log = new Logger('Login');
@@ -21,15 +23,25 @@ export class LoginComponent implements OnInit {
   error: string;
   loginForm: FormGroup;
   isLoading = false;
+  public forgotPasswordForm : FormGroup;
+  public isforgotPasswordformSubmit :Boolean = false;
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private i18nService: I18nService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+			  private alertService : AlertNotificationService,
+			  private changepasswordService : ChangepasswordService) {
     this.createForm();
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+   //const emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+  this.forgotPasswordForm = new FormGroup({
+      email : new FormControl('',  [Validators.required])
+      //email : new FormControl('',  [Validators.required, Validators.pattern(emailPattern)])
+    });
+  }
 
   // login() {
   //   this.isLoading = true;;
@@ -125,6 +137,35 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
       remember: true
     });
+  }
+  get forgotPassForm() { return this.forgotPasswordForm.controls; }
+
+  public openPasswordModal() {    
+    document.getElementById('passwordModal').classList.toggle('d-block');
+  }
+  public closePasswordModal() {
+    this.isforgotPasswordformSubmit = false;
+	this.forgotPasswordForm.reset();
+    document.getElementById('passwordModal').classList.toggle('d-block');
+  }
+  
+ 
+ public forgotPasswordformSubmit(){
+    this.isforgotPasswordformSubmit = true;
+    if(this.forgotPasswordForm.valid) {
+      let forgotPasswordForm = this.forgotPasswordForm.value;
+      let empCode = forgotPasswordForm.email;
+		this.changepasswordService.forgetPassword(empCode).subscribe((resp:any)=>{
+		if(resp.status == "success") {
+          this.alertService.forgotPasswordStatus('Password', true);
+			this.closePasswordModal();
+		  } 
+		//  if(resp.status == "failed") {
+		if(resp.status == 400){
+			this.alertService.forgotPasswordStatus('Password', false);
+          }
+      }); 
+    }
   }
 
 }

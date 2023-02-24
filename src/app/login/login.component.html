@@ -51,6 +51,7 @@
                     <input type="checkbox" class="form-check-input" formControlName="remember"/>
                     <span class="white-text" translate>Remember me</span>
                   </label>
+				 <span class="white-text text-right" translate style="float:right;"><a href="#"  (click)="openPasswordModal();" class="white-text">Forgot Password</a></span>
                 </div>
               </div>
               <button class="btn btn-primary w-100" type="submit" [disabled]="loginForm.invalid || isLoading">
@@ -64,3 +65,37 @@
     </div>
   </div>
 </div>
+  <!-- Password Modal Form -->
+  <div class="modal salary-info-model" id="passwordModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Forgot Password</h5>
+            <button class="close" type="button" data-dismiss="modal" appModal  (click)="closePasswordModal();">&times;</button>
+          </div>
+          <form novalidate [formGroup]="forgotPasswordForm" (ngSubmit)="forgotPasswordformSubmit();">
+            <div class="modal-body">
+              <div class="row form-group">
+                  <div class="col-lg-12">
+                    <label>Enter Username</label>
+                    <input formControlName="email" class="form-control"
+                      [ngClass]="{ 'is-invalid': isforgotPasswordformSubmit && forgotPassForm.email?.errors }"/>
+                    <div *ngIf="isforgotPasswordformSubmit && forgotPassForm.email?.errors" class="invalid-feedback">
+                    <div *ngIf="isforgotPasswordformSubmit && forgotPassForm.email?.errors.required" style="font-size:14px;">Please Enter Username</div>
+<!--                     <div *ngIf="!(forgotPassForm.email?.errors.required) && forgotPassForm.email.invalid" style="font-size:14px;">Please Enter a Valid Email</div>
+ -->                    </div>
+                  </div>
+                </div>
+                </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-info" type="submit">Submit</button>
+              <button class="btn btn-danger" type="button" data-dismiss="modal" appModal (click)="closePasswordModal();">Close</button>
+            </div>
+          </form>
+      </div>
+    </div>
+    </div>
+
+    <!-- End Of Password Modal Form -->
+

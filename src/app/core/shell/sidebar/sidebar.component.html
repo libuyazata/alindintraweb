@@ -48,14 +48,14 @@
             </a>
 			</span>
 	</li>
-	<li>
+	<!-- <li>
 			<span *ngIf="prv_deputationView == 'true'">
             <a [routerLink]=""><span class="fas fa-users"></span><span class="nav-label pl-2"> HR <i class="fas icon-margin" [ngClass]="{'fa-plus-circle': !isShowHr,'fa-minus-circle': isShowHr }" (click)="openHr();"></i></span></a>
 			<span *ngIf="isShowHr">
 			<a class="menu-link" routerLink="/deputation" routerLinkActive="active"><span class="fas fa-info-circle ml-5"></span><span class="nav-label pl-2"> Deputation</span></a>
 		    </span>
 			</span>
-	</li>
+	</li> -->
 	<li>
 			<span *ngIf="userRolesId == 1">
 			<a [routerLink]=""><span class="fas fa-user-cog"></span><span class="nav-label pl-2"> ADMIN<i class="fas icon-margin" [ngClass]="{'fa-plus-circle': !isShowAdmin,'fa-minus-circle': isShowAdmin }" (click)="openAdmin();"></i></span></a>
@@ -64,5 +64,12 @@
             </span>
 			</span>
     </li>
+	<li>
+			<span *ngIf="prv_userRoleId == '1' || prv_userRoleId == '2' || prv_userRoleId == '3' || prv_userRoleId == '4'">
+			<a class="menu-link" (click)=menuButtonClicked() routerLink="/change-password" routerLinkActive="active">
+                <span class="fas fa-key"></span><span class="nav-label"> CHANGE PASSWORD</span>
+            </a>
+			</span>
+	</li>
 </ul>
 </nav>

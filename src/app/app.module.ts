@@ -48,6 +48,7 @@ import { InboxModule } from '@app/inbox/inbox.module';
 import { SentModule } from '@app/sent/sent.module';
 import { GeneralmessageinboxModule } from '@app/general-message-inbox/general-message-inbox.module';
 import { GeneralmessagesentModule } from '@app/general-message-sent/general-message-sent.module';
+import { ChangepasswordModule } from '@app/change-password/change-password.module';
 
 
 
@@ -94,7 +95,8 @@ import { GeneralmessagesentModule } from '@app/general-message-sent/general-mess
 	InboxModule,
 	SentModule,
 	GeneralmessageinboxModule,
-	GeneralmessagesentModule
+	GeneralmessagesentModule,
+	ChangepasswordModule
   ],
   declarations: [AppComponent, BaseComponent],
   providers: [
