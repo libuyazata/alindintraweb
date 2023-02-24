@@ -161,7 +161,7 @@ export class LoginComponent implements OnInit {
 			this.closePasswordModal();
 		  } 
 		//  if(resp.status == "failed") {
-		if(resp.status == 400){
+		 else{
 			this.alertService.forgotPasswordStatus('Password', false);
           }
       }); 
