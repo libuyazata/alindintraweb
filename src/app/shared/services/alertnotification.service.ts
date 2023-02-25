@@ -102,6 +102,20 @@ export class AlertNotificationService {
             this.showError(message, title);
         }
     }
+	public alertUpdatePassword(item: string, isSaved : boolean) {
+        let message = "Error while saving the " + item;
+        let title = "Save Error!";
+
+        if(isSaved) {
+            message = item  +" Updated Successfully";
+            title = "Update Success!"
+            this.showSuccess(message, title);
+        } else {
+            title = "Update Error!"
+			message = "Wrong Existing Password Entered";
+			this.showError(message, title);
+        }
+    }
 	public forgotPasswordStatus(item: string, isSaved : boolean) {
         let message = "Error while saving the " + item;
         let title = "Update Error!";

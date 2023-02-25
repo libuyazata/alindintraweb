@@ -63,12 +63,12 @@ export class ChangepasswordComponent extends BaseComponent implements OnInit {
       let existPassword = passwordForm.existPassword;
 		this.changepasswordService.updatePassword(newPassword,existPassword).subscribe((resp:any)=>{
 		if(resp.status == "success") {
-          this.alertService.showSaveStatus('Password', true);
+          this.alertService.alertUpdatePassword('Password', true);
 			this.resetForm();
 		  } 
 		//  if(resp.status == "failed") {
 		 else{
-			this.alertService.showSaveStatus('Password', false);
+			this.alertService.alertUpdatePassword('Password', false);
           }
       }); 
     }
